@@ -2,6 +2,7 @@ fisherman/await
 fisherman/debug
 jethrokuan/fish-emacs
 fisherman/fin
+fisherman/fzf
 fisherman/get_file_age
 fisherman/getopts
 jethrokuan/git-distance
