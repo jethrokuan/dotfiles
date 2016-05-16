@@ -11,3 +11,4 @@
 /fish/.config/fish/**
 !/fish/.config/fish/functions/fisher.fish
 !/fish/.config/fish/fishfile
+!/fish/.config/fish/config.fish
