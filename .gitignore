@@ -1,0 +1,14 @@
+**/sec/**/*.zsh
+**/sec/**/*.zshenv
+*.sec*
+.DS_Store
+.gitsecret
+/bin/
+!README.md
+!*example
+/emacs/.emacs.d/auto-save-list/
+/emacs/.emacs.d/elpa/
+/fish/.config/fish/**
+!/fish/.config/fish/functions/fisher.fish
+!/fish/.config/fish/fishfile
+
