@@ -1,8 +1,10 @@
 fisherman/await
 fisherman/debug
 jethrokuan/fish-emacs
-fisherman/fin
+fisherman/fishtape
+fisherman/fnm
 fisherman/fzf
+fisherman/get
 fisherman/get_file_age
 fisherman/getopts
 jethrokuan/git-distance
@@ -13,5 +15,6 @@ fisherman/humanize_duration
 jethrokuan/jetty
 fisherman/last_job_id
 fisherman/menu
+fisherman/tio
 jethrokuan/tree
-fisherman/z
+fisherman/upto

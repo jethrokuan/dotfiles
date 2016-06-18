@@ -1,1 +1,0 @@
-("~/Documents/Code/jethrokuan.github.io/" "~/dotfiles/" "~/Documents/Code/z/" "~/Documents/Code/braid/" "~/Documents/Code/jetty/" "~/Documents/Code/git_distance/" "~/Documents/Code/fzf/" "~/Documents/Code/bookmarks/")
