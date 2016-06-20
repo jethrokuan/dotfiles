@@ -726,3 +726,22 @@
 ;;; Fish
 (use-package fish-mode
   :mode ("\\.fish\\'" . fish-mode))
+
+
+;;; Rust
+(use-package rust-mode
+  :mode ("\\.rs\\'" . rust-mode))
+
+
+;;; Python
+(use-package elpy
+  :config
+  (progn
+    ;; Use Flycheck instead of Flymake
+    (when (require 'flycheck nil t)
+      (remove-hook 'elpy-modules 'elpy-module-flymake)
+      (remove-hook 'elpy-modules 'elpy-module-yasnippet)
+      (remove-hook 'elpy-mode-hook 'elpy-module-highlight-indentation)
+      (add-hook 'elpy-mode-hook 'flycheck-mode))
+    (elpy-enable)
+    (setq elpy-rpc-backend "jedi")))
