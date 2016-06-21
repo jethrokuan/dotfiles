@@ -14,4 +14,5 @@
 !/fish/.config/fish/config.fish
 /emacs/.emacs.d/history
 /emacs/.emacs.d/recentf
-emacs/.emacs.d/projectile-bookmarks.eld
+/emacs/.emacs.d/projectile-bookmarks.eld
+/emacs/.emacs.d/.mc-lists.el

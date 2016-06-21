@@ -329,43 +329,6 @@
   :bind (("M-i" . change-inner)
          ("M-o" . change-outer)))
 
-;;;; Helm
-(use-package helm
-  :diminish helm-mode
-  :bind* (("C-c h" . helm-mini)
-          ("C-x C-f" . helm-find-files)
-          ("C-c f" . helm-recentf)
-          ("C-h a" . helm-apropos)
-          ("C-x C-b" . helm-buffers-list)
-          ("C-x b" . helm-buffers-list)
-          ("M-y" . helm-all-mark-rings)
-          ("M-a" . helm-M-x)
-          ("C-c o" . helm-occur))
-  :config (progn
-            (require 'helm-config)
-            (setq helm-candidate-number-limit 20)
-            (setq helm-idle-delay 0.0
-                  helm-input-idle-delay 0.01
-                  helm-quick-update t 
-                  helm-ff-skip-boring-files t)
-            (helm-mode 1)))
-
-;; Search
-(use-package helm-ag
-  :bind ("C-c g" . helm-ag))
-
-;; Descbinds
-(use-package helm-descbinds
-  :bind ("C-c b" . helm-descbinds))
-
-(use-package helm-dash
-  :bind (("C-c d" . helm-dash)
-         ("C-c C-d" . helm-dash-at-point))
-  :config (setq helm-dash-browser-func 'eww))
-
-(use-package helm-ls-git
-  :bind ("C-x C-d" . helm-browse-project))
-
 ;;; Paredit
 (use-package paredit
   :diminish paredit-mode
@@ -398,7 +361,6 @@
             (setq git-gutter+-modified-sign "==")
             (setq git-gutter+-added-sign "++")
             (setq git-gutter+-deleted-sign "--")))
-
 
 ;;;; Code/Text Completion
 ;;   Yasnippet - snippets
@@ -428,8 +390,6 @@
 (use-package projectile
   :demand t
   :init (projectile-global-mode 1)
-  :bind (("s-f" . projectile-find-file)
-         ("s-F" . projectile-grep))
   :bind-keymap* ("C-x p" . projectile-command-map)
   :config
   (require 'projectile)
@@ -467,13 +427,35 @@
       (find-file (expand-file-name
                   file (projectile-project-root)))
       (run-hooks 'projectile-find-file-hook)
-      (cider-jack-in)))
-  (use-package helm-projectile
-    :config
-    (require 'helm-projectile)
-    (helm-projectile-on)
-    (setq projectile-switch-project-action
-          #'projectile-commander)))
+      (cider-jack-in))))
+
+(use-package counsel-projectile
+  :bind (("s-p" . counsel-projectile)
+         ("s-f" . counsel-projectile-find-file)))
+
+(use-package counsel)
+(use-package counsel-dash
+  :config
+  (setq counsel-dash-docsets-path "~/.emacs.d/.docset"))
+
+(use-package swiper
+  :bind
+  (("C-s" . swiper)
+   ("C-c C-r" . ivy-resume)
+   ("M-a" . counsel-M-x)
+   ("C-x C-f" . counsel-find-file)
+   ("C-c h f" . counsel-describe-function)
+   ("C-c h v" . counsel-describe-variable)
+   ("C-c i u" . counsel-unicode-char)
+   ("C-c g" . counsel-git)
+   ("C-c j" . counsel-git-grep)
+   ("C-c k" . counsel-ag)
+   ("C-c l" . counsel-locate))
+  :config
+  (progn
+    (ivy-mode 1)
+    (setq ivy-use-virtual-buffers t)
+    (define-key read-expression-map (kbd "C-r") #'counsel-expression-history)))
 
 ;;; Org Mode
 (defvar jk/org-agenda-files
