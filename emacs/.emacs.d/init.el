@@ -735,13 +735,17 @@
 
 ;;; Python
 (use-package elpy
+  :init
+  (add-hook 'python-mode-hook (lambda () (aggressive-indent-mode -1)))
+  (defun set-newline-and-indent ()
+    "Map the return key with `newline-and-indent'"
+    (local-set-key (kbd "RET") 'newline-and-indent))
+  (add-hook 'python-mode-hook 'set-newline-and-indent)
   :config
-  (progn
-    ;; Use Flycheck instead of Flymake
-    (when (require 'flycheck nil t)
-      (remove-hook 'elpy-modules 'elpy-module-flymake)
-      (remove-hook 'elpy-modules 'elpy-module-yasnippet)
-      (remove-hook 'elpy-mode-hook 'elpy-module-highlight-indentation)
-      (add-hook 'elpy-mode-hook 'flycheck-mode))
-    (elpy-enable)
-    (setq elpy-rpc-backend "jedi")))
+  (when (require 'flycheck nil t)
+    (remove-hook 'elpy-modules 'elpy-module-flymake)
+    (remove-hook 'elpy-modules 'elpy-module-yasnippet)
+    (remove-hook 'elpy-mode-hook 'elpy-module-highlight-indentation)
+    (add-hook 'elpy-mode-hook 'flycheck-mode))
+  (elpy-enable)
+  (setq elpy-rpc-backend "jedi"))
