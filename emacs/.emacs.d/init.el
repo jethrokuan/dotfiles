@@ -439,7 +439,7 @@
   (setq counsel-dash-docsets-path "~/.emacs.d/.docset"))
 
 (use-package swiper
-  :bind
+  :bind*
   (("C-s" . swiper)
    ("C-c C-r" . ivy-resume)
    ("M-a" . counsel-M-x)
