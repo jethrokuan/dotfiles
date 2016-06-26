@@ -397,6 +397,7 @@
   (setq projectile-switch-project-action
         #'projectile-commander)
   (setq projectile-create-missing-test-files t)
+  (setq projectile-completion-system 'ivy)
   (def-projectile-commander-method ?s
     "Open a *eshell* buffer for the project."
     (projectile-run-eshell))
