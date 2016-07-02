@@ -63,7 +63,7 @@
 (setq message-log-max 10000)
 
 ;;; Base font
-(defvar emacs-english-font "Source Code Pro for Powerline 14"
+(defvar emacs-english-font "mononoki Regular 14"
   "the font name of English.")
 
 (defun font-exist-p (fontname)
