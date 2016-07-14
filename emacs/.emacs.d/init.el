@@ -541,9 +541,9 @@
                   \\let\\oldsection\\section
                   \\renewcommand\\section{\\clearpage\\oldsection}
                   \\setlength{\\parskip}{1em}
-                  \\setromanfont{Gentium}
-                  \\setromanfont [BoldFont={Cambo Bold},
-                                  ItalicFont={Cambo Italic}]{Cambo}                 
+                  \\setromanfont{Bitter}
+                  \\setromanfont [BoldFont={Bitter Bold},
+                                  ItalicFont={Bitter Italic}]{Cambo}                 
                   \\setmonofont[Scale=0.8]{mononoki Regular}
                   \\usepackage{geometry}
                   \\usepackage{hyperref}
