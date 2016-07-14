@@ -547,6 +547,7 @@
                   \\setmonofont[Scale=0.8]{mononoki Regular}
                   \\usepackage{geometry}
                   \\usepackage{hyperref}
+                  \\hypersetup {colorlinks = true, allcolors = red}
                   \\geometry{a4paper, textwidth=6.5in, textheight=10in,
                               marginparsep=7pt, marginparwidth=.6in}
                   \\pagestyle{empty}
