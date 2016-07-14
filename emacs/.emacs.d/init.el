@@ -542,9 +542,9 @@
                   \\renewcommand\\section{\\clearpage\\oldsection}
                   \\setlength{\\parskip}{1em}
                   \\setromanfont{Gentium}
-                  \\setromanfont [BoldFont={Gentium Basic Bold},
-                                  ItalicFont={Gentium Basic Italic}]{Gentium Basic}                 
-                  \\setmonofont[Scale=0.8]{DejaVu Sans Mono}
+                  \\setromanfont [BoldFont={Cambo Bold},
+                                  ItalicFont={Cambo Italic}]{Cambo}                 
+                  \\setmonofont[Scale=0.8]{mononoki Regular}
                   \\usepackage{geometry}
                   \\usepackage{hyperref}
                   \\geometry{a4paper, textwidth=6.5in, textheight=10in,
