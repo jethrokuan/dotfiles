@@ -528,7 +528,6 @@
   (setq org-latex-pdf-process
         '("xelatex -interaction nonstopmode %f"
           "xelatex -interaction nonstopmode %f"))
-  :config
   (require 'org-latex)
   (add-to-list 'org-latex-classes
                '("org-article"
