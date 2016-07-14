@@ -543,8 +543,8 @@
                   \\setlength{\\parskip}{1em}
                   \\setromanfont{Bitter}
                   \\setromanfont [BoldFont={Bitter Bold},
-                                  ItalicFont={Bitter Italic}]{Cambo}                 
-                  \\setmonofont[Scale=0.8]{mononoki Regular}
+                                 ItalicFont={Bitter Italic}]{Bitter}
+                  \\setmonofont[Scale=0.8]{mononoki}
                   \\usepackage{geometry}
                   \\usepackage{hyperref}
                   \\hypersetup {colorlinks = true, allcolors = red}
