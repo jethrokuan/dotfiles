@@ -534,6 +534,9 @@
                '("org-article"
                  "\\documentclass[11pt,a4paper]{article}
                   \\usepackage[T1]{fontenc}
+                  \\usepackage{epigraph}
+                  \\setlength\\epigraphwidth{13cm}
+                  \\setlength\\epigraphrule{0pt}
                   \\usepackage{fontspec}
                   \\usepackage{graphicx} 
                   \\usepackage{parskip}
