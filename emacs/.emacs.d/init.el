@@ -435,10 +435,6 @@
          ("s-f" . counsel-projectile-find-file)))
 
 (use-package counsel)
-(use-package counsel-dash
-  :config
-  (setq counsel-dash-docsets-path "~/.emacs.d/.docset"))
-
 (use-package swiper
   :bind*
   (("C-s" . swiper)
@@ -528,10 +524,13 @@
   (setq org-latex-pdf-process
         '("xelatex -interaction nonstopmode %f"
           "xelatex -interaction nonstopmode %f"))
-  (require 'org-latex)
-  (add-to-list 'org-latex-classes
-               '("org-article"
-                 "\\documentclass[11pt,a4paper]{article}
+  :config
+  (progn
+    (require 'org-latex)
+    (setq org-export-latex-listings t)
+    (add-to-list 'org-latex-classes
+                 '("org-article"
+                   "\\documentclass[11pt,a4paper]{article}
                   \\usepackage[T1]{fontenc}
                   \\usepackage{epigraph}
                   \\setlength\\epigraphwidth{13cm}
@@ -556,11 +555,11 @@
                   \\title{}                  
                   [NO-DEFAULT-PACKAGES]
                   [NO-PACKAGES]"
-                 ("\\section{%s}" . "\\section*{%s}")
-                 ("\\subsection{%s}" . "\\subsection*{%s}")
-                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+                   ("\\section{%s}" . "\\section*{%s}")
+                   ("\\subsection{%s}" . "\\subsection*{%s}")
+                   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                   ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                   ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
   (use-package ox-reveal
     :config (require 'ox-reveal)))
 
