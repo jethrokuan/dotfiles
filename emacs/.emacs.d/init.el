@@ -480,54 +480,52 @@
           ("C-c l" . org-store-link))
   :mode ("\\.org\\'" . org-mode)
   :init
-  (add-hook 'org-mode-hook #'trunc-lines-hook)
-  (setq org-ellipsis "⤵")
-  (setq org-modules '(org-drill))
-  (setq org-directory "~/.org")
-  (setq org-default-notes-directory (concat org-directory "/notes.org"))          
-  (setq org-agenda-dim-blocked-tasks t) ;;clearer agenda
-  (setq org-agenda-files jk/org-agenda-files)
-  (setq org-hide-emphasis-markers t)
-  (font-lock-add-keywords 'org-mode
-                          '(("^ +\\([-*]\\) "
-                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•")))))) 
-  (setq org-refile-targets
-        '((nil :maxlevel . 3)
-          (org-agenda-files :maxlevel . 3)))
-  (setq org-use-fast-todo-selection t)
-  (setq org-treat-S-cursor-todo-selection-as-state-change nil)
-  (setq org-capture-templates
-        '(("t" "Todo" entry (file+headline "~/.org/someday.org" "Tasks")
-           "* TODO %? %i\n")
-          ("e" "Email" entry (file+headline "~/.org/today.org" "Emails")
-           "* TODO [#A] %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n%a\n")
-          ("p" "Project" entry (file+headline "~/.org/someday.org" "Projects")
-           "* TODO %? %i\n")
-          ("b" "Book" entry (file "~/.org/books.org")
-           "* TO-READ %(org-set-tags) %? %i\n")
-          ("v" "Vocab" entry (file+headline "~/.org/vocab.org" "Vocabulary")
-           "* %^{The word} :drill:\n %\\1 \n** Answer \n%^{The definition}")
-          ("i" "Idea" entry (file+datetree "~/.org/ideas.org") "* %?\nEntered on %U\n %i\n")))
-  (setq org-publish-project-alist
-        '(("org-books"
-           ;; Path to your org files.
-           :publishing-function org-html-publish-to-html
-           :publishing-directory "~/Documents/Code/jethrokuan.github.io/"
-           :base-directory "~/.org/"
-           :exclude ".*"
-           :include ["books.org"]
-           :with-emphasize t
-           :with-todo-keywords t
-           :with-toc nil
-           :html-head "<link rel=\"stylesheet\" href=\"/css/org.css\" type=\"text/css\">"
-           :html-preamble t)))
-  (setq org-latex-pdf-process
-        '("xelatex -interaction nonstopmode %f"
-          "xelatex -interaction nonstopmode %f"))
-  :config
   (progn
-    (require 'org-latex)
-    (setq org-export-latex-listings t)
+    (add-hook 'org-mode-hook #'trunc-lines-hook)
+    (setq org-ellipsis "⤵")
+    (setq org-modules '(org-drill))
+    (setq org-directory "~/.org")
+    (setq org-default-notes-directory (concat org-directory "/notes.org"))          
+    (setq org-agenda-dim-blocked-tasks t) ;;clearer agenda
+    (setq org-agenda-files jk/org-agenda-files)
+    (setq org-hide-emphasis-markers t)
+    (font-lock-add-keywords 'org-mode
+                            '(("^ +\\([-*]\\) "
+                               (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•")))))) 
+    (setq org-refile-targets
+          '((nil :maxlevel . 3)
+            (org-agenda-files :maxlevel . 3)))
+    (setq org-use-fast-todo-selection t)
+    (setq org-treat-S-cursor-todo-selection-as-state-change nil)
+    (setq org-capture-templates
+          '(("t" "Todo" entry (file+headline "~/.org/someday.org" "Tasks")
+             "* TODO %? %i\n")
+            ("e" "Email" entry (file+headline "~/.org/today.org" "Emails")
+             "* TODO [#A] %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n%a\n")
+            ("p" "Project" entry (file+headline "~/.org/someday.org" "Projects")
+             "* TODO %? %i\n")
+            ("b" "Book" entry (file "~/.org/books.org")
+             "* TO-READ %(org-set-tags) %? %i\n")
+            ("v" "Vocab" entry (file+headline "~/.org/vocab.org" "Vocabulary")
+             "* %^{The word} :drill:\n %\\1 \n** Answer \n%^{The definition}")
+            ("i" "Idea" entry (file+datetree "~/.org/ideas.org") "* %?\nEntered on %U\n %i\n")))
+    (setq org-publish-project-alist
+          '(("org-books"
+             ;; Path to your org files.
+             :publishing-function org-html-publish-to-html
+             :publishing-directory "~/Documents/Code/jethrokuan.github.io/"
+             :base-directory "~/.org/"
+             :exclude ".*"
+             :include ["books.org"]
+             :with-emphasize t
+             :with-todo-keywords t
+             :with-toc nil
+             :html-head "<link rel=\"stylesheet\" href=\"/css/org.css\" type=\"text/css\">"
+             :html-preamble t)))
+    (setq org-latex-pdf-process
+          '("xelatex -interaction nonstopmode %f"
+            "xelatex -interaction nonstopmode %f"))
+    (require 'ox-latex)
     (add-to-list 'org-latex-classes
                  '("org-article"
                    "\\documentclass[11pt,a4paper]{article}
@@ -545,7 +543,7 @@
                   \\setromanfont{Bitter}
                   \\setromanfont [BoldFont={Bitter Bold},
                                  ItalicFont={Bitter Italic}]{Bitter}
-                  \\setmonofont[Scale=0.8]{mononoki}
+                  \\setmonofont[Scale=1.0]{mononoki}
                   \\usepackage{geometry}
                   \\usepackage{hyperref}
                   \\hypersetup {colorlinks = true, allcolors = red}
@@ -560,6 +558,7 @@
                    ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                    ("\\paragraph{%s}" . "\\paragraph*{%s}")
                    ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+  :config
   (use-package ox-reveal
     :config (require 'ox-reveal)))
 
