@@ -202,6 +202,7 @@
 
 (bind-key* "C-x |" 'toggle-window-split)
 (bind-key* "C-x m" 'eshell)
+(bind-key* "M-i" 'imenu)
 (bind-key* "M-z" 'zap-up-to-char)
 (bind-key* "C-c !" 'nuke-all-buffers)
 (bind-key* "C-x 3" 'split-and-move-right)
@@ -324,10 +325,6 @@
 ;;   Expand Region
 (use-package expand-region
   :bind (("C-=" . er/expand-region)))
-
-(use-package change-inner
-  :bind (("M-i" . change-inner)
-         ("M-o" . change-outer)))
 
 ;;; Paredit
 (use-package paredit
