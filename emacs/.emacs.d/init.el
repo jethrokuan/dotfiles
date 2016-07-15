@@ -483,7 +483,6 @@
   (progn
     (add-hook 'org-mode-hook #'trunc-lines-hook)
     (setq org-ellipsis "⤵")
-    (setq org-modules '(org-drill))
     (setq org-directory "~/.org")
     (setq org-default-notes-directory (concat org-directory "/notes.org"))          
     (setq org-agenda-dim-blocked-tasks t) ;;clearer agenda
