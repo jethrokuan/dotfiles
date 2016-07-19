@@ -534,6 +534,12 @@
                  '("org-article"
                    "\\documentclass[11pt,a4paper]{article}
                   \\usepackage[T1]{fontenc}
+                  \\usepackage{xcolor}
+                  \\usepackage{soul}
+                  \\definecolor{Light}{gray}{.90}
+                  \\sethlcolor{Light}
+                  \\let\\OldTexttt\\texttt
+                  \\renewcommand{\\texttt}[1]{\\OldTexttt{\\hl{#1}}}
                   \\usepackage{epigraph}
                   \\usepackage{enumitem}
                   \\setlist{nosep}
