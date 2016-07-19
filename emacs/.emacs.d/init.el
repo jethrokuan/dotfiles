@@ -385,6 +385,7 @@
 ;;; Project Management
 ;;; FFIP
 (use-package find-file-in-project
+  :disabled t
   :bind (("s-f" . find-file-in-project)
          ("s-F". find-file-in-current-directory)
          ("M-s-f" . find-file-in-project-by-selected))
