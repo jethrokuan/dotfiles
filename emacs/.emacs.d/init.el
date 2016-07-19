@@ -202,7 +202,6 @@
 
 (bind-key* "C-x |" 'toggle-window-split)
 (bind-key* "C-x m" 'eshell)
-(bind-key* "M-i" 'imenu)
 (bind-key* "M-z" 'zap-up-to-char)
 (bind-key* "C-c !" 'nuke-all-buffers)
 (bind-key* "C-x 3" 'split-and-move-right)
@@ -450,6 +449,7 @@
   (("C-s" . swiper)
    ("C-c C-r" . ivy-resume)
    ("M-a" . counsel-M-x)
+   ("M-i" . counsel-imenu)
    ("C-x C-f" . counsel-find-file)
    ("C-c h f" . counsel-describe-function)
    ("C-c h v" . counsel-describe-variable)
