@@ -16,6 +16,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(git-gutter+-added ((t (:foreground "black" :weight bold))))
+ '(git-gutter+-deleted ((t (:foreground "black" :weight bold))))
+ '(git-gutter+-modified ((t (:foreground "black" :weight bold))))
  '(helm-ls-git-added-copied-face ((t (:foreground "green" :weight bold))))
  '(helm-ls-git-added-modified-face ((t (:foreground "dark orange" :weight bold))))
  '(helm-ls-git-conflict-face ((t (:foreground "red" :weight bold))))
