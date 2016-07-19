@@ -266,6 +266,7 @@
 ;;; Visual Upgrades
 ;;; Anzu
 (use-package anzu
+  :disabled t
   :diminish anzu-mode
   :bind
   (([remap query-replace] . anzu-query-replace)
