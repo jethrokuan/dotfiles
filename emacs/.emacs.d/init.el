@@ -383,13 +383,30 @@
             :config (company-quickhelp-mode 1))))
 
 ;;; Project Management
-;;;   Projectile
+;;; FFIP
+(use-package find-file-in-project
+  :bind (("s-f" . find-file-in-project)
+         ("s-F". find-file-in-current-directory)
+         ("M-s-f" . find-file-in-project-by-selected))
+  :config
+  (autoload 'find-file-in-project "find-file-in-project" nil t)
+  (autoload 'find-file-in-project-by-selected "find-file-in-project" nil t)
+  (autoload 'find-directory-in-project-by-selected "find-file-in-project" nil t)
+  (autoload 'ffip-show-diff "find-file-in-project" nil t)
+  (autoload 'ffip-save-ivy-last "find-file-in-project" nil t)
+  (autoload 'ffip-ivy-resume "find-file-in-project" nil t))
+
+;;; Projectile
 (use-package projectile
+  :disabled t
   :demand t
   :init (projectile-global-mode 1)
   :bind-keymap* ("C-x p" . projectile-command-map)
   :config
   (require 'projectile)
+  (use-package counsel-projectile 
+    :bind (("s-p" . counsel-projectile)
+           ("s-f" . counsel-projectile-find-file)))
   (setq projectile-use-git-grep t)
   (setq projectile-switch-project-action
         #'projectile-commander)
@@ -426,10 +443,6 @@
                   file (projectile-project-root)))
       (run-hooks 'projectile-find-file-hook)
       (cider-jack-in))))
-
-(use-package counsel-projectile
-  :bind (("s-p" . counsel-projectile)
-         ("s-f" . counsel-projectile-find-file)))
 
 (use-package counsel)
 (use-package swiper
