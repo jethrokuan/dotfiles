@@ -535,6 +535,8 @@
                    "\\documentclass[11pt,a4paper]{article}
                   \\usepackage[T1]{fontenc}
                   \\usepackage{epigraph}
+                  \\usepackage{enumitem}
+                  \\setlist{nosep}
                   \\setlength\\epigraphwidth{13cm}
                   \\setlength\\epigraphrule{0pt}
                   \\usepackage{fontspec}
@@ -545,7 +547,7 @@
                   \\renewcommand\\section{\\clearpage\\oldsection}
                   \\setlength{\\parskip}{1em}
                   \\setromanfont{Bitter}
-                  \\setromanfont [BoldFont={Bitter Bold},
+                  \\setromanfont         [BoldFont={Bitter Bold},
                                  ItalicFont={Bitter Italic}]{Bitter}
                   \\setmonofont[Scale=1.0]{mononoki}
                   \\usepackage{geometry}
