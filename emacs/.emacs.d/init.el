@@ -63,20 +63,8 @@
 (setq message-log-max 10000)
 
 ;;; Base font
-(defvar emacs-english-font "mononoki Regular 14"
-  "the font name of English.")
-
-(defun font-exist-p (fontname)
-  "Test if this font is exist or not.
-  This function only work on GUI mode, on terminal it just
-  return nil since you can't set font for emacs on it."
-  (if (or (not fontname) (string= fontname "") (not (display-graphic-p)))
-      nil
-    (if (not (x-list-fonts fontname))
-        nil t)))
-
-(if (font-exist-p emacs-english-font)
-    (setq default-frame-alist '((emacs-english-font))))
+(when (window-system)
+  (set-default-font "Fira Code"))
 
 ;;; Use 2 spaces instead of tabs at all times
 (setq-default tab-width 2)
@@ -346,15 +334,6 @@
   :diminish git-gutter+-mode
   :defer 5
   :config (progn
-            (define-key git-gutter+-mode-map (kbd "C-x n") 'git-gutter+-next-hunk)
-            (define-key git-gutter+-mode-map (kbd "C-x p") 'git-gutter+-previous-hunk)
-            (define-key git-gutter+-mode-map (kbd "C-x v =") 'git-gutter+-show-hunk)
-            (define-key git-gutter+-mode-map (kbd "C-x r") 'git-gutter+-revert-hunks)
-            (define-key git-gutter+-mode-map (kbd "C-x t") 'git-gutter+-stage-hunks)
-            (define-key git-gutter+-mode-map (kbd "C-x c") 'git-gutter+-commit)
-            (define-key git-gutter+-mode-map (kbd "C-x C") 'git-gutter+-stage-and-commit)
-            (define-key git-gutter+-mode-map (kbd "C-x C-y") 'git-gutter+-stage-and-commit-whole-buffer)
-            (define-key git-gutter+-mode-map (kbd "C-x U") 'git-gutter+-unstage-whole-buffer)
             (setq git-gutter+-modified-sign "==")
             (setq git-gutter+-added-sign "++")
             (setq git-gutter+-deleted-sign "--")))
@@ -385,6 +364,7 @@
 ;;; Project Management
 ;;; FFIP
 (use-package find-file-in-project
+  :ensure ag
   :disabled t
   :bind (("s-f" . find-file-in-project)
          ("s-F". find-file-in-current-directory)
