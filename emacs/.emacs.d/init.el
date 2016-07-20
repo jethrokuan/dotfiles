@@ -398,7 +398,7 @@
   :config
   (require 'projectile)
   (use-package counsel-projectile 
-    :bind (("s-p" . counsel-projectile)
+    :bind (("s-P" . counsel-projectile)
            ("s-f" . counsel-projectile-find-file)
            ("s-b" . counsel-projectile-switch-to-buffer)))
   (setq projectile-use-git-grep t)
@@ -456,6 +456,7 @@
   :config
   (progn
     (ivy-mode 1)
+    (setq counsel-find-file-at-point t)
     (setq ivy-use-virtual-buffers t)
     (define-key read-expression-map (kbd "C-r") #'counsel-expression-history)
     (ivy-set-actions
