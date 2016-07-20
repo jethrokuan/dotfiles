@@ -515,6 +515,7 @@
                  '("org-article"
                    "\\documentclass[11pt,a4paper]{article}
                   \\usepackage[T1]{fontenc}
+                  \\setcounter{tocdepth}{2}
                   \\usepackage{xcolor}
                   \\usepackage{soul}
                   \\definecolor{Light}{gray}{.90}
