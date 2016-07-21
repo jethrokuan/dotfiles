@@ -66,6 +66,9 @@
 (when (window-system)
   (set-default-font "Fira Code"))
 
+;;; Use single-space for end of sentence
+(setq sentence-end-double-space nil)
+
 ;;; Use 2 spaces instead of tabs at all times
 (setq-default tab-width 2)
 (setq-default js-indent-level 2)
@@ -135,6 +138,10 @@
 (use-package page-break-lines
   :init (global-page-break-lines-mode)
   :diminish page-break-lines-mode)
+
+;;; Browse Kill Ring
+(use-package browse-kill-ring
+  :bind ("M-y" . browse-kill-ring))
 
 ;;; Keybindings
 ;;; Eshell                 C-x m
