@@ -3,7 +3,7 @@
 ;; Copyright (c) 2016 Jethro Kuan <jethrokuan95@gmail.com>
 ;;
 ;; Author: Jethro Kuan <jethrokuan95@gmail.com>
-;; URL: https://gihub.com/jethrokuan/.emacs.d
+;; URL: https://gihub.com/jethrokuan/dotfiles
 ;; Keywords: emacs
 
 ;; This file is not part of GNU Emacs.
