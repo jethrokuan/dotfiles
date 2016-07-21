@@ -517,15 +517,24 @@
              :html-head "<link rel=\"stylesheet\" href=\"/css/org.css\" type=\"text/css\">"
              :html-preamble t)))
     (setq org-latex-pdf-process
-          '("xelatex -interaction nonstopmode %f"
-            "xelatex -interaction nonstopmode %f"))
+          '("xelatex -shell-escape -interaction nonstopmode %f"
+            "xelatex -shell-escape -interaction nonstopmode %f"))
     (require 'ox-latex)
     (setq org-latex-tables-booktabs t)
+    (setq org-latex-listings 'minted)
+    (setq org-latex-minted-options
+          '(("frame" "lines")
+            ("linenos")
+            ("numbersep" "5pt")
+            ("framesep" "2mm")))
     (add-to-list 'org-latex-classes
                  '("org-article"
                    "\\documentclass[11pt,a4paper]{article}
                   \\usepackage[T1]{fontenc}
                   \\usepackage{booktabs}
+                  \\usepackage{minted}
+                  \\usemintedstyle{borland}
+                  \\usepackage{color}
                   \\setcounter{tocdepth}{2}
                   \\usepackage{xcolor}
                   \\usepackage{soul}
