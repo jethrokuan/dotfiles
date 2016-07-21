@@ -8,6 +8,9 @@
  '(anzu-replace-threshold 50)
  '(anzu-replace-to-string-separator " => ")
  '(anzu-search-threshold 1000)
+ '(org-agenda-files
+   (quote
+    ("~/.org/today.org" "~/.org/books.org" "~/.org/ideas.org" "~/.org/someday.org" "~/.org/temp vocab.org" "~/.org/vocab.org" "~/.org/calendars/jethro_gmail.org")))
  '(paradox-automatically-star t)
  '(paradox-github-token "e0f4a9cba91185c65b8170f45ee7941c61b88552")
  '(safe-local-variable-values (quote ((firestarter-type . t)))))

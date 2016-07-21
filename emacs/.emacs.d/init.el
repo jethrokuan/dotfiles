@@ -146,15 +146,12 @@
 ;;; Keybindings
 ;;; Eshell                 C-x m
 ;;; Mark-paragraph         M-p
-;;; Zap-up-to-char         M-z
+;;; zzz-up-to-char         M-z
 ;;; Compile files          F5
 ;;; Nuke all buffers       C-c n
 ;;; Split and move right   C-x 3
 ;;; Toggle split           C-|
 (require 'compile)
-(autoload 'zap-up-to-char "misc"
-  "Kill up to, but not including ARGth occurrence of CHAR."
-  'interactive)
 
 ;;;;   Useful functions
 (defun split-and-move-right ()
@@ -199,13 +196,15 @@
 (bind-key* "C-x |" 'toggle-window-split)
 (bind-key* "C-x m" 'eshell)
 (bind-key* "M-p" 'mark-paragraph)
-(bind-key* "M-z" 'zap-up-to-char)
 (bind-key* "C-c !" 'nuke-all-buffers)
 (bind-key* "C-x 3" 'split-and-move-right)
 (bind-key* "<f5>" (lambda ()
                     (interactive)
                     (setq-local compilation-read-command nil)
                     (call-interactively 'compile)))
+
+(use-package zzz-to-char
+  :bind (("M-z" . zzz-up-to-char)))
 
 ;; Emacs profiling tool
 (use-package esup
