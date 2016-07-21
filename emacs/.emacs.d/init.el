@@ -145,6 +145,7 @@
 
 ;;; Keybindings
 ;;; Eshell                 C-x m
+;;; Mark-paragraph         M-p
 ;;; Zap-up-to-char         M-z
 ;;; Compile files          F5
 ;;; Nuke all buffers       C-c n
@@ -197,6 +198,7 @@
 
 (bind-key* "C-x |" 'toggle-window-split)
 (bind-key* "C-x m" 'eshell)
+(bind-key* "M-p" 'mark-paragraph)
 (bind-key* "M-z" 'zap-up-to-char)
 (bind-key* "C-c !" 'nuke-all-buffers)
 (bind-key* "C-x 3" 'split-and-move-right)
