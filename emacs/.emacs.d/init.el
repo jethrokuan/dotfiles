@@ -520,6 +520,7 @@
           '("xelatex -interaction nonstopmode %f"
             "xelatex -interaction nonstopmode %f"))
     (require 'ox-latex)
+    (setq org-latex-tables-booktabs t)
     (add-to-list 'org-latex-classes
                  '("org-article"
                    "\\documentclass[11pt,a4paper]{article}
