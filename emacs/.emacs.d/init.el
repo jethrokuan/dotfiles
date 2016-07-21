@@ -294,6 +294,11 @@
   :diminish electric-align-mode
   :config (add-hook 'prog-mode-hook 'electric-align-mode))
 
+;;    keyfreq
+(use-package keyfreq
+  :config
+  (keyfreq-mode 1)
+  (keyfreq-autosave-mode 1))
 ;;;   Which-key
 (use-package which-key
   :diminish which-key-mode
