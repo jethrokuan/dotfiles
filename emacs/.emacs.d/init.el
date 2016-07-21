@@ -524,7 +524,7 @@
                  '("org-article"
                    "\\documentclass[11pt,a4paper]{article}
                   \\usepackage[T1]{fontenc}
-                  \\usepackage{tabularx}
+                  \\usepackage{booktabs}
                   \\setcounter{tocdepth}{2}
                   \\usepackage{xcolor}
                   \\usepackage{soul}
