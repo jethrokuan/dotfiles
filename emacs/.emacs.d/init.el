@@ -63,8 +63,8 @@
 (setq message-log-max 10000)
 
 ;;; Base font
-(when (window-system)
-  (set-default-font "Fira Code"))
+(add-to-list 'default-frame-alist
+             '(font . "Fira Code-12"))
 
 ;;; Use single-space for end of sentence
 (setq sentence-end-double-space nil)
