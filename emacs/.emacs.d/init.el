@@ -127,7 +127,7 @@
 
 ;;; Setting Emacs registers
 ;;; Eg. C-o i to jump to init.el
-(bind-key* "C-o" 'jump-to-register)
+(bind-key "C-o" 'jump-to-register)
 (set-register ?b (cons 'file "~/.org/books.org"))
 (set-register ?i (cons 'file "~/.emacs.d/init.el"))
 (set-register ?s (cons 'file "~/.org/someday.org"))
@@ -193,6 +193,7 @@
           (select-window first-win)
           (if this-win-2nd (other-window 1))))))
 
+(global-unset-key (kbd "M-a"))
 (bind-key* "C-x |" 'toggle-window-split)
 (bind-key* "C-x m" 'eshell)
 (bind-key* "M-p" 'mark-paragraph)
@@ -437,7 +438,6 @@
   (("C-s" . swiper)
    ("C-c C-r" . ivy-resume)
    ("M-a" . counsel-M-x)
-   ("C-x C-m" . counsel-M-x)
    ("C-M-i" . counsel-imenu)
    ("C-x C-f" . counsel-find-file)
    ("C-c h f" . counsel-describe-function)
@@ -452,6 +452,7 @@
     (ivy-mode 1)
     (setq counsel-find-file-at-point t)
     (setq ivy-use-virtual-buffers t)
+    (setq ivy-initial-inputs-alist nil)
     (define-key read-expression-map (kbd "C-r") #'counsel-expression-history)
     (ivy-set-actions
      'counsel-find-file
