@@ -437,6 +437,7 @@
   (("C-s" . swiper)
    ("C-c C-r" . ivy-resume)
    ("M-a" . counsel-M-x)
+   ("C-x C-m" . counsel-M-x)
    ("C-M-i" . counsel-imenu)
    ("C-x C-f" . counsel-find-file)
    ("C-c h f" . counsel-describe-function)
@@ -586,9 +587,7 @@
   (require 'org-gcal)
   (setq org-gcal-client-id "1025518578318-89os2t4n2ghd8105038u8b84hr90tqee.apps.googleusercontent.com"
         org-gcal-client-secret "govgKiWUCZmNSMHEm76YyNSB"
-        org-gcal-file-alist '(("jethro@tinkertanker.com" . "~/.org/calendars/jethro_tinkertanker.org")
-                              ("jethrokuan95@gmail.com" .  "~/.org/calendars/jethro_gmail.org")
-                              ("tinkertanker.com_63qqihhcdv12ves1po72cjcqdk@group.calendar.google.com" . "~/.org/calendars/tinkercademy.org"))))
+        org-gcal-file-alist '(("jethrokuan95@gmail.com" .  "~/.org/calendars/jethro_gmail.org"))))
 
 ;;;; Writing
 (use-package markdown-mode
@@ -670,6 +669,14 @@
   (add-hook 'css-mode-hook 'rainbow-mode)
   (add-hook 'scss-mode-hook 'rainbow-mode)
   (add-hook 'sass-mode-hook 'rainbow-mode))
+
+(use-package kurecolor
+  :bind (("<f6>" . kurecolor-decrease-saturation-by-step)
+         ("<f7>" . kurecolor-increase-saturation-by-step)
+         ("<f8>" . kurecolor-decrease-hue-by-step)
+         ("<f9>" . kurecolor-increase-hue-by-step)
+         ("<f1>" . kurecolor-decrease-brightness-by-step)
+         ("<f2>" . kurecolor-increase-brightness-by-step)))
 
 ;;; SCSS-mode
 ;;; Turn on rainbow-mode when scss-mode is active
