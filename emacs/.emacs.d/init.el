@@ -498,16 +498,10 @@
     (setq org-use-fast-todo-selection t)
     (setq org-treat-S-cursor-todo-selection-as-state-change nil)
     (setq org-capture-templates
-          '(("t" "Todo" entry (file+headline "~/.org/someday.org" "Tasks")
-             "* TODO %? %i\n")
-            ("e" "Email" entry (file+headline "~/.org/today.org" "Emails")
-             "* TODO [#A] %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n%a\n")
-            ("p" "Project" entry (file+headline "~/.org/someday.org" "Projects")
+          '(("t" "Todo" entry (file+headline "~/.org/someday.org" "Inbox")
              "* TODO %? %i\n")
             ("b" "Book" entry (file "~/.org/books.org")
              "* TO-READ %(org-set-tags) %? %i\n")
-            ("v" "Vocab" entry (file+headline "~/.org/vocab.org" "Vocabulary")
-             "* %^{The word} :drill:\n %\\1 \n** Answer \n%^{The definition}")
             ("i" "Idea" entry (file+datetree "~/.org/ideas.org") "* %?\nEntered on %U\n %i\n")))
     (setq org-publish-project-alist
           '(("org-books"
