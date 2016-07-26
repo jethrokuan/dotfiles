@@ -214,13 +214,13 @@
 
 ;;; Theming
 ;;; Monokai theme
-(use-package darkokai-theme
-  :disabled t
+(use-package darktooth-theme
   :init
-  (load-theme 'darkokai t))
+  (load-theme 'darktooth t))
 
 ;;; Tao theme: Black and White
 (use-package tao-theme
+  :disabled t
   :init
   (load-theme 'tao-yang t))
 
@@ -589,6 +589,7 @@
         org-gcal-file-alist '(("jethrokuan95@gmail.com" .  "~/.org/calendars/jethro_gmail.org"))))
 
 (use-package gtd-mode
+  :disabled t
   :ensure f
   :load-path "elisp/"
   :config
