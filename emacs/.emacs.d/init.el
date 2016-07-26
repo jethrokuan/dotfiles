@@ -474,7 +474,10 @@
 
 ;;; Org Mode
 (defvar jk/org-agenda-files
-  (append (file-expand-wildcards "~/.org/*.org") (file-expand-wildcards "~/.org/calendars/*.org"))
+  (append
+   ;;(file-expand-wildcards "~/.org/*.org")
+   (file-expand-wildcards "~/.org/calendars/*.org")
+   (file-expand-wildcards "~/.org/gtd/*.org"))
   "Files to include in org-agenda-files")
 
 (use-package org-plus-contrib
