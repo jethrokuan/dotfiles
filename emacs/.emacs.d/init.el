@@ -127,7 +127,7 @@
 
 ;;; Setting Emacs registers
 ;;; Eg. C-o i to jump to init.el
-(bind-key "C-o" 'bookmark-jump)
+(bind-key* "C-o" 'bookmark-jump)
 
 ;;; Break lines
 ;;; Small utility to change page breaks to look like <hr>s
