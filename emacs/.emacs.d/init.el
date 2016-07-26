@@ -309,7 +309,8 @@
   :bind (("C-M-c" . mc/edit-lines)
          ("C->" . mc/mark-next-like-this)
          ("C-<" . mc/mark-previous-like-this)
-         ("C-N" . mc/mark-next-lines)))
+         ("C-c C-<" . mc/mark-all-like-this)
+         ("C-n" . mc/mark-next-lines)))
 
 (use-package avy
   :bind* (("C-'" . avy-goto-char)
@@ -582,6 +583,12 @@
   (setq org-gcal-client-id "1025518578318-89os2t4n2ghd8105038u8b84hr90tqee.apps.googleusercontent.com"
         org-gcal-client-secret "govgKiWUCZmNSMHEm76YyNSB"
         org-gcal-file-alist '(("jethrokuan95@gmail.com" .  "~/.org/calendars/jethro_gmail.org"))))
+
+(use-package gtd-mode
+  :ensure f
+  :load-path "elisp/"
+  :config
+  (gtd-mode 1))
 
 ;;;; Writing
 (use-package markdown-mode
