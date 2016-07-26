@@ -127,12 +127,7 @@
 
 ;;; Setting Emacs registers
 ;;; Eg. C-o i to jump to init.el
-(bind-key "C-o" 'jump-to-register)
-(set-register ?b (cons 'file "~/.org/books.org"))
-(set-register ?i (cons 'file "~/.emacs.d/init.el"))
-(set-register ?s (cons 'file "~/.org/gtd/someday.org"))
-(set-register ?p (cons 'file "~/.org/gtd/projects.org"))
-(set-register ?t (cons 'file "~/.org/gtd/next_actions.org"))
+(bind-key "C-o" 'bookmark-jump)
 
 ;;; Break lines
 ;;; Small utility to change page breaks to look like <hr>s
