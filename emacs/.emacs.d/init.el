@@ -442,7 +442,7 @@
    ("C-x C-f" . counsel-find-file)
    ("C-c h f" . counsel-describe-function)
    ("C-c h v" . counsel-describe-variable)
-   ("C-c i u" . counsel-unicode-char)
+   ("C-c u" . counsel-unicode-char)
    ("C-c g" . counsel-git)
    ("C-c j" . counsel-git-grep)
    ("C-c k" . counsel-ag)
@@ -501,8 +501,7 @@
           '(("t" "Todo" entry (file+headline "~/.org/someday.org" "Inbox")
              "* TODO %? %i\n")
             ("b" "Book" entry (file "~/.org/books.org")
-             "* TO-READ %(org-set-tags) %? %i\n")
-            ("i" "Idea" entry (file+datetree "~/.org/ideas.org") "* %?\nEntered on %U\n %i\n")))
+             "* TO-READ %(org-set-tags) %? %i\n")))
     (setq org-publish-project-alist
           '(("org-books"
              ;; Path to your org files.
