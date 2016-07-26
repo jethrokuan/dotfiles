@@ -215,12 +215,12 @@
 ;;; Theming
 ;;; Monokai theme
 (use-package darktooth-theme
+  :disabled t
   :init
   (load-theme 'darktooth t))
 
 ;;; Tao theme: Black and White
 (use-package tao-theme
-  :disabled t
   :init
   (load-theme 'tao-yang t))
 
