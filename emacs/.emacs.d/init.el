@@ -672,6 +672,7 @@
   (add-hook 'sass-mode-hook 'rainbow-mode))
 
 (use-package kurecolor
+  :disabled t
   :bind (("<f6>" . kurecolor-decrease-saturation-by-step)
          ("<f7>" . kurecolor-increase-saturation-by-step)
          ("<f8>" . kurecolor-decrease-hue-by-step)
