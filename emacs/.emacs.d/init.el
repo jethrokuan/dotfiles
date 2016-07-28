@@ -571,7 +571,17 @@
                    ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                    ("\\paragraph{%s}" . "\\paragraph*{%s}")
                    ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
-  :config
+  (defun jethro/org-sort-books ()
+    (interactive)
+    (let ((old-point (point)))
+      (beginning-of-buffer)
+      (org-sort-entries t ?a)
+      (beginning-of-buffer)
+      (org-sort-entries t ?o)
+      (show-all)
+      (org-global-cycle)
+      (goto-char old-point)))
+  :config 
   (use-package ox-reveal
     :config (require 'ox-reveal)))
 
