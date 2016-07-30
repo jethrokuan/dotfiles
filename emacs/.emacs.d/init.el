@@ -503,10 +503,8 @@
     (setq org-use-fast-todo-selection t)
     (setq org-treat-S-cursor-todo-selection-as-state-change nil)
     (setq org-capture-templates
-          '(("t" "Todo" entry (file+headline "~/.org/someday.org" "Inbox")
-             "* TODO %? %i\n")
-            ("b" "Book" entry (file "~/.org/books.org")
-             "* TO-READ %(org-set-tags) %? %i\n")))
+          '(("b" "Book" entry (file "~/.org/books.org")
+             "* TO-READ %(org-set-tags)%? %i\n")))
     (setq org-publish-project-alist
           '(("org-books"
              ;; Path to your org files.
