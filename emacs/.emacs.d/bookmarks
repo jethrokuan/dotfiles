@@ -2,18 +2,11 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(#1=(#("init.el" 0 7
-      (bmkp-full-record #1#))
-    (filename . "~/dotfiles/emacs/.emacs.d/init.el")
-    (buffer-name . "init.el")
-    (front-context-string . ";;; init.el --- ")
-    (rear-context-string)
-    (front-context-region-string)
-    (rear-context-region-string)
-    (visits . 0)
-    (time . #2=(22423 31689 774229 223000))
-    (created . #2#)
-    (position . 1))
+(("init.org"
+ (filename . "~/dotfiles/emacs/.emacs.d/init.org")
+ (front-context-string . "# -*- after-save")
+ (rear-context-string)
+ (position . 1))
 #1=(#("projects.org" 0 12
       (bmkp-full-record #1#))
     (filename . "~/.org/gtd/projects.org")
@@ -70,8 +63,8 @@
     (position . 1))
 #1=(#("org-refile-last-stored" 0 22
       (bmkp-full-record #1#))
-    (filename . "~/.emacs.d/init.org")
-    (front-context-string . "** git-gutter+\n#")
-    (rear-context-string . "e t))\n#+end_src\n")
-    (position . 15757))
+    (filename . "~/dotfiles/emacs/.emacs.d/init.org")
+    (front-context-string . "** Intelligent C")
+    (rear-context-string . "ode))\n#+end_src\n")
+    (position . 25557))
 )

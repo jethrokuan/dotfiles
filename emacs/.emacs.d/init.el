@@ -100,14 +100,6 @@
                     (setq-local compilation-read-command nil)
                     (call-interactively 'compile)))
 
-(defun compilation-exit-autoclose (status code msg)
-  (when (and (eq status 'exit) (zerop code))
-    (bury-buffer)
-    (delete-window (get-buffer-window (get-buffer "*compilation*"))))
-  (cons msg code))
-
-(setq compilation-exit-message-function 'compilation-exit-autoclose)
-
 (use-package counsel)
 (use-package swiper
   :bind*
@@ -610,3 +602,11 @@
 (use-package focus
   :diminish focus-mode
   :bind ("C-c m f" . focus-mode))
+
+(use-package darkroom
+  :bind (("C-c m d" . darkroom-mode)
+         ("C-c m t" . darkroom-tentative-mode)))
+
+(use-package bury-successful-compilation
+  :config
+  (bury-successful-compilation 1))

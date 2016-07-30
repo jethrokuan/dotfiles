@@ -154,18 +154,6 @@ Don't wrap lines for coding. Create a hook that enables wrapping, for modes like
                     (setq-local compilation-read-command nil)
                     (call-interactively 'compile)))
 #+end_src
-* Helper Functions
-** Intelligent Compile Buffer
-Closes compile buffer if there are no errors.
-#+begin_src emacs-lisp :tangle yes
-(defun compilation-exit-autoclose (status code msg)
-  (when (and (eq status 'exit) (zerop code))
-    (bury-buffer)
-    (delete-window (get-buffer-window (get-buffer "*compilation*"))))
-  (cons msg code))
-
-(setq compilation-exit-message-function 'compilation-exit-autoclose)
-#+end_src
 * Counsel, Swiper and Ivy
 #+begin_src emacs-lisp :tangle yes
 (use-package counsel)
@@ -476,6 +464,7 @@ Closes compile buffer if there are no errors.
 #+end_src
 * Visual Enhancements
 ** beacon
+Beacon makes sure you don't lose track of your cursor when jumping around a buffer.
 #+begin_src emacs-lisp :tangle yes
 (use-package beacon
   :diminish beacon-mode
@@ -484,11 +473,13 @@ Closes compile buffer if there are no errors.
             (setq beacon-push-mark 10)))
 #+end_src
 ** show-paren
+Always show matching parenthesis.
 #+begin_src emacs-lisp :tangle yes
 (show-paren-mode 1)
 (setq show-paren-delay 0)
 #+end_src
 ** golden-ratio
+Give the working window more screen estate.
 #+begin_src emacs-lisp :tangle yes
 (use-package golden-ratio
   :diminish golden-ratio-mode
@@ -497,6 +488,7 @@ Closes compile buffer if there are no errors.
             (golden-ratio-mode 1)))
 #+end_src
 ** volatile-highlights
+Highlights recently copied/pasted text.
 #+begin_src emacs-lisp :tangle yes
 (use-package volatile-highlights
   :defer 5
@@ -504,6 +496,7 @@ Closes compile buffer if there are no errors.
   :config (volatile-highlights-mode t))
 #+end_src
 ** git-gutter+
+Displays added/modified/deleted on the left.
 #+begin_src emacs-lisp :tangle yes
 (use-package git-gutter+
   :init (global-git-gutter+-mode)
@@ -751,7 +744,7 @@ Sync calendar.google.com into a local org file.
   :diminish which-key-mode
   :config (add-hook 'after-init-hook 'which-key-mode))
 #+end_src
-** Nameless
+** nameless
 #+begin_src emacs-lisp :tangle yes
 (use-package nameless
   :diminish nameless-mode
@@ -783,4 +776,17 @@ Use Paradox instead of the default =package-list-packages=. =jethro/paradox-user
 (use-package focus
   :diminish focus-mode
   :bind ("C-c m f" . focus-mode))
+#+end_src
+** darkroom
+#+begin_src emacs-lisp :tangle yes
+(use-package darkroom
+  :bind (("C-c m d" . darkroom-mode)
+         ("C-c m t" . darkroom-tentative-mode)))
+#+end_src
+** bury-successful-compilation
+Closes compile buffer if there are no errors.
+#+begin_src emacs-lisp :tangle yes
+(use-package bury-successful-compilation
+  :config
+  (bury-successful-compilation 1))
 #+end_src
