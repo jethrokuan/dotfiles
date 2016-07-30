@@ -1,5 +1,6 @@
+# -*- after-save-hook: (org-babel-tangle); -*-
 * Basic Setup
-** Add Melpa and Org
+** Add MELPA and Org Repository
 #+BEGIN_SRC emacs-lisp :tangle yes
 (when (>= emacs-major-version 24)
   (require 'package)
@@ -21,25 +22,30 @@
   (require 'diminish)
   (setq use-package-always-ensure t))
 #+END_SRC
+** User details
+#+begin_src emacs-lisp :tangle yes
+(setq user-full-name "Jethro Kuan"
+      user-mail-address "jethrokuan95@gmail.com")
+#+end_src
 ** Sensible Defaults
-*** Use y/n over yes/no
-#+BEGIN_SRC emacs-lisp :tangle yes
-(defalias 'yes-or-no-p 'y-or-n-p)
-#+END_SRC
 *** Custom File
 #+BEGIN_SRC emacs-lisp :tangle yes
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 #+END_SRC
-*** Replace region when typing
-#+BEGIN_SRC emacs-lisp :tangle yes
-(delete-selection-mode +1)
-#+end_src
 *** Custom font
 #+BEGIN_SRC emacs-lisp :tangle yes
 (add-to-list 'default-frame-alist
              '(font . "Fira Code-12"))
 #+END_SRC
+*** Use y/n over yes/no
+#+BEGIN_SRC emacs-lisp :tangle yes
+(defalias 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
+*** Replace region when typing
+#+BEGIN_SRC emacs-lisp :tangle yes
+(delete-selection-mode +1)
+#+end_src
 *** Sentences
 Emacs uses double-spaces by default. Use single spaces by default:
 #+BEGIN_QUOTE
@@ -61,11 +67,6 @@ Don't wrap lines for coding. Create a hook that enables wrapping, for modes like
 (setq-default truncate-lines t)
 (defun trunc-lines-hook ()
   (setq truncate-lines nil))
-#+end_src
-*** User details
-#+begin_src emacs-lisp :tangle yes
-(setq user-full-name "Jethro Kuan"
-      user-mail-address "jethrokuan95@gmail.com")
 #+end_src
 *** UI Cruft
 #+begin_src emacs-lisp :tangle yes
@@ -95,28 +96,28 @@ Don't wrap lines for coding. Create a hook that enables wrapping, for modes like
       (message "%s" file)
       (delete-file file))))
 #+end_src
-** Shell PATH
+** Load secrets
+#+begin_src emacs-lisp :tangle yes
+(load "~/.emacs.d/secrets.el" t)
+#+end_src
+** Add PATH to eshell
 #+begin_src emacs-lisp :tangle yes
 (use-package exec-path-from-shell
   :demand t
   :init (exec-path-from-shell-initialize))
 #+end_src
-** Load secrets
-#+begin_src emacs-lisp :tangle yes
-(load "~/.emacs.d/secrets.el" t)
-#+end_src
 ** Bookmarks
 #+begin_src emacs-lisp :tangle yes
 (bind-key* "C-o" 'bookmark-jump)
 #+end_src
-** Theming
+** Theme
 #+begin_src emacs-lisp :tangle yes
 (use-package tao-theme
   :init
   (load-theme 'tao-yang t))
 #+end_src
-** Keybindings Upgrades
-**** Split and move right
+** Keybinding Upgrades
+*** Split and move right
 #+begin_src emacs-lisp :tangle yes
 (defun split-and-move-right ()
   (interactive)
@@ -125,7 +126,7 @@ Don't wrap lines for coding. Create a hook that enables wrapping, for modes like
 
 (bind-key* "C-x 3" 'split-and-move-right)
 #+end_src
-**** Nuke all buffers
+*** Nuke all buffers
 #+begin_src emacs-lisp :tangle yes
 (defun nuke-all-buffers ()
   "Kill all buffers, leaving *scratch* only."
@@ -138,15 +139,15 @@ Don't wrap lines for coding. Create a hook that enables wrapping, for modes like
 
 (bind-key* "C-c !" 'nuke-all-buffers)
 #+end_src
-**** Eshell
+*** Eshell
 #+begin_src emacs-lisp :tangle yes
 (bind-key* "C-x m" 'eshell)
 #+end_src
-**** Mark-paragraph
+*** Mark-paragraph
 #+begin_src emacs-lisp :tangle yes
 (bind-key* "M-p" 'mark-paragraph)
 #+end_src
-**** Compile with <f5>
+*** Compile with <f5>
 #+begin_src emacs-lisp :tangle yes
 (bind-key* "<f5>" (lambda ()
                     (interactive)
@@ -465,7 +466,7 @@ Closes compile buffer if there are no errors.
   :diminish clj-refactor-mode
   :config (cljr-add-keybindings-with-prefix "C-c j"))
 #+end_src
-** Markdown-mode
+** Markdown
 #+begin_src emacs-lisp :tangle yes
 (use-package markdown-mode
   :mode ("\\.md\\'" . markdown-mode)
@@ -619,7 +620,14 @@ Closes compile buffer if there are no errors.
                  ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-  (defun jethro/org-sort-books ()
+  :config 
+  (use-package ox-reveal
+    :config (require 'ox-reveal)))
+#+end_src
+*** jethro/org-sort-books
+I like to keep my books in sorted order, alphanumerically, and then my TODO keyword.
+#+begin_src emacs-lisp :tangle yes
+(defun jethro/org-sort-books ()
     (interactive)
     (let ((old-point (point)))
       (beginning-of-buffer)
@@ -629,7 +637,11 @@ Closes compile buffer if there are no errors.
       (show-all)
       (org-global-cycle)
       (goto-char old-point)))
-  (defun jethro/org-check-agenda ()
+#+end_src
+*** jethro/org-check-agenda
+Quickly access agenda for the week.
+#+begin_src emacs-lisp :tangle yes
+(defun jethro/org-check-agenda ()
     "Peek at agenda."
     (interactive)
     (cond
@@ -638,11 +650,11 @@ Closes compile buffer if there are no errors.
      ((get-buffer "*Org Agenda*")
       (switch-to-buffer-other-window "*Org Agenda*"))
      (t (org-agenda nil "a"))))
-  :config 
-  (use-package ox-reveal
-    :config (require 'ox-reveal)))
 #+end_src
-*** Org-gcal
+*** org-gcal
+Sync calendar.google.com into a local org file.
+
+=jethro/org-gcal-client-id= and =jethro/org-gcal-client-secret= are defined in =secrets.el=.
 #+begin_src emacs-lisp :tangle yes
 (use-package org-gcal
   :defer 30
@@ -766,7 +778,7 @@ Use Paradox instead of the default =package-list-packages=. =jethro/paradox-user
   :config
   (setq paradox-github-token jethro/paradox-user-token))
 #+end_src
-** Focus
+** focus
 #+begin_src emacs-lisp :tangle yes
 (use-package focus
   :diminish focus-mode

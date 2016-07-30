@@ -16,15 +16,18 @@
   (require 'diminish)
   (setq use-package-always-ensure t))
 
-(defalias 'yes-or-no-p 'y-or-n-p)
+(setq user-full-name "Jethro Kuan"
+      user-mail-address "jethrokuan95@gmail.com")
 
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
-(delete-selection-mode +1)
-
 (add-to-list 'default-frame-alist
              '(font . "Fira Code-12"))
+
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+(delete-selection-mode +1)
 
 (setq sentence-end-double-space nil)
 
@@ -35,9 +38,6 @@
 (setq-default truncate-lines t)
 (defun trunc-lines-hook ()
   (setq truncate-lines nil))
-
-(setq user-full-name "Jethro Kuan"
-      user-mail-address "jethrokuan95@gmail.com")
 
 (tooltip-mode -1)
 (tool-bar-mode -1)
@@ -61,11 +61,11 @@
       (message "%s" file)
       (delete-file file))))
 
+(load "~/.emacs.d/secrets.el" t)
+
 (use-package exec-path-from-shell
   :demand t
   :init (exec-path-from-shell-initialize))
-
-(load "~/.emacs.d/secrets.el" t)
 
 (bind-key* "C-o" 'bookmark-jump)
 
@@ -482,7 +482,11 @@
                  ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-  (defun jethro/org-sort-books ()
+  :config 
+  (use-package ox-reveal
+    :config (require 'ox-reveal)))
+
+(defun jethro/org-sort-books ()
     (interactive)
     (let ((old-point (point)))
       (beginning-of-buffer)
@@ -492,7 +496,8 @@
       (show-all)
       (org-global-cycle)
       (goto-char old-point)))
-  (defun jethro/org-check-agenda ()
+
+(defun jethro/org-check-agenda ()
     "Peek at agenda."
     (interactive)
     (cond
@@ -501,9 +506,6 @@
      ((get-buffer "*Org Agenda*")
       (switch-to-buffer-other-window "*Org Agenda*"))
      (t (org-agenda nil "a"))))
-  :config 
-  (use-package ox-reveal
-    :config (require 'ox-reveal)))
 
 (use-package org-gcal
   :defer 30
