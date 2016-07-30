@@ -776,6 +776,14 @@ Use Paradox instead of the default =package-list-packages=. =jethro/paradox-user
   :diminish focus-mode
   :bind ("C-c m f" . focus-mode))
 #+end_src
+** artbollocks
+Prevent usage of passive voice, weasel words and other common grammatical mistakes.
+#+begin_src emacs-lisp :tangle yes
+(use-package artbollocks-mode
+  :bind (("C-c m a" . artbollocks-mode))
+  :config
+  (add-hook 'text-mode-hook 'artbollocks-mode))
+#+end_src
 ** darkroom
 #+begin_src emacs-lisp :tangle yes
 (use-package darkroom

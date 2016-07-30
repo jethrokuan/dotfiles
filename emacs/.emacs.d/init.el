@@ -602,6 +602,11 @@
   :diminish focus-mode
   :bind ("C-c m f" . focus-mode))
 
+(use-package artbollocks-mode
+  :bind (("C-c m a" . artbollocks-mode))
+  :config
+  (add-hook 'text-mode-hook 'artbollocks-mode))
+
 (use-package darkroom
   :bind (("C-c m d" . darkroom-mode)
          ("C-c m t" . darkroom-tentative-mode)))
