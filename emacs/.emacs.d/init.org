@@ -491,7 +491,6 @@ Give the working window more screen estate.
 Highlights recently copied/pasted text.
 #+begin_src emacs-lisp :tangle yes
 (use-package volatile-highlights
-  :defer 5
   :diminish volatile-highlights-mode
   :config (volatile-highlights-mode t))
 #+end_src

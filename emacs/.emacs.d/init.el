@@ -360,7 +360,6 @@
             (golden-ratio-mode 1)))
 
 (use-package volatile-highlights
-  :defer 5
   :diminish volatile-highlights-mode
   :config (volatile-highlights-mode t))
 
