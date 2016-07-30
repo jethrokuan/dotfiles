@@ -331,6 +331,12 @@
   :config  (progn
              (add-hook 'emacs-lisp-mode-hook #'paredit-mode)))
 
+;;; Nameless
+(use-package nameless
+  :diminish nameless-mode
+  :config
+  (add-hook 'emacs-lisp-mode #'nameless-mode))
+
 ;;; Git
 ;;; Magit
 (use-package magit  
