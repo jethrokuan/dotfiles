@@ -328,8 +328,7 @@
 ;;; Paredit
 (use-package paredit
   :diminish paredit-mode
-  :config  (progn
-             (add-hook 'emacs-lisp-mode-hook #'paredit-mode)))
+  :config (add-hook 'emacs-lisp-mode-hook #'paredit-mode))
 
 ;;; Nameless
 (use-package nameless
