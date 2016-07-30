@@ -70,8 +70,8 @@
     (position . 1))
 #1=(#("org-refile-last-stored" 0 22
       (bmkp-full-record #1#))
-    (filename . "~/dotfiles/emacs/.emacs.d/config.org")
-    (front-context-string . "** Focus\n#+begin")
-    (rear-context-string . "ken))\n#+end_src\n")
-    (position . 16998))
+    (filename . "~/.emacs.d/init.org")
+    (front-context-string . "** git-gutter+\n#")
+    (rear-context-string . "e t))\n#+end_src\n")
+    (position . 15757))
 )
