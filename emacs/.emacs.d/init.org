@@ -1,9 +1,14 @@
+* Basic Setup
+** Add Melpa and Org
+#+BEGIN_SRC emacs-lisp :tangle yes
 (when (>= emacs-major-version 24)
   (require 'package)
   (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
   (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
   (package-initialize))
-
+#+END_SRC
+** Add =use-package=
+#+BEGIN_SRC emacs-lisp :tangle yes
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
@@ -15,42 +20,71 @@
   (require 'bind-key)
   (require 'diminish)
   (setq use-package-always-ensure t))
-
+#+END_SRC
+** Sensible Defaults
+*** Use y/n over yes/no
+#+BEGIN_SRC emacs-lisp :tangle yes
 (defalias 'yes-or-no-p 'y-or-n-p)
-
+#+END_SRC
+*** Custom File
+#+BEGIN_SRC emacs-lisp :tangle yes
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
-
+#+END_SRC
+*** Replace region when typing
+#+BEGIN_SRC emacs-lisp :tangle yes
 (delete-selection-mode +1)
-
+#+end_src
+*** Custom font
+#+BEGIN_SRC emacs-lisp :tangle yes
 (add-to-list 'default-frame-alist
              '(font . "Fira Code-12"))
+#+END_SRC
+*** Sentences
+Emacs uses double-spaces by default. Use single spaces by default:
+#+BEGIN_QUOTE
+NOTE: This will cause an indistinction between sentences and name abbrieviations (eg. E. B. White)
+#+END_QUOTE
 
+#+begin_src emacs-lisp :tangle yes
 (setq sentence-end-double-space nil)
-
+#+end_src
+*** Tab with 2 spaces
+#+begin_src emacs-lisp :tangle yes
 (setq-default tab-width 2)
 (setq-default js-indent-level 2)
 (setq-default indent-tabs-mode nil)
-
+#+end_src
+*** Don't wrap lines
+Don't wrap lines for coding. Create a hook that enables wrapping, for modes like org-mode and markdown-mode.
+#+begin_src emacs-lisp :tangle yes
 (setq-default truncate-lines t)
 (defun trunc-lines-hook ()
   (setq truncate-lines nil))
-
+#+end_src
+*** User details
+#+begin_src emacs-lisp :tangle yes
 (setq user-full-name "Jethro Kuan"
       user-mail-address "jethrokuan95@gmail.com")
-
+#+end_src
+*** UI Cruft
+#+begin_src emacs-lisp :tangle yes
 (tooltip-mode -1)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 (setq inhibit-splash-screen t)
 (setq inhibit-startup-message t)
-
+#+end_src
+*** Backup directory
+#+begin_src emacs-lisp :tangle yes
 (setq backup-directory-alist
       `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
-
+#+end_src
+**** Purge backup files
+#+begin_src emacs-lisp :tangle yes
 (message "Deleting old backup files...")
 (let ((week (* 60 60 24 7))
       (current (float-time (current-time))))
@@ -60,26 +94,39 @@
                   week))
       (message "%s" file)
       (delete-file file))))
-
+#+end_src
+** Shell PATH
+#+begin_src emacs-lisp :tangle yes
 (use-package exec-path-from-shell
   :demand t
   :init (exec-path-from-shell-initialize))
-
+#+end_src
+** Load secrets
+#+begin_src emacs-lisp :tangle yes
 (load "~/.emacs.d/secrets.el" t)
-
+#+end_src
+** Bookmarks
+#+begin_src emacs-lisp :tangle yes
 (bind-key* "C-o" 'bookmark-jump)
-
+#+end_src
+** Theming
+#+begin_src emacs-lisp :tangle yes
 (use-package tao-theme
   :init
   (load-theme 'tao-yang t))
-
+#+end_src
+** Keybindings Upgrades
+**** Split and move right
+#+begin_src emacs-lisp :tangle yes
 (defun split-and-move-right ()
   (interactive)
   (split-window-right)
   (windmove-right))
 
 (bind-key* "C-x 3" 'split-and-move-right)
-
+#+end_src
+**** Nuke all buffers
+#+begin_src emacs-lisp :tangle yes
 (defun nuke-all-buffers ()
   "Kill all buffers, leaving *scratch* only."
   (interactive)
@@ -90,16 +137,26 @@
   (delete-other-windows))
 
 (bind-key* "C-c !" 'nuke-all-buffers)
-
+#+end_src
+**** Eshell
+#+begin_src emacs-lisp :tangle yes
 (bind-key* "C-x m" 'eshell)
-
+#+end_src
+**** Mark-paragraph
+#+begin_src emacs-lisp :tangle yes
 (bind-key* "M-p" 'mark-paragraph)
-
+#+end_src
+**** Compile with <f5>
+#+begin_src emacs-lisp :tangle yes
 (bind-key* "<f5>" (lambda ()
                     (interactive)
                     (setq-local compilation-read-command nil)
                     (call-interactively 'compile)))
-
+#+end_src
+* Helper Functions
+** Intelligent Compile Buffer
+Closes compile buffer if there are no errors.
+#+begin_src emacs-lisp :tangle yes
 (defun compilation-exit-autoclose (status code msg)
   (when (and (eq status 'exit) (zerop code))
     (bury-buffer)
@@ -107,7 +164,9 @@
   (cons msg code))
 
 (setq compilation-exit-message-function 'compilation-exit-autoclose)
-
+#+end_src
+* Counsel, Swiper and Ivy
+#+begin_src emacs-lisp :tangle yes
 (use-package counsel)
 (use-package swiper
   :bind*
@@ -145,61 +204,89 @@
        ("j"
         ivy--switch-buffer-other-window-action
         "other window")))))
-
+#+end_src
+* Moving Around
+** avy
+#+begin_src emacs-lisp :tangle yes
 (use-package avy
   :bind* (("C-'" . avy-goto-char)
           ("C-," . avy-goto-char-2)))
-
+#+end_src
+** dumb-jump
+#+begin_src emacs-lisp :tangle yes
 (use-package dumb-jump
   :diminish dumb-jump-mode
   :bind (("C-M-g" . dumb-jump-go)
          ("C-M-p" . dumb-jump-back)
          ("C-M-q" . dumb-jump-quick-look)))
-
+#+end_src
+** ace-window
+#+begin_src emacs-lisp :tangle yes
 (use-package ace-window
   :bind (("M-'" . ace-window)))
-
+#+end_src
+* Editing Text
+** electric-align
+#+begin_src emacs-lisp :tangle yes
 (use-package electric-align
   :ensure f
   :load-path "elisp/"
   :diminish electric-align-mode
   :config (add-hook 'prog-mode-hook 'electric-align-mode))
-
+#+end_src
+** aggressive-indent
+#+begin_src emacs-lisp :tangle yes
 (use-package aggressive-indent
   :diminish aggressive-indent-mode
   :config (add-hook 'prog-mode-hook 'aggressive-indent-mode))
-
+#+end_src
+** multiple-cursors
+#+begin_src emacs-lisp :tangle yes
 (use-package multiple-cursors
   :bind (("C-M-c" . mc/edit-lines)
          ("C->" . mc/mark-next-like-this)
          ("C-<" . mc/mark-previous-like-this)
          ("C-c C-<" . mc/mark-all-like-this)))
-
+#+end_src
+** expand-region
+#+begin_src emacs-lisp :tangle yes
 (use-package expand-region
   :bind (("C-=" . er/expand-region)))
-
+#+end_src
+** paredit
+#+begin_src emacs-lisp :tangle yes
 (use-package paredit
   :diminish paredit-mode
   :config (add-hook 'emacs-lisp-mode-hook #'paredit-mode))
-
+#+end_src
+** zzz-to-char
+#+begin_src emacs-lisp :tangle yes
 (use-package zzz-to-char
   :bind (("M-z" . zzz-up-to-char)))
-
+#+end_src
+** browse-kill-ring
+#+begin_src emacs-lisp :tangle yes
 (use-package browse-kill-ring
   :bind ("M-y" . browse-kill-ring))
-
+#+end_src
+** Linting with Flycheck
+#+begin_src emacs-lisp :tangle yes
 (use-package flycheck
   :config (progn
             (use-package flycheck-pos-tip
               :config (flycheck-pos-tip-mode))
             (add-hook 'prog-mode-hook 'global-flycheck-mode)))
-
+#+end_src
+** Templating with Yasnippet
+#+begin_src emacs-lisp :tangle yes
 (use-package yasnippet
   :diminish yas-global-mode yas-minor-mode
   :defer 5
   :init (add-hook 'after-init-hook 'yas-global-mode)
   :config (setq yas-snippet-dirs '("~/.emacs.d/snippets/")))
-
+#+end_src
+** Autocompletions with Company
+#+begin_src emacs-lisp :tangle yes
 (use-package company
   :defer 5
   :diminish company-mode
@@ -213,7 +300,10 @@
                 company-transformers '(company-sort-by-occurrence))
           (use-package company-quickhelp
             :config (company-quickhelp-mode 1))))
-
+#+end_src
+* Language Support
+** Go
+#+begin_src emacs-lisp :tangle yes
 (use-package go-mode
   :mode ("\\.go\\'" . go-mode)
   :config (progn
@@ -243,7 +333,10 @@
               :config (add-hook 'go-mode-hook (lambda ()
                                                 (set (make-local-variable 'company-backends) '(company-go))
                                                 (company-mode))))))
-
+#+end_src
+** C++
+*** C++ compile function
+#+begin_src emacs-lisp :tangle yes
 (add-hook 'c++-mode-hook
           (lambda ()
             (unless (file-exists-p "Makefile")
@@ -252,13 +345,19 @@
                      (format "g++ -Wall -s -pedantic-errors %s -o %s --std=c++14"
                              file
                              (file-name-sans-extension file)))))))
-
+#+end_src
+** Fish
+#+begin_src emacs-lisp :tangle yes
 (use-package fish-mode
   :mode ("\\.fish\\'" . fish-mode))
-
+#+end_src
+** Rust
+#+begin_src emacs-lisp :tangle yes
 (use-package rust-mode
   :mode ("\\.rs\\'" . rust-mode))
-
+#+end_src
+** Python
+#+begin_src emacs-lisp :tangle yes
 (use-package elpy
   :init
   (add-hook 'python-mode-hook (lambda () (aggressive-indent-mode -1)))
@@ -274,45 +373,61 @@
     (add-hook 'elpy-mode-hook 'flycheck-mode))
   (elpy-enable)
   (setq elpy-rpc-backend "jedi"))
-
-(use-package web-mode
-  :mode (("\\.html\\'" . web-mode)
-         ("\\.html\\.erb\\'" . web-mode)
-         ("\\.mustache\\'" . web-mode)
-         ("\\.jinja\\'" . web-mode)
-         ("\\.php\\'" . web-mode))
-  :config  
-  (setq web-mode-enable-css-colorization t)
-  (setq web-mode-code-indent-offset 2)
-  (setq web-mode-markup-indent-offset 2))
-
-(use-package emmet-mode
-  :diminish emmet-mode
-  :config
-  (add-hook 'web-mode-hook 'emmet-mode)
-  (add-hook 'vue-mode-hook 'emmet-mode))
-
-(use-package vue-mode
-  :mode "\\.vue\\'")
-
-(use-package rainbow-mode
-  :diminish rainbow-mode
-  :config
-  (add-hook 'css-mode-hook 'rainbow-mode)
-  (add-hook 'scss-mode-hook 'rainbow-mode)
-  (add-hook 'sass-mode-hook 'rainbow-mode))
-
-(use-package scss-mode
-  :mode "\\.scss\\'" 
-  :config (progn
-            (setq scss-compile-at-save nil)))
-
-(use-package json-mode
-  :mode "\\.json\\'"
-  :config (add-hook 'json-mode-hook (lambda ()
-                                      (make-local-variable 'js-indent-level)
-                                      (setq js-indent-level 2))))
-
+#+end_src
+** HTML/CSS/JS
+*** Web-mode
+ #+begin_src emacs-lisp :tangle yes
+ (use-package web-mode
+   :mode (("\\.html\\'" . web-mode)
+          ("\\.html\\.erb\\'" . web-mode)
+          ("\\.mustache\\'" . web-mode)
+          ("\\.jinja\\'" . web-mode)
+          ("\\.php\\'" . web-mode))
+   :config  
+   (setq web-mode-enable-css-colorization t)
+   (setq web-mode-code-indent-offset 2)
+   (setq web-mode-markup-indent-offset 2))
+ #+end_src
+*** Emmet-mode
+ #+begin_src emacs-lisp :tangle yes
+ (use-package emmet-mode
+   :diminish emmet-mode
+   :config
+   (add-hook 'web-mode-hook 'emmet-mode)
+   (add-hook 'vue-mode-hook 'emmet-mode))
+ #+end_src
+*** Vue-mode
+ #+begin_src emacs-lisp :tangle yes
+ (use-package vue-mode
+   :mode "\\.vue\\'")
+ #+end_src
+*** Rainbow-mode
+ #+begin_src emacs-lisp :tangle yes
+ (use-package rainbow-mode
+   :diminish rainbow-mode
+   :config
+   (add-hook 'css-mode-hook 'rainbow-mode)
+   (add-hook 'scss-mode-hook 'rainbow-mode)
+   (add-hook 'sass-mode-hook 'rainbow-mode))
+ #+end_src
+*** SCSS-mode
+ #+begin_src emacs-lisp :tangle yes
+ (use-package scss-mode
+   :mode "\\.scss\\'" 
+   :config (progn
+             (setq scss-compile-at-save nil)))
+ #+end_src
+*** JSON
+ #+begin_src emacs-lisp :tangle yes
+ (use-package json-mode
+   :mode "\\.json\\'"
+   :config (add-hook 'json-mode-hook (lambda ()
+                                       (make-local-variable 'js-indent-level)
+                                       (setq js-indent-level 2))))
+ #+end_src
+** Clojure
+*** Clojure-mode
+#+begin_src emacs-lisp :tangle yes
 (use-package clojure-mode
   :mode (("\\.clj\\'" . clojure-mode)
          ("\\.boot\\'" . clojure-mode)
@@ -324,7 +439,9 @@
   (add-hook 'clojure-mode-hook #'subword-mode)
   (add-hook 'clojure-mode-hook #'clj-refactor-mode)
   (add-hook 'clojure-mode-hook #'paredit-mode))
-
+#+end_src
+*** Cider
+#+begin_src emacs-lisp :tangle yes
 (use-package cider
   :ensure t
   :defer t
@@ -339,39 +456,54 @@
         nrepl-hide-special-buffers t            
         cider-overlays-use-font-lock t)         
   (cider-repl-toggle-pretty-printing))
-
+#+end_src
+*** clj-refactor
+#+begin_src emacs-lisp :tangle yes
 (use-package clj-refactor
   :defines cljr-add-keybindings-with-prefix
   :defer t
   :diminish clj-refactor-mode
   :config (cljr-add-keybindings-with-prefix "C-c j"))
-
+#+end_src
+** Markdown-mode
+#+begin_src emacs-lisp :tangle yes
 (use-package markdown-mode
   :mode ("\\.md\\'" . markdown-mode)
   :config (progn
             (setq markdown-command "multimarkdown")
             (add-hook 'markdown-mode-hook #'trunc-lines-hook)))
-
+#+end_src
+* Visual Enhancements
+** beacon
+#+begin_src emacs-lisp :tangle yes
 (use-package beacon
   :diminish beacon-mode
   :config (progn
             (beacon-mode 1)
             (setq beacon-push-mark 10)))
-
+#+end_src
+** show-paren
+#+begin_src emacs-lisp :tangle yes
 (show-paren-mode 1)
 (setq show-paren-delay 0)
-
+#+end_src
+** golden-ratio
+#+begin_src emacs-lisp :tangle yes
 (use-package golden-ratio
   :diminish golden-ratio-mode
   :config (progn
             (add-to-list 'golden-ratio-extra-commands 'ace-window)
             (golden-ratio-mode 1)))
-
+#+end_src
+** volatile-highlights
+#+begin_src emacs-lisp :tangle yes
 (use-package volatile-highlights
   :defer 5
   :diminish volatile-highlights-mode
   :config (volatile-highlights-mode t))
-
+#+end_src
+** git-gutter+
+#+begin_src emacs-lisp :tangle yes
 (use-package git-gutter+
   :init (global-git-gutter+-mode)
   :diminish git-gutter+-mode
@@ -380,14 +512,19 @@
             (setq git-gutter+-modified-sign "==")
             (setq git-gutter+-added-sign "++")
             (setq git-gutter+-deleted-sign "--")))
-
+#+end_src
+* Org-mode
+*** Org-agenda-files
+#+begin_src emacs-lisp :tangle yes
 (defvar jk/org-agenda-files
   (append
    ;;(file-expand-wildcards "~/.org/*.org")
    (file-expand-wildcards "~/.org/calendars/*.org")
    (file-expand-wildcards "~/.org/gtd/*.org"))
   "Files to include in org-agenda-files")
-
+#+end_src
+*** TODO Everything Else
+#+begin_src emacs-lisp :tangle yes
 (use-package org-plus-contrib
   :bind (("C-c c" . org-capture)
          ("C-c a" . jethro/org-check-agenda)
@@ -504,7 +641,9 @@
   :config 
   (use-package ox-reveal
     :config (require 'ox-reveal)))
-
+#+end_src
+*** Org-gcal
+#+begin_src emacs-lisp :tangle yes
 (use-package org-gcal
   :defer 30
   :config
@@ -512,20 +651,27 @@
   (setq org-gcal-client-id jethro/org-gcal-client-id
         org-gcal-client-secret jethro/org-gcal-client-secret
         org-gcal-file-alist '(("jethrokuan95@gmail.com" .  "~/.org/calendars/jethro_gmail.org"))))
-
+#+end_src
+*** TODO gtd-mode
+#+begin_src emacs-lisp :tangle yes
 (use-package gtd-mode
   :disabled t
   :ensure f
   :load-path "elisp/"
   :config
   (gtd-mode 1))
-
+#+end_src
+* Project Management
+** Magit
+#+begin_src emacs-lisp :tangle yes
 (use-package magit  
   :bind (("C-x g" . magit-status)
          ("C-x M-g" . magit-blame))
   :init (setq magit-auto-revert-mode nil)
   :config (add-hook 'magit-mode-hook 'hl-line-mode))
-
+#+end_src
+** Projectile
+#+begin_src emacs-lisp :tangle yes
 (use-package projectile
   :demand t
   :init (projectile-global-mode 1)
@@ -572,19 +718,29 @@
                   file (projectile-project-root)))
       (run-hooks 'projectile-find-file-hook)
       (cider-jack-in))))
-
+#+end_src
+* Profiling
+** esup
+#+begin_src emacs-lisp :tangle yes
 (use-package esup
   :defer t)
-
+#+end_src
+** keyfreq
+#+begin_src emacs-lisp :tangle yes
 (use-package keyfreq
   :config
   (keyfreq-mode 1)
   (keyfreq-autosave-mode 1))
-
+#+end_src
+* Miscellaneous
+** which-key
+#+begin_src emacs-lisp :tangle yes
 (use-package which-key
   :diminish which-key-mode
   :config (add-hook 'after-init-hook 'which-key-mode))
-
+#+end_src
+** Nameless
+#+begin_src emacs-lisp :tangle yes
 (use-package nameless
   :diminish nameless-mode
   :config
@@ -595,16 +751,24 @@
           ("me" . "macroexp")
           ("c" . "cider")
           ("q" . "queue"))))
-
+#+end_src
+** firestarter
+#+begin_src emacs-lisp :tangle yes
 (use-package firestarter
   :bind ("C-c m s" . firestarter-mode)
   :init (put 'firestarter 'safe-local-variable 'identity))
-
+#+end_src
+** Paradox
+Use Paradox instead of the default =package-list-packages=. =jethro/paradox-user-token= is defined in =secrets.el=, and contains a github API token which has =public_repo= permissions.
+#+begin_src emacs-lisp :tangle yes
 (use-package paradox
   :commands (paradox-list-packages)
   :config
   (setq paradox-github-token jethro/paradox-user-token))
-
+#+end_src
+** Focus
+#+begin_src emacs-lisp :tangle yes
 (use-package focus
   :diminish focus-mode
   :bind ("C-c m f" . focus-mode))
+#+end_src
