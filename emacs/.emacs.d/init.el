@@ -27,6 +27,8 @@
 
 ;; Emacs configuration of Jethro Kuan
 
+;;; Code:
+
 ;;; Add MELPA and Org
 (when (>= emacs-major-version 24)
   (require 'package)
@@ -120,10 +122,14 @@
   :demand t
   :init (exec-path-from-shell-initialize))
 
+(load "~/.emacs.d/secrets.el" t)
+
 ;; Paradox
 ;; Better package listings
 (use-package paradox
-  :commands (paradox-list-packages))
+  :commands (paradox-list-packages)
+  :config
+  (setq paradox-github-token jethro/paradox-user-token))
 
 ;;; Setting Emacs registers
 ;;; Eg. C-o i to jump to init.el
@@ -607,8 +613,8 @@
   :defer 30
   :config
   (require 'org-gcal)
-  (setq org-gcal-client-id "1025518578318-89os2t4n2ghd8105038u8b84hr90tqee.apps.googleusercontent.com"
-        org-gcal-client-secret "govgKiWUCZmNSMHEm76YyNSB"
+  (setq org-gcal-client-id jethro/org-gcal-client-id
+        org-gcal-client-secret jethro/org-gcal-client-secret
         org-gcal-file-alist '(("jethrokuan95@gmail.com" .  "~/.org/calendars/jethro_gmail.org"))))
 
 (use-package gtd-mode
