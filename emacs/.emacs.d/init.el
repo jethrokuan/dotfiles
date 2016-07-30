@@ -334,7 +334,13 @@
 (use-package nameless
   :diminish nameless-mode
   :config
-  (add-hook 'emacs-lisp-mode #'nameless-mode))
+  (add-hook 'emacs-lisp-mode #'nameless-mode-from-hook)
+  (setq nameless-global-aliases
+        '(("fl" . "font-lock")
+          ("s" . "seq")
+          ("me" . "macroexp")
+          ("c" . "cider")
+          ("q" . "queue"))))
 
 ;;; Git
 ;;; Magit
@@ -481,57 +487,57 @@
   "Files to include in org-agenda-files")
 
 (use-package org-plus-contrib
-  :bind* (("C-c c" . org-capture)
-          ("C-c a" . org-agenda)
-          ("C-c l" . org-store-link))
+  :bind (("C-c c" . org-capture)
+         ("C-c a" . jethro/org-check-agenda)
+         ("C-c l" . org-store-link))
   :mode ("\\.org\\'" . org-mode)
   :init
-  (progn
-    (add-hook 'org-mode-hook #'trunc-lines-hook)
-    (setq org-ellipsis "⤵")
-    (setq org-directory "~/.org")
-    (setq org-default-notes-directory (concat org-directory "/notes.org"))          
-    (setq org-agenda-dim-blocked-tasks t) ;;clearer agenda
-    (setq org-agenda-files jk/org-agenda-files)
-    (setq org-hide-emphasis-markers t)
-    (font-lock-add-keywords 'org-mode
-                            '(("^ +\\([-*]\\) "
-                               (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•")))))) 
-    (setq org-refile-targets
-          '((nil :maxlevel . 3)
-            (org-agenda-files :maxlevel . 3)))
-    (setq org-use-fast-todo-selection t)
-    (setq org-treat-S-cursor-todo-selection-as-state-change nil)
-    (setq org-capture-templates
-          '(("b" "Book" entry (file "~/.org/books.org")
-             "* TO-READ %(org-set-tags)%? %i\n")))
-    (setq org-publish-project-alist
-          '(("org-books"
-             ;; Path to your org files.
-             :publishing-function org-html-publish-to-html
-             :publishing-directory "~/Documents/Code/jethrokuan.github.io/"
-             :base-directory "~/.org/"
-             :exclude ".*"
-             :include ["books.org"]
-             :with-emphasize t
-             :with-todo-keywords t
-             :with-toc nil
-             :html-head "<link rel=\"stylesheet\" href=\"/css/org.css\" type=\"text/css\">"
-             :html-preamble t)))
-    (setq org-latex-pdf-process
-          '("xelatex -shell-escape -interaction nonstopmode %f"
-            "xelatex -shell-escape -interaction nonstopmode %f"))
-    (require 'ox-latex)
-    (setq org-latex-tables-booktabs t)
-    (setq org-latex-listings 'minted)
-    (setq org-latex-minted-options
-          '(("frame" "lines")
-            ("linenos")
-            ("numbersep" "5pt")
-            ("framesep" "2mm")))
-    (add-to-list 'org-latex-classes
-                 '("org-article"
-                   "\\documentclass[11pt,a4paper]{article}
+  (add-hook 'org-mode-hook #'trunc-lines-hook)
+  (setq org-ellipsis "⤵")
+  (setq org-directory "~/.org")
+  (setq org-default-notes-directory (concat org-directory "/notes.org"))          
+  (setq org-agenda-dim-blocked-tasks t) ;;clearer agenda
+  
+  (setq org-agenda-files jk/org-agenda-files)
+  (setq org-hide-emphasis-markers t)
+  (font-lock-add-keywords 'org-mode
+                          '(("^ +\\([-*]\\) "
+                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•")))))) 
+  (setq org-refile-targets
+        '((nil :maxlevel . 3)
+          (org-agenda-files :maxlevel . 3)))
+  (setq org-use-fast-todo-selection t)
+  (setq org-treat-S-cursor-todo-selection-as-state-change nil)
+  (setq org-capture-templates
+        '(("b" "Book" entry (file "~/.org/books.org")
+           "* TO-READ %(org-set-tags)%? %i\n")))
+  (setq org-publish-project-alist
+        '(("org-books"
+           ;; Path to your org files.
+           :publishing-function org-html-publish-to-html
+           :publishing-directory "~/Documents/Code/jethrokuan.github.io/"
+           :base-directory "~/.org/"
+           :exclude ".*"
+           :include ["books.org"]
+           :with-emphasize t
+           :with-todo-keywords t
+           :with-toc nil
+           :html-head "<link rel=\"stylesheet\" href=\"/css/org.css\" type=\"text/css\">"
+           :html-preamble t)))
+  (setq org-latex-pdf-process
+        '("xelatex -shell-escape -interaction nonstopmode %f"
+          "xelatex -shell-escape -interaction nonstopmode %f"))
+  (require 'ox-latex)
+  (setq org-latex-tables-booktabs t)
+  (setq org-latex-listings 'minted)
+  (setq org-latex-minted-options
+        '(("frame" "lines")
+          ("linenos")
+          ("numbersep" "5pt")
+          ("framesep" "2mm")))
+  (add-to-list 'org-latex-classes
+               '("org-article"
+                 "\\documentclass[11pt,a4paper]{article}
                   \\usepackage[T1]{fontenc}
                   \\usepackage{booktabs}
                   \\usepackage{minted}
@@ -569,11 +575,11 @@
                   \\title{}                  
                   [NO-DEFAULT-PACKAGES]
                   [NO-PACKAGES]"
-                   ("\\section{%s}" . "\\section*{%s}")
-                   ("\\subsection{%s}" . "\\subsection*{%s}")
-                   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                   ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                   ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
   (defun jethro/org-sort-books ()
     (interactive)
     (let ((old-point (point)))
@@ -584,6 +590,15 @@
       (show-all)
       (org-global-cycle)
       (goto-char old-point)))
+  (defun jethro/org-check-agenda ()
+    "Peek at agenda."
+    (interactive)
+    (cond
+     ((derived-mode-p 'org-agenda-mode)
+      (if (window-parent) (delete-window) (bury-buffer)))
+     ((get-buffer "*Org Agenda*")
+      (switch-to-buffer-other-window "*Org Agenda*"))
+     (t (org-agenda nil "a"))))
   :config 
   (use-package ox-reveal
     :config (require 'ox-reveal)))
