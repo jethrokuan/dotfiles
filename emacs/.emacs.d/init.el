@@ -25,6 +25,13 @@
 (add-to-list 'default-frame-alist
              '(font . "Fira Code-12"))
 
+(tooltip-mode -1)
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+(setq inhibit-splash-screen t)
+(setq inhibit-startup-message t)
+
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 (delete-selection-mode +1)
@@ -38,13 +45,6 @@
 (setq-default truncate-lines t)
 (defun trunc-lines-hook ()
   (setq truncate-lines nil))
-
-(tooltip-mode -1)
-(tool-bar-mode -1)
-(menu-bar-mode -1)
-(scroll-bar-mode -1)
-(setq inhibit-splash-screen t)
-(setq inhibit-startup-message t)
 
 (setq backup-directory-alist
       `((".*" . ,temporary-file-directory)))
@@ -100,43 +100,50 @@
                     (setq-local compilation-read-command nil)
                     (call-interactively 'compile)))
 
-(use-package counsel)
-(use-package swiper
+(use-package counsel
+  :demand t
   :bind*
-  (("C-s" . swiper)
-   ("C-c C-r" . ivy-resume)
+  (("C-c C-r" . ivy-resume)
    ("M-a" . counsel-M-x)
    ("C-M-i" . counsel-imenu)
    ("C-x C-f" . counsel-find-file)
-   ("C-h f" . counsel-describe-function)
-   ("C-h v" . counsel-describe-variable)
    ("C-c u" . counsel-unicode-char)
    ("C-c g" . counsel-git)
    ("C-c j" . counsel-git-grep)
    ("C-c k" . counsel-ag)
    ("C-c l" . counsel-locate))
+  :bind (:map help-map
+          ("f" . counsel-describe-function)
+          ("v" . counsel-describe-variable)
+          ("l" . counsel-info-lookup-symbol))
   :config
-  (progn
-    (ivy-mode 1)
-    (setq counsel-find-file-at-point t)
-    (setq ivy-use-virtual-buffers t)
-    (setq ivy-initial-inputs-alist nil)
-    (define-key read-expression-map (kbd "C-r") #'counsel-expression-history)
-    (ivy-set-actions
-     'counsel-find-file
-     '(("d" (lambda (x) (delete-file (expand-file-name x)))
-        "delete"
-        )))
-    (ivy-set-actions
-     'ivy-switch-buffer
-     '(("k"
-        (lambda (x)
-          (kill-buffer x)
-          (ivy--reset-state ivy-last))
-        "kill")
-       ("j"
-        ivy--switch-buffer-other-window-action
-        "other window")))))
+  (ivy-mode 1)
+  (setq counsel-find-file-at-point t)
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-initial-inputs-alist nil)
+  (ivy-set-actions
+   'counsel-find-file
+   '(("d" (lambda (x) (delete-file (expand-file-name x)))
+      "delete"
+      )))
+  (ivy-set-actions
+   'ivy-switch-buffer
+   '(("k"
+      (lambda (x)
+        (kill-buffer x)
+        (ivy--reset-state ivy-last))
+      "kill")
+     ("j"
+      ivy--switch-buffer-other-window-action
+     "other window"))))
+
+(use-package swiper
+  :bind*
+  (("C-s" . swiper)
+   ("C-r" . swiper))
+  :bind
+  (:map read-expression-map
+    ("C-r" . counsel-expression-history)))
 
 (use-package avy
   :bind* (("C-'" . avy-goto-char)
@@ -172,7 +179,9 @@
 
 (use-package paredit
   :diminish paredit-mode
-  :config (add-hook 'emacs-lisp-mode-hook #'paredit-mode))
+  :config
+  (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
+  (add-hook 'clojure-mode-hook 'paredit-mode))
 
 (use-package zzz-to-char
   :bind (("M-z" . zzz-up-to-char)))
@@ -188,12 +197,10 @@
 
 (use-package yasnippet
   :diminish yas-global-mode yas-minor-mode
-  :defer 5
   :init (add-hook 'after-init-hook 'yas-global-mode)
   :config (setq yas-snippet-dirs '("~/.emacs.d/snippets/")))
 
 (use-package company
-  :defer 5
   :diminish company-mode
   :init (progn
           (add-hook 'after-init-hook 'global-company-mode)
@@ -252,6 +259,7 @@
   :mode ("\\.rs\\'" . rust-mode))
 
 (use-package elpy
+  :mode ("\\.py\\'" . elpy-mode)
   :init
   (add-hook 'python-mode-hook (lambda () (aggressive-indent-mode -1)))
   (defun set-newline-and-indent ()
@@ -266,6 +274,35 @@
     (add-hook 'elpy-mode-hook 'flycheck-mode))
   (elpy-enable)
   (setq elpy-rpc-backend "jedi"))
+
+(defun jethro/locate-dominating-file (regexp)
+  "Locate a directory with a file matching REGEXP."
+  (locate-dominating-file
+   default-directory
+   (lambda (directory)
+     (> (length (directory-files directory nil regexp t)) 0))))
+
+(defconst jethro/jshint-regexp
+  (concat "\\`" (regexp-quote ".jshintrc") "\\'"))
+
+(defconst jethro/eslint-regexp
+  (concat "\\`" (regexp-quote ".eslintrc") "\\(\\.\\(js\\|ya?ml\\|json\\)\\)?\\'"))
+
+(defun jethro/js2-mode-hook ()
+  (cond
+   ((jethro/locate-dominating-file jethro/jshint-regexp)
+    (flycheck-select-checker 'javascript-jshint))
+   ((jethro/locate-dominating-file jethro/eslint-regexp)
+    (flycheck-select-checker 'javascript-eslint))))
+
+(use-package js2-mode
+  :mode ("\\.js\\'" . js2-mode)
+  :config (add-hook 'js2-mode-hook #'jethro/js2-mode-hook)
+  (use-package company-tern
+    :config
+    (add-hook 'js3-mode-hook (lambda ()
+                               (set (make-local-variable 'company-backends) '(company-tern))
+                               (company-mode)))))
 
 (use-package web-mode
   :mode (("\\.html\\'" . web-mode)
@@ -288,11 +325,10 @@
   :mode "\\.vue\\'")
 
 (use-package rainbow-mode
-  :diminish rainbow-mode
-  :config
-  (add-hook 'css-mode-hook 'rainbow-mode)
-  (add-hook 'scss-mode-hook 'rainbow-mode)
-  (add-hook 'sass-mode-hook 'rainbow-mode))
+  :mode (("\\.css\\'" . rainbow-mode)
+         ("\\.scss\\'" . rainbow-mode)
+         ("\\.sass\\'" . rainbow-mode))
+  :diminish rainbow-mode)
 
 (use-package scss-mode
   :mode "\\.scss\\'" 
@@ -314,12 +350,10 @@
   :init
   (add-hook 'clojure-mode-hook #'eldoc-mode)
   (add-hook 'clojure-mode-hook #'subword-mode)
-  (add-hook 'clojure-mode-hook #'clj-refactor-mode)
-  (add-hook 'clojure-mode-hook #'paredit-mode))
+  (add-hook 'clojure-mode-hook #'clj-refactor-mode))
 
 (use-package cider
   :ensure t
-  :defer t
   :init (add-hook 'cider-mode-hook #'clj-refactor-mode)
   :diminish subword-mode
   :config
@@ -334,7 +368,6 @@
 
 (use-package clj-refactor
   :defines cljr-add-keybindings-with-prefix
-  :defer t
   :diminish clj-refactor-mode
   :config (cljr-add-keybindings-with-prefix "C-c j"))
 
@@ -393,6 +426,7 @@
   
   (setq org-agenda-files jk/org-agenda-files)
   (setq org-hide-emphasis-markers t)
+  (setq org-src-tab-acts-natively t)
   (font-lock-add-keywords 'org-mode
                           '(("^ +\\([-*]\\) "
                              (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•")))))) 
@@ -499,7 +533,6 @@
      (t (org-agenda nil "a"))))
 
 (use-package org-gcal
-  :defer 30
   :config
   (require 'org-gcal)
   (setq org-gcal-client-id jethro/org-gcal-client-id
@@ -581,7 +614,7 @@
 (use-package nameless
   :diminish nameless-mode
   :config
-  (add-hook 'emacs-lisp-mode #'nameless-mode-from-hook)
+  (add-hook 'emacs-lisp-mode-hook 'nameless-mode-from-hook)
   (setq nameless-global-aliases
         '(("fl" . "font-lock")
           ("s" . "seq")

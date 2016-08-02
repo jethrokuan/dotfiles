@@ -1,6 +1,8 @@
 # -*- after-save-hook: (org-babel-tangle); -*-
 * Basic Setup
 ** Add MELPA and Org Repository
+Add package archives. Note that I'm using HTTP, HTTPS did not work for me.
+
 #+BEGIN_SRC emacs-lisp :tangle yes
 (when (>= emacs-major-version 24)
   (require 'package)
@@ -8,7 +10,7 @@
   (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
   (package-initialize))
 #+END_SRC
-** Add =use-package=
+** Add [[https://github.com/jwiegley/use-package/issues/70][use-package]]
 #+BEGIN_SRC emacs-lisp :tangle yes
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -22,7 +24,7 @@
   (require 'diminish)
   (setq use-package-always-ensure t))
 #+END_SRC
-** User details
+** User configuration
 #+begin_src emacs-lisp :tangle yes
 (setq user-full-name "Jethro Kuan"
       user-mail-address "jethrokuan95@gmail.com")
@@ -38,6 +40,15 @@
 (add-to-list 'default-frame-alist
              '(font . "Fira Code-12"))
 #+END_SRC
+*** UI Cruft
+#+begin_src emacs-lisp :tangle yes
+(tooltip-mode -1)
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+(setq inhibit-splash-screen t)
+(setq inhibit-startup-message t)
+#+end_src
 *** Use y/n over yes/no
 #+BEGIN_SRC emacs-lisp :tangle yes
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -67,15 +78,6 @@ Don't wrap lines for coding. Create a hook that enables wrapping, for modes like
 (setq-default truncate-lines t)
 (defun trunc-lines-hook ()
   (setq truncate-lines nil))
-#+end_src
-*** UI Cruft
-#+begin_src emacs-lisp :tangle yes
-(tooltip-mode -1)
-(tool-bar-mode -1)
-(menu-bar-mode -1)
-(scroll-bar-mode -1)
-(setq inhibit-splash-screen t)
-(setq inhibit-startup-message t)
 #+end_src
 *** Backup directory
 #+begin_src emacs-lisp :tangle yes
@@ -107,10 +109,12 @@ Don't wrap lines for coding. Create a hook that enables wrapping, for modes like
   :init (exec-path-from-shell-initialize))
 #+end_src
 ** Bookmarks
+I use bookmarks to jump around to my files. I bind bookmark-jump to =C-o= to make it more accessible.
 #+begin_src emacs-lisp :tangle yes
 (bind-key* "C-o" 'bookmark-jump)
 #+end_src
 ** Theme
+   I use a monochrome theme, and have gotten too used to it. Other good alternatives include [[https://github.com/emacsfodder/emacs-theme-darktooth][darktooth]].
 #+begin_src emacs-lisp :tangle yes
 (use-package tao-theme
   :init
@@ -118,6 +122,7 @@ Don't wrap lines for coding. Create a hook that enables wrapping, for modes like
 #+end_src
 ** Keybinding Upgrades
 *** Split and move right
+Currently =C-x 3= only creates a new window, and does not change the focus to the right window.
 #+begin_src emacs-lisp :tangle yes
 (defun split-and-move-right ()
   (interactive)
@@ -127,6 +132,7 @@ Don't wrap lines for coding. Create a hook that enables wrapping, for modes like
 (bind-key* "C-x 3" 'split-and-move-right)
 #+end_src
 *** Nuke all buffers
+=C-c != to clear all open buffers and start from a clean state.
 #+begin_src emacs-lisp :tangle yes
 (defun nuke-all-buffers ()
   "Kill all buffers, leaving *scratch* only."
@@ -140,68 +146,88 @@ Don't wrap lines for coding. Create a hook that enables wrapping, for modes like
 (bind-key* "C-c !" 'nuke-all-buffers)
 #+end_src
 *** Eshell
+=C-x m= to access eshell
 #+begin_src emacs-lisp :tangle yes
 (bind-key* "C-x m" 'eshell)
 #+end_src
 *** Mark-paragraph
+Bind =M-p= to =mark-paragraph=.
 #+begin_src emacs-lisp :tangle yes
 (bind-key* "M-p" 'mark-paragraph)
 #+end_src
 *** Compile with <f5>
+Bind =<f5>= to call compile.
 #+begin_src emacs-lisp :tangle yes
 (bind-key* "<f5>" (lambda ()
                     (interactive)
                     (setq-local compilation-read-command nil)
                     (call-interactively 'compile)))
 #+end_src
-* Counsel, Swiper and Ivy
+* Ivy
+I've recently switched over from =helm= to =ivy=. This is because the API for ivy is simpler, and thus makes it easier to extend.
+
+** Counsel
+Counsel contains ivy enhancements for commonly-used functions.
 #+begin_src emacs-lisp :tangle yes
-(use-package counsel)
-(use-package swiper
+(use-package counsel
+  :demand t
   :bind*
-  (("C-s" . swiper)
-   ("C-c C-r" . ivy-resume)
+  (("C-c C-r" . ivy-resume)
    ("M-a" . counsel-M-x)
    ("C-M-i" . counsel-imenu)
    ("C-x C-f" . counsel-find-file)
-   ("C-h f" . counsel-describe-function)
-   ("C-h v" . counsel-describe-variable)
    ("C-c u" . counsel-unicode-char)
    ("C-c g" . counsel-git)
    ("C-c j" . counsel-git-grep)
    ("C-c k" . counsel-ag)
    ("C-c l" . counsel-locate))
+  :bind (:map help-map
+          ("f" . counsel-describe-function)
+          ("v" . counsel-describe-variable)
+          ("l" . counsel-info-lookup-symbol))
   :config
-  (progn
-    (ivy-mode 1)
-    (setq counsel-find-file-at-point t)
-    (setq ivy-use-virtual-buffers t)
-    (setq ivy-initial-inputs-alist nil)
-    (define-key read-expression-map (kbd "C-r") #'counsel-expression-history)
-    (ivy-set-actions
-     'counsel-find-file
-     '(("d" (lambda (x) (delete-file (expand-file-name x)))
-        "delete"
-        )))
-    (ivy-set-actions
-     'ivy-switch-buffer
-     '(("k"
-        (lambda (x)
-          (kill-buffer x)
-          (ivy--reset-state ivy-last))
-        "kill")
-       ("j"
-        ivy--switch-buffer-other-window-action
-        "other window")))))
+  (ivy-mode 1)
+  (setq counsel-find-file-at-point t)
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-initial-inputs-alist nil)
+  (ivy-set-actions
+   'counsel-find-file
+   '(("d" (lambda (x) (delete-file (expand-file-name x)))
+      "delete"
+      )))
+  (ivy-set-actions
+   'ivy-switch-buffer
+   '(("k"
+      (lambda (x)
+        (kill-buffer x)
+        (ivy--reset-state ivy-last))
+      "kill")
+     ("j"
+      ivy--switch-buffer-other-window-action
+     "other window"))))
+#+end_src
+
+** Swiper
+Swiper is ivy-enhanced isearch.
+#+begin_src emacs-lisp :tangle yes
+(use-package swiper
+  :bind*
+  (("C-s" . swiper)
+   ("C-r" . swiper))
+  :bind
+  (:map read-expression-map
+    ("C-r" . counsel-expression-history)))
 #+end_src
 * Moving Around
 ** avy
+Use avy to move between visible text.
 #+begin_src emacs-lisp :tangle yes
 (use-package avy
   :bind* (("C-'" . avy-goto-char)
           ("C-," . avy-goto-char-2)))
 #+end_src
 ** dumb-jump
+Use it to jump to function definitions. Requires no external depedencies.
 #+begin_src emacs-lisp :tangle yes
 (use-package dumb-jump
   :diminish dumb-jump-mode
@@ -210,12 +236,14 @@ Don't wrap lines for coding. Create a hook that enables wrapping, for modes like
          ("C-M-q" . dumb-jump-quick-look)))
 #+end_src
 ** ace-window
+Ace-window makes it easier to move between windows.
 #+begin_src emacs-lisp :tangle yes
 (use-package ace-window
   :bind (("M-'" . ace-window)))
 #+end_src
 * Editing Text
 ** electric-align
+Use multiple spaces to align code and text.
 #+begin_src emacs-lisp :tangle yes
 (use-package electric-align
   :ensure f
@@ -224,12 +252,14 @@ Don't wrap lines for coding. Create a hook that enables wrapping, for modes like
   :config (add-hook 'prog-mode-hook 'electric-align-mode))
 #+end_src
 ** aggressive-indent
+Keep your text indented at all times. Remember to turn this off for indentation-dependent languages like Python and Haml.
 #+begin_src emacs-lisp :tangle yes
 (use-package aggressive-indent
   :diminish aggressive-indent-mode
   :config (add-hook 'prog-mode-hook 'aggressive-indent-mode))
 #+end_src
 ** multiple-cursors
+A port of Sublime Text's multiple-cursors functionality.
 #+begin_src emacs-lisp :tangle yes
 (use-package multiple-cursors
   :bind (("C-M-c" . mc/edit-lines)
@@ -238,17 +268,22 @@ Don't wrap lines for coding. Create a hook that enables wrapping, for modes like
          ("C-c C-<" . mc/mark-all-like-this)))
 #+end_src
 ** expand-region
+Use this often, and in combination with multiple-cursors.
 #+begin_src emacs-lisp :tangle yes
 (use-package expand-region
   :bind (("C-=" . er/expand-region)))
 #+end_src
 ** paredit
+For editing Lisp code.
 #+begin_src emacs-lisp :tangle yes
 (use-package paredit
   :diminish paredit-mode
-  :config (add-hook 'emacs-lisp-mode-hook #'paredit-mode))
+  :config
+  (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
+  (add-hook 'clojure-mode-hook 'paredit-mode))
 #+end_src
 ** zzz-to-char
+Uses the avy-backend with z-to-char.
 #+begin_src emacs-lisp :tangle yes
 (use-package zzz-to-char
   :bind (("M-z" . zzz-up-to-char)))
@@ -270,14 +305,12 @@ Don't wrap lines for coding. Create a hook that enables wrapping, for modes like
 #+begin_src emacs-lisp :tangle yes
 (use-package yasnippet
   :diminish yas-global-mode yas-minor-mode
-  :defer 5
   :init (add-hook 'after-init-hook 'yas-global-mode)
   :config (setq yas-snippet-dirs '("~/.emacs.d/snippets/")))
 #+end_src
 ** Autocompletions with Company
 #+begin_src emacs-lisp :tangle yes
 (use-package company
-  :defer 5
   :diminish company-mode
   :init (progn
           (add-hook 'after-init-hook 'global-company-mode)
@@ -348,6 +381,7 @@ Don't wrap lines for coding. Create a hook that enables wrapping, for modes like
 ** Python
 #+begin_src emacs-lisp :tangle yes
 (use-package elpy
+  :mode ("\\.py\\'" . elpy-mode)
   :init
   (add-hook 'python-mode-hook (lambda () (aggressive-indent-mode -1)))
   (defun set-newline-and-indent ()
@@ -364,6 +398,42 @@ Don't wrap lines for coding. Create a hook that enables wrapping, for modes like
   (setq elpy-rpc-backend "jedi"))
 #+end_src
 ** HTML/CSS/JS
+*** JS2-mode
+**** Flycheck
+Turn on flycheck for JS2-mode. Pick the appropriate lint file.
+#+begin_src emacs-lisp :tangle yes
+  (defun jethro/locate-dominating-file (regexp)
+    "Locate a directory with a file matching REGEXP."
+    (locate-dominating-file
+     default-directory
+     (lambda (directory)
+       (> (length (directory-files directory nil regexp t)) 0))))
+
+  (defconst jethro/jshint-regexp
+    (concat "\\`" (regexp-quote ".jshintrc") "\\'"))
+
+  (defconst jethro/eslint-regexp
+    (concat "\\`" (regexp-quote ".eslintrc") "\\(\\.\\(js\\|ya?ml\\|json\\)\\)?\\'"))
+
+  (defun jethro/js2-mode-hook ()
+    (cond
+     ((jethro/locate-dominating-file jethro/jshint-regexp)
+      (flycheck-select-checker 'javascript-jshint))
+     ((jethro/locate-dominating-file jethro/eslint-regexp)
+      (flycheck-select-checker 'javascript-eslint))))
+
+  (use-package js2-mode
+    :mode ("\\.js\\'" . js2-mode)
+    :config (add-hook 'js2-mode-hook #'jethro/js2-mode-hook)
+    (use-package company-tern
+      :config
+      (add-hook 'js3-mode-hook (lambda ()
+                                 (set (make-local-variable 'company-backends) '(company-tern))
+                                 (company-mode)))))
+#+end_src
+
+Also, enable company-tern as the completion backend.
+
 *** Web-mode
  #+begin_src emacs-lisp :tangle yes
  (use-package web-mode
@@ -379,11 +449,11 @@ Don't wrap lines for coding. Create a hook that enables wrapping, for modes like
  #+end_src
 *** Emmet-mode
  #+begin_src emacs-lisp :tangle yes
- (use-package emmet-mode
-   :diminish emmet-mode
-   :config
-   (add-hook 'web-mode-hook 'emmet-mode)
-   (add-hook 'vue-mode-hook 'emmet-mode))
+(use-package emmet-mode
+  :diminish emmet-mode
+  :config
+  (add-hook 'web-mode-hook 'emmet-mode)
+  (add-hook 'vue-mode-hook 'emmet-mode))
  #+end_src
 *** Vue-mode
  #+begin_src emacs-lisp :tangle yes
@@ -393,11 +463,10 @@ Don't wrap lines for coding. Create a hook that enables wrapping, for modes like
 *** Rainbow-mode
  #+begin_src emacs-lisp :tangle yes
  (use-package rainbow-mode
-   :diminish rainbow-mode
-   :config
-   (add-hook 'css-mode-hook 'rainbow-mode)
-   (add-hook 'scss-mode-hook 'rainbow-mode)
-   (add-hook 'sass-mode-hook 'rainbow-mode))
+   :mode (("\\.css\\'" . rainbow-mode)
+          ("\\.scss\\'" . rainbow-mode)
+          ("\\.sass\\'" . rainbow-mode))
+   :diminish rainbow-mode)
  #+end_src
 *** SCSS-mode
  #+begin_src emacs-lisp :tangle yes
@@ -426,14 +495,12 @@ Don't wrap lines for coding. Create a hook that enables wrapping, for modes like
   :init
   (add-hook 'clojure-mode-hook #'eldoc-mode)
   (add-hook 'clojure-mode-hook #'subword-mode)
-  (add-hook 'clojure-mode-hook #'clj-refactor-mode)
-  (add-hook 'clojure-mode-hook #'paredit-mode))
+  (add-hook 'clojure-mode-hook #'clj-refactor-mode))
 #+end_src
 *** Cider
 #+begin_src emacs-lisp :tangle yes
 (use-package cider
   :ensure t
-  :defer t
   :init (add-hook 'cider-mode-hook #'clj-refactor-mode)
   :diminish subword-mode
   :config
@@ -450,7 +517,6 @@ Don't wrap lines for coding. Create a hook that enables wrapping, for modes like
 #+begin_src emacs-lisp :tangle yes
 (use-package clj-refactor
   :defines cljr-add-keybindings-with-prefix
-  :defer t
   :diminish clj-refactor-mode
   :config (cljr-add-keybindings-with-prefix "C-c j"))
 #+end_src
@@ -532,6 +598,7 @@ Displays added/modified/deleted on the left.
   
   (setq org-agenda-files jk/org-agenda-files)
   (setq org-hide-emphasis-markers t)
+  (setq org-src-tab-acts-natively t)
   (font-lock-add-keywords 'org-mode
                           '(("^ +\\([-*]\\) "
                              (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•")))))) 
@@ -649,7 +716,6 @@ Sync calendar.google.com into a local org file.
 =jethro/org-gcal-client-id= and =jethro/org-gcal-client-secret= are defined in =secrets.el=.
 #+begin_src emacs-lisp :tangle yes
 (use-package org-gcal
-  :defer 30
   :config
   (require 'org-gcal)
   (setq org-gcal-client-id jethro/org-gcal-client-id
@@ -748,7 +814,7 @@ Sync calendar.google.com into a local org file.
 (use-package nameless
   :diminish nameless-mode
   :config
-  (add-hook 'emacs-lisp-mode #'nameless-mode-from-hook)
+  (add-hook 'emacs-lisp-mode-hook 'nameless-mode-from-hook)
   (setq nameless-global-aliases
         '(("fl" . "font-lock")
           ("s" . "seq")
