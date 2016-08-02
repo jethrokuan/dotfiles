@@ -1,3 +1,6 @@
 [submodule "emacs/.emacs.d/snippets"]
 	path = emacs/.emacs.d/snippets
 	url = git@github.com:jethrokuan/snippets.git
+[submodule "emacs/.emacs.d/elisp/tao-theme"]
+	path = emacs/.emacs.d/elisp/tao-theme
+	url = git@github.com:jethrokuan/tao-theme-emacs.git

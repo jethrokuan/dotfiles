@@ -70,40 +70,8 @@
 (bind-key* "C-o" 'bookmark-jump)
 
 (use-package tao-theme
-  :disabled t
   :init
   (load-theme 'tao-yang t))
-
-(use-package spacemacs-theme
-  :init
-  (load-theme 'spacemacs-dark t))
-
-(defun split-and-move-right ()
-  (interactive)
-  (split-window-right)
-  (windmove-right))
-
-(bind-key* "C-x 3" 'split-and-move-right)
-
-(defun nuke-all-buffers ()
-  "Kill all buffers, leaving *scratch* only."
-  (interactive)
-  (mapc
-   (lambda (buffer)
-     (kill-buffer buffer))
-   (buffer-list))
-  (delete-other-windows))
-
-(bind-key* "C-c !" 'nuke-all-buffers)
-
-(bind-key* "C-x m" 'eshell)
-
-(bind-key* "M-p" 'mark-paragraph)
-
-(bind-key* "<f5>" (lambda ()
-                    (interactive)
-                    (setq-local compilation-read-command nil)
-                    (call-interactively 'compile)))
 
 (use-package counsel
   :demand t
@@ -217,6 +185,13 @@
                 company-transformers '(company-sort-by-occurrence))
           (use-package company-quickhelp
             :config (company-quickhelp-mode 1))))
+
+(use-package flyspell
+  :ensure f
+  :diminish flyspell-mode
+  :config
+  (add-hook 'org-mode-hook 'flyspell-mode)
+  (add-hook 'markdown-mode-hook 'flyspell-mode))
 
 (use-package go-mode
   :mode ("\\.go\\'" . go-mode)
@@ -405,6 +380,8 @@
   :config (volatile-highlights-mode t))
 
 (use-package git-gutter+
+  :bind* (("C-g n". git-gutter+-next-hunk)
+          ("C-g s" . git-gutter+-stage-hunks))
   :init (global-git-gutter+-mode)
   :diminish git-gutter+-mode
   :defer 5
@@ -431,7 +408,6 @@
   (setq org-directory "~/.org")
   (setq org-default-notes-directory (concat org-directory "/notes.org"))          
   (setq org-agenda-dim-blocked-tasks t) ;;clearer agenda
-
   (setq org-agenda-files jk/org-agenda-files)
   (setq org-hide-emphasis-markers t)
   (setq org-src-tab-acts-natively t)
@@ -446,78 +422,90 @@
   (setq org-capture-templates
         '(("b" "Book" entry (file "~/.org/books.org")
            "* TO-READ %(org-set-tags)%? %i\n")))
-  (setq org-publish-project-alist
-        '(("org-books"
-           ;; Path to your org files.
-           :publishing-function org-html-publish-to-html
-           :publishing-directory "~/Documents/Code/jethrokuan.github.io/"
-           :base-directory "~/.org/"
-           :exclude ".*"
-           :include ["books.org"]
-           :with-emphasize t
-           :with-todo-keywords t
-           :with-toc nil
-           :html-head "<link rel=\"stylesheet\" href=\"/css/org.css\" type=\"text/css\">"
-           :html-preamble t)))
-  (setq org-latex-pdf-process
-        '("xelatex -shell-escape -interaction nonstopmode %f"
-          "xelatex -shell-escape -interaction nonstopmode %f"))
-  (require 'ox-latex)
-  (setq org-latex-tables-booktabs t)
-  (setq org-latex-listings 'minted)
-  (setq org-latex-minted-options
-        '(("frame" "lines")
-          ("linenos")
-          ("numbersep" "5pt")
-          ("framesep" "2mm")))
-  (add-to-list 'org-latex-classes
-               '("org-article"
-                 "\\documentclass[11pt,a4paper]{article}
-                  \\usepackage[T1]{fontenc}
-                  \\usepackage{booktabs}
-                  \\usepackage{minted}
-                  \\usemintedstyle{borland}
-                  \\usepackage{color}
-                  \\setcounter{tocdepth}{2}
-                  \\usepackage{xcolor}
-                  \\usepackage{soul}
-                  \\definecolor{Light}{gray}{.90}
-                  \\sethlcolor{Light}
-                  \\let\\OldTexttt\\texttt
-                  \\renewcommand{\\texttt}[1]{\\OldTexttt{\\hl{#1}}}
-                  \\usepackage{epigraph}
-                  \\usepackage{enumitem}
-                  \\setlist{nosep}
-                  \\setlength\\epigraphwidth{13cm}
-                  \\setlength\\epigraphrule{0pt}
-                  \\usepackage{fontspec}
-                  \\usepackage{graphicx} 
-                  \\usepackage{parskip}
-                  \\defaultfontfeatures{Mapping=tex-text}
-                  \\let\\oldsection\\section
-                  \\renewcommand\\section{\\clearpage\\oldsection}
-                  \\setlength{\\parskip}{1em}
-                  \\setromanfont{Bitter}
-                  \\setromanfont         [BoldFont={Bitter Bold},
-                                 ItalicFont={Bitter Italic}]{Bitter}
-                  \\setmonofont[Scale=1.0]{mononoki}
-                  \\usepackage{geometry}
-                  \\usepackage{hyperref}
-                  \\hypersetup {colorlinks = true, allcolors = red}
-                  \\geometry{a4paper, textwidth=6.5in, textheight=10in,
-                              marginparsep=7pt, marginparwidth=.6in}
-                  \\pagestyle{empty}
-                  \\title{}                  
-                  [NO-DEFAULT-PACKAGES]
-                  [NO-PACKAGES]"
-                 ("\\section{%s}" . "\\section*{%s}")
-                 ("\\subsection{%s}" . "\\subsection*{%s}")
-                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
   :config 
   (use-package ox-reveal
     :config (require 'ox-reveal)))
+
+(setq org-icalendar-combined-agenda-file (concat org-directory "/org.ics"))
+(setq org-icalendar-include-todo '(all))
+(setq org-icalendar-use-scheduled '(event-if-todo event-if-not-todo))
+(setq org-icalendar-use-deadline '(event-if-todo event-if-not-todo))
+(setq org-agenda-default-appointment-duration 60)
+
+;; this hook saves an ics file once an org-buffer is saved
+(defun jethro/org-ical-export()
+  (org-icalendar-combine-agenda-files))
+
+(setq org-publish-project-alist
+      '(("org-books"
+         ;; Path to your org files.
+         :publishing-function org-html-publish-to-html
+         :publishing-directory "~/Documents/Code/jethrokuan.github.io/"
+         :base-directory "~/.org/"
+         :exclude ".*"
+         :include ["books.org"]
+         :with-emphasize t
+         :with-todo-keywords t
+         :with-toc nil
+         :html-head "<link rel=\"stylesheet\" href=\"/css/org.css\" type=\"text/css\">"
+         :html-preamble t)))
+
+(setq org-latex-pdf-process
+      '("xelatex -shell-escape -interaction nonstopmode %f"
+        "xelatex -shell-escape -interaction nonstopmode %f"))
+(require 'ox-latex)
+(setq org-latex-tables-booktabs t)
+(setq org-latex-listings 'minted)
+(setq org-latex-minted-options
+      '(("frame" "lines")
+        ("linenos")
+        ("numbersep" "5pt")
+        ("framesep" "2mm")))
+(add-to-list 'org-latex-classes
+             '("org-article"
+               "\\documentclass[11pt,a4paper]{article}
+                    \\usepackage[T1]{fontenc}
+                    \\usepackage{booktabs}
+                    \\usepackage{minted}
+                    \\usemintedstyle{borland}
+                    \\usepackage{color}
+                    \\setcounter{tocdepth}{2}
+                    \\usepackage{xcolor}
+                    \\usepackage{soul}
+                    \\definecolor{Light}{gray}{.90}
+                    \\sethlcolor{Light}
+                    \\let\\OldTexttt\\texttt
+                    \\renewcommand{\\texttt}[1]{\\OldTexttt{\\hl{#1}}}
+                    \\usepackage{epigraph}
+                    \\usepackage{enumitem}
+                    \\setlist{nosep}
+                    \\setlength\\epigraphwidth{13cm}
+                    \\setlength\\epigraphrule{0pt}
+                    \\usepackage{fontspec}
+                    \\usepackage{graphicx} 
+                    \\usepackage{parskip}
+                    \\defaultfontfeatures{Mapping=tex-text}
+                    \\let\\oldsection\\section
+                    \\renewcommand\\section{\\clearpage\\oldsection}
+                    \\setlength{\\parskip}{1em}
+                    \\setromanfont{Bitter}
+                    \\setromanfont         [BoldFont={Bitter Bold},
+                                   ItalicFont={Bitter Italic}]{Bitter}
+                    \\setmonofont[Scale=1.0]{mononoki}
+                    \\usepackage{geometry}
+                    \\usepackage{hyperref}
+                    \\hypersetup {colorlinks = true, allcolors = red}
+                    \\geometry{a4paper, textwidth=6.5in, textheight=10in,
+                                marginparsep=7pt, marginparwidth=.6in}
+                    \\pagestyle{empty}
+                    \\title{}                  
+                    [NO-DEFAULT-PACKAGES]
+                    [NO-PACKAGES]"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
 (defun jethro/org-sort-books ()
     (interactive)
@@ -548,7 +536,8 @@
         org-gcal-file-alist '(("jethrokuan95@gmail.com" .  "~/.org/calendars/jethro_gmail.org"))))
 
 (use-package gtd-mode
-  :disabled t
+  :bind (("C-c x" . gtd-clear-inbox)
+         ("C-c i". gtd-into-inbox))
   :ensure f
   :load-path "elisp/"
   :config

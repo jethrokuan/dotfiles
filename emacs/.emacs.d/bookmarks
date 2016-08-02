@@ -2,7 +2,12 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("init.org"
+(("calendar.org"
+ (filename . "~/.org/gtd/calendar.org")
+ (front-context-string . "# -*- after-save")
+ (rear-context-string)
+ (position . 1))
+("init.org"
  (filename . "~/dotfiles/emacs/.emacs.d/init.org")
  (front-context-string . "# -*- after-save")
  (rear-context-string)
@@ -58,13 +63,13 @@
 #1=(#("org-capture-last-stored" 0 23
       (bmkp-full-record #1#))
     (filename . "~/.org/gtd/inbox.org")
-    (front-context-string . "* CORs module bi")
+    (front-context-string . "* Vishnu owes me")
     (rear-context-string)
     (position . 1))
 #1=(#("org-refile-last-stored" 0 22
       (bmkp-full-record #1#))
-    (filename . "~/dotfiles/emacs/.emacs.d/init.org")
-    (front-context-string . "** Intelligent C")
-    (rear-context-string . "ode))\n#+end_src\n")
-    (position . 25557))
+    (filename . "~/.org/gtd/waiting_for.org")
+    (front-context-string . "** Vishnu owes m")
+    (rear-context-string . "u owes me 29.25\n")
+    (position . 56))
 )
