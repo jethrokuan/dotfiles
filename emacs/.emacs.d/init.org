@@ -114,11 +114,17 @@ I use bookmarks to jump around to my files. I bind bookmark-jump to =C-o= to mak
 (bind-key* "C-o" 'bookmark-jump)
 #+end_src
 ** Theme
-   I use a monochrome theme, and have gotten too used to it. Other good alternatives include [[https://github.com/emacsfodder/emacs-theme-darktooth][darktooth]].
 #+begin_src emacs-lisp :tangle yes
 (use-package tao-theme
+  :disabled t
   :init
   (load-theme 'tao-yang t))
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+(use-package spacemacs-theme
+  :init
+  (load-theme 'spacemacs-dark t))
 #+end_src
 ** Keybinding Upgrades
 *** Split and move right
@@ -402,38 +408,42 @@ Uses the avy-backend with z-to-char.
 **** Flycheck
 Turn on flycheck for JS2-mode. Pick the appropriate lint file.
 #+begin_src emacs-lisp :tangle yes
-  (defun jethro/locate-dominating-file (regexp)
-    "Locate a directory with a file matching REGEXP."
-    (locate-dominating-file
-     default-directory
-     (lambda (directory)
-       (> (length (directory-files directory nil regexp t)) 0))))
+(defun jethro/locate-dominating-file (regexp)
+  "Locate a directory with a file matching REGEXP."
+  (locate-dominating-file
+   default-directory
+   (lambda (directory)
+     (> (length (directory-files directory nil regexp t)) 0))))
+(defconst jethro/jshint-regexp
+  (concat "\\`" (regexp-quote ".jshintrc") "\\'"))
+(defconst jethro/eslint-regexp
+  (concat "\\`" (regexp-quote ".eslintrc") "\\(\\.\\(js\\|ya?ml\\|json\\)\\)?\\'"))
 
-  (defconst jethro/jshint-regexp
-    (concat "\\`" (regexp-quote ".jshintrc") "\\'"))
+(defun jethro/js2-mode-hook ()
+  (cond
+   ((jethro/locate-dominating-file jethro/jshint-regexp)
+    (flycheck-select-checker 'javascript-jshint))
+   ((jethro/locate-dominating-file jethro/eslint-regexp)
+    (flycheck-select-checker 'javascript-eslint))))
 
-  (defconst jethro/eslint-regexp
-    (concat "\\`" (regexp-quote ".eslintrc") "\\(\\.\\(js\\|ya?ml\\|json\\)\\)?\\'"))
-
-  (defun jethro/js2-mode-hook ()
-    (cond
-     ((jethro/locate-dominating-file jethro/jshint-regexp)
-      (flycheck-select-checker 'javascript-jshint))
-     ((jethro/locate-dominating-file jethro/eslint-regexp)
-      (flycheck-select-checker 'javascript-eslint))))
-
-  (use-package js2-mode
-    :mode ("\\.js\\'" . js2-mode)
-    :config (add-hook 'js2-mode-hook #'jethro/js2-mode-hook)
+(use-package js2-mode
+  :mode ("\\.js\\'" . js2-mode)
+  :config
+  (add-hook 'js2-mode-hook #'jethro/js2-mode-hook)
+  (use-package tern
+    :diminish tern-mode
+    :config    
+    (add-hook 'js2-mode-hook 'tern-mode)
     (use-package company-tern
-      :config
-      (add-hook 'js3-mode-hook (lambda ()
-                                 (set (make-local-variable 'company-backends) '(company-tern))
-                                 (company-mode)))))
+                  :config
+                  (add-to-list 'company-backends 'company-tern))))
 #+end_src
 
 Also, enable company-tern as the completion backend.
 
+#+begin_src emacs-lisp :tangle yes
+
+#+end_src
 *** Web-mode
  #+begin_src emacs-lisp :tangle yes
  (use-package web-mode
@@ -584,104 +594,104 @@ Displays added/modified/deleted on the left.
 #+end_src
 *** TODO Everything Else
 #+begin_src emacs-lisp :tangle yes
-(use-package org-plus-contrib
-  :bind (("C-c c" . org-capture)
-         ("C-c a" . jethro/org-check-agenda)
-         ("C-c l" . org-store-link))
-  :mode ("\\.org\\'" . org-mode)
-  :init
-  (add-hook 'org-mode-hook #'trunc-lines-hook)
-  (setq org-ellipsis "⤵")
-  (setq org-directory "~/.org")
-  (setq org-default-notes-directory (concat org-directory "/notes.org"))          
-  (setq org-agenda-dim-blocked-tasks t) ;;clearer agenda
+  (use-package org-plus-contrib
+    :bind (("C-c c" . org-capture)
+           ("C-c a" . jethro/org-check-agenda)
+           ("C-c l" . org-store-link))
+    :mode ("\\.org\\'" . org-mode)
+    :init
+    (add-hook 'org-mode-hook #'trunc-lines-hook)
+    (setq org-ellipsis "⤵")
+    (setq org-directory "~/.org")
+    (setq org-default-notes-directory (concat org-directory "/notes.org"))          
+    (setq org-agenda-dim-blocked-tasks t) ;;clearer agenda
   
-  (setq org-agenda-files jk/org-agenda-files)
-  (setq org-hide-emphasis-markers t)
-  (setq org-src-tab-acts-natively t)
-  (font-lock-add-keywords 'org-mode
-                          '(("^ +\\([-*]\\) "
-                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•")))))) 
-  (setq org-refile-targets
-        '((nil :maxlevel . 3)
-          (org-agenda-files :maxlevel . 3)))
-  (setq org-use-fast-todo-selection t)
-  (setq org-treat-S-cursor-todo-selection-as-state-change nil)
-  (setq org-capture-templates
-        '(("b" "Book" entry (file "~/.org/books.org")
-           "* TO-READ %(org-set-tags)%? %i\n")))
-  (setq org-publish-project-alist
-        '(("org-books"
-           ;; Path to your org files.
-           :publishing-function org-html-publish-to-html
-           :publishing-directory "~/Documents/Code/jethrokuan.github.io/"
-           :base-directory "~/.org/"
-           :exclude ".*"
-           :include ["books.org"]
-           :with-emphasize t
-           :with-todo-keywords t
-           :with-toc nil
-           :html-head "<link rel=\"stylesheet\" href=\"/css/org.css\" type=\"text/css\">"
-           :html-preamble t)))
-  (setq org-latex-pdf-process
-        '("xelatex -shell-escape -interaction nonstopmode %f"
-          "xelatex -shell-escape -interaction nonstopmode %f"))
-  (require 'ox-latex)
-  (setq org-latex-tables-booktabs t)
-  (setq org-latex-listings 'minted)
-  (setq org-latex-minted-options
-        '(("frame" "lines")
-          ("linenos")
-          ("numbersep" "5pt")
-          ("framesep" "2mm")))
-  (add-to-list 'org-latex-classes
-               '("org-article"
-                 "\\documentclass[11pt,a4paper]{article}
-                  \\usepackage[T1]{fontenc}
-                  \\usepackage{booktabs}
-                  \\usepackage{minted}
-                  \\usemintedstyle{borland}
-                  \\usepackage{color}
-                  \\setcounter{tocdepth}{2}
-                  \\usepackage{xcolor}
-                  \\usepackage{soul}
-                  \\definecolor{Light}{gray}{.90}
-                  \\sethlcolor{Light}
-                  \\let\\OldTexttt\\texttt
-                  \\renewcommand{\\texttt}[1]{\\OldTexttt{\\hl{#1}}}
-                  \\usepackage{epigraph}
-                  \\usepackage{enumitem}
-                  \\setlist{nosep}
-                  \\setlength\\epigraphwidth{13cm}
-                  \\setlength\\epigraphrule{0pt}
-                  \\usepackage{fontspec}
-                  \\usepackage{graphicx} 
-                  \\usepackage{parskip}
-                  \\defaultfontfeatures{Mapping=tex-text}
-                  \\let\\oldsection\\section
-                  \\renewcommand\\section{\\clearpage\\oldsection}
-                  \\setlength{\\parskip}{1em}
-                  \\setromanfont{Bitter}
-                  \\setromanfont         [BoldFont={Bitter Bold},
-                                 ItalicFont={Bitter Italic}]{Bitter}
-                  \\setmonofont[Scale=1.0]{mononoki}
-                  \\usepackage{geometry}
-                  \\usepackage{hyperref}
-                  \\hypersetup {colorlinks = true, allcolors = red}
-                  \\geometry{a4paper, textwidth=6.5in, textheight=10in,
-                              marginparsep=7pt, marginparwidth=.6in}
-                  \\pagestyle{empty}
-                  \\title{}                  
-                  [NO-DEFAULT-PACKAGES]
-                  [NO-PACKAGES]"
-                 ("\\section{%s}" . "\\section*{%s}")
-                 ("\\subsection{%s}" . "\\subsection*{%s}")
-                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-  :config 
-  (use-package ox-reveal
-    :config (require 'ox-reveal)))
+    (setq org-agenda-files jk/org-agenda-files)
+    (setq org-hide-emphasis-markers t)
+    (setq org-src-tab-acts-natively t)
+    (font-lock-add-keywords 'org-mode
+                    '(("^ +\\([-*]\\) "
+                       (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•")))))) 
+    (setq org-refile-targets
+          '((nil :maxlevel . 3)
+            (org-agenda-files :maxlevel . 3)))
+    (setq org-use-fast-todo-selection t)
+    (setq org-treat-S-cursor-todo-selection-as-state-change nil)
+    (setq org-capture-templates
+          '(("b" "Book" entry (file "~/.org/books.org")
+             "* TO-READ %(org-set-tags)%? %i\n")))
+    (setq org-publish-project-alist
+          '(("org-books"
+             ;; Path to your org files.
+             :publishing-function org-html-publish-to-html
+             :publishing-directory "~/Documents/Code/jethrokuan.github.io/"
+             :base-directory "~/.org/"
+             :exclude ".*"
+             :include ["books.org"]
+             :with-emphasize t
+             :with-todo-keywords t
+             :with-toc nil
+             :html-head "<link rel=\"stylesheet\" href=\"/css/org.css\" type=\"text/css\">"
+             :html-preamble t)))
+    (setq org-latex-pdf-process
+          '("xelatex -shell-escape -interaction nonstopmode %f"
+            "xelatex -shell-escape -interaction nonstopmode %f"))
+    (require 'ox-latex)
+    (setq org-latex-tables-booktabs t)
+    (setq org-latex-listings 'minted)
+    (setq org-latex-minted-options
+          '(("frame" "lines")
+            ("linenos")
+            ("numbersep" "5pt")
+            ("framesep" "2mm")))
+    (add-to-list 'org-latex-classes
+                 '("org-article"
+                   "\\documentclass[11pt,a4paper]{article}
+                    \\usepackage[T1]{fontenc}
+                    \\usepackage{booktabs}
+                    \\usepackage{minted}
+                    \\usemintedstyle{borland}
+                    \\usepackage{color}
+                    \\setcounter{tocdepth}{2}
+                    \\usepackage{xcolor}
+                    \\usepackage{soul}
+                    \\definecolor{Light}{gray}{.90}
+                    \\sethlcolor{Light}
+                    \\let\\OldTexttt\\texttt
+                    \\renewcommand{\\texttt}[1]{\\OldTexttt{\\hl{#1}}}
+                    \\usepackage{epigraph}
+                    \\usepackage{enumitem}
+                    \\setlist{nosep}
+                    \\setlength\\epigraphwidth{13cm}
+                    \\setlength\\epigraphrule{0pt}
+                    \\usepackage{fontspec}
+                    \\usepackage{graphicx} 
+                    \\usepackage{parskip}
+                    \\defaultfontfeatures{Mapping=tex-text}
+                    \\let\\oldsection\\section
+                    \\renewcommand\\section{\\clearpage\\oldsection}
+                    \\setlength{\\parskip}{1em}
+                    \\setromanfont{Bitter}
+                    \\setromanfont         [BoldFont={Bitter Bold},
+                                   ItalicFont={Bitter Italic}]{Bitter}
+                    \\setmonofont[Scale=1.0]{mononoki}
+                    \\usepackage{geometry}
+                    \\usepackage{hyperref}
+                    \\hypersetup {colorlinks = true, allcolors = red}
+                    \\geometry{a4paper, textwidth=6.5in, textheight=10in,
+                                marginparsep=7pt, marginparwidth=.6in}
+                    \\pagestyle{empty}
+                    \\title{}                  
+                    [NO-DEFAULT-PACKAGES]
+                    [NO-PACKAGES]"
+                   ("\\section{%s}" . "\\section*{%s}")
+                   ("\\subsection{%s}" . "\\subsection*{%s}")
+                   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                   ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                   ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+    :config 
+    (use-package ox-reveal
+      :config (require 'ox-reveal)))
 #+end_src
 *** jethro/org-sort-books
 I like to keep my books in sorted order, alphanumerically, and then my TODO keyword.

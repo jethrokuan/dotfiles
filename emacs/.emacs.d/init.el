@@ -70,8 +70,13 @@
 (bind-key* "C-o" 'bookmark-jump)
 
 (use-package tao-theme
+  :disabled t
   :init
   (load-theme 'tao-yang t))
+
+(use-package spacemacs-theme
+  :init
+  (load-theme 'spacemacs-dark t))
 
 (defun split-and-move-right ()
   (interactive)
@@ -281,10 +286,8 @@
    default-directory
    (lambda (directory)
      (> (length (directory-files directory nil regexp t)) 0))))
-
 (defconst jethro/jshint-regexp
   (concat "\\`" (regexp-quote ".jshintrc") "\\'"))
-
 (defconst jethro/eslint-regexp
   (concat "\\`" (regexp-quote ".eslintrc") "\\(\\.\\(js\\|ya?ml\\|json\\)\\)?\\'"))
 
@@ -297,12 +300,17 @@
 
 (use-package js2-mode
   :mode ("\\.js\\'" . js2-mode)
-  :config (add-hook 'js2-mode-hook #'jethro/js2-mode-hook)
-  (use-package company-tern
-    :config
-    (add-hook 'js3-mode-hook (lambda ()
-                               (set (make-local-variable 'company-backends) '(company-tern))
-                               (company-mode)))))
+  :config
+  (add-hook 'js2-mode-hook #'jethro/js2-mode-hook)
+  (use-package tern
+    :diminish tern-mode
+    :config    
+    (add-hook 'js2-mode-hook 'tern-mode)
+    (use-package company-tern
+                  :config
+                  (add-to-list 'company-backends 'company-tern))))
+
+
 
 (use-package web-mode
   :mode (("\\.html\\'" . web-mode)
@@ -423,13 +431,13 @@
   (setq org-directory "~/.org")
   (setq org-default-notes-directory (concat org-directory "/notes.org"))          
   (setq org-agenda-dim-blocked-tasks t) ;;clearer agenda
-  
+
   (setq org-agenda-files jk/org-agenda-files)
   (setq org-hide-emphasis-markers t)
   (setq org-src-tab-acts-natively t)
   (font-lock-add-keywords 'org-mode
-                          '(("^ +\\([-*]\\) "
-                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•")))))) 
+                  '(("^ +\\([-*]\\) "
+                     (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•")))))) 
   (setq org-refile-targets
         '((nil :maxlevel . 3)
           (org-agenda-files :maxlevel . 3)))
