@@ -1,4 +1,4 @@
-# -*- after-save-hook: (org-babel-tangle); -*-
+# -*- after-save-hook: (jethro/org-after-save-init); -*-
 * Basic Setup
 ** Add MELPA and Org Repository
 Add package archives. Note that I'm using HTTP, HTTPS did not work for me.
@@ -10,6 +10,7 @@ Add package archives. Note that I'm using HTTP, HTTPS did not work for me.
   (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
   (package-initialize))
 #+END_SRC
+
 ** Add [[https://github.com/jwiegley/use-package/issues/70][use-package]]
 #+BEGIN_SRC emacs-lisp :tangle yes
 (unless (package-installed-p 'use-package)
@@ -24,22 +25,26 @@ Add package archives. Note that I'm using HTTP, HTTPS did not work for me.
   (require 'diminish)
   (setq use-package-always-ensure t))
 #+END_SRC
+
 ** User configuration
 #+begin_src emacs-lisp :tangle yes
 (setq user-full-name "Jethro Kuan"
       user-mail-address "jethrokuan95@gmail.com")
 #+end_src
+
 ** Sensible Defaults
 *** Custom File
 #+BEGIN_SRC emacs-lisp :tangle yes
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 #+END_SRC
+
 *** Custom font
 #+BEGIN_SRC emacs-lisp :tangle yes
 (add-to-list 'default-frame-alist
              '(font . "Fira Code-12"))
 #+END_SRC
+
 *** UI Cruft
 #+begin_src emacs-lisp :tangle yes
 (tooltip-mode -1)
@@ -49,16 +54,20 @@ Add package archives. Note that I'm using HTTP, HTTPS did not work for me.
 (setq inhibit-splash-screen t)
 (setq inhibit-startup-message t)
 #+end_src
+
 *** Use y/n over yes/no
 #+BEGIN_SRC emacs-lisp :tangle yes
 (defalias 'yes-or-no-p 'y-or-n-p)
 #+END_SRC
+
 *** Replace region when typing
 #+BEGIN_SRC emacs-lisp :tangle yes
 (delete-selection-mode +1)
 #+end_src
+
 *** Sentences
 Emacs uses double-spaces by default. Use single spaces by default:
+
 #+BEGIN_QUOTE
 NOTE: This will cause an indistinction between sentences and name abbrieviations (eg. E. B. White)
 #+END_QUOTE
@@ -66,19 +75,23 @@ NOTE: This will cause an indistinction between sentences and name abbrieviations
 #+begin_src emacs-lisp :tangle yes
 (setq sentence-end-double-space nil)
 #+end_src
+
 *** Tab with 2 spaces
 #+begin_src emacs-lisp :tangle yes
 (setq-default tab-width 2)
 (setq-default js-indent-level 2)
 (setq-default indent-tabs-mode nil)
 #+end_src
+
 *** Don't wrap lines
 Don't wrap lines for coding. Create a hook that enables wrapping, for modes like org-mode and markdown-mode.
+
 #+begin_src emacs-lisp :tangle yes
 (setq-default truncate-lines t)
 (defun trunc-lines-hook ()
   (setq truncate-lines nil))
 #+end_src
+
 *** Backup directory
 #+begin_src emacs-lisp :tangle yes
 (setq backup-directory-alist
@@ -86,7 +99,7 @@ Don't wrap lines for coding. Create a hook that enables wrapping, for modes like
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 #+end_src
-**** Purge backup files
+
 The following code will delete all backup files that are older than a certain date:
 
 #+begin_src emacs-lisp :tangle yes
@@ -104,23 +117,27 @@ The following code will delete all backup files that are older than a certain da
 #+begin_src emacs-lisp :tangle yes
 (load "~/.emacs.d/secrets.el" t)
 #+end_src
+
 ** Add PATH to eshell
 #+begin_src emacs-lisp :tangle yes
 (use-package exec-path-from-shell
   :demand t
   :init (exec-path-from-shell-initialize))
 #+end_src
+
 ** Bookmarks
 I use bookmarks to jump around to my files. I bind bookmark-jump to =C-o= to make it more accessible.
 #+begin_src emacs-lisp :tangle yes
 (bind-key* "C-o" 'bookmark-jump)
 #+end_src
+
 ** Theme
 #+begin_src emacs-lisp :tangle yes
 (use-package tao-theme
   :init
   (load-theme 'tao-yang t))
 #+end_src
+
 * Ivy
 I've recently switched over from =helm= to =ivy=. This is because the API for ivy is simpler, and thus makes it easier to extend.
 
@@ -535,8 +552,6 @@ Highlights recently copied/pasted text.
 Displays added/modified/deleted on the left.
 #+begin_src emacs-lisp :tangle yes
   (use-package git-gutter+
-    :bind* (("C-g n". git-gutter+-next-hunk)
-            ("C-g s" . git-gutter+-stage-hunks))
     :init (global-git-gutter+-mode)
     :diminish git-gutter+-mode
     :defer 5
@@ -545,8 +560,12 @@ Displays added/modified/deleted on the left.
               (setq git-gutter+-added-sign "++")
               (setq git-gutter+-deleted-sign "--")))
 #+end_src
-* Org-mode
-*** Org-agenda-files
+* Org-mode 
+** Htmlize
+#+begin_src emacs-lisp :tangle yes
+(use-package htmlize)
+#+end_src
+** Org-agenda-files
 #+begin_src emacs-lisp :tangle yes
 (defvar jk/org-agenda-files
   (append
@@ -555,7 +574,7 @@ Displays added/modified/deleted on the left.
    (file-expand-wildcards "~/.org/gtd/*.org"))
   "Files to include in org-agenda-files")
 #+end_src
-*** TODO Everything Else
+** TODO Everything Else
 #+begin_src emacs-lisp :tangle yes
   (use-package org-plus-contrib
     :bind (("C-c c" . org-capture)
@@ -586,7 +605,7 @@ Displays added/modified/deleted on the left.
     (use-package ox-reveal
       :config (require 'ox-reveal)))
 #+end_src
-*** org-icalendar
+** org-icalendar
 #+begin_src emacs-lisp :tangle yes
   (setq org-icalendar-combined-agenda-file (concat org-directory "/org.ics"))
   (setq org-icalendar-include-todo '(all))
@@ -598,10 +617,10 @@ Displays added/modified/deleted on the left.
   (defun jethro/org-ical-export()
     (org-icalendar-combine-agenda-files))
 #+end_src
-*** org-publish
+** org-publish
 #+begin_src emacs-lisp :tangle yes
   (setq org-publish-project-alist
-        '(("org-books"
+        '(("books"
            ;; Path to your org files.
            :publishing-function org-html-publish-to-html
            :publishing-directory "~/Documents/Code/jethrokuan.github.io/"
@@ -612,9 +631,20 @@ Displays added/modified/deleted on the left.
            :with-todo-keywords t
            :with-toc nil
            :html-head "<link rel=\"stylesheet\" href=\"/css/org.css\" type=\"text/css\">"
+           :html-preamble t)
+          ("emacs.d"
+           :publishing-function org-html-publish-to-html
+           :publishing-directory "~/Documents/Code/jethrokuan.github.io/"
+           :base-directory "~/.emacs.d/"
+           :exclude ".*"
+           :include ["init.org"]
+           :with-emphasize t
+           :with-toc t
+           :html-head "<link href=\"http://fonts.googleapis.com/css?family=Roboto+Slab:400,700|Inconsolata:400,700\" type=\"text/css\" rel=\"stylesheet\">"         
+           :html-head "<link rel=\"stylesheet\" href=\"https://raw.githubusercontent.com/thi-ng/org-spec/master/css/style.css\" type=\"text/css\">"
            :html-preamble t)))
 #+end_src
-*** org-latex
+** org-latex
 I use export to LaTeX through ox-latex, using xelatex for a nicer export template.
 #+begin_src emacs-lisp :tangle yes
   (setq org-latex-pdf-process
@@ -674,7 +704,7 @@ I use export to LaTeX through ox-latex, using xelatex for a nicer export templat
                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 #+end_src
-*** jethro/org-sort-books
+** jethro/org-sort-books
 I like to keep my books in sorted order, alphanumerically, and then my TODO keyword.
 #+begin_src emacs-lisp :tangle yes
 (defun jethro/org-sort-books ()
@@ -688,7 +718,13 @@ I like to keep my books in sorted order, alphanumerically, and then my TODO keyw
       (org-global-cycle)
       (goto-char old-point)))
 #+end_src
-*** jethro/org-check-agenda
+** jethro/org-after-save-init
+#+begin_src emacs-lisp :tangle yes
+  (defun jethro/org-after-save-init ()
+    (org-babel-tangle)
+    (org-publish "emacs.d"))
+#+end_src
+** jethro/org-check-agenda
 Quickly access agenda for the week.
 #+begin_src emacs-lisp :tangle yes
 (defun jethro/org-check-agenda ()
@@ -701,7 +737,7 @@ Quickly access agenda for the week.
       (switch-to-buffer-other-window "*Org Agenda*"))
      (t (org-agenda nil "a"))))
 #+end_src
-*** org-gcal
+** org-gcal
 Sync calendar.google.com into a local org file.
 
 =jethro/org-gcal-client-id= and =jethro/org-gcal-client-secret= are defined in =secrets.el=.
@@ -713,7 +749,7 @@ Sync calendar.google.com into a local org file.
         org-gcal-client-secret jethro/org-gcal-client-secret
         org-gcal-file-alist '(("jethrokuan95@gmail.com" .  "~/.org/calendars/jethro_gmail.org"))))
 #+end_src
-*** TODO gtd-mode
+** TODO gtd-mode
 #+begin_src emacs-lisp :tangle yes
   (use-package gtd-mode
     :bind (("C-c x" . gtd-clear-inbox)

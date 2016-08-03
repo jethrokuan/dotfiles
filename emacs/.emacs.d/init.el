@@ -380,8 +380,6 @@
   :config (volatile-highlights-mode t))
 
 (use-package git-gutter+
-  :bind* (("C-g n". git-gutter+-next-hunk)
-          ("C-g s" . git-gutter+-stage-hunks))
   :init (global-git-gutter+-mode)
   :diminish git-gutter+-mode
   :defer 5
@@ -389,6 +387,8 @@
             (setq git-gutter+-modified-sign "==")
             (setq git-gutter+-added-sign "++")
             (setq git-gutter+-deleted-sign "--")))
+
+(use-package htmlize)
 
 (defvar jk/org-agenda-files
   (append
@@ -437,7 +437,7 @@
   (org-icalendar-combine-agenda-files))
 
 (setq org-publish-project-alist
-      '(("org-books"
+      '(("books"
          ;; Path to your org files.
          :publishing-function org-html-publish-to-html
          :publishing-directory "~/Documents/Code/jethrokuan.github.io/"
@@ -448,6 +448,17 @@
          :with-todo-keywords t
          :with-toc nil
          :html-head "<link rel=\"stylesheet\" href=\"/css/org.css\" type=\"text/css\">"
+         :html-preamble t)
+        ("emacs.d"
+         :publishing-function org-html-publish-to-html
+         :publishing-directory "~/Documents/Code/jethrokuan.github.io/"
+         :base-directory "~/.emacs.d/"
+         :exclude ".*"
+         :include ["init.org"]
+         :with-emphasize t
+         :with-toc t
+         :html-head "<link href=\"http://fonts.googleapis.com/css?family=Roboto+Slab:400,700|Inconsolata:400,700\" type=\"text/css\" rel=\"stylesheet\">"         
+         :html-head "<link rel=\"stylesheet\" href=\"https://raw.githubusercontent.com/thi-ng/org-spec/master/css/style.css\" type=\"text/css\">"
          :html-preamble t)))
 
 (setq org-latex-pdf-process
@@ -517,6 +528,10 @@
       (show-all)
       (org-global-cycle)
       (goto-char old-point)))
+
+(defun jethro/org-after-save-init ()
+  (org-babel-tangle)
+  (org-publish "emacs.d"))
 
 (defun jethro/org-check-agenda ()
     "Peek at agenda."
