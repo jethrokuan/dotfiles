@@ -2,7 +2,12 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("calendar.org"
+(("waiting_for.org"
+ (filename . "~/.org/gtd/waiting_for.org")
+ (front-context-string . "#+TODO: WAITING ")
+ (rear-context-string)
+ (position . 1))
+("calendar.org"
  (filename . "~/.org/gtd/calendar.org")
  (front-context-string . "# -*- after-save")
  (rear-context-string)
@@ -63,13 +68,13 @@
 #1=(#("org-capture-last-stored" 0 23
       (bmkp-full-record #1#))
     (filename . "~/.org/gtd/inbox.org")
-    (front-context-string . "* Vishnu owes me")
+    (front-context-string)
     (rear-context-string)
     (position . 1))
 #1=(#("org-refile-last-stored" 0 22
       (bmkp-full-record #1#))
-    (filename . "~/.org/gtd/waiting_for.org")
-    (front-context-string . "** Vishnu owes m")
-    (rear-context-string . "u owes me 29.25\n")
-    (position . 56))
+    (filename . "~/.org/gtd/next_actions.org")
+    (front-context-string)
+    (rear-context-string . "\n* Next Actions\n")
+    (position . 84))
 )
