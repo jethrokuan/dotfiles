@@ -390,16 +390,9 @@
 
 (use-package htmlize)
 
-(defvar jk/org-agenda-files
-  (append
-   ;;(file-expand-wildcards "~/.org/*.org")
-   (file-expand-wildcards "~/.org/calendars/*.org")
-   (file-expand-wildcards "~/.org/gtd/*.org"))
-  "Files to include in org-agenda-files")
-
 (use-package org-plus-contrib
   :bind (("C-c c" . org-capture)
-         ("C-c a" . jethro/org-check-agenda)
+         ("C-c a" . org-agenda)
          ("C-c l" . org-store-link))
   :mode ("\\.org\\'" . org-mode)
   :init
@@ -407,8 +400,6 @@
   (setq org-ellipsis "⤵")
   (setq org-directory "~/.org")
   (setq org-default-notes-directory (concat org-directory "/notes.org"))          
-  (setq org-agenda-dim-blocked-tasks t) ;;clearer agenda
-  (setq org-agenda-files jk/org-agenda-files)
   (setq org-hide-emphasis-markers t)
   (setq org-src-tab-acts-natively t)
   (font-lock-add-keywords 'org-mode
@@ -421,10 +412,24 @@
   (setq org-treat-S-cursor-todo-selection-as-state-change nil)
   (setq org-capture-templates
         '(("b" "Book" entry (file "~/.org/books.org")
-           "* TO-READ %(org-set-tags)%? %i\n")))
-  :config 
-  (use-package ox-reveal
-    :config (require 'ox-reveal)))
+           "* TO-READ %(org-set-tags)%? %i\n"))))
+
+(defvar jethro/org-agenda-files
+  (append
+   ;;(file-expand-wildcards "~/.org/*.org")
+   (file-expand-wildcards "~/.org/calendars/*.org")
+   (file-expand-wildcards "~/.org/gtd/*.org"))
+  "Files to include in org-agenda-files")
+
+(setq org-agenda-files jethro/org-agenda-files)
+
+(setq org-agenda-custom-commands 
+      '(("w" todo "WAITING" nil) 
+        ("n" todo "NEXT" nil)
+        ("d" "Agenda + Next Actions" ((agenda) (todo "NEXT"))))
+      )
+
+(setq org-agenda-dim-blocked-tasks t)
 
 (setq org-icalendar-combined-agenda-file (concat org-directory "/org.ics"))
 (setq org-icalendar-include-todo '(all))
@@ -457,8 +462,7 @@
          :include ["init.org"]
          :with-emphasize t
          :with-toc t
-         :html-head "<link href=\"http://fonts.googleapis.com/css?family=Roboto+Slab:400,700|Inconsolata:400,700\" type=\"text/css\" rel=\"stylesheet\">"         
-         :html-head "<link rel=\"stylesheet\" href=\"https://raw.githubusercontent.com/thi-ng/org-spec/master/css/style.css\" type=\"text/css\">"
+         :html-head "<link rel=\"stylesheet\" href=\"/css/emacsd.css\" type=\"text/css\">"
          :html-preamble t)))
 
 (setq org-latex-pdf-process
@@ -518,6 +522,9 @@
                ("\\paragraph{%s}" . "\\paragraph*{%s}")
                ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
+(use-package ox-reveal
+    :config (require 'ox-reveal))
+
 (defun jethro/org-sort-books ()
     (interactive)
     (let ((old-point (point)))
@@ -532,23 +539,6 @@
 (defun jethro/org-after-save-init ()
   (org-babel-tangle)
   (org-publish "emacs.d"))
-
-(defun jethro/org-check-agenda ()
-    "Peek at agenda."
-    (interactive)
-    (cond
-     ((derived-mode-p 'org-agenda-mode)
-      (if (window-parent) (delete-window) (bury-buffer)))
-     ((get-buffer "*Org Agenda*")
-      (switch-to-buffer-other-window "*Org Agenda*"))
-     (t (org-agenda nil "a"))))
-
-(use-package org-gcal
-  :config
-  (require 'org-gcal)
-  (setq org-gcal-client-id jethro/org-gcal-client-id
-        org-gcal-client-secret jethro/org-gcal-client-secret
-        org-gcal-file-alist '(("jethrokuan95@gmail.com" .  "~/.org/calendars/jethro_gmail.org"))))
 
 (use-package gtd-mode
   :bind (("C-c x" . gtd-clear-inbox)

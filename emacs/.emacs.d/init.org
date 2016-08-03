@@ -561,24 +561,18 @@ Displays added/modified/deleted on the left.
               (setq git-gutter+-deleted-sign "--")))
 #+end_src
 * Org-mode 
-** Htmlize
+** Prerequisites
+*** Htmlize
+We need =htmlize= to add syntax highlighting to org-exports for HTML files.
+
 #+begin_src emacs-lisp :tangle yes
 (use-package htmlize)
 #+end_src
-** Org-agenda-files
-#+begin_src emacs-lisp :tangle yes
-(defvar jk/org-agenda-files
-  (append
-   ;;(file-expand-wildcards "~/.org/*.org")
-   (file-expand-wildcards "~/.org/calendars/*.org")
-   (file-expand-wildcards "~/.org/gtd/*.org"))
-  "Files to include in org-agenda-files")
-#+end_src
-** TODO Everything Else
+** Basic Configuration
 #+begin_src emacs-lisp :tangle yes
   (use-package org-plus-contrib
     :bind (("C-c c" . org-capture)
-           ("C-c a" . jethro/org-check-agenda)
+           ("C-c a" . org-agenda)
            ("C-c l" . org-store-link))
     :mode ("\\.org\\'" . org-mode)
     :init
@@ -586,8 +580,6 @@ Displays added/modified/deleted on the left.
     (setq org-ellipsis "⤵")
     (setq org-directory "~/.org")
     (setq org-default-notes-directory (concat org-directory "/notes.org"))          
-    (setq org-agenda-dim-blocked-tasks t) ;;clearer agenda
-    (setq org-agenda-files jk/org-agenda-files)
     (setq org-hide-emphasis-markers t)
     (setq org-src-tab-acts-natively t)
     (font-lock-add-keywords 'org-mode
@@ -600,10 +592,27 @@ Displays added/modified/deleted on the left.
     (setq org-treat-S-cursor-todo-selection-as-state-change nil)
     (setq org-capture-templates
           '(("b" "Book" entry (file "~/.org/books.org")
-             "* TO-READ %(org-set-tags)%? %i\n")))
-    :config 
-    (use-package ox-reveal
-      :config (require 'ox-reveal)))
+             "* TO-READ %(org-set-tags)%? %i\n"))))
+#+end_src
+** org-agenda
+#+begin_src emacs-lisp :tangle yes
+  (defvar jethro/org-agenda-files
+    (append
+     ;;(file-expand-wildcards "~/.org/*.org")
+     (file-expand-wildcards "~/.org/calendars/*.org")
+     (file-expand-wildcards "~/.org/gtd/*.org"))
+    "Files to include in org-agenda-files")
+
+  (setq org-agenda-files jethro/org-agenda-files)
+
+  (setq org-agenda-custom-commands 
+        '(("w" todo "WAITING" nil) 
+          ("n" todo "NEXT" nil)
+          ("d" "Agenda + Next Actions" ((agenda) (todo "NEXT"))))
+        )
+
+  (setq org-agenda-dim-blocked-tasks t)
+
 #+end_src
 ** org-icalendar
 #+begin_src emacs-lisp :tangle yes
@@ -640,8 +649,7 @@ Displays added/modified/deleted on the left.
            :include ["init.org"]
            :with-emphasize t
            :with-toc t
-           :html-head "<link href=\"http://fonts.googleapis.com/css?family=Roboto+Slab:400,700|Inconsolata:400,700\" type=\"text/css\" rel=\"stylesheet\">"         
-           :html-head "<link rel=\"stylesheet\" href=\"https://raw.githubusercontent.com/thi-ng/org-spec/master/css/style.css\" type=\"text/css\">"
+           :html-head "<link rel=\"stylesheet\" href=\"/css/emacsd.css\" type=\"text/css\">"
            :html-preamble t)))
 #+end_src
 ** org-latex
@@ -704,8 +712,13 @@ I use export to LaTeX through ox-latex, using xelatex for a nicer export templat
                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 #+end_src
+** ox-reveal
+#+begin_src emacs-lisp :tangle yes
+(use-package ox-reveal
+    :config (require 'ox-reveal))
+#+end_src
 ** jethro/org-sort-books
-I like to keep my books in sorted order, alphanumerically, and then my TODO keyword.
+I like to keep my books in sorted order, alphanumerically, and then by TODO keyword.
 #+begin_src emacs-lisp :tangle yes
 (defun jethro/org-sort-books ()
     (interactive)
@@ -724,32 +737,7 @@ I like to keep my books in sorted order, alphanumerically, and then my TODO keyw
     (org-babel-tangle)
     (org-publish "emacs.d"))
 #+end_src
-** jethro/org-check-agenda
-Quickly access agenda for the week.
-#+begin_src emacs-lisp :tangle yes
-(defun jethro/org-check-agenda ()
-    "Peek at agenda."
-    (interactive)
-    (cond
-     ((derived-mode-p 'org-agenda-mode)
-      (if (window-parent) (delete-window) (bury-buffer)))
-     ((get-buffer "*Org Agenda*")
-      (switch-to-buffer-other-window "*Org Agenda*"))
-     (t (org-agenda nil "a"))))
-#+end_src
-** org-gcal
-Sync calendar.google.com into a local org file.
-
-=jethro/org-gcal-client-id= and =jethro/org-gcal-client-secret= are defined in =secrets.el=.
-#+begin_src emacs-lisp :tangle yes
-(use-package org-gcal
-  :config
-  (require 'org-gcal)
-  (setq org-gcal-client-id jethro/org-gcal-client-id
-        org-gcal-client-secret jethro/org-gcal-client-secret
-        org-gcal-file-alist '(("jethrokuan95@gmail.com" .  "~/.org/calendars/jethro_gmail.org"))))
-#+end_src
-** TODO gtd-mode
+** gtd-mode
 #+begin_src emacs-lisp :tangle yes
   (use-package gtd-mode
     :bind (("C-c x" . gtd-clear-inbox)
