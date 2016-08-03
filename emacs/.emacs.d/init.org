@@ -139,6 +139,22 @@ I use bookmarks to jump around to my files. I bind bookmark-jump to =C-o= to mak
   (load-theme 'tao-yang t))
 #+end_src
 
+** Keybindings
+*** eshell with =C-x m=
+#+begin_src emacs-lisp :tangle yes
+  (bind-key* "C-x m" 'eshell)
+#+end_src
+*** mark-paragraph with =M-p=
+#+begin_src emacs-lisp :tangle yes
+  (bind-key* "M-p" 'mark-paragraph)
+#+end_src
+*** compile with =<f5>=
+#+begin_src emacs-lisp :tangle yes
+  (bind-key* "<f5>" (lambda ()
+                      (interactive)
+                      (setq-local compilation-read-command nil)
+                      (call-interactively 'compile)))
+#+end_src
 * Ivy
 I've recently switched over from =helm= to =ivy=. This is because the API for ivy is simpler, and thus makes it easier to extend.
 
