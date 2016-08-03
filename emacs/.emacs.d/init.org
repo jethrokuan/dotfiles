@@ -450,11 +450,11 @@ Also, enable company-tern as the completion backend.
  #+end_src
 *** Rainbow-mode
  #+begin_src emacs-lisp :tangle yes
- (use-package rainbow-mode
-   :mode (("\\.css\\'" . rainbow-mode)
-          ("\\.scss\\'" . rainbow-mode)
-          ("\\.sass\\'" . rainbow-mode))
-   :diminish rainbow-mode)
+   (use-package rainbow-mode
+     :diminish rainbow-mode
+     :config
+     (add-hook 'css-mode-hook 'rainbow-mode)
+     (add-hook 'scss-mode-hook 'rainbow-mode))
  #+end_src
 *** SCSS-mode
  #+begin_src emacs-lisp :tangle yes

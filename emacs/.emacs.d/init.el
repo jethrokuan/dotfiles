@@ -308,10 +308,10 @@
   :mode "\\.vue\\'")
 
 (use-package rainbow-mode
-  :mode (("\\.css\\'" . rainbow-mode)
-         ("\\.scss\\'" . rainbow-mode)
-         ("\\.sass\\'" . rainbow-mode))
-  :diminish rainbow-mode)
+  :diminish rainbow-mode
+  :config
+  (add-hook 'css-mode-hook 'rainbow-mode)
+  (add-hook 'scss-mode-hook 'rainbow-mode))
 
 (use-package scss-mode
   :mode "\\.scss\\'" 
