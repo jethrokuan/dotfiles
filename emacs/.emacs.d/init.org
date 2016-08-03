@@ -1,4 +1,5 @@
 # -*- after-save-hook: (jethro/org-after-save-init); -*-
+#+TITLE: Jethro's Emacs.d Configuration
 * Basic Setup
 ** Add MELPA and Org Repository
 Add package archives. Note that I'm using HTTP, HTTPS did not work for me.
@@ -304,6 +305,7 @@ Uses the avy-backend with z-to-char.
     :ensure f
     :diminish flyspell-mode
     :config
+    (add-hook 'text-mode-hook 'flyspell-mode)
     (add-hook 'org-mode-hook 'flyspell-mode)
     (add-hook 'markdown-mode-hook 'flyspell-mode))
 #+end_src
@@ -381,47 +383,7 @@ Uses the avy-backend with z-to-char.
   (elpy-enable)
   (setq elpy-rpc-backend "jedi"))
 #+end_src
-** HTML/CSS/JS
-*** JS2-mode
-**** Flycheck
-Turn on flycheck for JS2-mode. Pick the appropriate lint file.
-#+begin_src emacs-lisp :tangle yes
-(defun jethro/locate-dominating-file (regexp)
-  "Locate a directory with a file matching REGEXP."
-  (locate-dominating-file
-   default-directory
-   (lambda (directory)
-     (> (length (directory-files directory nil regexp t)) 0))))
-(defconst jethro/jshint-regexp
-  (concat "\\`" (regexp-quote ".jshintrc") "\\'"))
-(defconst jethro/eslint-regexp
-  (concat "\\`" (regexp-quote ".eslintrc") "\\(\\.\\(js\\|ya?ml\\|json\\)\\)?\\'"))
-
-(defun jethro/js2-mode-hook ()
-  (cond
-   ((jethro/locate-dominating-file jethro/jshint-regexp)
-    (flycheck-select-checker 'javascript-jshint))
-   ((jethro/locate-dominating-file jethro/eslint-regexp)
-    (flycheck-select-checker 'javascript-eslint))))
-
-(use-package js2-mode
-  :mode ("\\.js\\'" . js2-mode)
-  :config
-  (add-hook 'js2-mode-hook #'jethro/js2-mode-hook)
-  (use-package tern
-    :diminish tern-mode
-    :config    
-    (add-hook 'js2-mode-hook 'tern-mode)
-    (use-package company-tern
-                  :config
-                  (add-to-list 'company-backends 'company-tern))))
-#+end_src
-
-Also, enable company-tern as the completion backend.
-
-#+begin_src emacs-lisp :tangle yes
-
-#+end_src
+** HTML
 *** Web-mode
  #+begin_src emacs-lisp :tangle yes
  (use-package web-mode
@@ -443,11 +405,7 @@ Also, enable company-tern as the completion backend.
   (add-hook 'web-mode-hook 'emmet-mode)
   (add-hook 'vue-mode-hook 'emmet-mode))
  #+end_src
-*** Vue-mode
- #+begin_src emacs-lisp :tangle yes
- (use-package vue-mode
-   :mode "\\.vue\\'")
- #+end_src
+** CSS
 *** Rainbow-mode
  #+begin_src emacs-lisp :tangle yes
    (use-package rainbow-mode
@@ -463,7 +421,56 @@ Also, enable company-tern as the completion backend.
    :config (progn
              (setq scss-compile-at-save nil)))
  #+end_src
-*** JSON
+** JS
+*** Flycheck with jslint/eslint
+Turn on flycheck for JS2-mode. Pick the appropriate lint file.
+#+begin_src emacs-lisp :tangle yes
+  (defun jethro/locate-dominating-file (regexp)
+    "Locate a directory with a file matching REGEXP."
+    (locate-dominating-file
+     default-directory
+     (lambda (directory)
+       (> (length (directory-files directory nil regexp t)) 0))))
+  (defconst jethro/jshint-regexp
+    (concat "\\`" (regexp-quote ".jshintrc") "\\'"))
+  (defconst jethro/eslint-regexp
+    (concat "\\`" (regexp-quote ".eslintrc") "\\(\\.\\(js\\|ya?ml\\|json\\)\\)?\\'"))
+
+  (defun jethro/js2-mode-hook ()
+    (cond
+     ((jethro/locate-dominating-file jethro/jshint-regexp)
+      (flycheck-select-checker 'javascript-jshint))
+     ((jethro/locate-dominating-file jethro/eslint-regexp)
+      (flycheck-select-checker 'javascript-eslint))))
+#+end_src
+*** JS2-mode
+
+Here I also added =tern-mode=. This requires the tern executable:
+#+begin_src bash :tangle no
+npm install -g tern
+#+end_src
+
+#+begin_src emacs-lisp :tangle yes
+(use-package js2-mode
+  :mode ("\\.js\\'" . js2-mode)
+  :config
+  (add-hook 'js2-mode-hook #'jethro/js2-mode-hook)
+  (use-package tern
+    :diminish tern-mode
+    :config    
+    (add-hook 'js2-mode-hook 'tern-mode)
+    (use-package company-tern
+                  :config
+                  (add-to-list 'company-backends 'company-tern))))
+#+end_src
+*** Vue-mode
+Additional support for Vue.js projects.
+
+ #+begin_src emacs-lisp :tangle yes
+ (use-package vue-mode
+   :mode "\\.vue\\'")
+ #+end_src
+** JSON
  #+begin_src emacs-lisp :tangle yes
  (use-package json-mode
    :mode "\\.json\\'"
@@ -488,7 +495,6 @@ Also, enable company-tern as the completion backend.
 *** Cider
 #+begin_src emacs-lisp :tangle yes
 (use-package cider
-  :ensure t
   :init (add-hook 'cider-mode-hook #'clj-refactor-mode)
   :diminish subword-mode
   :config
@@ -648,6 +654,7 @@ We need =htmlize= to add syntax highlighting to org-exports for HTML files.
            :exclude ".*"
            :include ["init.org"]
            :with-emphasize t
+           :with-title nil         
            :with-toc t
            :html-head "<link rel=\"stylesheet\" href=\"/css/emacsd.css\" type=\"text/css\">"
            :html-preamble t)))

@@ -190,6 +190,7 @@
   :ensure f
   :diminish flyspell-mode
   :config
+  (add-hook 'text-mode-hook 'flyspell-mode)
   (add-hook 'org-mode-hook 'flyspell-mode)
   (add-hook 'markdown-mode-hook 'flyspell-mode))
 
@@ -255,6 +256,34 @@
   (elpy-enable)
   (setq elpy-rpc-backend "jedi"))
 
+(use-package web-mode
+  :mode (("\\.html\\'" . web-mode)
+         ("\\.html\\.erb\\'" . web-mode)
+         ("\\.mustache\\'" . web-mode)
+         ("\\.jinja\\'" . web-mode)
+         ("\\.php\\'" . web-mode))
+  :config  
+  (setq web-mode-enable-css-colorization t)
+  (setq web-mode-code-indent-offset 2)
+  (setq web-mode-markup-indent-offset 2))
+
+(use-package emmet-mode
+  :diminish emmet-mode
+  :config
+  (add-hook 'web-mode-hook 'emmet-mode)
+  (add-hook 'vue-mode-hook 'emmet-mode))
+
+(use-package rainbow-mode
+  :diminish rainbow-mode
+  :config
+  (add-hook 'css-mode-hook 'rainbow-mode)
+  (add-hook 'scss-mode-hook 'rainbow-mode))
+
+(use-package scss-mode
+  :mode "\\.scss\\'" 
+  :config (progn
+            (setq scss-compile-at-save nil)))
+
 (defun jethro/locate-dominating-file (regexp)
   "Locate a directory with a file matching REGEXP."
   (locate-dominating-file
@@ -285,38 +314,8 @@
                   :config
                   (add-to-list 'company-backends 'company-tern))))
 
-
-
-(use-package web-mode
-  :mode (("\\.html\\'" . web-mode)
-         ("\\.html\\.erb\\'" . web-mode)
-         ("\\.mustache\\'" . web-mode)
-         ("\\.jinja\\'" . web-mode)
-         ("\\.php\\'" . web-mode))
-  :config  
-  (setq web-mode-enable-css-colorization t)
-  (setq web-mode-code-indent-offset 2)
-  (setq web-mode-markup-indent-offset 2))
-
-(use-package emmet-mode
-  :diminish emmet-mode
-  :config
-  (add-hook 'web-mode-hook 'emmet-mode)
-  (add-hook 'vue-mode-hook 'emmet-mode))
-
 (use-package vue-mode
   :mode "\\.vue\\'")
-
-(use-package rainbow-mode
-  :diminish rainbow-mode
-  :config
-  (add-hook 'css-mode-hook 'rainbow-mode)
-  (add-hook 'scss-mode-hook 'rainbow-mode))
-
-(use-package scss-mode
-  :mode "\\.scss\\'" 
-  :config (progn
-            (setq scss-compile-at-save nil)))
 
 (use-package json-mode
   :mode "\\.json\\'"
@@ -336,7 +335,6 @@
   (add-hook 'clojure-mode-hook #'clj-refactor-mode))
 
 (use-package cider
-  :ensure t
   :init (add-hook 'cider-mode-hook #'clj-refactor-mode)
   :diminish subword-mode
   :config
@@ -461,6 +459,7 @@
          :exclude ".*"
          :include ["init.org"]
          :with-emphasize t
+         :with-title nil         
          :with-toc t
          :html-head "<link rel=\"stylesheet\" href=\"/css/emacsd.css\" type=\"text/css\">"
          :html-preamble t)))
