@@ -406,7 +406,8 @@
   (add-hook 'org-mode-hook #'trunc-lines-hook)
   (setq org-ellipsis "⤵")
   (setq org-directory "~/.org")
-  (setq org-default-notes-directory (concat org-directory "/notes.org"))          
+  (setq org-default-notes-directory (concat org-directory "/notes.org"))
+  (setq org-export-in-background t)
   (setq org-hide-emphasis-markers t)
   (setq org-src-tab-acts-natively t)
   (font-lock-add-keywords 'org-mode
@@ -483,47 +484,44 @@
       '(("frame" "lines")
         ("linenos")
         ("numbersep" "5pt")
-        ("framesep" "2mm")))
+        ("framesep" "2mm")
+        ("fontfamily" "tt")))
 (add-to-list 'org-latex-classes
              '("org-article"
                "\\documentclass[11pt,a4paper]{article}
-                    \\usepackage[T1]{fontenc}
-                    \\usepackage{booktabs}
-                    \\usepackage{minted}
-                    \\usemintedstyle{borland}
-                    \\usepackage{color}
-                    \\setcounter{tocdepth}{2}
-                    \\usepackage{xcolor}
-                    \\usepackage{soul}
-                    \\definecolor{Light}{gray}{.90}
-                    \\sethlcolor{Light}
-                    \\let\\OldTexttt\\texttt
-                    \\renewcommand{\\texttt}[1]{\\OldTexttt{\\hl{#1}}}
-                    \\usepackage{epigraph}
-                    \\usepackage{enumitem}
-                    \\setlist{nosep}
-                    \\setlength\\epigraphwidth{13cm}
-                    \\setlength\\epigraphrule{0pt}
-                    \\usepackage{fontspec}
-                    \\usepackage{graphicx} 
-                    \\usepackage{parskip}
-                    \\defaultfontfeatures{Mapping=tex-text}
-                    \\let\\oldsection\\section
-                    \\renewcommand\\section{\\clearpage\\oldsection}
-                    \\setlength{\\parskip}{1em}
-                    \\setromanfont{Bitter}
-                    \\setromanfont         [BoldFont={Bitter Bold},
-                                   ItalicFont={Bitter Italic}]{Bitter}
-                    \\setmonofont[Scale=1.0]{mononoki}
-                    \\usepackage{geometry}
-                    \\usepackage{hyperref}
-                    \\hypersetup {colorlinks = true, allcolors = red}
-                    \\geometry{a4paper, textwidth=6.5in, textheight=10in,
-                                marginparsep=7pt, marginparwidth=.6in}
-                    \\pagestyle{empty}
-                    \\title{}                  
-                    [NO-DEFAULT-PACKAGES]
-                    [NO-PACKAGES]"
+                      \\usepackage[default]{droidserif}
+                      \\usepackage[T1]{fontenc}
+                      \\usepackage{booktabs}
+                      \\usepackage{minted}
+                      \\usemintedstyle{borland}
+                      \\usepackage{color}
+                      \\setcounter{tocdepth}{2}
+                      \\usepackage{xcolor}
+                      \\usepackage{soul}
+                      \\definecolor{Light}{gray}{.90}
+                      \\sethlcolor{Light}
+                      \\let\\OldTexttt\\texttt
+                      \\renewcommand{\\texttt}[1]{\\OldTexttt{\\hl{#1}}}
+                      \\usepackage{epigraph}
+                      \\usepackage{enumitem}
+                      \\setlist{nosep}
+                      \\setlength\\epigraphwidth{13cm}
+                      \\setlength\\epigraphrule{0pt}
+                      \\usepackage{fontspec}
+                      \\usepackage{graphicx} 
+                      \\usepackage{parskip}
+                      \\let\\oldsection\\section
+                      \\renewcommand\\section{\\clearpage\\oldsection}
+                      \\setlength{\\parskip}{1em}
+                      \\usepackage{geometry}
+                      \\usepackage{hyperref}
+                      \\hypersetup {colorlinks = true, allcolors = red}
+                      \\geometry{a4paper, textwidth=6.5in, textheight=10in,
+                                  marginparsep=7pt, marginparwidth=.6in}
+                      \\pagestyle{empty}
+                      \\title{}                  
+                      [NO-DEFAULT-PACKAGES]
+                      [NO-PACKAGES]"
                ("\\section{%s}" . "\\section*{%s}")
                ("\\subsection{%s}" . "\\subsection*{%s}")
                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
