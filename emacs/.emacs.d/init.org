@@ -592,7 +592,7 @@ We need =htmlize= to add syntax highlighting to org-exports for HTML files.
 #+end_src
 ** Basic Configuration
 #+begin_src emacs-lisp :tangle yes
-  (use-package org-plus-contrib
+  (use-package org
     :bind (("C-c c" . org-capture)
            ("C-c a" . org-agenda)
            ("C-c l" . org-store-link))
