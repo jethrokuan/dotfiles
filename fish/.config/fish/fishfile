@@ -1,11 +1,10 @@
 fisherman/await
 fisherman/debug
 jethrokuan/fish-emacs
-fisherman/fnm
+jethrokuan/fnm
 fisherman/fzf
 fisherman/get_file_age
 fisherman/getopts
-jethrokuan/git-distance
 jethrokuan/git_distance
 fisherman/git_porcelain
 fisherman/git_util
