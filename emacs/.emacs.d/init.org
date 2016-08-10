@@ -840,6 +840,12 @@ I like to keep my books in sorted order, alphanumerically, and then by TODO keyw
   (keyfreq-autosave-mode 1))
 #+end_src
 * Miscellaneous
+** Pivotal-mode
+#+begin_src emacs-lisp :tangle yes
+  (use-package pivotal-tracker
+    :config
+    (setq pivotal-api-token jethro/pivotal-api-token))
+#+end_src
 ** which-key
 #+begin_src emacs-lisp :tangle yes
 (use-package which-key

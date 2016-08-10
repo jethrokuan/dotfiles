@@ -615,6 +615,10 @@
   (keyfreq-mode 1)
   (keyfreq-autosave-mode 1))
 
+(use-package pivotal-tracker
+  :config
+  (setq pivotal-api-token jethro/pivotal-api-token))
+
 (use-package which-key
   :diminish which-key-mode
   :config (add-hook 'after-init-hook 'which-key-mode))
