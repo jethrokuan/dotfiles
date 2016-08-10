@@ -140,6 +140,15 @@ I use bookmarks to jump around to my files. I bind bookmark-jump to =C-o= to mak
 #+end_src
 
 ** Keybindings
+*** Nuke all buffers with =C-c !=
+#+begin_src emacs-lisp :tangle yes
+  (defun jethro/nuke-all-buffers ()
+    (interactive)
+    (mapcar 'kill-buffer (buffer-list))
+    (delete-other-windows))
+
+  (bind-key* "C-c !" 'jethro/nuke-all-buffers)
+#+end_src
 *** eshell with =C-x m=
 #+begin_src emacs-lisp :tangle yes
   (bind-key* "C-x m" 'eshell)
@@ -691,6 +700,13 @@ I use export to LaTeX through ox-latex, using xelatex for a nicer export templat
           ("numbersep" "5pt")
           ("framesep" "2mm")
           ("fontfamily" "tt")))
+  (add-to-list 'org-latex-classes
+               '("beamer"
+                 "\\documentclass\[presentation\]\{beamer\}"
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
   (add-to-list 'org-latex-classes
                '("org-article"
                  "\\documentclass[11pt,a4paper]{article}
