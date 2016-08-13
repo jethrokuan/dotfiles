@@ -537,7 +537,7 @@ Additional support for Vue.js projects.
 (use-package clj-refactor
   :defines cljr-add-keybindings-with-prefix
   :diminish clj-refactor-mode
-  :config (cljr-add-keybindings-with-prefix "C-c j"))
+  :config (cljr-add-keybindings-with-prefix "C-c C-j"))
 #+end_src
 ** Markdown
 #+begin_src emacs-lisp :tangle yes

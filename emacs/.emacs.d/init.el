@@ -366,7 +366,7 @@
 (use-package clj-refactor
   :defines cljr-add-keybindings-with-prefix
   :diminish clj-refactor-mode
-  :config (cljr-add-keybindings-with-prefix "C-c j"))
+  :config (cljr-add-keybindings-with-prefix "C-c C-j"))
 
 (use-package markdown-mode
   :mode ("\\.md\\'" . markdown-mode)
