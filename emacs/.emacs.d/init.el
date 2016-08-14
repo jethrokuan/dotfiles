@@ -343,8 +343,8 @@
   :mode (("\\.clj\\'" . clojure-mode)
          ("\\.boot\\'" . clojure-mode)
          ("\\.edn\\'" . clojure-mode)
-         ("\\.cljs\\'" . clojure-mode)
-         ("\\.cljs\\.hl\\'" . clojure-mode))
+         ("\\.cljs\\'" . clojurescript-mode)
+         ("\\.cljs\\.hl\\'" . clojurescript-mode))
   :init
   (add-hook 'clojure-mode-hook #'eldoc-mode)
   (add-hook 'clojure-mode-hook #'subword-mode)
