@@ -170,42 +170,44 @@ I've recently switched over from =helm= to =ivy=. This is because the API for iv
 ** Counsel
 Counsel contains ivy enhancements for commonly-used functions.
 #+begin_src emacs-lisp :tangle yes
-(use-package counsel
-  :demand t
-  :bind*
-  (("C-c C-r" . ivy-resume)
-   ("M-a" . counsel-M-x)
-   ("C-M-i" . counsel-imenu)
-   ("C-x C-f" . counsel-find-file)
-   ("C-c u" . counsel-unicode-char)
-   ("C-c g" . counsel-git)
-   ("C-c j" . counsel-git-grep)
-   ("C-c k" . counsel-ag)
-   ("C-c l" . counsel-locate))
-  :bind (:map help-map
-          ("f" . counsel-describe-function)
-          ("v" . counsel-describe-variable)
-          ("l" . counsel-info-lookup-symbol))
-  :config
-  (ivy-mode 1)
-  (setq counsel-find-file-at-point t)
-  (setq ivy-use-virtual-buffers t)
-  (setq ivy-initial-inputs-alist nil)
-  (ivy-set-actions
-   'counsel-find-file
-   '(("d" (lambda (x) (delete-file (expand-file-name x)))
-      "delete"
-      )))
-  (ivy-set-actions
-   'ivy-switch-buffer
-   '(("k"
-      (lambda (x)
-        (kill-buffer x)
-        (ivy--reset-state ivy-last))
-      "kill")
-     ("j"
-      ivy--switch-buffer-other-window-action
-     "other window"))))
+  (use-package counsel
+    :demand t
+    :bind*
+    (("C-c C-r" . ivy-resume)
+     ("M-a" . counsel-M-x)
+     ("C-M-i" . counsel-imenu)
+     ("C-x C-f" . counsel-find-file)
+     ("C-c u" . counsel-unicode-char)
+     ("C-c g" . counsel-git)
+     ("C-c j" . counsel-git-grep)
+     ("C-c k" . counsel-ag)
+     ("C-c l" . counsel-locate))
+    :bind (:map help-map
+                ("f" . counsel-describe-function)
+                ("v" . counsel-describe-variable)
+                ("l" . counsel-info-lookup-symbol))
+    :config
+    (ivy-mode 1)
+    (setq counsel-find-file-at-point t)
+    (setq ivy-use-virtual-buffers t)
+    (setq ivy-re-builders-alist
+          '((t . ivy--regex-fuzzy)))
+    (setq ivy-initial-inputs-alist nil)
+    (ivy-set-actions
+     'counsel-find-file
+     '(("d" (lambda (x) (delete-file (expand-file-name x)))
+        "delete"
+        )))
+    (ivy-set-actions
+     'ivy-switch-buffer
+     '(("k"
+        (lambda (x)
+          (kill-buffer x)
+          (ivy--reset-state ivy-last))
+        "kill")
+       ("j"
+        ivy--switch-buffer-other-window-action
+        "other window"))))
 #+end_src
 
 ** Swiper
@@ -537,7 +539,7 @@ Additional support for Vue.js projects.
 (use-package clj-refactor
   :defines cljr-add-keybindings-with-prefix
   :diminish clj-refactor-mode
-  :config (cljr-add-keybindings-with-prefix "C-c j"))
+  :config (cljr-add-keybindings-with-prefix "C-c C-j"))
 #+end_src
 ** Markdown
 #+begin_src emacs-lisp :tangle yes
@@ -546,6 +548,12 @@ Additional support for Vue.js projects.
   :config (progn
             (setq markdown-command "multimarkdown")
             (add-hook 'markdown-mode-hook #'trunc-lines-hook)))
+#+end_src
+*** Squiggly-clojure
+#+begin_src emacs-lisp :tangle yes
+  (use-package flycheck-clojure
+    :config
+    (flycheck-clojure-setup))
 #+end_src
 * Visual Enhancements
 ** beacon

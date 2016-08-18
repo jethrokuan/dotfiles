@@ -102,13 +102,15 @@
    ("C-c k" . counsel-ag)
    ("C-c l" . counsel-locate))
   :bind (:map help-map
-          ("f" . counsel-describe-function)
-          ("v" . counsel-describe-variable)
-          ("l" . counsel-info-lookup-symbol))
+              ("f" . counsel-describe-function)
+              ("v" . counsel-describe-variable)
+              ("l" . counsel-info-lookup-symbol))
   :config
   (ivy-mode 1)
   (setq counsel-find-file-at-point t)
   (setq ivy-use-virtual-buffers t)
+  (setq ivy-re-builders-alist
+        '((t . ivy--regex-fuzzy)))
   (setq ivy-initial-inputs-alist nil)
   (ivy-set-actions
    'counsel-find-file
@@ -124,7 +126,7 @@
       "kill")
      ("j"
       ivy--switch-buffer-other-window-action
-     "other window"))))
+      "other window"))))
 
 (use-package swiper
   :bind*
@@ -366,13 +368,17 @@
 (use-package clj-refactor
   :defines cljr-add-keybindings-with-prefix
   :diminish clj-refactor-mode
-  :config (cljr-add-keybindings-with-prefix "C-c j"))
+  :config (cljr-add-keybindings-with-prefix "C-c C-j"))
 
 (use-package markdown-mode
   :mode ("\\.md\\'" . markdown-mode)
   :config (progn
             (setq markdown-command "multimarkdown")
             (add-hook 'markdown-mode-hook #'trunc-lines-hook)))
+
+(use-package flycheck-clojure
+  :config
+  (flycheck-clojure-setup))
 
 (use-package beacon
   :diminish beacon-mode
