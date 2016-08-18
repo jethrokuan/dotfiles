@@ -67,7 +67,8 @@
   :demand t
   :init (exec-path-from-shell-initialize))
 
-(bind-key* "C-o" 'bookmark-jump)
+(bind-key* "S-o" 'bookmark-jump)
+
 
 (use-package tao-theme
   :init

@@ -127,9 +127,9 @@ The following code will delete all backup files that are older than a certain da
 #+end_src
 
 ** Bookmarks
-I use bookmarks to jump around to my files. I bind bookmark-jump to =C-o= to make it more accessible.
+I use bookmarks to jump around to my files. I bind bookmark-jump to =S-o= to make it more accessible.
 #+begin_src emacs-lisp :tangle yes
-(bind-key* "C-o" 'bookmark-jump)
+(bind-key* "S-o" 'bookmark-jump)
 #+end_src
 
 ** Theme
