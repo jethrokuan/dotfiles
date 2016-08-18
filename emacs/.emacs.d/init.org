@@ -852,8 +852,8 @@ I like to keep my books in sorted order, alphanumerically, and then by TODO keyw
 ** Magit
 #+begin_src emacs-lisp :tangle yes
 (use-package magit  
-  :bind (("C-x g" . magit-status)
-         ("C-x M-g" . magit-blame))
+  :bind (("s-g" . magit-status)
+         ("s-G" . magit-blame))
   :init (setq magit-auto-revert-mode nil)
   :config (add-hook 'magit-mode-hook 'hl-line-mode))
 #+end_src

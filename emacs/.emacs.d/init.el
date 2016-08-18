@@ -622,8 +622,8 @@
   (gtd-mode 1))
 
 (use-package magit  
-  :bind (("C-x g" . magit-status)
-         ("C-x M-g" . magit-blame))
+  :bind (("s-g" . magit-status)
+         ("s-G" . magit-blame))
   :init (setq magit-auto-revert-mode nil)
   :config (add-hook 'magit-mode-hook 'hl-line-mode))
 
