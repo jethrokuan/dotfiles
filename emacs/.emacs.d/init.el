@@ -71,11 +71,6 @@
   :init
   (load-theme 'zenburn t))
 
-(use-package tao-theme
-  :disabled t
-  :init
-  (load-theme 'tao-yang t))
-
 (defun open-next-line (arg)
   "Move to the next line and then opens a line.
    See also `newline-and-indent'."
@@ -83,7 +78,7 @@
   (end-of-line)
   (open-line arg)
   (next-line 1)
-  (when newline-and-indent
+  (when 'newline-and-indent
     (indent-according-to-mode)))
 
 (defun open-previous-line (arg)
@@ -92,7 +87,7 @@
   (interactive "p")
   (beginning-of-line)
   (open-line arg)
-  (when newline-and-indent
+  (when 'newline-and-indent
     (indent-according-to-mode)))
 
 (bind-key* "C-o" 'open-next-line)
@@ -131,12 +126,11 @@
               ("v" . counsel-describe-variable)
               ("l" . counsel-info-lookup-symbol))
   :config
-  (use-package flx)
   (ivy-mode 1)
   (setq counsel-find-file-at-point t)
   (setq ivy-use-virtual-buffers t)
   (setq ivy-re-builders-alist
-        '((t . ivy--regex-fuzzy)))
+        '((t . ivy--regex-plus)))
   (setq ivy-initial-inputs-alist nil)
   (ivy-set-actions
    'counsel-find-file
@@ -287,10 +281,6 @@
   :mode ("\\.py\\'" . elpy-mode)
   :init
   (add-hook 'python-mode-hook (lambda () (aggressive-indent-mode -1)))
-  (defun set-newline-and-indent ()
-    "Map the return key with `newline-and-indent'"
-    (local-set-key (kbd "RET") 'newline-and-indent))
-  (add-hook 'python-mode-hook 'set-newline-and-indent)
   :config
   (when (require 'flycheck nil t)
     (remove-hook 'elpy-modules 'elpy-module-flymake)
