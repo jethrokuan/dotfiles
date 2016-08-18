@@ -67,16 +67,36 @@
   :demand t
   :init (exec-path-from-shell-initialize))
 
-(bind-key* "S-o" 'bookmark-jump)
-
-(use-package apropospriate-theme
+(use-package zenburn-theme
   :init
-  (load-theme 'apropospriate-dark t))
+  (load-theme 'zenburn t))
 
 (use-package tao-theme
   :disabled t
   :init
   (load-theme 'tao-yang t))
+
+(defun open-next-line (arg)
+  "Move to the next line and then opens a line.
+   See also `newline-and-indent'."
+  (interactive "p")
+  (end-of-line)
+  (open-line arg)
+  (next-line 1)
+  (when newline-and-indent
+    (indent-according-to-mode)))
+
+(defun open-previous-line (arg)
+  "Open a new line before the current one. 
+     See also `newline-and-indent'."
+  (interactive "p")
+  (beginning-of-line)
+  (open-line arg)
+  (when newline-and-indent
+    (indent-according-to-mode)))
+
+(bind-key* "C-o" 'open-next-line)
+(bind-key* "M-o" 'open-previous-line)
 
 (defun jethro/nuke-all-buffers ()
   (interactive)
@@ -111,6 +131,7 @@
               ("v" . counsel-describe-variable)
               ("l" . counsel-info-lookup-symbol))
   :config
+  (use-package flx)
   (ivy-mode 1)
   (setq counsel-find-file-at-point t)
   (setq ivy-use-virtual-buffers t)
@@ -388,9 +409,9 @@
 
 (use-package beacon
   :diminish beacon-mode
-  :config (progn
-            (beacon-mode 1)
-            (setq beacon-push-mark 10)))
+  :config
+  (beacon-mode 1)
+  (setq beacon-push-mark 10))
 
 (show-paren-mode 1)
 (setq show-paren-delay 0)
@@ -586,12 +607,6 @@
                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                ("\\paragraph{%s}" . "\\paragraph*{%s}")
                ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-
-(use-package ox-reveal
-  :ensure f
-  :load-path "./elisp/"
-  :config
-  (require 'ox-reveal))
 
 (defun jethro/org-sort-books ()
     (interactive)

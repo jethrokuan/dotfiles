@@ -128,18 +128,17 @@ The following code will delete all backup files that are older than a certain da
 
 ** Bookmarks
 I use bookmarks to jump around to my files. I bind bookmark-jump to =S-o= to make it more accessible.
-#+begin_src emacs-lisp :tangle yes
-(bind-key* "S-o" 'bookmark-jump)
-#+end_src
+
+EDIT: trying to get used to =C-x r b.=
 
 ** Theme
 
-*** Apropospriate
+*** Zenburn
 A low-contrast theme that's easy on the eyes.
 #+begin_src emacs-lisp :tangle yes
-  (use-package apropospriate-theme
+  (use-package zenburn-theme
     :init
-    (load-theme 'apropospriate-dark t))
+    (load-theme 'zenburn t))
 #+end_src
 *** Tao (Disabled)
 #+begin_src emacs-lisp :tangle yes
@@ -150,6 +149,30 @@ A low-contrast theme that's easy on the eyes.
 #+end_src
 
 ** Keybindings
+*** Opening Lines
+#+begin_src emacs-lisp :tangle yes
+  (defun open-next-line (arg)
+    "Move to the next line and then opens a line.
+     See also `newline-and-indent'."
+    (interactive "p")
+    (end-of-line)
+    (open-line arg)
+    (next-line 1)
+    (when newline-and-indent
+      (indent-according-to-mode)))
+
+  (defun open-previous-line (arg)
+    "Open a new line before the current one. 
+       See also `newline-and-indent'."
+    (interactive "p")
+    (beginning-of-line)
+    (open-line arg)
+    (when newline-and-indent
+      (indent-according-to-mode)))
+
+  (bind-key* "C-o" 'open-next-line)
+  (bind-key* "M-o" 'open-previous-line)
+#+end_src
 *** Nuke all buffers with =C-c !=
 #+begin_src emacs-lisp :tangle yes
   (defun jethro/nuke-all-buffers ()
@@ -197,6 +220,7 @@ Counsel contains ivy enhancements for commonly-used functions.
                 ("v" . counsel-describe-variable)
                 ("l" . counsel-info-lookup-symbol))
     :config
+    (use-package flx)
     (ivy-mode 1)
     (setq counsel-find-file-at-point t)
     (setq ivy-use-virtual-buffers t)
@@ -316,10 +340,10 @@ Uses the avy-backend with z-to-char.
 #+end_src
 ** Templating with Yasnippet
 #+begin_src emacs-lisp :tangle yes
-(use-package yasnippet
-  :diminish yas-global-mode yas-minor-mode
-  :init (add-hook 'after-init-hook 'yas-global-mode)
-  :config (setq yas-snippet-dirs '("~/.emacs.d/snippets/")))
+  (use-package yasnippet
+    :diminish yas-global-mode yas-minor-mode
+    :init (add-hook 'after-init-hook 'yas-global-mode)
+    :config (setq yas-snippet-dirs '("~/.emacs.d/snippets/")))
 #+end_src
 ** Autocompletions with Company
 #+begin_src emacs-lisp :tangle yes
@@ -570,11 +594,11 @@ Additional support for Vue.js projects.
 ** beacon
 Beacon makes sure you don't lose track of your cursor when jumping around a buffer.
 #+begin_src emacs-lisp :tangle yes
-(use-package beacon
-  :diminish beacon-mode
-  :config (progn
-            (beacon-mode 1)
-            (setq beacon-push-mark 10)))
+  (use-package beacon
+    :diminish beacon-mode
+    :config
+    (beacon-mode 1)
+    (setq beacon-push-mark 10))
 #+end_src
 ** show-paren
 Always show matching parenthesis.
@@ -801,14 +825,6 @@ I use export to LaTeX through ox-latex, using xelatex for a nicer export templat
                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 #+end_src
-** ox-reveal
-#+begin_src emacs-lisp :tangle yes
-  (use-package ox-reveal
-    :ensure f
-    :load-path "./elisp/"
-    :config
-    (require 'ox-reveal))
-#+end_src
 ** jethro/org-sort-books
 I like to keep my books in sorted order, alphanumerically, and then by TODO keyword.
 #+begin_src emacs-lisp :tangle yes
@@ -850,52 +866,52 @@ I like to keep my books in sorted order, alphanumerically, and then by TODO keyw
 #+end_src
 ** Projectile
 #+begin_src emacs-lisp :tangle yes
-(use-package projectile
-  :demand t
-  :init (projectile-global-mode 1)
-  :bind-keymap* ("C-x p" . projectile-command-map)
-  :config
-  (require 'projectile)
-  (use-package counsel-projectile 
-    :bind (("s-P" . counsel-projectile)
-           ("s-f" . counsel-projectile-find-file)
-           ("s-b" . counsel-projectile-switch-to-buffer)))
-  (setq projectile-use-git-grep t)
-  (setq projectile-switch-project-action
-        #'projectile-commander)
-  (setq projectile-create-missing-test-files t)
-  (setq projectile-completion-system 'ivy)
-  (def-projectile-commander-method ?s
-    "Open a *eshell* buffer for the project."
-    (projectile-run-eshell))
-  (def-projectile-commander-method ?c
-    "Run `compile' in the project."
-    (projectile-compile-project nil))
-  (def-projectile-commander-method ?\C-?
-    "Go back to project selection."
-    (projectile-switch-project))
-  (def-projectile-commander-method ?d
-    "Open project root in dired."
-    (projectile-dired))
-  (def-projectile-commander-method ?F
-    "Git fetch."
-    (magit-status)
-    (call-interactively #'magit-fetch-current))
-  (def-projectile-commander-method ?j
-    "Jack-in."
-    (let* ((opts (projectile-current-project-files))
-           (file (ido-completing-read
-                  "Find file: "
-                  opts
-                  nil nil nil nil
-                  (car (cl-member-if
-                        (lambda (f)
-                          (string-match "core\\.clj\\'" f))
-                        opts)))))
-      (find-file (expand-file-name
-                  file (projectile-project-root)))
-      (run-hooks 'projectile-find-file-hook)
-      (cider-jack-in))))
+  (use-package projectile
+    :demand t
+    :init (projectile-global-mode 1)
+    :bind-keymap* ("C-x p" . projectile-command-map)
+    :config
+    (require 'projectile)
+    (use-package counsel-projectile 
+      :bind (("s-P" . counsel-projectile)
+             ("s-f" . counsel-projectile-find-file)
+             ("s-b" . counsel-projectile-switch-to-buffer)))
+    (setq projectile-use-git-grep t)
+    (setq projectile-switch-project-action
+          #'projectile-commander)
+    (setq projectile-create-missing-test-files t)
+    (setq projectile-completion-system 'ivy)
+    (def-projectile-commander-method ?s
+      "Open a *eshell* buffer for the project."
+      (projectile-run-eshell))
+    (def-projectile-commander-method ?c
+      "Run `compile' in the project."
+      (projectile-compile-project nil))
+    (def-projectile-commander-method ?\C-?
+      "Go back to project selection."
+      (projectile-switch-project))
+    (def-projectile-commander-method ?d
+      "Open project root in dired."
+      (projectile-dired))
+    (def-projectile-commander-method ?F
+      "Git fetch."
+      (magit-status)
+      (call-interactively #'magit-fetch-current))
+    (def-projectile-commander-method ?j
+      "Jack-in."
+      (let* ((opts (projectile-current-project-files))
+             (file (ido-completing-read
+                    "Find file: "
+                    opts
+                    nil nil nil nil
+                    (car (cl-member-if
+                          (lambda (f)
+                            (string-match "core\\.clj\\'" f))
+                          opts)))))
+        (find-file (expand-file-name
+                    file (projectile-project-root)))
+        (run-hooks 'projectile-find-file-hook)
+        (cider-jack-in))))
 #+end_src
 * Profiling
 ** esup
