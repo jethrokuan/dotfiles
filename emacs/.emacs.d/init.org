@@ -133,10 +133,20 @@ I use bookmarks to jump around to my files. I bind bookmark-jump to =S-o= to mak
 #+end_src
 
 ** Theme
+
+*** Apropospriate
+A low-contrast theme that's easy on the eyes.
 #+begin_src emacs-lisp :tangle yes
-(use-package tao-theme
-  :init
-  (load-theme 'tao-yang t))
+  (use-package apropospriate-theme
+    :init
+    (load-theme 'apropospriate-dark t))
+#+end_src
+*** Tao (Disabled)
+#+begin_src emacs-lisp :tangle yes
+  (use-package tao-theme
+    :disabled t
+    :init
+    (load-theme 'tao-yang t))
 #+end_src
 
 ** Keybindings

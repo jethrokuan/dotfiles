@@ -69,8 +69,12 @@
 
 (bind-key* "S-o" 'bookmark-jump)
 
+(use-package apropospriate-theme
+  :init
+  (load-theme 'apropospriate-dark t))
 
 (use-package tao-theme
+  :disabled t
   :init
   (load-theme 'tao-yang t))
 
