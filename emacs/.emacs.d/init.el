@@ -350,8 +350,8 @@
   :mode (("\\.clj\\'" . clojure-mode)
          ("\\.boot\\'" . clojure-mode)
          ("\\.edn\\'" . clojure-mode)
-         ("\\.cljs\\'" . clojure-mode)
-         ("\\.cljs\\.hl\\'" . clojure-mode))
+         ("\\.cljs\\'" . clojurescript-mode)
+         ("\\.cljs\\.hl\\'" . clojurescript-mode))
   :init
   (add-hook 'clojure-mode-hook #'eldoc-mode)
   (add-hook 'clojure-mode-hook #'subword-mode)
@@ -368,6 +368,7 @@
         cider-font-lock-dynamically '(macro core function var)
         nrepl-hide-special-buffers t            
         cider-overlays-use-font-lock t)         
+  (setq cider-cljs-lein-repl "(do (use 'figwheel-sidecar.repl-api) (start-figwheel!) (cljs-repl))")
   (cider-repl-toggle-pretty-printing))
 
 (use-package clj-refactor
@@ -552,9 +553,45 @@
                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                ("\\paragraph{%s}" . "\\paragraph*{%s}")
                ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+(add-to-list 'org-latex-classes
+             '("org-math"
+               "\\documentclass[11pt,a4paper]{article}
+                      \\usepackage[T1]{fontenc}
+                      \\usepackage{amsmath}
+                      \\usepackage{booktabs}
+                      \\usepackage{color}
+                      \\setcounter{tocdepth}{2}
+                      \\usepackage{epigraph}
+                      \\usepackage{enumitem}
+                      \\setlist{nosep}
+                      \\setlength\\epigraphwidth{13cm}
+                      \\setlength\\epigraphrule{0pt}
+                      \\usepackage{fontspec}
+                      \\usepackage{graphicx} 
+                      \\usepackage{parskip}
+                      \\let\\oldsection\\section
+                      \\renewcommand\\section{\\clearpage\\oldsection}
+                      \\setlength{\\parskip}{1em}
+                      \\usepackage{geometry}
+                      \\usepackage{hyperref}
+                      \\hypersetup {colorlinks = true, allcolors = red}
+                      \\geometry{a4paper, textwidth=6.5in, textheight=10in,
+                                  marginparsep=7pt, marginparwidth=.6in}
+                      \\pagestyle{empty}
+                      \\title{}                  
+                      [NO-DEFAULT-PACKAGES]
+                      [NO-PACKAGES]"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
 (use-package ox-reveal
-    :config (require 'ox-reveal))
+  :ensure f
+  :load-path "./elisp/"
+  :config
+  (require 'ox-reveal))
 
 (defun jethro/org-sort-books ()
     (interactive)
