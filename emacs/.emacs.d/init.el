@@ -200,6 +200,10 @@
 (use-package browse-kill-ring
   :bind ("M-y" . browse-kill-ring))
 
+(use-package move-text
+  :bind* (("M-<up>" . move-text-up)
+          ("M-<down>" . move-text-down)))
+
 (use-package flycheck
   :config (progn
             (use-package flycheck-pos-tip

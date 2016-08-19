@@ -327,6 +327,12 @@ Uses the avy-backend with z-to-char.
 (use-package browse-kill-ring
   :bind ("M-y" . browse-kill-ring))
 #+end_src
+** move-text
+#+begin_src emacs-lisp :tangle yes
+  (use-package move-text
+    :bind* (("M-<up>" . move-text-up)
+            ("M-<down>" . move-text-down)))
+#+end_src
 ** Linting with Flycheck
 #+begin_src emacs-lisp :tangle yes
 (use-package flycheck
