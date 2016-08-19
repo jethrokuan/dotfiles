@@ -503,6 +503,11 @@ Turn on flycheck for JS2-mode. Pick the appropriate lint file.
      ((jethro/locate-dominating-file jethro/eslint-regexp)
       (flycheck-select-checker 'javascript-eslint))))
 #+end_src
+*** Jade
+#+begin_src emacs-lisp :tangle yes
+  (when (>= emacs-major-version 25)
+    (use-package jade))
+#+end_src
 *** JS2-mode
 
 Here I also added =tern-mode=. This requires the tern executable:

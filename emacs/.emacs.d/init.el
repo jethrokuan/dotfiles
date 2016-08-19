@@ -340,6 +340,9 @@
    ((jethro/locate-dominating-file jethro/eslint-regexp)
     (flycheck-select-checker 'javascript-eslint))))
 
+(when (>= emacs-major-version 25)
+  (use-package jade))
+
 (use-package js2-mode
   :mode ("\\.js\\'" . js2-mode)
   :config
