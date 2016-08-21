@@ -423,14 +423,15 @@
   :diminish volatile-highlights-mode
   :config (volatile-highlights-mode t))
 
-(use-package git-gutter+
-  :init (global-git-gutter+-mode)
-  :diminish git-gutter+-mode
+(use-package git-gutter
+  :init (global-git-gutter-mode)
+  :diminish git-gutter-mode
   :defer 5
-  :config (progn
-            (setq git-gutter+-modified-sign "==")
-            (setq git-gutter+-added-sign "++")
-            (setq git-gutter+-deleted-sign "--")))
+  :config
+  (setq git-gutter:modified-sign "==")
+  (setq git-gutter:added-sign "++")
+  (setq git-gutter:deleted-sign "--")
+  (setq git-gutter:update-interval 2))
 
 (use-package htmlize)
 
