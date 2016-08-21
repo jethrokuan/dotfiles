@@ -194,6 +194,11 @@
   (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
   (add-hook 'clojure-mode-hook 'paredit-mode))
 
+(use-package origami
+  :bind* (("C-f" . origami-forward-toggle-node))
+  :config
+  (global-origami-mode))
+
 (use-package zzz-to-char
   :bind (("M-z" . zzz-up-to-char)))
 

@@ -316,6 +316,13 @@ For editing Lisp code.
   (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
   (add-hook 'clojure-mode-hook 'paredit-mode))
 #+end_src
+** origami
+#+begin_src emacs-lisp :tangle yes
+  (use-package origami
+    :bind* (("C-f" . origami-forward-toggle-node))
+    :config
+    (global-origami-mode))
+#+end_src
 ** zzz-to-char
 Uses the avy-backend with z-to-char.
 #+begin_src emacs-lisp :tangle yes
