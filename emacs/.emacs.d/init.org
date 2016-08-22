@@ -298,6 +298,11 @@ Hide details and only show file and folder names.
 #+begin_src emacs-lisp :tangle yes
   (require 'dired-x)
 #+end_src
+** save-place-mode
+Save the cursor location for files I've visited.
+#+begin_src emacs-lisp :tangle yes
+(save-place-mode t)
+#+end_src
 * Editing Text
 ** electric-align
 Use multiple spaces to align code and text.

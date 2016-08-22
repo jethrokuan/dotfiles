@@ -182,6 +182,8 @@
 
 (require 'dired-x)
 
+(save-place-mode t)
+
 (use-package electric-align
   :ensure f
   :load-path "elisp/"
