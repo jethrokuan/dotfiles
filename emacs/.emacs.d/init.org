@@ -208,6 +208,7 @@ Counsel contains ivy enhancements for commonly-used functions.
      ("M-a" . counsel-M-x)
      ("C-M-i" . counsel-imenu)
      ("C-x C-f" . counsel-find-file)
+     ("C-c d" . counsel-dired-jump)
      ("C-c u" . counsel-unicode-char)
      ("C-c g" . counsel-git)
      ("C-c j" . counsel-git-grep)
@@ -274,6 +275,25 @@ Ace-window makes it easier to move between windows.
 #+begin_src emacs-lisp :tangle yes
 (use-package ace-window
   :bind (("M-'" . ace-window)))
+#+end_src
+** dired
+*** Hide details
+Hide details and only show file and folder names.
+#+begin_src emacs-lisp :tangle yes
+  (defun jethro/dired-mode-setup-hook ()
+    "hook for dired-mode"
+    (dired-hide-details-mode 1))
+
+  (add-hook 'dired-mode-hook 'jethro/dired-mode-setup-hook)
+#+end_src
+*** Recursive Copying and Deleting
+#+begin_src emacs-lisp :tangle yes
+  (setq dired-recursive-copies (quote always))
+  (setq dired-recursive-deletes (quote top))
+#+end_src
+*** dired-jump from file
+#+begin_src emacs-lisp :tangle yes
+  (require 'dired-x)
 #+end_src
 * Editing Text
 ** electric-align

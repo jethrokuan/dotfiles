@@ -116,6 +116,7 @@
    ("M-a" . counsel-M-x)
    ("C-M-i" . counsel-imenu)
    ("C-x C-f" . counsel-find-file)
+   ("C-c d" . counsel-dired-jump)
    ("C-c u" . counsel-unicode-char)
    ("C-c g" . counsel-git)
    ("C-c j" . counsel-git-grep)
@@ -168,6 +169,17 @@
 
 (use-package ace-window
   :bind (("M-'" . ace-window)))
+
+(defun jethro/dired-mode-setup-hook ()
+  "hook for dired-mode"
+  (dired-hide-details-mode 1))
+
+(add-hook 'dired-mode-hook 'jethro/dired-mode-setup-hook)
+
+(setq dired-recursive-copies (quote always))
+(setq dired-recursive-deletes (quote top))
+
+(require 'dired-x)
 
 (use-package electric-align
   :ensure f
