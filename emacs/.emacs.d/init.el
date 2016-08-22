@@ -152,10 +152,11 @@
 (use-package swiper
   :bind*
   (("C-s" . swiper)
-   ("C-r" . swiper))
+   ("C-r" . swiper)
+   ("C-M-s" . swiper-all))
   :bind
   (:map read-expression-map
-    ("C-r" . counsel-expression-history)))
+        ("C-r" . counsel-expression-history)))
 
 (use-package avy
   :bind* (("C-'" . avy-goto-char)
