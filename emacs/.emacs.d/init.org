@@ -672,7 +672,9 @@ Displays added/modified/deleted on the left.
 We need =htmlize= to add syntax highlighting to org-exports for HTML files.
 
 #+begin_src emacs-lisp :tangle yes
-(use-package htmlize)
+  (use-package htmlize
+    :config
+    (require 'htmlize))
 #+end_src
 ** Basic Configuration
 #+begin_src emacs-lisp :tangle yes
@@ -760,6 +762,12 @@ We need =htmlize= to add syntax highlighting to org-exports for HTML files.
            :html-head "<link rel=\"stylesheet\" href=\"/css/emacsd.css\" type=\"text/css\">"
            :html-preamble t)))
 #+end_src
+** org-reveal
+#+begin_src emacs-lisp :tangle yes
+  (use-package ox-reveal
+    :config
+    (require 'ox-reveal))
+#+end_src
 ** org-latex
 I use export to LaTeX through ox-latex, using xelatex for a nicer export template.
 #+begin_src emacs-lisp :tangle yes
@@ -775,13 +783,6 @@ I use export to LaTeX through ox-latex, using xelatex for a nicer export templat
           ("numbersep" "5pt")
           ("framesep" "2mm")
           ("fontfamily" "tt")))
-  (add-to-list 'org-latex-classes
-               '("beamer"
-                 "\\documentclass\[presentation\]\{beamer\}"
-                 ("\\subsection{%s}" . "\\subsection*{%s}")
-                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
   (add-to-list 'org-latex-classes
                '("org-article"
                  "\\documentclass[11pt,a4paper]{article}
