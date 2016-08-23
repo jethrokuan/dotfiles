@@ -128,7 +128,8 @@
    ("C-c g" . counsel-git)
    ("C-c j" . counsel-git-grep)
    ("C-c k" . counsel-ag)
-   ("C-c l" . counsel-locate))
+   ("C-c l" . counsel-locate)
+   ("M-y" . counsel-yank-pop))
   :bind (:map help-map
               ("f" . counsel-describe-function)
               ("v" . counsel-describe-variable)
@@ -223,9 +224,6 @@
 
 (use-package zzz-to-char
   :bind (("M-z" . zzz-up-to-char)))
-
-(use-package browse-kill-ring
-  :bind ("M-y" . browse-kill-ring))
 
 (use-package move-text
   :bind* (("M-<up>" . move-text-up)

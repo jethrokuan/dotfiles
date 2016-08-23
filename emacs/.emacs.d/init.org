@@ -225,7 +225,8 @@ Counsel contains ivy enhancements for commonly-used functions.
      ("C-c g" . counsel-git)
      ("C-c j" . counsel-git-grep)
      ("C-c k" . counsel-ag)
-     ("C-c l" . counsel-locate))
+     ("C-c l" . counsel-locate)
+     ("M-y" . counsel-yank-pop))
     :bind (:map help-map
                 ("f" . counsel-describe-function)
                 ("v" . counsel-describe-variable)
@@ -366,11 +367,6 @@ Uses the avy-backend with z-to-char.
 #+begin_src emacs-lisp :tangle yes
 (use-package zzz-to-char
   :bind (("M-z" . zzz-up-to-char)))
-#+end_src
-** browse-kill-ring
-#+begin_src emacs-lisp :tangle yes
-(use-package browse-kill-ring
-  :bind ("M-y" . browse-kill-ring))
 #+end_src
 ** move-text
 #+begin_src emacs-lisp :tangle yes
