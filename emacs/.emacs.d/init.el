@@ -109,6 +109,12 @@
                     (setq-local compilation-read-command nil)
                     (call-interactively 'compile)))
 
+(use-package startscreen
+  :ensure f
+  :load-path "./elisp/"
+  :config
+  (jethro/setup-startup-hook))
+
 (use-package counsel
   :demand t
   :bind*
@@ -118,6 +124,7 @@
    ("C-x C-f" . counsel-find-file)
    ("C-c d" . counsel-dired-jump)
    ("C-c u" . counsel-unicode-char)
+   ("C-c f" . ivy-recentf)
    ("C-c g" . counsel-git)
    ("C-c j" . counsel-git-grep)
    ("C-c k" . counsel-ag)

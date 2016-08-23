@@ -197,6 +197,15 @@ A low-contrast theme that's easy on the eyes.
                       (setq-local compilation-read-command nil)
                       (call-interactively 'compile)))
 #+end_src
+
+** Startup screen
+#+begin_src emacs-lisp :tangle yes
+  (use-package startscreen
+    :ensure f
+    :load-path "./elisp/"
+    :config
+    (jethro/setup-startup-hook))
+#+end_src
 * Ivy
 I've recently switched over from =helm= to =ivy=. This is because the API for ivy is simpler, and thus makes it easier to extend.
 
@@ -212,6 +221,7 @@ Counsel contains ivy enhancements for commonly-used functions.
      ("C-x C-f" . counsel-find-file)
      ("C-c d" . counsel-dired-jump)
      ("C-c u" . counsel-unicode-char)
+     ("C-c f" . ivy-recentf)
      ("C-c g" . counsel-git)
      ("C-c j" . counsel-git-grep)
      ("C-c k" . counsel-ag)
