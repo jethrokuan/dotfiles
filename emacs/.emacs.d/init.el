@@ -418,10 +418,14 @@
   :init
   (add-hook 'clojure-mode-hook #'eldoc-mode)
   (add-hook 'clojure-mode-hook #'subword-mode)
+  (add-hook 'clojure-mode-hook #'cider-mode)
   (add-hook 'clojure-mode-hook #'clj-refactor-mode))
 
 (use-package cider
-  :init (add-hook 'cider-mode-hook #'clj-refactor-mode)
+  :init
+  (add-hook 'cider-mode-hook #'clj-refactor-mode)
+  (add-hook 'cider-repl-mode-hook #'company-mode)
+  (add-hook 'cider-mode-hook #'company-mode)
   :diminish subword-mode
   :config
   (setq nrepl-log-messages t                  
@@ -429,8 +433,10 @@
         cider-repl-use-clojure-font-lock t    
         cider-prompt-save-file-on-load 'always-save
         cider-font-lock-dynamically '(macro core function var)
-        nrepl-hide-special-buffers t            
-        cider-overlays-use-font-lock t)         
+        nrepl-hide-special-buffers t
+        cider-show-error-buffer nil
+        cider-overlays-use-font-lock t
+        cider-repl-result-prefix ";; => ")
   (setq cider-cljs-lein-repl "(do (use 'figwheel-sidecar.repl-api) (start-figwheel!) (cljs-repl))")
   (cider-repl-toggle-pretty-printing))
 
