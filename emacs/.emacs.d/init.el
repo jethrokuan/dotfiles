@@ -115,6 +115,8 @@
   :config
   (jethro/setup-startup-hook))
 
+(use-package hydra)
+
 (use-package counsel
   :demand t
   :bind*
@@ -123,9 +125,7 @@
    ("C-M-i" . counsel-imenu)
    ("C-x C-f" . counsel-find-file)
    ("C-c d" . counsel-dired-jump)
-   ("C-c u" . counsel-unicode-char)
-   ("C-c f" . ivy-recentf)
-   ("C-c g" . counsel-git)
+   ("C-c r" . ivy-recentf)
    ("C-c j" . counsel-git-grep)
    ("C-c k" . counsel-ag)
    ("C-c l" . counsel-locate)
@@ -218,9 +218,17 @@
   (add-hook 'clojure-mode-hook 'paredit-mode))
 
 (use-package origami
-  :bind* (("C-f" . origami-forward-toggle-node))
   :config
-  (global-origami-mode))
+  (global-origami-mode)
+  (global-set-key
+   (kbd "C-c o")
+   (defhydra hydra-folding (:color red)
+     ("o" origami-open-node "open node")
+     ("c" origami-close-node "close node")
+     ("n" origami-next-fold "next fold")
+     ("p" origami-previous-fold "previous fold")
+     ("f" origami-forward-toggle-node "fold forward")
+     ("a" origami-toggle-all-nodes "fold all"))))
 
 (use-package zzz-to-char
   :bind (("M-z" . zzz-up-to-char)))
@@ -230,10 +238,22 @@
           ("M-<down>" . move-text-down)))
 
 (use-package flycheck
-  :config (progn
-            (use-package flycheck-pos-tip
-              :config (flycheck-pos-tip-mode))
-            (add-hook 'prog-mode-hook 'global-flycheck-mode)))
+  :config
+  (global-set-key (kbd "C-c f")
+                  (defhydra hydra-flycheck
+                    (:pre (progn (setq hydra-lv t) (flycheck-list-errors))
+                          :post (progn (setq hydra-lv nil) (quit-windows-on "*Flycheck errors*"))
+                          :hint nil)
+                    "Errors"
+                    ("f"  flycheck-error-list-set-filter                            "Filter")
+                    ("n"  flycheck-next-error                                       "Next")
+                    ("p"  flycheck-previous-error                                   "Previous")
+                    ("<" flycheck-first-error                                      "First")
+                    (">"  (progn (goto-char (point-max)) (flycheck-previous-error)) "Last")
+                    ("q"  nil)))
+  (use-package flycheck-pos-tip
+    :config (flycheck-pos-tip-mode))
+  (add-hook 'prog-mode-hook 'global-flycheck-mode))
 
 (use-package yasnippet
   :diminish yas-global-mode yas-minor-mode
@@ -429,6 +449,11 @@
   :config
   (flycheck-clojure-setup))
 
+(defhydra hydra-zoom (global-map "<f2>")
+  "zoom"
+  ("i" text-scale-increase "in")
+  ("o" text-scale-decrease "out"))
+
 (use-package beacon
   :diminish beacon-mode
   :config
@@ -456,7 +481,35 @@
   (setq git-gutter:modified-sign "==")
   (setq git-gutter:added-sign "++")
   (setq git-gutter:deleted-sign "--")
-  (setq git-gutter:update-interval 2))
+  (setq git-gutter:update-interval 2)
+  (global-set-key (kbd "C-c g")
+                  (defhydra hydra-git-gutter (:body-pre (git-gutter-mode 1)
+                                                        :hint nil)
+                    "
+Git gutter:
+  _n_: next hunk        _s_tage hunk     _q_uit
+  _p_: previous hunk    _r_evert hunk    _Q_uit and deactivate git-gutter
+  ^ ^                   _p_opup hunk
+  _<_: first hunk
+  _>_: last hunk        set start _R_evision
+"
+                    ("n" git-gutter:next-hunk)
+                    ("p" git-gutter:previous-hunk)
+                    ("<" (progn (goto-char (point-min))
+                                (git-gutter:next-hunk 1)))
+                    (">" (progn (goto-char (point-min))
+                                (git-gutter:previous-hunk 1)))
+                    ("s" git-gutter:stage-hunk)
+                    ("r" git-gutter:revert-hunk)
+                    ("p" git-gutter:popup-hunk)
+                    ("R" git-gutter:set-start-revision)
+                    ("q" nil :color blue)
+                    ("Q" (progn (git-gutter-mode -1)
+                                ;; git-gutter-fringe doesn't seem to
+                                ;; clear the markup right away
+                                (sit-for 0.1)
+                                (git-gutter:clear))
+                     :color blue))))
 
 (use-package htmlize
   :config
@@ -652,6 +705,19 @@
   :load-path "elisp/"
   :config
   (gtd-mode 1))
+
+(use-package smerge-mode
+  :functions smerge-next smerge-prev smerge-keep-all smerge-keep-mine smerge-keep-other
+  :config
+  (progn
+    (global-set-key (kbd "C-c s")
+                    (defhydra hydra-smerge (:body-pre (smerge-mode 1) :color red)
+                      "Smerge mode"
+                      ("<down>" smerge-next        "Next conflict")
+                      ("<up>"   smerge-prev        "Previous conflict")
+                      ("M-a"    smerge-keep-all    "Keep all")
+                      ("M-m"    smerge-keep-mine   "Keep mine")
+                      ("M-o"    smerge-keep-other  "Keep other")))))
 
 (use-package magit  
   :bind (("s-g" . magit-status)
