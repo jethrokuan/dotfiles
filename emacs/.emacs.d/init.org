@@ -134,6 +134,24 @@ I use bookmarks to jump around to my files. I bind bookmark-jump to =S-o= to mak
 EDIT: trying to get used to =C-x r b.=
 
 ** Theme
+*** Darktooth (Disabled)
+#+begin_src emacs-lisp :tangle no
+  (use-package darktooth-theme
+    :init
+    (load-theme 'darktooth t))
+#+end_src
+*** Tomorrow (Disabled)
+#+begin_src emacs-lisp :tangle no
+  (use-package color-theme-sanityinc-tomorrow
+    :config
+    (color-theme-sanityinc-tomorrow-day))
+#+end_src
+*** Material (Disabled)
+#+begin_src emacs-lisp :tangle no
+  (use-package material-theme
+    :init
+    (load-theme 'material t))
+#+end_src
 *** Zenburn
 A low-contrast theme that's easy on the eyes.
 #+begin_src emacs-lisp :tangle yes
