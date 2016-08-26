@@ -117,6 +117,8 @@
 
 (use-package hydra)
 
+(use-package flx)
+
 (use-package counsel
   :demand t
   :bind*
@@ -138,8 +140,10 @@
   (ivy-mode 1)
   (setq counsel-find-file-at-point t)
   (setq ivy-use-virtual-buffers t)
+  (setq ivy-display-style 'fancy)
   (setq ivy-re-builders-alist
-        '((t . ivy--regex-plus)))
+        '((ivy-switch-buffer . ivy--regex-plus)
+          (t . ivy--regex-fuzzy)))
   (setq ivy-initial-inputs-alist nil)
   (ivy-set-actions
    'counsel-find-file

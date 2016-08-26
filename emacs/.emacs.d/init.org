@@ -212,7 +212,10 @@ A low-contrast theme that's easy on the eyes.
 #+end_src
 * Ivy
 I've recently switched over from =helm= to =ivy=. This is because the API for ivy is simpler, and thus makes it easier to extend.
-
+** flx
+#+begin_src emacs-lisp :tangle yes
+(use-package flx)
+#+end_src
 ** Counsel
 Counsel contains ivy enhancements for commonly-used functions.
 #+begin_src emacs-lisp :tangle yes
@@ -237,8 +240,10 @@ Counsel contains ivy enhancements for commonly-used functions.
     (ivy-mode 1)
     (setq counsel-find-file-at-point t)
     (setq ivy-use-virtual-buffers t)
+    (setq ivy-display-style 'fancy)
     (setq ivy-re-builders-alist
-          '((t . ivy--regex-plus)))
+          '((ivy-switch-buffer . ivy--regex-plus)
+            (t . ivy--regex-fuzzy)))
     (setq ivy-initial-inputs-alist nil)
     (ivy-set-actions
      'counsel-find-file
