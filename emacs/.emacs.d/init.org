@@ -776,7 +776,8 @@ We need =htmlize= to add syntax highlighting to org-exports for HTML files.
 
 #+begin_src emacs-lisp :tangle yes
   (use-package htmlize
-    :commands htmlize-buffer)
+    :config
+    (require 'htmlize))
 #+end_src
 ** Basic Configuration
 #+begin_src emacs-lisp :tangle yes

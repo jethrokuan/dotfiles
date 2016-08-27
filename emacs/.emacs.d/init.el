@@ -524,7 +524,8 @@ Git gutter:
                      :color blue))))
 
 (use-package htmlize
-  :commands htmlize-buffer)
+  :config
+  (require 'htmlize))
 
 (use-package org
   :bind (("C-c c" . org-capture)
