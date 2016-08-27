@@ -134,6 +134,11 @@ I use bookmarks to jump around to my files. I bind bookmark-jump to =S-o= to mak
 EDIT: trying to get used to =C-x r b.=
 
 ** Theme
+
+*** Base16
+#+begin_src emacs-lisp :tangle yes
+(use-package base16-theme)
+#+end_src
 *** Darktooth (Disabled)
 #+begin_src emacs-lisp :tangle no
   (use-package darktooth-theme
@@ -398,11 +403,15 @@ For editing Lisp code.
        ("f" origami-forward-toggle-node "fold forward")
        ("a" origami-toggle-all-nodes "fold all"))))
 #+end_src
-** zzz-to-char
-Uses the avy-backend with z-to-char.
+** zap-up-to-char
 #+begin_src emacs-lisp :tangle yes
-(use-package zzz-to-char
-  :bind (("M-z" . zzz-up-to-char)))
+  (autoload 'zap-up-to-char "misc"
+    "Kill up to, but not including ARGth occurrence of CHAR.
+
+    \(fn arg char)"
+    'interactive)
+
+  (bind-key* "M-z" 'zap-up-to-char)
 #+end_src
 ** move-text
 #+begin_src emacs-lisp :tangle yes

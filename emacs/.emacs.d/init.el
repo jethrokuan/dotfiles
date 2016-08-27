@@ -67,6 +67,8 @@
   :demand t
   :init (exec-path-from-shell-initialize))
 
+(use-package base16-theme)
+
 (use-package color-theme-sanityinc-tomorrow
   :config
   (color-theme-sanityinc-tomorrow-night))
@@ -236,8 +238,13 @@
      ("f" origami-forward-toggle-node "fold forward")
      ("a" origami-toggle-all-nodes "fold all"))))
 
-(use-package zzz-to-char
-  :bind (("M-z" . zzz-up-to-char)))
+(autoload 'zap-up-to-char "misc"
+  "Kill up to, but not including ARGth occurrence of CHAR.
+
+  \(fn arg char)"
+  'interactive)
+
+(bind-key* "M-z" 'zap-up-to-char)
 
 (use-package move-text
   :bind* (("M-<up>" . move-text-up)
