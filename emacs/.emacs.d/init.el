@@ -67,7 +67,9 @@
   :demand t
   :init (exec-path-from-shell-initialize))
 
-(use-package base16-theme)
+(use-package soft-stone-theme
+  :init
+  (load-theme 'soft-stone t))
 
 (use-package color-theme-sanityinc-tomorrow
   :config

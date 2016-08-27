@@ -135,9 +135,11 @@ EDIT: trying to get used to =C-x r b.=
 
 ** Theme
 
-*** Base16
+*** Soft Stone
 #+begin_src emacs-lisp :tangle yes
-(use-package base16-theme)
+  (use-package soft-stone-theme
+    :init
+    (load-theme 'soft-stone t))
 #+end_src
 *** Darktooth (Disabled)
 #+begin_src emacs-lisp :tangle no
@@ -348,7 +350,6 @@ Hide details and only show file and folder names.
 #+begin_src emacs-lisp :tangle yes
   (require 'dired-x)
 #+end_src
-
 ** save-place-mode
 Save the cursor location for files I've visited.
 #+begin_src emacs-lisp :tangle yes
