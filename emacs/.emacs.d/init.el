@@ -67,9 +67,9 @@
   :demand t
   :init (exec-path-from-shell-initialize))
 
-(use-package zenburn-theme
-  :init
-  (load-theme 'zenburn t))
+(use-package color-theme-sanityinc-tomorrow
+  :config
+  (color-theme-sanityinc-tomorrow-night))
 
 (defun open-next-line (arg)
   "Move to the next line and then opens a line.
