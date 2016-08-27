@@ -71,10 +71,6 @@
   :init
   (load-theme 'soft-stone t))
 
-(use-package color-theme-sanityinc-tomorrow
-  :config
-  (color-theme-sanityinc-tomorrow-night))
-
 (defun open-next-line (arg)
   "Move to the next line and then opens a line.
    See also `newline-and-indent'."
@@ -707,6 +703,9 @@ Git gutter:
                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                ("\\paragraph{%s}" . "\\paragraph*{%s}")
                ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+(use-package org-pomodoro
+  :bind ("C-c C-x C-i" . org-pomodoro))
 
 (defun jethro/org-sort-books ()
     (interactive)

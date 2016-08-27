@@ -147,8 +147,8 @@ EDIT: trying to get used to =C-x r b.=
     :init
     (load-theme 'darktooth t))
 #+end_src
-*** Tomorrow
-#+begin_src emacs-lisp :tangle yes
+*** Tomorrow (Disabled)
+#+begin_src emacs-lisp :tangle no
   (use-package color-theme-sanityinc-tomorrow
     :config
     (color-theme-sanityinc-tomorrow-night))
@@ -978,6 +978,12 @@ I use export to LaTeX through ox-latex, using xelatex for a nicer export templat
                  ("\\paragraph{%s}" . "\\paragraph*{%s}")
                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 #+end_src
+** org-pomodoro
+#+begin_src emacs-lisp :tangle yes
+  (use-package org-pomodoro
+    :bind ("C-c C-x C-i" . org-pomodoro))
+#+end_src
+
 ** jethro/org-sort-books
 I like to keep my books in sorted order, alphanumerically, and then by TODO keyword.
 #+begin_src emacs-lisp :tangle yes
