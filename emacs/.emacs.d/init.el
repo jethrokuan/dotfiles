@@ -141,9 +141,6 @@
   (setq counsel-find-file-at-point t)
   (setq ivy-use-virtual-buffers t)
   (setq ivy-display-style 'fancy)
-  (setq ivy-re-builders-alist
-        '((ivy-switch-buffer . ivy--regex-plus)
-          (t . ivy--regex-fuzzy)))
   (setq ivy-initial-inputs-alist nil)
   (ivy-set-actions
    'counsel-find-file
@@ -169,6 +166,11 @@
   :bind
   (:map read-expression-map
         ("C-r" . counsel-expression-history)))
+
+(setq ivy-re-builders-alist
+      '((ivy-switch-buffer . ivy--regex-plus)
+        (swiper . ivy--regex-plus)
+        (t . ivy--regex-fuzzy)))
 
 (use-package avy
   :bind* (("C-'" . avy-goto-char)

@@ -259,9 +259,6 @@ Counsel contains ivy enhancements for commonly-used functions.
     (setq counsel-find-file-at-point t)
     (setq ivy-use-virtual-buffers t)
     (setq ivy-display-style 'fancy)
-    (setq ivy-re-builders-alist
-          '((ivy-switch-buffer . ivy--regex-plus)
-            (t . ivy--regex-fuzzy)))
     (setq ivy-initial-inputs-alist nil)
     (ivy-set-actions
      'counsel-find-file
@@ -279,7 +276,6 @@ Counsel contains ivy enhancements for commonly-used functions.
         ivy--switch-buffer-other-window-action
         "other window"))))
 #+end_src
-
 ** Swiper
 Swiper is ivy-enhanced isearch.
 #+begin_src emacs-lisp :tangle yes
@@ -291,6 +287,13 @@ Swiper is ivy-enhanced isearch.
     :bind
     (:map read-expression-map
           ("C-r" . counsel-expression-history)))
+#+end_src
+** Fuzzy searching
+#+begin_src emacs-lisp :tangle yes
+  (setq ivy-re-builders-alist
+        '((ivy-switch-buffer . ivy--regex-plus)
+          (swiper . ivy--regex-plus)
+          (t . ivy--regex-fuzzy)))
 #+end_src
 * Moving Around
 ** avy
