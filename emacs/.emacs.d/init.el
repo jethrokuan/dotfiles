@@ -771,14 +771,9 @@ Git gutter:
   (def-projectile-commander-method ?j
     "Jack-in."
     (let* ((opts (projectile-current-project-files))
-           (file (ido-completing-read
-                  "Find file: "
-                  opts
-                  nil nil nil nil
-                  (car (cl-member-if
-                        (lambda (f)
-                          (string-match "core\\.clj\\'" f))
-                        opts)))))
+           (file (ivy-read
+                  "Find file: " 
+                  opts)))
       (find-file (expand-file-name
                   file (projectile-project-root)))
       (run-hooks 'projectile-find-file-hook)
