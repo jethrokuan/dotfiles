@@ -185,7 +185,9 @@
          ("C-M-q" . dumb-jump-quick-look)))
 
 (use-package ace-window
-  :bind (("M-'" . ace-window)))
+  :bind ("M-'" . ace-window)
+  :config
+  (setq aw-keys '(?h ?t ?n ?s)))
 
 (defun jethro/dired-mode-setup-hook ()
   "hook for dired-mode"

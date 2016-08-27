@@ -320,8 +320,10 @@ Use it to jump to function definitions. Requires no external depedencies.
 ** ace-window
 Ace-window makes it easier to move between windows.
 #+begin_src emacs-lisp :tangle yes
-(use-package ace-window
-  :bind (("M-'" . ace-window)))
+  (use-package ace-window
+    :bind ("M-'" . ace-window)
+    :config
+    (setq aw-keys '(?h ?t ?n ?s)))
 #+end_src
 ** dired
 *** Hide details
