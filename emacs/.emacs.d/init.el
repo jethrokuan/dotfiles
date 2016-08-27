@@ -195,6 +195,8 @@
 
 (add-hook 'dired-mode-hook 'jethro/dired-mode-setup-hook)
 
+(setq dired-listing-switches "-aBhl  --group-directories-first")
+
 (setq dired-recursive-copies (quote always))
 (setq dired-recursive-deletes (quote top))
 

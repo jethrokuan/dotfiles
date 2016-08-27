@@ -335,6 +335,10 @@ Hide details and only show file and folder names.
 
   (add-hook 'dired-mode-hook 'jethro/dired-mode-setup-hook)
 #+end_src
+*** Sort directories first
+#+begin_src emacs-lisp :tangle yes
+(setq dired-listing-switches "-aBhl  --group-directories-first")
+#+end_src
 *** Recursive Copying and Deleting
 #+begin_src emacs-lisp :tangle yes
   (setq dired-recursive-copies (quote always))
@@ -344,6 +348,7 @@ Hide details and only show file and folder names.
 #+begin_src emacs-lisp :tangle yes
   (require 'dired-x)
 #+end_src
+
 ** save-place-mode
 Save the cursor location for files I've visited.
 #+begin_src emacs-lisp :tangle yes
