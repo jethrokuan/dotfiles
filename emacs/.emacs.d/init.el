@@ -174,7 +174,9 @@
 
 (use-package avy
   :bind* (("C-'" . avy-goto-char)
-          ("C-," . avy-goto-char-2)))
+          ("C-," . avy-goto-char-2))
+  :config
+  (setq avy-keys '(?h ?t ?n ?s)))
 
 (use-package dumb-jump
   :diminish dumb-jump-mode
@@ -469,6 +471,10 @@
 (use-package flycheck-clojure
   :config
   (flycheck-clojure-setup))
+
+(use-package smart-mode-line
+  :config
+  (add-hook 'after-init-hook 'sml/setup))
 
 (defhydra hydra-zoom (global-map "<f2>")
   "zoom"

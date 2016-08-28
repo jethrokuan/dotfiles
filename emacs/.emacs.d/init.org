@@ -134,7 +134,6 @@ I use bookmarks to jump around to my files. I bind bookmark-jump to =S-o= to mak
 EDIT: trying to get used to =C-x r b.=
 
 ** Theme
-
 *** Soft Stone
 #+begin_src emacs-lisp :tangle yes
   (use-package soft-stone-theme
@@ -306,9 +305,11 @@ Swiper is ivy-enhanced isearch.
 ** avy
 Use avy to move between visible text.
 #+begin_src emacs-lisp :tangle yes
-(use-package avy
-  :bind* (("C-'" . avy-goto-char)
-          ("C-," . avy-goto-char-2)))
+  (use-package avy
+    :bind* (("C-'" . avy-goto-char)
+            ("C-," . avy-goto-char-2))
+    :config
+    (setq avy-keys '(?h ?t ?n ?s)))
 #+end_src
 ** dumb-jump
 Use it to jump to function definitions. Requires no external depedencies.
@@ -707,6 +708,12 @@ Additional support for Vue.js projects.
     (flycheck-clojure-setup))
 #+end_src
 * Visual Enhancements
+** Smart-mode-line
+#+begin_src emacs-lisp :tangle yes
+  (use-package smart-mode-line
+    :config
+    (add-hook 'after-init-hook 'sml/setup))
+#+end_src
 ** Zooming
 #+begin_src emacs-lisp :tangle yes
 (defhydra hydra-zoom (global-map "<f2>")
