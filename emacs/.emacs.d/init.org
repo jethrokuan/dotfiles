@@ -348,7 +348,8 @@ Hide details and only show file and folder names.
 ** save-place-mode
 Save the cursor location for files I've visited.
 #+begin_src emacs-lisp :tangle yes
-(save-place-mode t)
+(require 'saveplace)
+(setq-default save-place t)
 #+end_src
 * Editing Text
 ** electric-align
@@ -603,11 +604,6 @@ Turn on flycheck for JS2-mode. Pick the appropriate lint file.
       (flycheck-select-checker 'javascript-jshint))
      ((jethro/locate-dominating-file jethro/eslint-regexp)
       (flycheck-select-checker 'javascript-eslint))))
-#+end_src
-*** Jade
-#+begin_src emacs-lisp :tangle yes
-  (when (>= emacs-major-version 25)
-    (use-package jade))
 #+end_src
 *** JS2-mode
 
