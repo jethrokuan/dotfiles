@@ -698,6 +698,10 @@ Additional support for Vue.js projects.
     (flycheck-clojure-setup))
 #+end_src
 * Visual Enhancements
+** Page-break-lines
+#+begin_src emacs-lisp :tangle yes
+(use-package page-break-lines)
+#+end_src
 ** Smart-mode-line
 #+begin_src emacs-lisp :tangle yes
   (use-package smart-mode-line

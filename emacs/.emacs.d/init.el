@@ -463,6 +463,8 @@
   :config
   (flycheck-clojure-setup))
 
+(use-package page-break-lines)
+
 (use-package smart-mode-line
   :config
   (add-hook 'after-init-hook 'sml/setup)
