@@ -36,12 +36,6 @@ Add package archives. Note that I'm using HTTP, HTTPS did not work for me.
 #+end_src
 
 ** Sensible Defaults
-*** Custom File
-#+BEGIN_SRC emacs-lisp :tangle yes
-(setq custom-file "~/.emacs.d/custom.el")
-(load custom-file)
-#+END_SRC
-
 *** Custom font
 #+BEGIN_SRC emacs-lisp :tangle yes
 (add-to-list 'default-frame-alist
@@ -134,8 +128,8 @@ I use bookmarks to jump around to my files. I bind bookmark-jump to =S-o= to mak
 EDIT: trying to get used to =C-x r b.=
 
 ** Theme
-*** Soft Stone
-#+begin_src emacs-lisp :tangle yes
+*** Soft Stone (Disabled)
+#+begin_src emacs-lisp :tangle no
   (use-package soft-stone-theme
     :init
     (load-theme 'soft-stone t))
@@ -221,7 +215,7 @@ A low-contrast theme that's easy on the eyes.
                       (setq-local compilation-read-command nil)
                       (call-interactively 'compile)))
 #+end_src
-
+*** 
 ** Startup screen
 #+begin_src emacs-lisp :tangle yes
   (use-package startscreen
@@ -1170,3 +1164,8 @@ Closes compile buffer if there are no errors.
   :config
   (bury-successful-compilation 1))
 #+end_src
+* Custom File
+#+BEGIN_SRC emacs-lisp :tangle yes
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file)
+#+END_SRC

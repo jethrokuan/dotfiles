@@ -19,9 +19,6 @@
 (setq user-full-name "Jethro Kuan"
       user-mail-address "jethrokuan95@gmail.com")
 
-(setq custom-file "~/.emacs.d/custom.el")
-(load custom-file)
-
 (add-to-list 'default-frame-alist
              '(font . "Fira Code-12"))
 
@@ -66,10 +63,6 @@
 (use-package exec-path-from-shell
   :demand t
   :init (exec-path-from-shell-initialize))
-
-(use-package soft-stone-theme
-  :init
-  (load-theme 'soft-stone t))
 
 (defun open-next-line (arg)
   "Move to the next line and then opens a line.
@@ -849,3 +842,6 @@ Git gutter:
 (use-package bury-successful-compilation
   :config
   (bury-successful-compilation 1))
+
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file)
