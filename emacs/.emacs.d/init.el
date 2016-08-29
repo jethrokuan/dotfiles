@@ -467,7 +467,18 @@
 
 (use-package smart-mode-line
   :config
-  (add-hook 'after-init-hook 'sml/setup))
+  (add-hook 'after-init-hook 'sml/setup)
+  (setq rm-blacklist
+        (format "^ \\(%s\\)$"
+                (mapconcat #'identity
+                           '("FlyC.*"
+                             "Projectile.*"
+                             "ivy"
+                             "company"
+                             ""
+                             ","
+                             "ElDoc")
+                           "\\|"))))
 
 (defhydra hydra-zoom (global-map "<f2>")
   "zoom"
