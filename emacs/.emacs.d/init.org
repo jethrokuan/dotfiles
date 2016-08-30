@@ -29,6 +29,11 @@ Add package archives. Note that I'm using HTTP, HTTPS did not work for me.
   (setq use-package-always-ensure t))
 #+END_SRC
 
+** custom-set-themes
+This should remove any warning about loading themes.
+#+begin_src emacs-lisp :tangle yes
+(setq custom-set-themes t)
+#+end_src
 ** User configuration
 #+begin_src emacs-lisp :tangle yes
 (setq user-full-name "Jethro Kuan"
@@ -217,7 +222,7 @@ A low-contrast theme that's easy on the eyes.
 #+end_src
 *** 
 ** Startup screen
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
   (use-package startscreen
     :ensure f
     :load-path "./elisp/"

@@ -16,6 +16,8 @@
   (require 'diminish)
   (setq use-package-always-ensure t))
 
+(setq custom-set-themes t)
+
 (setq user-full-name "Jethro Kuan"
       user-mail-address "jethrokuan95@gmail.com")
 
@@ -101,12 +103,6 @@
                     (interactive)
                     (setq-local compilation-read-command nil)
                     (call-interactively 'compile)))
-
-(use-package startscreen
-  :ensure f
-  :load-path "./elisp/"
-  :config
-  (jethro/setup-startup-hook))
 
 (use-package hydra)
 
