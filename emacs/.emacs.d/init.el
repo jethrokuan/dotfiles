@@ -464,6 +464,10 @@
 (use-package smart-mode-line
   :config
   (add-hook 'after-init-hook 'sml/setup)
+  (setq sml/mode-width 'full)
+  (setq sml/replacer-regexp-list
+        '(("^~/.org/" ":O:")
+          ("^~/\\.emacs\\.d/" ":ED")))
   (setq rm-blacklist
         (format "^ \\(%s\\)$"
                 (mapconcat #'identity
