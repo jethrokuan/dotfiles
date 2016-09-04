@@ -1,4 +1,4 @@
-s# -*- after-save-hook: (jethro/org-after-save-init); -*-
+# -*- after-save-hook: (jethro/org-after-save-init); -*-
 #+TITLE: Jethro's Emacs.d Configuration
 #+HTML_HEAD: <style>pre.src {background-color: #303030; color: #e5e5e5;}</style>
 
@@ -138,6 +138,11 @@ EDIT: trying to get used to =C-x r b.=
   (use-package soft-stone-theme
     :init
     (load-theme 'soft-stone t))
+#+end_src
+*** Solarized
+#+begin_src emacs-lisp :tangle yes
+  (use-package color-theme-sanityinc-solarized
+    :commands (color-theme-sanityinc-solarized-dark color-theme-sanityinc-solarized-light))
 #+end_src
 *** Darktooth (Disabled)
 #+begin_src emacs-lisp :tangle no
