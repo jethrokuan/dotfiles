@@ -139,10 +139,11 @@ EDIT: trying to get used to =C-x r b.=
     :init
     (load-theme 'soft-stone t))
 #+end_src
-*** Solarized
-#+begin_src emacs-lisp :tangle yes
+*** Solarized (Disabled)
+#+begin_src emacs-lisp :tangle no
   (use-package color-theme-sanityinc-solarized
-    :commands (color-theme-sanityinc-solarized-dark color-theme-sanityinc-solarized-light))
+    :commands (color-theme-sanityinc-solarized-dark color-theme-sanityinc-solarized-light)
+    :init (load-theme 'sanityinc-solarized-light t))
 #+end_src
 *** Darktooth (Disabled)
 #+begin_src emacs-lisp :tangle no
@@ -150,11 +151,11 @@ EDIT: trying to get used to =C-x r b.=
     :init
     (load-theme 'darktooth t))
 #+end_src
-*** Tomorrow (Disabled)
-#+begin_src emacs-lisp :tangle no
+*** Tomorrow
+#+begin_src emacs-lisp :tangle yes
   (use-package color-theme-sanityinc-tomorrow
-    :config
-    (color-theme-sanityinc-tomorrow-night))
+    :init
+    (load-theme 'sanityinc-tomorrow-night t))
 #+end_src
 *** Material (Disabled)
 #+begin_src emacs-lisp :tangle no

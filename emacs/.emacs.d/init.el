@@ -66,8 +66,9 @@
   :demand t
   :init (exec-path-from-shell-initialize))
 
-(use-package color-theme-sanityinc-solarized
-  :commands (color-theme-sanityinc-solarized-dark color-theme-sanityinc-solarized-light))
+(use-package color-theme-sanityinc-tomorrow
+  :init
+  (load-theme 'sanityinc-tomorrow-night t))
 
 (defun open-next-line (arg)
   "Move to the next line and then opens a line.
