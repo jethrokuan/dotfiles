@@ -2,7 +2,12 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("waiting_for.org"
+(("next_actions.org"
+ (filename . "~/.org/gtd/next_actions.org")
+ (front-context-string . "#+TODO: NEXT | D")
+ (rear-context-string)
+ (position . 1))
+("waiting_for.org"
  (filename . "~/.org/gtd/waiting_for.org")
  (front-context-string . "#+TODO: WAITING ")
  (rear-context-string)
