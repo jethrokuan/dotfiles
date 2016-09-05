@@ -1,5 +1,4 @@
 mpd_music_dir = "~/Music"
-
 user_interface = "alternative"
 
 alternative_header_first_line_format = "$(11)─┤ $b$(13)%a$(end)$/b ├─$(end)"
@@ -33,3 +32,10 @@ playlist_editor_display_mode = "columns"
 autocenter_mode = "yes"
 titles_visibility = "no"
 enable_window_title = "no"
+
+allow_for_physical_item_deletion = "yes"
+
+ask_before_clearing_playlists = "no"
+
+# Addons
+fetch_lyrics_for_current_song_in_background = "yes"
