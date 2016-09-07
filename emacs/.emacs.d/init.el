@@ -19,6 +19,9 @@
 (setq user-full-name "Jethro Kuan"
       user-mail-address "jethrokuan95@gmail.com")
 
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file)
+
 (add-to-list 'default-frame-alist
              '(font . "Inconsolata-g for Powerline-12"))
 
@@ -61,9 +64,6 @@
                   week))
       (message "%s" file)
       (delete-file file))))
-
-(setq custom-file "custom.el")
-(load custom-file)
 
 (load "~/.emacs.d/secrets.el" t)
 
@@ -169,6 +169,7 @@
         (t . ivy--regex-fuzzy)))
 
 (use-package crux
+  :commands (crux-switch-to-previous-buffer)
   :bind* (("C-c o" . crux-open-with)
           ("C-c n" . crux-cleanup-buffer-or-region)
           ("C-c D" . crux-delete-file-and-buffer)
@@ -272,6 +273,62 @@ point reaches the beginning or end of the buffer, stop there."
   :config
   (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
   (add-hook 'clojure-mode-hook 'paredit-mode))
+
+(autoload 'zap-up-to-char "misc"
+  "Kill up to, but not including ARGth occurrence of CHAR.
+
+  \(fn arg char)"
+  'interactive)
+
+(bind-key* "M-z" 'zap-up-to-char)
+
+(use-package move-text
+  :bind* (("M-<up>" . move-text-up)
+          ("M-<down>" . move-text-down)))
+
+(use-package flycheck
+  :config
+  (global-set-key (kbd "C-c f")
+                  (defhydra hydra-flycheck
+                    (:pre (progn (setq hydra-lv t) (flycheck-list-errors))
+                          :post (progn (setq hydra-lv nil) (quit-windows-on "*Flycheck errors*"))
+                          :hint nil)
+                    "Errors"
+                    ("f"  flycheck-error-list-set-filter                            "Filter")
+                    ("n"  flycheck-next-error                                       "Next")
+                    ("p"  flycheck-previous-error                                   "Previous")
+                    ("<" flycheck-first-error                                      "First")
+                    (">"  (progn (goto-char (point-max)) (flycheck-previous-error)) "Last")
+                    ("q"  nil)))
+  (use-package flycheck-pos-tip
+    :config (flycheck-pos-tip-mode))
+  (add-hook 'prog-mode-hook 'global-flycheck-mode))
+
+(use-package yasnippet
+  :diminish yas-global-mode yas-minor-mode
+  :init (add-hook 'after-init-hook 'yas-global-mode)
+  :config (setq yas-snippet-dirs '("~/.emacs.d/snippets/")))
+
+(use-package company
+  :diminish company-mode
+  :init (progn
+          (add-hook 'after-init-hook 'global-company-mode)
+          (setq company-dabbrev-ignore-case nil
+                company-dabbrev-code-ignore-case nil
+                company-dabbrev-downcase nil
+                company-idle-delay 0
+                company-begin-commands '(self-insert-command)
+                company-transformers '(company-sort-by-occurrence))
+          (use-package company-quickhelp
+            :config (company-quickhelp-mode 1))))
+
+(use-package flyspell
+  :ensure f
+  :diminish flyspell-mode
+  :config
+  (add-hook 'text-mode-hook 'flyspell-mode)
+  (add-hook 'org-mode-hook 'flyspell-mode)
+  (add-hook 'markdown-mode-hook 'flyspell-mode))
 
 (use-package go-mode
   :mode ("\\.go\\'" . go-mode)

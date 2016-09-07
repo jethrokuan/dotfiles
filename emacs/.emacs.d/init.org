@@ -1,4 +1,4 @@
-#+TITLE: Jethro's Emacs.d Configuration
+ #+TITLE: Jethro's Emacs.d Configuration
 * Introduction  
 * Basic Setup
 ** Add MELPA and Org Repository
@@ -35,6 +35,11 @@ Use-package allows for isolation of package configuration, while maintaining tid
       user-mail-address "jethrokuan95@gmail.com")
 #+end_src
 
+** Custom file
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (setq custom-file "~/.emacs.d/custom.el")
+  (load custom-file)
+#+END_SRC
 ** TODO Setup GNUs with Gmail
 ** Custom font
 I use Inconsolata-g, patched with Powerline. Other good alternatives include Source Code Pro.
@@ -125,11 +130,6 @@ The following code will delete all backup files that are older than a certain da
       (message "%s" file)
       (delete-file file))))
 #+end_src
-** Custom file
-#+BEGIN_SRC emacs-lisp :tangle yes
-  (setq custom-file "custom.el")
-  (load custom-file)
-#+END_SRC
 ** Load secrets
 #+begin_src emacs-lisp :tangle yes
 (load "~/.emacs.d/secrets.el" t)
@@ -275,6 +275,7 @@ Swiper is ivy-enhanced isearch.
 ** Crux
 #+begin_src emacs-lisp :tangle yes
   (use-package crux
+    :commands (crux-switch-to-previous-buffer)
     :bind* (("C-c o" . crux-open-with)
             ("C-c n" . crux-cleanup-buffer-or-region)
             ("C-c D" . crux-delete-file-and-buffer)
@@ -420,6 +421,74 @@ For editing Lisp code.
   :config
   (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
   (add-hook 'clojure-mode-hook 'paredit-mode))
+#+end_src
+** zap-up-to-char
+#+begin_src emacs-lisp :tangle yes
+  (autoload 'zap-up-to-char "misc"
+    "Kill up to, but not including ARGth occurrence of CHAR.
+
+    \(fn arg char)"
+    'interactive)
+
+  (bind-key* "M-z" 'zap-up-to-char)
+#+end_src
+** move-text
+#+begin_src emacs-lisp :tangle yes
+  (use-package move-text
+    :bind* (("M-<up>" . move-text-up)
+            ("M-<down>" . move-text-down)))
+#+end_src
+** Linting with Flycheck
+#+begin_src emacs-lisp :tangle yes
+  (use-package flycheck
+    :config
+    (global-set-key (kbd "C-c f")
+                    (defhydra hydra-flycheck
+                      (:pre (progn (setq hydra-lv t) (flycheck-list-errors))
+                            :post (progn (setq hydra-lv nil) (quit-windows-on "*Flycheck errors*"))
+                            :hint nil)
+                      "Errors"
+                      ("f"  flycheck-error-list-set-filter                            "Filter")
+                      ("n"  flycheck-next-error                                       "Next")
+                      ("p"  flycheck-previous-error                                   "Previous")
+                      ("<" flycheck-first-error                                      "First")
+                      (">"  (progn (goto-char (point-max)) (flycheck-previous-error)) "Last")
+                      ("q"  nil)))
+    (use-package flycheck-pos-tip
+      :config (flycheck-pos-tip-mode))
+    (add-hook 'prog-mode-hook 'global-flycheck-mode))
+#+end_src
+** Templating with Yasnippet
+#+begin_src emacs-lisp :tangle yes
+  (use-package yasnippet
+    :diminish yas-global-mode yas-minor-mode
+    :init (add-hook 'after-init-hook 'yas-global-mode)
+    :config (setq yas-snippet-dirs '("~/.emacs.d/snippets/")))
+#+end_src
+** Autocompletions with Company
+#+begin_src emacs-lisp :tangle yes
+(use-package company
+  :diminish company-mode
+  :init (progn
+          (add-hook 'after-init-hook 'global-company-mode)
+          (setq company-dabbrev-ignore-case nil
+                company-dabbrev-code-ignore-case nil
+                company-dabbrev-downcase nil
+                company-idle-delay 0
+                company-begin-commands '(self-insert-command)
+                company-transformers '(company-sort-by-occurrence))
+          (use-package company-quickhelp
+            :config (company-quickhelp-mode 1))))
+#+end_src
+** Spellcheck with Flyspell
+#+begin_src emacs-lisp :tangle yes
+  (use-package flyspell
+    :ensure f
+    :diminish flyspell-mode
+    :config
+    (add-hook 'text-mode-hook 'flyspell-mode)
+    (add-hook 'org-mode-hook 'flyspell-mode)
+    (add-hook 'markdown-mode-hook 'flyspell-mode))
 #+end_src
 * Language Support
 ** Go
