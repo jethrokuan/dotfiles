@@ -16,13 +16,11 @@
   (require 'diminish)
   (setq use-package-always-ensure t))
 
-(setq custom-set-themes t)
-
 (setq user-full-name "Jethro Kuan"
       user-mail-address "jethrokuan95@gmail.com")
 
 (add-to-list 'default-frame-alist
-             '(font . "Fira Code-12"))
+             '(font . "Inconsolata-g for Powerline-12"))
 
 (tooltip-mode -1)
 (tool-bar-mode -1)
@@ -66,9 +64,9 @@
   :demand t
   :init (exec-path-from-shell-initialize))
 
-(use-package color-theme-sanityinc-tomorrow
-  :init
-  (load-theme 'sanityinc-tomorrow-night t))
+(add-to-list 'default-frame-alist '(background-color . "ivory"))
+
+(set-face-attribute 'region nil :background "salmon")
 
 (defun open-next-line (arg)
   "Move to the next line and then opens a line.
@@ -138,8 +136,7 @@
   (ivy-set-actions
    'counsel-find-file
    '(("d" (lambda (x) (delete-file (expand-file-name x)))
-      "delete"
-      )))
+      "delete")))
   (ivy-set-actions
    'ivy-switch-buffer
    '(("k"
@@ -417,6 +414,12 @@
                                       (make-local-variable 'js-indent-level)
                                       (setq js-indent-level 2))))
 
+(use-package markdown-mode
+  :mode ("\\.md\\'" . markdown-mode)
+  :config (progn
+            (setq markdown-command "multimarkdown")
+            (add-hook 'markdown-mode-hook #'trunc-lines-hook)))
+
 (use-package clojure-mode
   :mode (("\\.clj\\'" . clojure-mode)
          ("\\.boot\\'" . clojure-mode)
@@ -453,20 +456,25 @@
   :diminish clj-refactor-mode
   :config (cljr-add-keybindings-with-prefix "C-c C-j"))
 
-(use-package markdown-mode
-  :mode ("\\.md\\'" . markdown-mode)
-  :config (progn
-            (setq markdown-command "multimarkdown")
-            (add-hook 'markdown-mode-hook #'trunc-lines-hook)))
-
 (use-package flycheck-clojure
   :config
   (flycheck-clojure-setup))
+
+(add-hook 'prog-mode-hook 
+  (lambda ()
+    (linum-mode 1)))
+
+(add-hook 'text-mode-hook 
+  (lambda ()
+    (linum-mode 1)))
+
+(global-hl-line-mode 1)
 
 (use-package page-break-lines)
 
 (use-package smart-mode-line
   :config
+  (setq sml/theme 'light)
   (add-hook 'after-init-hook 'sml/setup)
   (setq sml/mode-width 'full)
   (setq sml/replacer-regexp-list
@@ -493,7 +501,8 @@
   :diminish beacon-mode
   :config
   (beacon-mode 1)
-  (setq beacon-push-mark 10))
+  (setq beacon-push-mark 10)
+  (setq beacon-color "#B4EAA2"))
 
 (show-paren-mode 1)
 (setq show-paren-delay 0)
@@ -508,43 +517,13 @@
   :diminish volatile-highlights-mode
   :config (volatile-highlights-mode t))
 
-(use-package git-gutter
-  :init (global-git-gutter-mode)
-  :diminish git-gutter-mode
-  :defer 5
+(use-package git-gutter-fringe+
   :config
-  (setq git-gutter:modified-sign "==")
-  (setq git-gutter:added-sign "++")
-  (setq git-gutter:deleted-sign "--")
-  (setq git-gutter:update-interval 2)
-  (global-set-key (kbd "C-c g")
-                  (defhydra hydra-git-gutter (:body-pre (git-gutter-mode 1)
-                                                        :hint nil)
-                    "
-Git gutter:
-  _n_: next hunk        _s_tage hunk     _q_uit
-  _p_: previous hunk    _r_evert hunk    _Q_uit and deactivate git-gutter
-  ^ ^                   _p_opup hunk
-  _<_: first hunk
-  _>_: last hunk        set start _R_evision
-"
-                    ("n" git-gutter:next-hunk)
-                    ("p" git-gutter:previous-hunk)
-                    ("<" (progn (goto-char (point-min))
-                                (git-gutter:next-hunk 1)))
-                    (">" (progn (goto-char (point-min))
-                                (git-gutter:previous-hunk 1)))
-                    ("s" git-gutter:stage-hunk)
-                    ("r" git-gutter:revert-hunk)
-                    ("p" git-gutter:popup-hunk)
-                    ("R" git-gutter:set-start-revision)
-                    ("q" nil :color blue)
-                    ("Q" (progn (git-gutter-mode -1)
-                                ;; git-gutter-fringe doesn't seem to
-                                ;; clear the markup right away
-                                (sit-for 0.1)
-                                (git-gutter:clear))
-                     :color blue))))
+  (global-git-gutter+-mode)
+  (set-face-foreground 'git-gutter+-modified "gold1")
+  (set-face-foreground 'git-gutter+-added    "SeaGreen")
+  (set-face-foreground 'git-gutter+-deleted  "IndianRed")
+  (setq git-gutter-fr+-side 'left-fringe))
 
 (use-package htmlize
   :config
@@ -857,6 +836,17 @@ Git gutter:
 (use-package bury-successful-compilation
   :config
   (bury-successful-compilation 1))
-
-(setq custom-file "~/.emacs.d/custom.el")
-(load custom-file)
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

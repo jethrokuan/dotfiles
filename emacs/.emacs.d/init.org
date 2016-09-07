@@ -1,10 +1,8 @@
-# -*- after-save-hook: (jethro/org-after-save-init); -*-
 #+TITLE: Jethro's Emacs.d Configuration
-#+HTML_HEAD: <style>pre.src {background-color: #303030; color: #e5e5e5;}</style>
-
+* Introduction  
 * Basic Setup
 ** Add MELPA and Org Repository
-Add package archives. Note that I'm using HTTP, HTTPS did not work for me.
+Add package archives. Note that I'm using HTTP, HTTPS did not work for me. To configure HTTPS, simply replace occurrences of http with https.
 
 #+BEGIN_SRC emacs-lisp :tangle yes
 (when (>= emacs-major-version 24)
@@ -15,6 +13,8 @@ Add package archives. Note that I'm using HTTP, HTTPS did not work for me.
 #+END_SRC
 
 ** Add [[https://github.com/jwiegley/use-package/issues/70][use-package]]
+Use-package allows for isolation of package configuration, while maintaining tidiness and performance.
+
 #+BEGIN_SRC emacs-lisp :tangle yes
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
@@ -29,25 +29,24 @@ Add package archives. Note that I'm using HTTP, HTTPS did not work for me.
   (setq use-package-always-ensure t))
 #+END_SRC
 
-** custom-set-themes
-This should remove any warning about loading themes.
-#+begin_src emacs-lisp :tangle yes
-(setq custom-set-themes t)
-#+end_src
 ** User configuration
 #+begin_src emacs-lisp :tangle yes
 (setq user-full-name "Jethro Kuan"
       user-mail-address "jethrokuan95@gmail.com")
 #+end_src
 
-** Sensible Defaults
-*** Custom font
+** TODO Setup GNUs with Gmail
+** Custom font
+I use Inconsolata-g, patched with Powerline. Other good alternatives include Source Code Pro.
+
 #+BEGIN_SRC emacs-lisp :tangle yes
 (add-to-list 'default-frame-alist
-             '(font . "Fira Code-12"))
+             '(font . "Inconsolata-g for Powerline-12"))
 #+END_SRC
 
-*** UI Cruft
+** UI Cruft
+Remove useless toolbars and splash screens.
+
 #+begin_src emacs-lisp :tangle yes
 (tooltip-mode -1)
 (tool-bar-mode -1)
@@ -57,17 +56,21 @@ This should remove any warning about loading themes.
 (setq inhibit-startup-message t)
 #+end_src
 
-*** Use y/n over yes/no
+** Use y/n over yes/no
+Always prefer the shorter y/n over yes/no.
+
 #+BEGIN_SRC emacs-lisp :tangle yes
 (defalias 'yes-or-no-p 'y-or-n-p)
 #+END_SRC
 
-*** Replace region when typing
+** Replace region when typing
+Type over a selected region, instead of deleting before typing.
+
 #+BEGIN_SRC emacs-lisp :tangle yes
 (delete-selection-mode +1)
 #+end_src
 
-*** Sentences
+** Sentences
 Emacs uses double-spaces by default. Use single spaces by default:
 
 #+BEGIN_QUOTE
@@ -78,14 +81,14 @@ NOTE: This will cause an indistinction between sentences and name abbrieviations
 (setq sentence-end-double-space nil)
 #+end_src
 
-*** Tab with 2 spaces
+** Tab with 2 spaces
 #+begin_src emacs-lisp :tangle yes
 (setq-default tab-width 2)
 (setq-default js-indent-level 2)
 (setq-default indent-tabs-mode nil)
 #+end_src
 
-*** Don't wrap lines
+** Don't wrap lines
 Don't wrap lines for coding. Create a hook that enables wrapping, for modes like org-mode and markdown-mode.
 
 #+begin_src emacs-lisp :tangle yes
@@ -94,7 +97,7 @@ Don't wrap lines for coding. Create a hook that enables wrapping, for modes like
   (setq truncate-lines nil))
 #+end_src
 
-*** Backup directory
+** Backup directory
 #+begin_src emacs-lisp :tangle yes
 (setq backup-directory-alist
       `((".*" . ,temporary-file-directory)))
@@ -127,56 +130,15 @@ The following code will delete all backup files that are older than a certain da
   :init (exec-path-from-shell-initialize))
 #+end_src
 
-** Bookmarks
-I use bookmarks to jump around to my files. I bind bookmark-jump to =S-o= to make it more accessible.
-
-EDIT: trying to get used to =C-x r b.=
-
 ** Theme
-*** Soft Stone (Disabled)
-#+begin_src emacs-lisp :tangle no
-  (use-package soft-stone-theme
-    :init
-    (load-theme 'soft-stone t))
-#+end_src
-*** Solarized (Disabled)
-#+begin_src emacs-lisp :tangle no
-  (use-package color-theme-sanityinc-solarized
-    :commands (color-theme-sanityinc-solarized-dark color-theme-sanityinc-solarized-light)
-    :init (load-theme 'sanityinc-solarized-light t))
-#+end_src
-*** Darktooth (Disabled)
-#+begin_src emacs-lisp :tangle no
-  (use-package darktooth-theme
-    :init
-    (load-theme 'darktooth t))
-#+end_src
-*** Tomorrow
+*** Set background
 #+begin_src emacs-lisp :tangle yes
-  (use-package color-theme-sanityinc-tomorrow
-    :init
-    (load-theme 'sanityinc-tomorrow-night t))
+(add-to-list 'default-frame-alist '(background-color . "ivory"))
 #+end_src
-*** Material (Disabled)
-#+begin_src emacs-lisp :tangle no
-  (use-package material-theme
-    :init
-    (load-theme 'material t))
+*** Set highlight colour
+#+begin_src emacs-lisp :tangle yes
+(set-face-attribute 'region nil :background "salmon")
 #+end_src
-*** Zenburn (Disabled)
-A low-contrast theme that's easy on the eyes.
-#+begin_src emacs-lisp :tangle no
-  (use-package zenburn-theme
-    :init
-    (load-theme 'zenburn t))
-#+end_src
-*** Tao (Disabled)
-#+begin_src emacs-lisp :tangle no
-  (use-package tao-theme
-    :init
-    (load-theme 'tao-yang t))
-#+end_src
-
 ** Keybindings
 *** Opening Lines
 #+begin_src emacs-lisp :tangle yes
@@ -226,22 +188,15 @@ A low-contrast theme that's easy on the eyes.
                       (setq-local compilation-read-command nil)
                       (call-interactively 'compile)))
 #+end_src
-*** 
-** Startup screen
-#+begin_src emacs-lisp :tangle no
-  (use-package startscreen
-    :ensure f
-    :load-path "./elisp/"
-    :config
-    (jethro/setup-startup-hook))
-#+end_src
+**** 
 ** Hydra
 #+begin_src emacs-lisp :tangle yes
   (use-package hydra)
 #+end_src
 * Ivy
-I've recently switched over from =helm= to =ivy=. This is because the API for ivy is simpler, and thus makes it easier to extend.
+I've recently switched over from =helm= to =ivy=. Ivy is simpler, and easier to extend.
 ** flx
+Flx is required for fuzzy-matching.
 #+begin_src emacs-lisp :tangle yes
 (use-package flx)
 #+end_src
@@ -274,8 +229,7 @@ Counsel contains ivy enhancements for commonly-used functions.
     (ivy-set-actions
      'counsel-find-file
      '(("d" (lambda (x) (delete-file (expand-file-name x)))
-        "delete"
-        )))
+        "delete")))
     (ivy-set-actions
      'ivy-switch-buffer
      '(("k"
@@ -299,7 +253,7 @@ Swiper is ivy-enhanced isearch.
     (:map read-expression-map
           ("C-r" . counsel-expression-history)))
 #+end_src
-** Fuzzy searching
+** Fuzzy Searching
 #+begin_src emacs-lisp :tangle yes
   (setq ivy-re-builders-alist
         '((ivy-switch-buffer . ivy--regex-plus)
@@ -651,6 +605,14 @@ Additional support for Vue.js projects.
                                        (make-local-variable 'js-indent-level)
                                        (setq js-indent-level 2))))
  #+end_src
+** Markdown
+#+begin_src emacs-lisp :tangle yes
+(use-package markdown-mode
+  :mode ("\\.md\\'" . markdown-mode)
+  :config (progn
+            (setq markdown-command "multimarkdown")
+            (add-hook 'markdown-mode-hook #'trunc-lines-hook)))
+#+end_src
 ** Clojure
 *** Clojure-mode
 #+begin_src emacs-lisp :tangle yes
@@ -694,14 +656,6 @@ Additional support for Vue.js projects.
   :diminish clj-refactor-mode
   :config (cljr-add-keybindings-with-prefix "C-c C-j"))
 #+end_src
-** Markdown
-#+begin_src emacs-lisp :tangle yes
-(use-package markdown-mode
-  :mode ("\\.md\\'" . markdown-mode)
-  :config (progn
-            (setq markdown-command "multimarkdown")
-            (add-hook 'markdown-mode-hook #'trunc-lines-hook)))
-#+end_src
 *** Squiggly-clojure
 #+begin_src emacs-lisp :tangle yes
   (use-package flycheck-clojure
@@ -709,6 +663,20 @@ Additional support for Vue.js projects.
     (flycheck-clojure-setup))
 #+end_src
 * Visual Enhancements
+** linum-mode
+#+begin_src emacs-lisp :tangle yes
+(add-hook 'prog-mode-hook 
+  (lambda ()
+    (linum-mode 1)))
+
+(add-hook 'text-mode-hook 
+  (lambda ()
+    (linum-mode 1)))
+#+end_src
+** hl-line-mode
+#+begin_src emacs-lisp :tangle yes
+(global-hl-line-mode 1)
+#+end_src
 ** Page-break-lines
 #+begin_src emacs-lisp :tangle yes
 (use-package page-break-lines)
@@ -717,6 +685,7 @@ Additional support for Vue.js projects.
 #+begin_src emacs-lisp :tangle yes
   (use-package smart-mode-line
     :config
+    (setq sml/theme 'light)
     (add-hook 'after-init-hook 'sml/setup)
     (setq sml/mode-width 'full)
     (setq sml/replacer-regexp-list
@@ -748,7 +717,8 @@ Beacon makes sure you don't lose track of your cursor when jumping around a buff
     :diminish beacon-mode
     :config
     (beacon-mode 1)
-    (setq beacon-push-mark 10))
+    (setq beacon-push-mark 10)
+    (setq beacon-color "#B4EAA2"))
 #+end_src
 ** show-paren
 Always show matching parenthesis.
@@ -772,46 +742,16 @@ Highlights recently copied/pasted text.
   :diminish volatile-highlights-mode
   :config (volatile-highlights-mode t))
 #+end_src
-** git-gutter
+** git-gutter-fringe+
 Displays added/modified/deleted on the left.
 #+begin_src emacs-lisp :tangle yes
-  (use-package git-gutter
-    :init (global-git-gutter-mode)
-    :diminish git-gutter-mode
-    :defer 5
+  (use-package git-gutter-fringe+
     :config
-    (setq git-gutter:modified-sign "==")
-    (setq git-gutter:added-sign "++")
-    (setq git-gutter:deleted-sign "--")
-    (setq git-gutter:update-interval 2)
-    (global-set-key (kbd "C-c g")
-                    (defhydra hydra-git-gutter (:body-pre (git-gutter-mode 1)
-                                                          :hint nil)
-                      "
-  Git gutter:
-    _n_: next hunk        _s_tage hunk     _q_uit
-    _p_: previous hunk    _r_evert hunk    _Q_uit and deactivate git-gutter
-    ^ ^                   _p_opup hunk
-    _<_: first hunk
-    _>_: last hunk        set start _R_evision
-  "
-                      ("n" git-gutter:next-hunk)
-                      ("p" git-gutter:previous-hunk)
-                      ("<" (progn (goto-char (point-min))
-                                  (git-gutter:next-hunk 1)))
-                      (">" (progn (goto-char (point-min))
-                                  (git-gutter:previous-hunk 1)))
-                      ("s" git-gutter:stage-hunk)
-                      ("r" git-gutter:revert-hunk)
-                      ("p" git-gutter:popup-hunk)
-                      ("R" git-gutter:set-start-revision)
-                      ("q" nil :color blue)
-                      ("Q" (progn (git-gutter-mode -1)
-                                  ;; git-gutter-fringe doesn't seem to
-                                  ;; clear the markup right away
-                                  (sit-for 0.1)
-                                  (git-gutter:clear))
-                       :color blue))))
+    (global-git-gutter+-mode)
+    (set-face-foreground 'git-gutter+-modified "gold1")
+    (set-face-foreground 'git-gutter+-added    "SeaGreen")
+    (set-face-foreground 'git-gutter+-deleted  "IndianRed")
+    (setq git-gutter-fr+-side 'left-fringe))
 #+end_src
 * Org-mode
 ** Prerequisites
@@ -1190,8 +1130,7 @@ Closes compile buffer if there are no errors.
   :config
   (bury-successful-compilation 1))
 #+end_src
-* Custom File
-#+BEGIN_SRC emacs-lisp :tangle yes
-(setq custom-file "~/.emacs.d/custom.el")
-(load custom-file)
-#+END_SRC
+* Tangling
+#+begin_src emacs-lisp :tangle no
+(jethro/org-after-save-init)
+#+end_src

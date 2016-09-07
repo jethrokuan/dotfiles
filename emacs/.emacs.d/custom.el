@@ -10,15 +10,15 @@
  '(camcorder-recording-command
    (quote
     ("ffmpeg" " --fps 20 --no-sound --windowid " window-id " -o " file)))
- '(custom-enabled-themes (quote (sanityinc-tomorrow-night)))
  '(custom-safe-themes
    (quote
-    ("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" default)))
+    ("c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default)))
  '(fci-rule-color "#eee8d5")
  '(package-selected-packages
    (quote
     (camcorder ag org-pomodoro flx eink-theme cider-hydra jade zzz-to-char zenburn-theme which-key web-mode vue-mode volatile-highlights use-package tao-theme spacemacs-theme smart-mode-line scss-mode rust-mode request-deferred rainbow-mode pivotal-tracker paradox page-break-lines ox-reveal origami noctilux-theme nameless move-text markdown-mode magit kurecolor keyfreq json-mode js3-mode js2-mode htmlize gorepl-mode golint golden-ratio go-dlv git-gutter git-gutter+ focus flycheck-pos-tip flycheck-clojure fish-mode firestarter expand-region exec-path-from-shell esup emmet-mode elpy dumb-jump darktooth-theme darkroom counsel-projectile company-tern company-quickhelp company-go clj-refactor bury-successful-compilation browse-kill-ring beacon artbollocks-mode alert aggressive-indent ace-window)))
  '(paradox-automatically-star t)
+ '(paradox-github-token t)
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
    (quote
