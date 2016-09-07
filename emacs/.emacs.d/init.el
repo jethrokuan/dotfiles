@@ -29,6 +29,10 @@
 (setq inhibit-splash-screen t)
 (setq inhibit-startup-message t)
 
+(require 'bookmark)
+(bookmark-bmenu-list)
+(switch-to-buffer "*Bookmark List*")
+
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 (delete-selection-mode +1)
@@ -476,6 +480,9 @@
   :config
   (setq sml/theme 'light)
   (add-hook 'after-init-hook 'sml/setup)
+  (setq sml/name-width 30)
+  (setq sml/shorten-directory t)
+  (setq sml/shorten-modes t)
   (setq sml/mode-width 'full)
   (setq sml/replacer-regexp-list
         '(("^~/.org/" ":O:")
@@ -485,12 +492,20 @@
                 (mapconcat #'identity
                            '("FlyC.*"
                              "Projectile.*"
+                             "GitGutter"
                              "ivy"
                              "company"
                              ""
                              ","
                              "ElDoc")
                            "\\|"))))
+
+(setq display-time-24hr-format t)
+(display-time-mode 1)
+
+(use-package nyan-mode
+  :config
+  (nyan-mode 1))
 
 (defhydra hydra-zoom (global-map "<f2>")
   "zoom"

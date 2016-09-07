@@ -56,6 +56,13 @@ Remove useless toolbars and splash screens.
 (setq inhibit-startup-message t)
 #+end_src
 
+** Show bookmark list
+#+begin_src emacs-lisp :tangle yes
+(require 'bookmark)
+(bookmark-bmenu-list)
+(switch-to-buffer "*Bookmark List*")
+#+end_src
+
 ** Use y/n over yes/no
 Always prefer the shorter y/n over yes/no.
 
@@ -687,6 +694,9 @@ Additional support for Vue.js projects.
     :config
     (setq sml/theme 'light)
     (add-hook 'after-init-hook 'sml/setup)
+    (setq sml/name-width 30)
+    (setq sml/shorten-directory t)
+    (setq sml/shorten-modes t)
     (setq sml/mode-width 'full)
     (setq sml/replacer-regexp-list
           '(("^~/.org/" ":O:")
@@ -696,12 +706,24 @@ Additional support for Vue.js projects.
                   (mapconcat #'identity
                              '("FlyC.*"
                                "Projectile.*"
+                               "GitGutter"
                                "ivy"
                                "company"
                                ""
                                ","
                                "ElDoc")
                              "\\|"))))
+#+end_src
+*** Showing time
+#+begin_src emacs-lisp :tangle yes
+(setq display-time-24hr-format t)
+(display-time-mode 1)
+#+end_src
+** nyan-mode
+#+begin_src emacs-lisp :tangle yes
+  (use-package nyan-mode
+    :config
+    (nyan-mode 1))
 #+end_src
 ** Zooming
 #+begin_src emacs-lisp :tangle yes
