@@ -446,6 +446,11 @@ point reaches the beginning or end of the buffer, stop there."
                   :config
                   (add-to-list 'company-backends 'company-tern))))
 
+(use-package js2-refactor
+  :config
+  (add-hook 'js2-mode-hook #'js2-refactor-mode)
+  (js2r-add-keybindings-with-prefix "C-c C-j"))
+
 (use-package vue-mode
   :mode "\\.vue\\'")
 
@@ -510,6 +515,12 @@ point reaches the beginning or end of the buffer, stop there."
     (linum-mode 1)))
 
 (global-hl-line-mode 1)
+
+(require 'whitespace)
+(setq whitespace-line-column 80) ;; limit line length
+(setq whitespace-style '(face lines-tail))
+
+(add-hook 'prog-mode-hook 'whitespace-mode)
 
 (use-package page-break-lines)
 

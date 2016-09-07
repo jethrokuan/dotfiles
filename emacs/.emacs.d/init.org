@@ -640,6 +640,13 @@ npm install -g tern
                   :config
                   (add-to-list 'company-backends 'company-tern))))
 #+end_src
+*** JS2-refactor
+#+begin_src emacs-lisp :tangle yes
+  (use-package js2-refactor
+    :config
+    (add-hook 'js2-mode-hook #'js2-refactor-mode)
+    (js2r-add-keybindings-with-prefix "C-c C-j"))
+#+end_src
 *** Vue-mode
 Additional support for Vue.js projects.
 
@@ -726,6 +733,15 @@ Additional support for Vue.js projects.
 ** hl-line-mode
 #+begin_src emacs-lisp :tangle yes
 (global-hl-line-mode 1)
+#+end_src
+** whitespace-mode
+Show fill-column.
+#+begin_src emacs-lisp :tangle yes
+(require 'whitespace)
+(setq whitespace-line-column 80) ;; limit line length
+(setq whitespace-style '(face lines-tail))
+
+(add-hook 'prog-mode-hook 'whitespace-mode)
 #+end_src
 ** Page-break-lines
 #+begin_src emacs-lisp :tangle yes
