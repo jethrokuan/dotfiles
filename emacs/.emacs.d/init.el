@@ -62,6 +62,9 @@
       (message "%s" file)
       (delete-file file))))
 
+(setq custom-file "custom.el")
+(load custom-file)
+
 (load "~/.emacs.d/secrets.el" t)
 
 (use-package exec-path-from-shell
@@ -122,7 +125,6 @@
    ("C-M-i" . counsel-imenu)
    ("C-x C-f" . counsel-find-file)
    ("C-c d" . counsel-dired-jump)
-   ("C-c r" . ivy-recentf)
    ("C-c j" . counsel-git-grep)
    ("C-c k" . counsel-ag)
    ("C-c l" . counsel-locate)
@@ -165,6 +167,17 @@
       '((ivy-switch-buffer . ivy--regex-plus)
         (swiper . ivy--regex-plus)
         (t . ivy--regex-fuzzy)))
+
+(use-package crux
+  :bind* (("C-c o" . crux-open-with)
+          ("C-c n" . crux-cleanup-buffer-or-region)
+          ("C-c D" . crux-delete-file-and-buffer)
+          ("C-a" . crux-move-beginning-of-line)
+          ("M-o" . crux-smart-open-line)
+          ("C-c r" . crux-rename-file-and-buffer)
+          ("C-c d" . crux-duplicate-current-line-or-region)
+          ("C-c M-d" . crux-duplicate-and-comment-current-line-or-region)
+          ("s-o" . crux-smart-open-line-above)))
 
 (defun jethro/beginning-of-line (arg)
   "Move point back to indentation of beginning of line.
@@ -224,6 +237,17 @@ point reaches the beginning or end of the buffer, stop there."
 (require 'saveplace)
 (setq-default save-place t)
 
+(use-package key-chord
+  :config
+  (key-chord-mode 1)
+  (key-chord-define-global "mw" 'avy-goto-word-1)
+  (key-chord-define-global "gl" 'avy-goto-line)
+  (key-chord-define-global "jk" 'avy-goto-char)
+  (key-chord-define-global "JJ" 'crux-switch-to-previous-buffer)
+  (key-chord-define-global "FF" 'counsel-find-file)
+  (key-chord-define-global "xx" 'execute-extended-command)
+  (key-chord-define-global "yy" 'counsel-yank-pop))
+
 (use-package electric-align
   :ensure f
   :load-path "elisp/"
@@ -248,75 +272,6 @@ point reaches the beginning or end of the buffer, stop there."
   :config
   (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
   (add-hook 'clojure-mode-hook 'paredit-mode))
-
-(use-package origami
-  :config
-  (global-origami-mode)
-  (global-set-key
-   (kbd "C-c o")
-   (defhydra hydra-folding (:color red)
-     ("o" origami-open-node "open node")
-     ("c" origami-close-node "close node")
-     ("n" origami-next-fold "next fold")
-     ("p" origami-previous-fold "previous fold")
-     ("f" origami-forward-toggle-node "fold forward")
-     ("a" origami-toggle-all-nodes "fold all"))))
-
-(autoload 'zap-up-to-char "misc"
-  "Kill up to, but not including ARGth occurrence of CHAR.
-
-  \(fn arg char)"
-  'interactive)
-
-(bind-key* "M-z" 'zap-up-to-char)
-
-(use-package move-text
-  :bind* (("M-<up>" . move-text-up)
-          ("M-<down>" . move-text-down)))
-
-(use-package flycheck
-  :config
-  (global-set-key (kbd "C-c f")
-                  (defhydra hydra-flycheck
-                    (:pre (progn (setq hydra-lv t) (flycheck-list-errors))
-                          :post (progn (setq hydra-lv nil) (quit-windows-on "*Flycheck errors*"))
-                          :hint nil)
-                    "Errors"
-                    ("f"  flycheck-error-list-set-filter                            "Filter")
-                    ("n"  flycheck-next-error                                       "Next")
-                    ("p"  flycheck-previous-error                                   "Previous")
-                    ("<" flycheck-first-error                                      "First")
-                    (">"  (progn (goto-char (point-max)) (flycheck-previous-error)) "Last")
-                    ("q"  nil)))
-  (use-package flycheck-pos-tip
-    :config (flycheck-pos-tip-mode))
-  (add-hook 'prog-mode-hook 'global-flycheck-mode))
-
-(use-package yasnippet
-  :diminish yas-global-mode yas-minor-mode
-  :init (add-hook 'after-init-hook 'yas-global-mode)
-  :config (setq yas-snippet-dirs '("~/.emacs.d/snippets/")))
-
-(use-package company
-  :diminish company-mode
-  :init (progn
-          (add-hook 'after-init-hook 'global-company-mode)
-          (setq company-dabbrev-ignore-case nil
-                company-dabbrev-code-ignore-case nil
-                company-dabbrev-downcase nil
-                company-idle-delay 0
-                company-begin-commands '(self-insert-command)
-                company-transformers '(company-sort-by-occurrence))
-          (use-package company-quickhelp
-            :config (company-quickhelp-mode 1))))
-
-(use-package flyspell
-  :ensure f
-  :diminish flyspell-mode
-  :config
-  (add-hook 'text-mode-hook 'flyspell-mode)
-  (add-hook 'org-mode-hook 'flyspell-mode)
-  (add-hook 'markdown-mode-hook 'flyspell-mode))
 
 (use-package go-mode
   :mode ("\\.go\\'" . go-mode)
