@@ -23,7 +23,7 @@
 (load custom-file)
 
 (add-to-list 'default-frame-alist
-             '(font . "Inconsolata-g for Powerline-12"))
+             '(font . "Hack-12"))
 
 (tooltip-mode -1)
 (tool-bar-mode -1)

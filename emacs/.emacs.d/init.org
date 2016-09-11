@@ -42,11 +42,11 @@ Use-package allows for isolation of package configuration, while maintaining tid
 #+END_SRC
 ** TODO Setup GNUs with Gmail
 ** Custom font
-I use Inconsolata-g, patched with Powerline. Other good alternatives include Source Code Pro.
+I use Hack, patched with Powerline. Other good alternatives include Source Code Pro.
 
 #+BEGIN_SRC emacs-lisp :tangle yes
 (add-to-list 'default-frame-alist
-             '(font . "Inconsolata-g for Powerline-12"))
+             '(font . "Hack-12"))
 #+END_SRC
 
 ** UI Cruft
