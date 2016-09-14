@@ -1,4 +1,4 @@
- #+TITLE: Jethro's Emacs.d Configuration
+#+TITLE: Jethro's Emacs.d Configuration
 * Introduction  
 * Basic Setup
 ** Add MELPA and Org Repository
@@ -331,9 +331,13 @@ Use it to jump to function definitions. Requires no external depedencies.
          ("C-M-p" . dumb-jump-back)
          ("C-M-q" . dumb-jump-quick-look)))
 #+end_src
-** ace-window
-Ace-window makes it easier to move between windows.
+** Window switching
 #+begin_src emacs-lisp :tangle yes
+(bind-key* "M-'" 'other-window)
+#+end_src
+** ace-window (disabled)
+Ace-window makes it easier to move between windows.
+#+begin_src emacs-lisp :tangle no
   (use-package ace-window
     :bind ("M-'" . ace-window)
     :config

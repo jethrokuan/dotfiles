@@ -217,10 +217,7 @@ point reaches the beginning or end of the buffer, stop there."
          ("C-M-p" . dumb-jump-back)
          ("C-M-q" . dumb-jump-quick-look)))
 
-(use-package ace-window
-  :bind ("M-'" . ace-window)
-  :config
-  (setq aw-keys '(?h ?t ?n ?s)))
+(bind-key* "M-'" 'other-window)
 
 (defun jethro/dired-mode-setup-hook ()
   "hook for dired-mode"
