@@ -71,9 +71,8 @@
   :demand t
   :init (exec-path-from-shell-initialize))
 
-(add-to-list 'default-frame-alist '(background-color . "ivory"))
-
-(set-face-attribute 'region nil :background "salmon")
+(use-package doom-themes
+  :init (load-theme 'doom-one t))
 
 (defun open-next-line (arg)
   "Move to the next line and then opens a line.

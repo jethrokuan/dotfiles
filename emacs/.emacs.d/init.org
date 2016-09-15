@@ -143,14 +143,21 @@ The following code will delete all backup files that are older than a certain da
 #+end_src
 
 ** Theme
-*** Set background
+
+*** Doom Theme
 #+begin_src emacs-lisp :tangle yes
-(add-to-list 'default-frame-alist '(background-color . "ivory"))
+  (use-package doom-themes
+    :init (load-theme 'doom-one t))
 #+end_src
-*** Set highlight colour
-#+begin_src emacs-lisp :tangle yes
-(set-face-attribute 'region nil :background "salmon")
-#+end_src
+*** Theme-less
+**** Set background
+ #+begin_src emacs-lisp :tangle no
+   (add-to-list 'default-frame-alist '(background-color . "ivory"))
+ #+end_src
+**** Set highlight colour
+ #+begin_src emacs-lisp :tangle no
+ (set-face-attribute 'region nil :background "salmon")
+ #+end_src
 ** Keybindings
 *** Opening Lines
 #+begin_src emacs-lisp :tangle yes
