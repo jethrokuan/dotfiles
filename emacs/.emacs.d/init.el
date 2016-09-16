@@ -72,7 +72,12 @@
   :init (exec-path-from-shell-initialize))
 
 (use-package doom-themes
-  :init (load-theme 'doom-one t))
+  :init
+  (load-theme 'doom-one t)
+  :config
+  (add-hook 'find-file-hook 'doom-buffer-mode)
+  (add-hook 'minibuffer-setup-hook 'doom-brighten-minibuffer)
+  (require 'doom-neotree))
 
 (defun open-next-line (arg)
   "Move to the next line and then opens a line.
@@ -179,31 +184,6 @@
           ("C-c M-d" . crux-duplicate-and-comment-current-line-or-region)
           ("s-o" . crux-smart-open-line-above)))
 
-(defun jethro/beginning-of-line (arg)
-  "Move point back to indentation of beginning of line.
-
-Move point to the first non-whitespace character on this line.
-If point is already there, move to the beginning of the line.
-Effectively toggle between the first non-whitespace character and
-the beginning of the line.
-
-If ARG is not nil or 1, move forward ARG - 1 lines first.  If
-point reaches the beginning or end of the buffer, stop there."
-  (interactive "^p")
-  (setq arg (or arg 1))
-
-  ;; Move lines first
-  (when (/= arg 1)
-    (let ((line-move-visual nil))
-      (forward-line (1- arg))))
-
-  (let ((orig-point (point)))
-    (back-to-indentation)
-    (when (= orig-point (point))
-      (move-beginning-of-line 1))))
-
-(bind-key* "C-a" #'jethro/beginning-of-line)
-
 (use-package avy
   :bind* (("C-'" . avy-goto-char)
           ("C-," . avy-goto-char-2))
@@ -243,7 +223,13 @@ point reaches the beginning or end of the buffer, stop there."
   (key-chord-define-global "JJ" 'crux-switch-to-previous-buffer)
   (key-chord-define-global "FF" 'counsel-find-file)
   (key-chord-define-global "xx" 'execute-extended-command)
-  (key-chord-define-global "yy" 'counsel-yank-pop))
+  (key-chord-define-global "yy" 'counsel-yank-pop)
+  (key-chord-define-global ",." 'neotree-toggle))
+
+(use-package neotree
+  :bind ("<f8>" . neotree-toggle)
+  :config
+  (setq neo-smart-open t))
 
 (use-package electric-align
   :ensure f

@@ -147,7 +147,12 @@ The following code will delete all backup files that are older than a certain da
 *** Doom Theme
 #+begin_src emacs-lisp :tangle yes
   (use-package doom-themes
-    :init (load-theme 'doom-one t))
+    :init
+    (load-theme 'doom-one t)
+    :config
+    (add-hook 'find-file-hook 'doom-buffer-mode)
+    (add-hook 'minibuffer-setup-hook 'doom-brighten-minibuffer)
+    (require 'doom-neotree))
 #+end_src
 *** Theme-less
 **** Set background
@@ -293,33 +298,6 @@ Swiper is ivy-enhanced isearch.
             ("C-c M-d" . crux-duplicate-and-comment-current-line-or-region)
             ("s-o" . crux-smart-open-line-above)))
 #+end_src
-** Moving to start of line
-#+begin_src emacs-lisp :tangle yes
-  (defun jethro/beginning-of-line (arg)
-    "Move point back to indentation of beginning of line.
-
-  Move point to the first non-whitespace character on this line.
-  If point is already there, move to the beginning of the line.
-  Effectively toggle between the first non-whitespace character and
-  the beginning of the line.
-
-  If ARG is not nil or 1, move forward ARG - 1 lines first.  If
-  point reaches the beginning or end of the buffer, stop there."
-    (interactive "^p")
-    (setq arg (or arg 1))
-
-    ;; Move lines first
-    (when (/= arg 1)
-      (let ((line-move-visual nil))
-        (forward-line (1- arg))))
-
-    (let ((orig-point (point)))
-      (back-to-indentation)
-      (when (= orig-point (point))
-        (move-beginning-of-line 1))))
-
-  (bind-key* "C-a" #'jethro/beginning-of-line)
-#+end_src
 ** avy
 Use avy to move between visible text.
 #+begin_src emacs-lisp :tangle yes
@@ -390,7 +368,15 @@ Save the cursor location for files I've visited.
     (key-chord-define-global "JJ" 'crux-switch-to-previous-buffer)
     (key-chord-define-global "FF" 'counsel-find-file)
     (key-chord-define-global "xx" 'execute-extended-command)
-    (key-chord-define-global "yy" 'counsel-yank-pop))
+    (key-chord-define-global "yy" 'counsel-yank-pop)
+    (key-chord-define-global ",." 'neotree-toggle))
+#+end_src
+** neotree
+#+begin_src emacs-lisp :tangle yes
+  (use-package neotree
+    :bind ("<f8>" . neotree-toggle)
+    :config
+    (setq neo-smart-open t))
 #+end_src
 * Editing Text
 ** electric-align
