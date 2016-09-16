@@ -809,8 +809,7 @@ Beacon makes sure you don't lose track of your cursor when jumping around a buff
     :diminish beacon-mode
     :config
     (beacon-mode 1)
-    (setq beacon-push-mark 10)
-    (setq beacon-color "#B4EAA2"))
+    (setq beacon-push-mark 10))
 #+end_src
 ** show-paren
 Always show matching parenthesis.

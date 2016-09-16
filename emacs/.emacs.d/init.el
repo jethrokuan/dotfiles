@@ -560,8 +560,7 @@ point reaches the beginning or end of the buffer, stop there."
   :diminish beacon-mode
   :config
   (beacon-mode 1)
-  (setq beacon-push-mark 10)
-  (setq beacon-color "#B4EAA2"))
+  (setq beacon-push-mark 10))
 
 (show-paren-mode 1)
 (setq show-paren-delay 0)
