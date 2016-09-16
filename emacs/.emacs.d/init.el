@@ -831,7 +831,7 @@ point reaches the beginning or end of the buffer, stop there."
   (def-projectile-commander-method ?F
     "Git fetch."
     (magit-status)
-    (call-interactively #'magit-fetch-current))
+    (call-interactively #'magit-fetch-all))
   (def-projectile-commander-method ?j
     "Jack-in."
     (let* ((opts (projectile-current-project-files))

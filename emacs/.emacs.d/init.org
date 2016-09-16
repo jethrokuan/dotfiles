@@ -1130,7 +1130,7 @@ Useful when handling git merge conflicts.
     (def-projectile-commander-method ?F
       "Git fetch."
       (magit-status)
-      (call-interactively #'magit-fetch-current))
+      (call-interactively #'magit-fetch-all))
     (def-projectile-commander-method ?j
       "Jack-in."
       (let* ((opts (projectile-current-project-files))
