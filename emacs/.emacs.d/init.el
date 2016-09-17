@@ -580,7 +580,7 @@
   :mode ("\\.org\\'" . org-mode)
   :init
   (add-hook 'org-mode-hook #'trunc-lines-hook)
-  (setq org-ellipsis "⤵")
+  (setq org-ellipsis "…")
   (setq org-directory "~/.org")
   (setq org-default-notes-directory (concat org-directory "/notes.org"))
   (setq org-export-in-background t)
@@ -660,6 +660,7 @@
 (require 'ox-latex)
 (setq org-latex-tables-booktabs t)
 (setq org-latex-listings 'minted)
+(setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
 (setq org-latex-minted-options
       '(("frame" "lines")
         ("linenos")
@@ -708,38 +709,38 @@
                ("\\paragraph{%s}" . "\\paragraph*{%s}")
                ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 (add-to-list 'org-latex-classes
-             '("org-math"
+             '("org-notes"
                "\\documentclass[11pt,a4paper]{article}
                       \\usepackage[T1]{fontenc}
+                      \\usepackage{charter}
+                      \\usepackage[expert]{mathdesign}
+                      \\usepackage{titlesec}
+                      \\titleformat{\\section}[hang]{
+                      \\usefont{T1}{bch}{b}{n}\\selectfont}{}{0em} 
+                      {\\hspace{-0.4pt}\\Large \\thesection\\hspace{0.6em}}
+                      [] % optional code following the title body                     
                       \\usepackage{amsmath}
                       \\usepackage{booktabs}
                       \\usepackage{color}
-                      \\setcounter{tocdepth}{2}
+                      \\setcounter{tocdepth}{3}
                       \\usepackage{epigraph}
                       \\usepackage{enumitem}
-                      \\setlist{nosep}
-                      \\setlength\\epigraphwidth{13cm}
-                      \\setlength\\epigraphrule{0pt}
-                      \\usepackage{fontspec}
+                      \\setlist{nosep}                       
                       \\usepackage{graphicx} 
-                      \\usepackage{parskip}
-                      \\let\\oldsection\\section
-                      \\renewcommand\\section{\\clearpage\\oldsection}
-                      \\setlength{\\parskip}{1em}
-                      \\usepackage{geometry}
+                      \\usepackage{parskip}                        
+                      \\setlength{\\parskip}{1em}                     
                       \\usepackage{hyperref}
                       \\hypersetup {colorlinks = true, allcolors = red}
-                      \\geometry{a4paper, textwidth=6.5in, textheight=10in,
-                                  marginparsep=7pt, marginparwidth=.6in}
+                      \\usepackage[a4paper,left=3cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
                       \\pagestyle{empty}
                       \\title{}                  
                       [NO-DEFAULT-PACKAGES]
                       [NO-PACKAGES]"
-               ("\\section{%s}" . "\\section*{%s}")
-               ("\\subsection{%s}" . "\\subsection*{%s}")
-               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-               ("\\paragraph{%s}" . "\\paragraph*{%s}")
-               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+                      ("\\section{%s}" . "\\section*{%s}")
+                      ("\\subsection{%s}" . "\\subsection*{%s}")
+                      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                      ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                      ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
 (use-package org-pomodoro
   :bind ("C-c C-x C-i" . org-pomodoro))
