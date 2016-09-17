@@ -719,6 +719,7 @@
                       \\usefont{T1}{bch}{b}{n}\\selectfont}{}{0em} 
                       {\\hspace{-0.4pt}\\Large \\thesection\\hspace{0.6em}}
                       [] % optional code following the title body                     
+                      \\usepackage[space]{grffile}
                       \\usepackage{amsmath}
                       \\usepackage{booktabs}
                       \\usepackage{color}
