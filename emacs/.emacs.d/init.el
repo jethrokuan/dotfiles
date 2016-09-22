@@ -488,14 +488,6 @@
   :config
   (flycheck-clojure-setup))
 
-(add-hook 'prog-mode-hook 
-  (lambda ()
-    (linum-mode 1)))
-
-(add-hook 'text-mode-hook 
-  (lambda ()
-    (linum-mode 1)))
-
 (global-hl-line-mode 1)
 
 (require 'whitespace)

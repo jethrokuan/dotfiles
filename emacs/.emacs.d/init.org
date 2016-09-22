@@ -1,5 +1,5 @@
 #+TITLE: Jethro's Emacs.d Configuration
-* Introduction  
+* Introduction
 * Basic Setup
 ** Add MELPA and Org Repository
 Add package archives. Note that I'm using HTTP, HTTPS did not work for me. To configure HTTPS, simply replace occurrences of http with https.
@@ -717,13 +717,9 @@ Additional support for Vue.js projects.
     (flycheck-clojure-setup))
 #+end_src
 * Visual Enhancements
-** linum-mode
-#+begin_src emacs-lisp :tangle yes
+** linum-mode (Disabled)
+#+begin_src emacs-lisp :tangle no
 (add-hook 'prog-mode-hook 
-  (lambda ()
-    (linum-mode 1)))
-
-(add-hook 'text-mode-hook 
   (lambda ()
     (linum-mode 1)))
 #+end_src
@@ -1209,7 +1205,7 @@ Closes compile buffer if there are no errors.
   :config
   (bury-successful-compilation 1))
 #+end_src
-* Tangling
+* Tangling                                                         :noexport:
 #+begin_src emacs-lisp :tangle no
 (jethro/org-after-save-init)
 #+end_src
