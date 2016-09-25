@@ -143,20 +143,7 @@
   (setq ivy-use-virtual-buffers t)
   (setq ivy-display-style 'fancy)
   (setq ivy-initial-inputs-alist nil)
-  (ivy-set-actions
-   'counsel-find-file
-   '(("d" (lambda (x) (delete-file (expand-file-name x)))
-      "delete")))
-  (ivy-set-actions
-   'ivy-switch-buffer
-   '(("k"
-      (lambda (x)
-        (kill-buffer x)
-        (ivy--reset-state ivy-last))
-      "kill")
-     ("j"
-      ivy--switch-buffer-other-window-action
-      "other window"))))
+  (define-key ivy-minibuffer-map (kbd "<return>") 'ivy-alt-done))
 
 (use-package swiper
   :bind*
@@ -171,6 +158,45 @@
       '((ivy-switch-buffer . ivy--regex-plus)
         (swiper . ivy--regex-plus)
         (t . ivy--regex-fuzzy)))
+
+(defun reloading (cmd)
+  (lambda (x)
+    (funcall cmd x)
+    (ivy--reset-state ivy-last)))
+(defun given-file (cmd prompt) ; needs lexical-binding
+  (lambda (source)
+    (let ((target
+           (let ((enable-recursive-minibuffers t))
+             (read-file-name
+              (format "%s %s to:" prompt source)))))
+      (funcall cmd source target 1))))
+(defun confirm-delete-file (x)
+  (dired-delete-file x 'confirm-each-subdirectory))
+(ivy-add-actions
+ 'counsel-find-file
+ `(("c" ,(given-file #'copy-file "Copy") "copy")
+   ("d" ,(reloading #'confirm-delete-file) "delete")
+   ("m" ,(reloading (given-file #'rename-file "Move")) "move")))
+(ivy-add-actions
+ 'counsel-projectile-find-file
+ `(("c" ,(given-file #'copy-file "Copy") "copy")
+   ("d" ,(reloading #'confirm-delete-file) "delete")
+   ("m" ,(reloading (given-file #'rename-file "Move")) "move")
+   ("b" counsel-find-file-cd-bookmark-action "cd bookmark")))
+
+(defun ivy-dired ()
+  (interactive)
+  (if ivy--directory
+      (ivy-quit-and-run
+       (dired ivy--directory)
+       (when (re-search-forward
+              (regexp-quote
+               (substring ivy--current 0 -1)) nil t)
+         (goto-char (match-beginning 0))))
+    (user-error
+     "Not completing files currently")))
+
+(define-key ivy-minibuffer-map (kbd "C-:") 'ivy-dired)
 
 (use-package crux
   :commands (crux-switch-to-previous-buffer)
