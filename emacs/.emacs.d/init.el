@@ -211,8 +211,7 @@
 
 (require 'dired-x)
 
-(require 'saveplace)
-(setq-default save-place t)
+(save-place-mode 1)
 
 (use-package key-chord
   :config
@@ -225,11 +224,6 @@
   (key-chord-define-global "xx" 'execute-extended-command)
   (key-chord-define-global "yy" 'counsel-yank-pop)
   (key-chord-define-global ",." 'neotree-toggle))
-
-(use-package neotree
-  :bind ("<f8>" . neotree-toggle)
-  :config
-  (setq neo-smart-open t))
 
 (use-package electric-align
   :ensure f
@@ -518,6 +512,7 @@
                              "ivy"
                              "company"
                              ""
+                             "doom"
                              ","
                              "ElDoc")
                            "\\|"))))
@@ -660,80 +655,32 @@
         ("framesep" "2mm")
         ("fontfamily" "tt")))
 (add-to-list 'org-latex-classes
-             '("org-article"
-               "\\documentclass[11pt,a4paper]{article}
-                      \\usepackage[default]{droidserif}
+             '("book"
+               "\\documentclass[10pt]{memoir}
+                      \\usepackage{charter}
                       \\usepackage[T1]{fontenc}
                       \\usepackage{booktabs}
                       \\usepackage{minted}
                       \\usemintedstyle{borland}
                       \\usepackage{color}
-                      \\setcounter{tocdepth}{2}
-                      \\usepackage{xcolor}
-                      \\usepackage{soul}
-                      \\definecolor{Light}{gray}{.90}
-                      \\sethlcolor{Light}
-                      \\let\\OldTexttt\\texttt
-                      \\renewcommand{\\texttt}[1]{\\OldTexttt{\\hl{#1}}}
                       \\usepackage{epigraph}
                       \\usepackage{enumitem}
                       \\setlist{nosep}
                       \\setlength\\epigraphwidth{13cm}
                       \\setlength\\epigraphrule{0pt}
                       \\usepackage{fontspec}
-                      \\usepackage{graphicx} 
-                      \\usepackage{parskip}
-                      \\let\\oldsection\\section
-                      \\renewcommand\\section{\\clearpage\\oldsection}
-                      \\setlength{\\parskip}{1em}
-                      \\usepackage{geometry}
+                      \\usepackage{graphicx}
                       \\usepackage{hyperref}
                       \\hypersetup {colorlinks = true, allcolors = red}
-                      \\geometry{a4paper, textwidth=6.5in, textheight=10in,
-                                  marginparsep=7pt, marginparwidth=.6in}
-                      \\pagestyle{empty}
-                      \\title{}                  
+                      \\title{}
                       [NO-DEFAULT-PACKAGES]
                       [NO-PACKAGES]"
+               ("\\chapter{%s}" . "\\chapter*{%s}")
                ("\\section{%s}" . "\\section*{%s}")
                ("\\subsection{%s}" . "\\subsection*{%s}")
                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
                ("\\paragraph{%s}" . "\\paragraph*{%s}")
                ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-(add-to-list 'org-latex-classes
-             '("org-notes"
-               "\\documentclass[11pt,a4paper]{article}
-                      \\usepackage[T1]{fontenc}
-                      \\usepackage{charter}
-                      \\usepackage[expert]{mathdesign}
-                      \\usepackage{titlesec}
-                      \\titleformat{\\section}[hang]{
-                      \\usefont{T1}{bch}{b}{n}\\selectfont}{}{0em} 
-                      {\\hspace{-0.4pt}\\Large \\thesection\\hspace{0.6em}}
-                      [] % optional code following the title body                     
-                      \\usepackage[space]{grffile}
-                      \\usepackage{amsmath}
-                      \\usepackage{booktabs}
-                      \\usepackage{color}
-                      \\setcounter{tocdepth}{3}
-                      \\usepackage{epigraph}
-                      \\usepackage{enumitem}
-                      \\setlist{nosep}                       
-                      \\usepackage{graphicx} 
-                      \\usepackage{parskip}                        
-                      \\setlength{\\parskip}{1em}                     
-                      \\usepackage{hyperref}
-                      \\hypersetup {colorlinks = true, allcolors = red}
-                      \\usepackage[a4paper,left=3cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
-                      \\pagestyle{empty}
-                      \\title{}                  
-                      [NO-DEFAULT-PACKAGES]
-                      [NO-PACKAGES]"
-                      ("\\section{%s}" . "\\section*{%s}")
-                      ("\\subsection{%s}" . "\\subsection*{%s}")
-                      ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                      ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                      ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
 (use-package org-pomodoro
   :bind ("C-c C-x C-i" . org-pomodoro))
@@ -778,7 +725,9 @@
   :bind (("s-g" . magit-status)
          ("s-G" . magit-blame))
   :init (setq magit-auto-revert-mode nil)
-  :config (add-hook 'magit-mode-hook 'hl-line-mode))
+  :config
+  (use-package magithub)
+  (add-hook 'magit-mode-hook 'hl-line-mode))
 
 (use-package projectile
   :demand t
