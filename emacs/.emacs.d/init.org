@@ -29,6 +29,12 @@ Use-package allows for isolation of package configuration, while maintaining tid
   (setq use-package-always-ensure t))
 #+END_SRC
 
+** Add validate
+Validate is a package that checks for and reports Emacs config errors.
+#+begin_src emacs-lisp :tangle yes
+  (use-package validate
+    :demand t)
+#+end_src
 ** User configuration
 #+begin_src emacs-lisp :tangle yes
 (setq user-full-name "Jethro Kuan"
@@ -878,13 +884,13 @@ We need =htmlize= to add syntax highlighting to org-exports for HTML files.
                     '(("^ +\\([-*]\\) "
                        (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•")))))) 
     (setq org-refile-targets
-          '((nil :maxlevel . 3)
-            (org-agenda-files :maxlevel . 3)))
+                   '((nil :maxlevel . 3)
+                     (org-agenda-files :maxlevel . 3)))
     (setq org-use-fast-todo-selection t)
     (setq org-treat-S-cursor-todo-selection-as-state-change nil)
     (setq org-capture-templates
-          '(("b" "Book" entry (file "~/.org/books.org")
-             "* TO-READ %(org-set-tags)%? %i\n"))))
+                   '(("b" "Book" entry (file "~/.org/books.org")
+                      "* TO-READ %(org-set-tags)%? %i\n"))))
 #+end_src
 ** org-agenda
 #+begin_src emacs-lisp :tangle yes

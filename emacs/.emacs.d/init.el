@@ -16,6 +16,9 @@
   (require 'diminish)
   (setq use-package-always-ensure t))
 
+(use-package validate
+  :demand t)
+
 (setq user-full-name "Jethro Kuan"
       user-mail-address "jethrokuan95@gmail.com")
 
@@ -603,13 +606,13 @@
                   '(("^ +\\([-*]\\) "
                      (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•")))))) 
   (setq org-refile-targets
-        '((nil :maxlevel . 3)
-          (org-agenda-files :maxlevel . 3)))
+                 '((nil :maxlevel . 3)
+                   (org-agenda-files :maxlevel . 3)))
   (setq org-use-fast-todo-selection t)
   (setq org-treat-S-cursor-todo-selection-as-state-change nil)
   (setq org-capture-templates
-        '(("b" "Book" entry (file "~/.org/books.org")
-           "* TO-READ %(org-set-tags)%? %i\n"))))
+                 '(("b" "Book" entry (file "~/.org/books.org")
+                    "* TO-READ %(org-set-tags)%? %i\n"))))
 
 (defvar jethro/org-agenda-files
   (append
