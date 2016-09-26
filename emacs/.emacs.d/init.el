@@ -245,8 +245,7 @@
 (use-package key-chord
   :config
   (key-chord-mode 1)
-  (key-chord-define-global "mw" 'avy-goto-word-1)
-  (key-chord-define-global "gl" 'avy-goto-line)
+  (key-chord-define-global "mw" 'avy-goto-word-1)   
   (key-chord-define-global "jk" 'avy-goto-char)
   (key-chord-define-global "JJ" 'crux-switch-to-previous-buffer)
   (key-chord-define-global "FF" 'counsel-find-file)
@@ -598,8 +597,7 @@
   (add-hook 'org-mode-hook #'trunc-lines-hook)
   (setq org-ellipsis "…")
   (setq org-directory "~/.org")
-  (setq org-default-notes-directory (concat org-directory "/notes.org"))
-  (setq org-export-in-background t)
+  (setq org-default-notes-directory (concat org-directory "/notes.org"))   
   (setq org-hide-emphasis-markers t)
   (setq org-src-tab-acts-natively t)
   (font-lock-add-keywords 'org-mode
@@ -689,6 +687,7 @@
                       \\usepackage{charter}
                       \\usepackage[T1]{fontenc}
                       \\usepackage{booktabs}
+                      \\usepackage{amsmath}
                       \\usepackage{minted}
                       \\usemintedstyle{borland}
                       \\usepackage{color}
@@ -699,6 +698,32 @@
                       \\setlength\\epigraphrule{0pt}
                       \\usepackage{fontspec}
                       \\usepackage{graphicx}
+                      \\usepackage{hyperref}
+                      \\hypersetup {colorlinks = true, allcolors = red}
+                      \\title{}
+                      [NO-DEFAULT-PACKAGES]
+                      [NO-PACKAGES]"
+               ("\\chapter{%s}" . "\\chapter*{%s}")
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")
+               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+(add-to-list 'org-latex-classes
+             '("notes"
+               "\\documentclass[10pt]{amsbook}
+                      \\usepackage{charter}                       
+                      \\usepackage{booktabs}
+                      \\usepackage{amsmath}
+                      \\usepackage{minted}
+                      \\usemintedstyle{borland}
+                      \\usepackage{color}
+                      \\usepackage{epigraph}
+                      \\usepackage{enumitem}
+                      \\setlist{nosep}                      
+                      \\usepackage{fontspec}
+                      \\usepackage{graphicx}
+                      \\usepackage[a4paper,left=3cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
                       \\usepackage{hyperref}
                       \\hypersetup {colorlinks = true, allcolors = red}
                       \\title{}
