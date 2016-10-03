@@ -455,6 +455,8 @@
   (add-hook 'js2-mode-hook #'js2-refactor-mode)
   (js2r-add-keybindings-with-prefix "C-c C-j"))
 
+(use-package jade)
+
 (use-package vue-mode
   :mode "\\.vue\\'")
 
@@ -711,17 +713,15 @@
                ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 (add-to-list 'org-latex-classes
              '("notes"
-               "\\documentclass[10pt]{amsbook}
+               "\\documentclass[10pt,oneside]{amsbook}
                       \\usepackage{charter}                       
                       \\usepackage{booktabs}
                       \\usepackage{amsmath}
                       \\usepackage{minted}
                       \\usemintedstyle{borland}
                       \\usepackage{color}
-                      \\usepackage{epigraph}
                       \\usepackage{enumitem}
-                      \\setlist{nosep}                      
-                      \\usepackage{fontspec}
+                      \\setlist{nosep}
                       \\usepackage{graphicx}
                       \\usepackage[a4paper,left=3cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
                       \\usepackage{hyperref}
