@@ -333,8 +333,8 @@
 (bind-key* "M-z" 'zap-up-to-char)
 
 (use-package move-text
-  :bind* (("M-<up>" . move-text-up)
-          ("M-<down>" . move-text-down)))
+  :bind (("M-<up>" . move-text-up)
+         ("M-<down>" . move-text-down)))
 
 (use-package flycheck
   :config

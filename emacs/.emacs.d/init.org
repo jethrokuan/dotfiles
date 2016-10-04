@@ -513,8 +513,8 @@ For editing Lisp code.
 ** move-text
 #+begin_src emacs-lisp :tangle yes
   (use-package move-text
-    :bind* (("M-<up>" . move-text-up)
-            ("M-<down>" . move-text-down)))
+    :bind (("M-<up>" . move-text-up)
+           ("M-<down>" . move-text-down)))
 #+end_src
 ** Linting with Flycheck
 #+begin_src emacs-lisp :tangle yes
