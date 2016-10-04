@@ -322,8 +322,7 @@
               ("C-c `"  . wrap-with-back-quotes)) 
   :init
   (show-smartparens-global-mode t)
-  (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
-  (add-hook 'org-mode-hook 'turn-on-smartparens-strict-mode))
+  (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode))
 
 (autoload 'zap-up-to-char "misc"
   "Kill up to, but not including ARGth occurrence of CHAR.

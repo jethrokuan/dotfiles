@@ -498,8 +498,7 @@ For editing Lisp code.
                 ("C-c `"  . wrap-with-back-quotes)) 
     :init
     (show-smartparens-global-mode t)
-    (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
-    (add-hook 'org-mode-hook 'turn-on-smartparens-strict-mode))
+    (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode))
 #+end_src
 ** zap-up-to-char
 #+begin_src emacs-lisp :tangle yes
@@ -950,7 +949,7 @@ We need =htmlize= to add syntax highlighting to org-exports for HTML files.
                       "* TO-READ %(org-set-tags)%? %i\n"))))
 #+end_src
 ** org-agenda
-#+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
   (defvar jethro/org-agenda-files
     (append
      ;;(file-expand-wildcards "~/.org/*.org")
