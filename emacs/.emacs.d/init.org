@@ -569,6 +569,10 @@ For editing Lisp code.
     (add-hook 'markdown-mode-hook 'flyspell-mode))
 #+end_src
 * Language Support
+** Emacs Lisp
+#+begin_src emacs-lisp :tangle yes
+(bind-key "C-c C-k" 'eval-buffer)
+#+end_src
 ** Go
 #+begin_src emacs-lisp :tangle yes
 (use-package go-mode

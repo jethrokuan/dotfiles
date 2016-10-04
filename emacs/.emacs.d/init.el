@@ -380,6 +380,8 @@
   (add-hook 'org-mode-hook 'flyspell-mode)
   (add-hook 'markdown-mode-hook 'flyspell-mode))
 
+(bind-key "C-c C-k" 'eval-buffer)
+
 (use-package go-mode
   :mode ("\\.go\\'" . go-mode)
   :config (progn
