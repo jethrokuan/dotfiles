@@ -322,7 +322,26 @@
               ("C-c `"  . wrap-with-back-quotes)) 
   :init
   (show-smartparens-global-mode t)
-  (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode))
+  (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
+  :config
+  (defmacro def-pairs (pairs)
+    `(progn
+       ,@(loop for (key . val) in pairs
+               collect
+               `(defun ,(read (concat
+                               "wrap-with-"
+                               (prin1-to-string key)
+                               "s"))
+                    (&optional arg)
+                  (interactive "p")
+                  (sp-wrap-with-pair ,val)))))
+
+  (def-pairs ((paren        . "(")
+              (bracket      . "[")
+              (brace        . "{")
+              (single-quote . "'")
+              (double-quote . "\"")
+              (back-quote   . "`"))))
 
 (autoload 'zap-up-to-char "misc"
   "Kill up to, but not including ARGth occurrence of CHAR.
@@ -468,23 +487,7 @@
   :config (progn
             (setq scss-compile-at-save nil)))
 
-(defun jethro/locate-dominating-file (regexp)
-  "Locate a directory with a file matching REGEXP."
-  (locate-dominating-file
-   default-directory
-   (lambda (directory)
-     (> (length (directory-files directory nil regexp t)) 0))))
-(defconst jethro/jshint-regexp
-  (concat "\\`" (regexp-quote ".jshintrc") "\\'"))
-(defconst jethro/eslint-regexp
-  (concat "\\`" (regexp-quote ".eslintrc") "\\(\\.\\(js\\|ya?ml\\|json\\)\\)?\\'"))
-
-(defun jethro/js2-mode-hook ()
-  (cond
-   ((jethro/locate-dominating-file jethro/jshint-regexp)
-    (flycheck-select-checker 'javascript-jshint))
-   ((jethro/locate-dominating-file jethro/eslint-regexp)
-    (flycheck-select-checker 'javascript-eslint))))
+(flycheck-add-mode 'javascript-eslint 'js2-mode)
 
 (use-package js2-mode
   :mode ("\\.js\\'" . js2-mode)

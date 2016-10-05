@@ -498,7 +498,26 @@ For editing Lisp code.
                 ("C-c `"  . wrap-with-back-quotes)) 
     :init
     (show-smartparens-global-mode t)
-    (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode))
+    (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
+    :config
+    (defmacro def-pairs (pairs)
+      `(progn
+         ,@(loop for (key . val) in pairs
+                 collect
+                 `(defun ,(read (concat
+                                 "wrap-with-"
+                                 (prin1-to-string key)
+                                 "s"))
+                      (&optional arg)
+                    (interactive "p")
+                    (sp-wrap-with-pair ,val)))))
+
+    (def-pairs ((paren        . "(")
+                (bracket      . "[")
+                (brace        . "{")
+                (single-quote . "'")
+                (double-quote . "\"")
+                (back-quote   . "`"))))
 #+end_src
 ** zap-up-to-char
 #+begin_src emacs-lisp :tangle yes
@@ -681,26 +700,9 @@ For editing Lisp code.
              (setq scss-compile-at-save nil)))
  #+end_src
 ** JS
-*** Flycheck with jslint/eslint
-Turn on flycheck for JS2-mode. Pick the appropriate lint file.
+*** Flycheck
 #+begin_src emacs-lisp :tangle yes
-  (defun jethro/locate-dominating-file (regexp)
-    "Locate a directory with a file matching REGEXP."
-    (locate-dominating-file
-     default-directory
-     (lambda (directory)
-       (> (length (directory-files directory nil regexp t)) 0))))
-  (defconst jethro/jshint-regexp
-    (concat "\\`" (regexp-quote ".jshintrc") "\\'"))
-  (defconst jethro/eslint-regexp
-    (concat "\\`" (regexp-quote ".eslintrc") "\\(\\.\\(js\\|ya?ml\\|json\\)\\)?\\'"))
-
-  (defun jethro/js2-mode-hook ()
-    (cond
-     ((jethro/locate-dominating-file jethro/jshint-regexp)
-      (flycheck-select-checker 'javascript-jshint))
-     ((jethro/locate-dominating-file jethro/eslint-regexp)
-      (flycheck-select-checker 'javascript-eslint))))
+  (flycheck-add-mode 'javascript-eslint 'js2-mode)
 #+end_src
 *** JS2-mode
 
