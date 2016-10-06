@@ -1124,6 +1124,10 @@ I like to keep my books in sorted order, alphanumerically, and then by TODO keyw
     :config
     (gtd-mode 1))
 #+end_src
+** epresent
+#+begin_src emacs-lisp :tangle yes
+(use-package epresent)
+#+end_src
 * Project Management
 ** Smerge-mode
 Useful when handling git merge conflicts.

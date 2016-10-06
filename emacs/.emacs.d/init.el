@@ -813,6 +813,8 @@
   :config
   (gtd-mode 1))
 
+(use-package epresent)
+
 (use-package smerge-mode
   :functions smerge-next smerge-prev smerge-keep-all smerge-keep-mine smerge-keep-other
   :config
