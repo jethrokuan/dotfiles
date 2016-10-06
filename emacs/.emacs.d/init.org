@@ -46,6 +46,11 @@ Validate is a package that checks for and reports Emacs config errors.
   (setq custom-file "~/.emacs.d/custom.el")
   (load custom-file)
 #+END_SRC
+** Default browser
+#+begin_src emacs-lisp :tangle yes
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program "chromium")
+#+end_src
 ** TODO Setup GNUs with Gmail
 ** Custom font
 I use Hack, patched with Powerline. Other good alternatives include Source Code Pro.
@@ -489,17 +494,17 @@ For editing Lisp code.
 
                 ("C-x C-t" . sp-transpose-hybrid-sexp)
 
-                ("C-c ("  . wrap-with-parens)
-                ("C-c ["  . wrap-with-brackets)
-                ("C-c {"  . wrap-with-braces)
-                ("C-c '"  . wrap-with-single-quotes)
-                ("C-c \"" . wrap-with-double-quotes)
-                ("C-c _"  . wrap-with-underscores)
-                ("C-c `"  . wrap-with-back-quotes)) 
+                ("M-c ("  . wrap-with-parens)
+                ("M-c ["  . wrap-with-brackets)
+                ("M-c {"  . wrap-with-braces)
+                ("M-c '"  . wrap-with-single-quotes)
+                ("M-c \"" . wrap-with-double-quotes)
+                ("M-c _"  . wrap-with-underscores)
+                ("M-c `"  . wrap-with-back-quotes)) 
     :init
-    (show-smartparens-global-mode t)
-    (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
+    (add-hook 'prog-mode-hook 'turn-on-smartparens-mode)
     :config
+    (require 'smartparens-config)
     (defmacro def-pairs (pairs)
       `(progn
          ,@(loop for (key . val) in pairs
@@ -1093,7 +1098,15 @@ I use export to LaTeX through ox-latex, using xelatex for a nicer export templat
   (use-package org-pomodoro
     :bind ("C-c C-x C-i" . org-pomodoro))
 #+end_src
-
+** org-download
+#+begin_src emacs-lisp :tangle yes
+  (use-package org-download
+    :bind ("C-Y" . org-download-yank)
+    :config
+    (setq-default org-download-image-dir "./pictures")
+    (setq-default org-download-heading-lvl nil)
+    (require 'org-download))
+#+end_src
 ** jethro/org-sort-books
 I like to keep my books in sorted order, alphanumerically, and then by TODO keyword.
 #+begin_src emacs-lisp :tangle yes
@@ -1153,7 +1166,7 @@ Useful when handling git merge conflicts.
            ("s-G" . magit-blame))
     :init (setq magit-auto-revert-mode nil)
     :config
-    (use-package magithub)
+    ;; (use-package magithub)
     (add-hook 'magit-mode-hook 'hl-line-mode))
 #+end_src
 

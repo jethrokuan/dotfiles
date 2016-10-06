@@ -25,6 +25,9 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program "chromium")
+
 (add-to-list 'default-frame-alist
              '(font . "Hack-12"))
 
@@ -313,17 +316,17 @@
 
               ("C-x C-t" . sp-transpose-hybrid-sexp)
 
-              ("C-c ("  . wrap-with-parens)
-              ("C-c ["  . wrap-with-brackets)
-              ("C-c {"  . wrap-with-braces)
-              ("C-c '"  . wrap-with-single-quotes)
-              ("C-c \"" . wrap-with-double-quotes)
-              ("C-c _"  . wrap-with-underscores)
-              ("C-c `"  . wrap-with-back-quotes)) 
+              ("M-c ("  . wrap-with-parens)
+              ("M-c ["  . wrap-with-brackets)
+              ("M-c {"  . wrap-with-braces)
+              ("M-c '"  . wrap-with-single-quotes)
+              ("M-c \"" . wrap-with-double-quotes)
+              ("M-c _"  . wrap-with-underscores)
+              ("M-c `"  . wrap-with-back-quotes)) 
   :init
-  (show-smartparens-global-mode t)
-  (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
+  (add-hook 'prog-mode-hook 'turn-on-smartparens-mode)
   :config
+  (require 'smartparens-config)
   (defmacro def-pairs (pairs)
     `(progn
        ,@(loop for (key . val) in pairs
@@ -790,6 +793,13 @@
 (use-package org-pomodoro
   :bind ("C-c C-x C-i" . org-pomodoro))
 
+(use-package org-download
+  :bind ("C-Y" . org-download-yank)
+  :config
+  (setq-default org-download-image-dir "./pictures")
+  (setq-default org-download-heading-lvl nil)
+  (require 'org-download))
+
 (defun jethro/org-sort-books ()
     (interactive)
     (let ((old-point (point)))
@@ -814,7 +824,7 @@
   (gtd-mode 1))
 
 (use-package epresent
-  :bind ("C-c P" . epresent-run))
+  :bind ("<f5>"))
 
 (use-package smerge-mode
   :functions smerge-next smerge-prev smerge-keep-all smerge-keep-mine smerge-keep-other
@@ -834,7 +844,7 @@
          ("s-G" . magit-blame))
   :init (setq magit-auto-revert-mode nil)
   :config
-  (use-package magithub)
+  ;; (use-package magithub)
   (add-hook 'magit-mode-hook 'hl-line-mode))
 
 (use-package projectile
