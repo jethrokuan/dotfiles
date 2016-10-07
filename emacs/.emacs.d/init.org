@@ -1101,7 +1101,6 @@ I use export to LaTeX through ox-latex, using xelatex for a nicer export templat
 ** org-download
 #+begin_src emacs-lisp :tangle yes
   (use-package org-download
-    :bind ("C-Y" . org-download-yank)
     :config
     (setq-default org-download-image-dir "./pictures")
     (setq-default org-download-heading-lvl nil)

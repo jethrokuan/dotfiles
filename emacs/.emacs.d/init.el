@@ -794,7 +794,6 @@
   :bind ("C-c C-x C-i" . org-pomodoro))
 
 (use-package org-download
-  :bind ("C-Y" . org-download-yank)
   :config
   (setq-default org-download-image-dir "./pictures")
   (setq-default org-download-heading-lvl nil)
