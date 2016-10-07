@@ -165,30 +165,12 @@
         (swiper . ivy--regex-plus)
         (t . ivy--regex-fuzzy)))
 
-(defun reloading (cmd)
-  (lambda (x)
-    (funcall cmd x)
-    (ivy--reset-state ivy-last)))
-(defun given-file (cmd prompt) ; needs lexical-binding
-  (lambda (source)
-    (let ((target
-           (let ((enable-recursive-minibuffers t))
-             (read-file-name
-              (format "%s %s to:" prompt source)))))
-      (funcall cmd source target 1))))
-(defun confirm-delete-file (x)
-  (dired-delete-file x 'confirm-each-subdirectory))
-(ivy-add-actions
- 'counsel-find-file
- `(("c" ,(given-file #'copy-file "Copy") "copy")
-   ("d" ,(reloading #'confirm-delete-file) "delete")
-   ("m" ,(reloading (given-file #'rename-file "Move")) "move")))
-(ivy-add-actions
- 'counsel-projectile-find-file
- `(("c" ,(given-file #'copy-file "Copy") "copy")
-   ("d" ,(reloading #'confirm-delete-file) "delete")
-   ("m" ,(reloading (given-file #'rename-file "Move")) "move")
-   ("b" counsel-find-file-cd-bookmark-action "cd bookmark")))
+(define-key ivy-minibuffer-map (kbd "C-:") 'ivy-dired)
+(define-key ivy-minibuffer-map (kbd "C-c o") 'ivy-occur)
+(define-key read-expression-map (kbd "C-r") 'counsel-expression-history)
+(ivy-set-actions
+ t
+ '(("I" insert "insert")))
 
 (defun ivy-dired ()
   (interactive)
