@@ -477,14 +477,13 @@
 (use-package js2-mode
   :mode ("\\.js\\'" . js2-mode)
   :config
-  (add-hook 'js2-mode-hook #'jethro/js2-mode-hook)
   (use-package tern
     :diminish tern-mode
     :config    
     (add-hook 'js2-mode-hook 'tern-mode)
     (use-package company-tern
-                  :config
-                  (add-to-list 'company-backends 'company-tern))))
+      :config
+      (add-to-list 'company-backends 'company-tern))))
 
 (use-package js2-refactor
   :config

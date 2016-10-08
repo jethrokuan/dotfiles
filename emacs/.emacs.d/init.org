@@ -699,17 +699,16 @@ npm install -g tern
 #+end_src
 
 #+begin_src emacs-lisp :tangle yes
-(use-package js2-mode
-  :mode ("\\.js\\'" . js2-mode)
-  :config
-  (add-hook 'js2-mode-hook #'jethro/js2-mode-hook)
-  (use-package tern
-    :diminish tern-mode
-    :config    
-    (add-hook 'js2-mode-hook 'tern-mode)
-    (use-package company-tern
-                  :config
-                  (add-to-list 'company-backends 'company-tern))))
+  (use-package js2-mode
+    :mode ("\\.js\\'" . js2-mode)
+    :config
+    (use-package tern
+      :diminish tern-mode
+      :config    
+      (add-hook 'js2-mode-hook 'tern-mode)
+      (use-package company-tern
+        :config
+        (add-to-list 'company-backends 'company-tern))))
 #+end_src
 *** JS2-refactor
 #+begin_src emacs-lisp :tangle yes
@@ -1277,5 +1276,5 @@ Closes compile buffer if there are no errors.
 #+end_src
 * Tangling                                                         :noexport:
 #+begin_src emacs-lisp :tangle no
-(jethro/org-after-save-init)
+  (jethro/org-after-save-init)
 #+end_src
