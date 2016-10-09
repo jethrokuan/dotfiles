@@ -38,9 +38,7 @@
 (setq inhibit-splash-screen t)
 (setq inhibit-startup-message t)
 
-(require 'bookmark)
-(bookmark-bmenu-list)
-(switch-to-buffer "*Bookmark List*")
+(setq initial-buffer-choice "~/.org/gtd/next_actions.org")
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -306,7 +304,8 @@
               ("M-c _"  . wrap-with-underscores)
               ("M-c `"  . wrap-with-back-quotes)) 
   :init
-  (add-hook 'prog-mode-hook 'turn-on-smartparens-mode)
+  (add-hook 'emacs-lisp-mode-hook 'turn-on-smartparens-mode)
+  (add-hook 'clojure-mode-hook 'turn-on-smartparens-mode)
   :config
   (require 'smartparens-config)
   (defmacro def-pairs (pairs)
@@ -450,7 +449,7 @@
          ("\\.mustache\\'" . web-mode)
          ("\\.jinja\\'" . web-mode)
          ("\\.php\\'" . web-mode))
-  :config  
+  :config
   (setq web-mode-enable-css-colorization t)
   (setq web-mode-code-indent-offset 2)
   (setq web-mode-markup-indent-offset 2))
@@ -473,6 +472,16 @@
             (setq scss-compile-at-save nil)))
 
 (flycheck-add-mode 'javascript-eslint 'js2-mode)
+
+(use-package js-comint
+  :config
+  (add-hook 'js2-mode-hook
+            (lambda ()
+              (local-set-key (kbd "C-x C-e") 'js-send-last-sexp)
+              (local-set-key (kbd "C-M-x") 'js-send-last-sexp-and-go)
+              (local-set-key (kbd "C-c b") 'js-send-buffer)
+              (local-set-key (kbd "C-c C-b") 'js-send-buffer-and-go)
+              (local-set-key (kbd "C-c l") 'js-load-file-and-go))))
 
 (use-package js2-mode
   :mode ("\\.js\\'" . js2-mode)
