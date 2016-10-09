@@ -13,7 +13,7 @@
  '(epresent-text-scale 300)
  '(package-selected-packages
    (quote
-    (epresent smartparens jade org-download validate magithub ag bury-successful-compilation darkroom artbollocks-mode focus paradox firestarter nameless which-key pivotal-tracker keyfreq esup counsel-projectile projectile magit org-pomodoro ox-reveal htmlize git-gutter-fringe+ volatile-highlights golden-ratio beacon nyan-mode smart-mode-line web-mode vue-mode use-package scss-mode rust-mode rainbow-mode page-break-lines neotree move-text markdown-mode key-chord json-mode js2-refactor go-mode flycheck-pos-tip flycheck-clojure flx fish-mode expand-region exec-path-from-shell emmet-mode elpy dumb-jump doom-themes crux counsel company-tern company-quickhelp clj-refactor avy aggressive-indent)))
+    (js-comint epresent smartparens jade org-download validate magithub ag bury-successful-compilation darkroom artbollocks-mode focus paradox firestarter nameless which-key pivotal-tracker keyfreq esup counsel-projectile projectile magit org-pomodoro ox-reveal htmlize git-gutter-fringe+ volatile-highlights golden-ratio beacon nyan-mode smart-mode-line web-mode vue-mode use-package scss-mode rust-mode rainbow-mode page-break-lines neotree move-text markdown-mode key-chord json-mode js2-refactor go-mode flycheck-pos-tip flycheck-clojure flx fish-mode expand-region exec-path-from-shell emmet-mode elpy dumb-jump doom-themes crux counsel company-tern company-quickhelp clj-refactor avy aggressive-indent)))
  '(paradox-github-token t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
