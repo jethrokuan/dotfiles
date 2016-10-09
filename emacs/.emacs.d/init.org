@@ -391,6 +391,10 @@ Save the cursor location for files I've visited.
     (key-chord-define-global ",." 'neotree-toggle))
 #+end_src
 * Editing Text
+** electric-pair mode
+#+begin_src emacs-lisp :tangle yes
+  (add-hook 'after-init-hook (lambda () (electric-pair-mode 1)))
+#+end_src
 ** electric-align
 Use multiple spaces to align code and text.
 #+begin_src emacs-lisp :tangle yes

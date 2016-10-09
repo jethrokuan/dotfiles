@@ -236,6 +236,8 @@
   (key-chord-define-global "yy" 'counsel-yank-pop)
   (key-chord-define-global ",." 'neotree-toggle))
 
+(add-hook 'after-init-hook (lambda () (electric-pair-mode 1)))
+
 (use-package electric-align
   :ensure f
   :load-path "elisp/"
