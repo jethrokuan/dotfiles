@@ -702,10 +702,8 @@
          :publishing-function org-html-publish-to-html
          :publishing-directory jethro/books-dir
          :base-directory "~/.org/"
-         :completion-function (lambda ()
-                                (progn
-                                  (shell-command (format "cd %s && ruby books.rb" jethro/books-dir))
-                                  (jethro/auto-git-commit-and-push jethro/books-dir)))
+         :completion-function (lambda () 
+                                (shell-command (format "cd %s && ruby books.rb && git add -A && git commit -m \"%s\" && git push origin master" jethro/books-dir "New changes: $(date)")))
          :exclude ".*"
          :include ["books.org"]
          :with-emphasize t
