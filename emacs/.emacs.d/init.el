@@ -691,7 +691,7 @@
   (org-icalendar-combine-agenda-files))
 
 (defun jethro/auto-git-commit-and-push (dir)
-  (shell-command (format "cd %s && git add -A && git commit -m %s && git push origin master" dir "New changes $(date)")))
+  (shell-command (format "cd %s && git add -A && git commit -m \"%s\" && git push origin master" dir "New changes: $(date)")))
 
 (setq jethro/emacsd-site-dir "~/Documents/Code/emacsd_site/")
 (setq jethro/books-dir "~/Documents/Code/books/")
