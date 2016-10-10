@@ -1198,14 +1198,16 @@ Useful when handling git merge conflicts.
     (require 'projectile)
     (use-package counsel-projectile 
       :bind (("s-f" . counsel-projectile-find-file)
-             ("s-b" . counsel-projectile-switch-to-buffer)))
+             ("s-b" . counsel-projectile-switch-to-buffer))
+      :config
+      (counsel-projectile-on))
     (setq projectile-use-git-grep t)
     (setq projectile-create-missing-test-files t)
     (setq projectile-completion-system 'ivy))
 #+end_src
 
 *** Projectile Commander
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp :tangle yes
   (setq projectile-switch-project-action
         #'projectile-commander)
   (def-projectile-commander-method ?s
