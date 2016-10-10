@@ -76,6 +76,7 @@
   :init (exec-path-from-shell-initialize))
 
 (setq-default explicit-shell-file-name "/bin/bash")
+(setq-default shell-file-name "/bin/bash")
 
 (use-package doom-themes
   :init
@@ -689,14 +690,20 @@
 (defun jethro/org-ical-export()
   (org-icalendar-combine-agenda-files))
 
+(defun jethro/auto-git-commit-and-push (dir)
+  (shell-command (format "cd %s && git add -A && git commit -m %s && git push origin master" dir "New changes $(date)")))
+
 (setq jethro/emacsd-site-dir "~/Documents/Code/emacsd_site/")
+(setq jethro/books-dir "~/Documents/Code/books/")
 
 (setq org-publish-project-alist
       '(("books"
          ;; Path to your org files.
          :publishing-function org-html-publish-to-html
-         :publishing-directory "~/Documents/Code/books/"
+         :publishing-directory jethro/books-dir
          :base-directory "~/.org/"
+         :completion-function (lambda ()
+                                (jethro/auto-git-commit-and-push jethro/books-dir))
          :exclude ".*"
          :include ["books.org"]
          :with-emphasize t
@@ -705,7 +712,7 @@
          :html-preamble t)
         ("emacs.d"
          :publishing-function org-html-publish-to-html
-         :publishing-directory "~/Documents/Code/emacsd_site/"
+         :publishing-directory jethro/emacsd-site-dir
          :base-directory "~/.emacs.d/"
          :exclude ".*"
          :include ["init.org"]
@@ -716,7 +723,7 @@
                                                  (rename-file htmlfile
                                                               (concat jethro/emacsd-site-dir
                                                                       "index.html") t)
-                                                 (shell-command (concat "cd " jethro/emacsd-site-dir " && git add -A && git commit -m 'New Changes: $(date)' && git push origin master"))))))
+                                                 (jethro/auto-git-commit-and-push jethro/emacsd-site-dir)))))
          :with-emphasize t
          :with-title nil
          :with-toc t
