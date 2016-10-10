@@ -703,7 +703,9 @@
          :publishing-directory jethro/books-dir
          :base-directory "~/.org/"
          :completion-function (lambda ()
-                                (jethro/auto-git-commit-and-push jethro/books-dir))
+                                (progn
+                                  (shell-command (format "cd %s && ruby books.rb" jethro/books-dir))
+                                  (jethro/auto-git-commit-and-push jethro/books-dir)))
          :exclude ".*"
          :include ["books.org"]
          :with-emphasize t
