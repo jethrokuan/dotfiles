@@ -845,40 +845,11 @@
   :config
   (require 'projectile)
   (use-package counsel-projectile 
-    :bind (("s-P" . counsel-projectile)
-           ("s-f" . counsel-projectile-find-file)
+    :bind (("s-f" . counsel-projectile-find-file)
            ("s-b" . counsel-projectile-switch-to-buffer)))
   (setq projectile-use-git-grep t)
-  (setq projectile-switch-project-action
-        #'projectile-commander)
   (setq projectile-create-missing-test-files t)
-  (setq projectile-completion-system 'ivy)
-  (def-projectile-commander-method ?s
-    "Open a *eshell* buffer for the project."
-    (projectile-run-eshell))
-  (def-projectile-commander-method ?c
-    "Run `compile' in the project."
-    (projectile-compile-project nil))
-  (def-projectile-commander-method ?\C-?
-    "Go back to project selection."
-    (projectile-switch-project))
-  (def-projectile-commander-method ?d
-    "Open project root in dired."
-    (projectile-dired))
-  (def-projectile-commander-method ?F
-    "Git fetch."
-    (magit-status)
-    (call-interactively #'magit-fetch-all))
-  (def-projectile-commander-method ?j
-    "Jack-in."
-    (let* ((opts (projectile-current-project-files))
-           (file (ivy-read
-                  "Find file: " 
-                  opts)))
-      (find-file (expand-file-name
-                  file (projectile-project-root)))
-      (run-hooks 'projectile-find-file-hook)
-      (cider-jack-in))))
+  (setq projectile-completion-system 'ivy))
 
 (use-package esup
   :defer t)
