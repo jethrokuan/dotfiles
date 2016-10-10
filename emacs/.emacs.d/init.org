@@ -143,7 +143,6 @@ The following code will delete all backup files that are older than a certain da
 #+begin_src emacs-lisp :tangle yes
 (load "~/.emacs.d/secrets.el" t)
 #+end_src
-
 ** Add PATH to eshell
 #+begin_src emacs-lisp :tangle yes
 (use-package exec-path-from-shell
@@ -151,6 +150,10 @@ The following code will delete all backup files that are older than a certain da
   :init (exec-path-from-shell-initialize))
 #+end_src
 
+** Default shell
+#+begin_src emacs-lisp :tangle yes
+  (setq-default explicit-shell-file-name "/bin/bash")
+#+end_src
 ** Theme
 
 *** Doom Theme
@@ -1012,9 +1015,11 @@ We need =htmlize= to add syntax highlighting to org-exports for HTML files.
            :completion-function (lambda () (let ((htmlfile (concat jethro/emacsd-site-dir
                                                                    "init.html")))
                                              (if (file-exists-p htmlfile)
-                                                 (rename-file htmlfile
-                                                              (concat jethro/emacsd-site-dir
-                                                                      "index.html") t))))
+                                                 (progn
+                                                   (rename-file htmlfile
+                                                                (concat jethro/emacsd-site-dir
+                                                                        "index.html") t)
+                                                   (shell-command (concat "cd " jethro/emacsd-site-dir " && git add -A && git commit -m 'New Changes: $(date)' && git push origin master"))))))
            :with-emphasize t
            :with-title nil
            :with-toc t
@@ -1131,8 +1136,7 @@ I like to keep my books in sorted order, alphanumerically, and then by TODO keyw
 ** jethro/org-after-save-init
 #+begin_src emacs-lisp :tangle yes
   (defun jethro/org-after-save-init ()
-    (org-babel-tangle)
-    (org-publish "emacs.d"))
+    (org-babel-tangle))
 #+end_src
 ** gtd-mode
 #+begin_src emacs-lisp :tangle yes

@@ -75,6 +75,8 @@
   :demand t
   :init (exec-path-from-shell-initialize))
 
+(setq-default explicit-shell-file-name "/bin/bash")
+
 (use-package doom-themes
   :init
   (load-theme 'doom-one t)
@@ -710,9 +712,11 @@
          :completion-function (lambda () (let ((htmlfile (concat jethro/emacsd-site-dir
                                                                  "init.html")))
                                            (if (file-exists-p htmlfile)
-                                               (rename-file htmlfile
-                                                            (concat jethro/emacsd-site-dir
-                                                                    "index.html") t))))
+                                               (progn
+                                                 (rename-file htmlfile
+                                                              (concat jethro/emacsd-site-dir
+                                                                      "index.html") t)
+                                                 (shell-command (concat "cd " jethro/emacsd-site-dir " && git add -A && git commit -m 'New Changes: $(date)' && git push origin master"))))))
          :with-emphasize t
          :with-title nil
          :with-toc t
@@ -813,8 +817,7 @@
   (org-publish "books"))
 
 (defun jethro/org-after-save-init ()
-  (org-babel-tangle)
-  (org-publish "emacs.d"))
+  (org-babel-tangle))
 
 (use-package gtd-mode
   :bind (("C-c x" . gtd-clear-inbox)
