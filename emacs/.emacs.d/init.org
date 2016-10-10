@@ -218,9 +218,9 @@ The following code will delete all backup files that are older than a certain da
 #+begin_src emacs-lisp :tangle yes
   (bind-key* "M-p" 'mark-paragraph)
 #+end_src
-*** compile with =<f5>=
+*** compile with =<f9>=
 #+begin_src emacs-lisp :tangle yes
-  (bind-key* "<f5>" (lambda ()
+  (bind-key* "<f9>" (lambda ()
                       (interactive)
                       (setq-local compilation-read-command nil)
                       (call-interactively 'compile)))

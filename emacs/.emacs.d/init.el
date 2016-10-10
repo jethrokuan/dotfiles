@@ -119,7 +119,7 @@
 
 (bind-key* "M-p" 'mark-paragraph)
 
-(bind-key* "<f5>" (lambda ()
+(bind-key* "<f9>" (lambda ()
                     (interactive)
                     (setq-local compilation-read-command nil)
                     (call-interactively 'compile)))
