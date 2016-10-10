@@ -687,27 +687,34 @@
 (defun jethro/org-ical-export()
   (org-icalendar-combine-agenda-files))
 
+(setq jethro/emacsd-site-dir "~/Documents/Code/emacsd_site/")
+
 (setq org-publish-project-alist
       '(("books"
          ;; Path to your org files.
          :publishing-function org-html-publish-to-html
-         :publishing-directory "~/Documents/Code/jethrokuan.github.io/"
+         :publishing-directory "~/Documents/Code/books/"
          :base-directory "~/.org/"
          :exclude ".*"
          :include ["books.org"]
          :with-emphasize t
          :with-todo-keywords t
          :with-toc nil
-         :html-head "<link rel=\"stylesheet\" href=\"/css/org.css\" type=\"text/css\">"
          :html-preamble t)
         ("emacs.d"
          :publishing-function org-html-publish-to-html
-         :publishing-directory "~/Documents/Code/jethrokuan.github.io/"
+         :publishing-directory "~/Documents/Code/emacsd_site/"
          :base-directory "~/.emacs.d/"
          :exclude ".*"
          :include ["init.org"]
+         :completion-function (lambda () (let ((htmlfile (concat jethro/emacsd-site-dir
+                                                                 "init.html")))
+                                           (if (file-exists-p htmlfile)
+                                               (rename-file htmlfile
+                                                            (concat jethro/emacsd-site-dir
+                                                                    "index.html") t))))
          :with-emphasize t
-         :with-title nil         
+         :with-title nil
          :with-toc t
          :html-head "<link rel=\"stylesheet\" href=\"/css/emacsd.css\" type=\"text/css\">"
          :html-preamble t)))
@@ -801,6 +808,9 @@
       (show-all)
       (org-global-cycle)
       (goto-char old-point)))
+
+(defun jethro/org-after-save-books ()
+  (org-publish "books"))
 
 (defun jethro/org-after-save-init ()
   (org-babel-tangle)
