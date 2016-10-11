@@ -680,16 +680,6 @@
 
 (setq org-agenda-dim-blocked-tasks t)
 
-(setq org-icalendar-combined-agenda-file (concat org-directory "/org.ics"))
-(setq org-icalendar-include-todo '(all))
-(setq org-icalendar-use-scheduled '(event-if-todo event-if-not-todo))
-(setq org-icalendar-use-deadline '(event-if-todo event-if-not-todo))
-(setq org-agenda-default-appointment-duration 60)
-
-;; this hook saves an ics file once an org-buffer is saved
-(defun jethro/org-ical-export()
-  (org-icalendar-combine-agenda-files))
-
 (defun jethro/auto-git-commit-and-push (dir)
   (shell-command (format "cd %s && git add -A && git commit -m \"%s\" && git push origin master" dir "New changes: $(date)")))
 
@@ -909,10 +899,6 @@
   :config
   (keyfreq-mode 1)
   (keyfreq-autosave-mode 1))
-
-(use-package pivotal-tracker
-  :config
-  (setq pivotal-api-token jethro/pivotal-api-token))
 
 (use-package which-key
   :diminish which-key-mode
