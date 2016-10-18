@@ -156,7 +156,6 @@ The following code will delete all backup files that are older than a certain da
   (setq-default shell-file-name "/bin/bash")
 #+end_src
 ** Theme
-
 *** Doom Theme
 #+begin_src emacs-lisp :tangle yes
   (use-package doom-themes
@@ -165,7 +164,9 @@ The following code will delete all backup files that are older than a certain da
     :config
     (add-hook 'find-file-hook 'doom-buffer-mode)
     (add-hook 'minibuffer-setup-hook 'doom-brighten-minibuffer)
-    (require 'doom-neotree))
+    (require 'doom-neotree)
+    (setq doom-enable-brighter-comments t)
+    (use-package all-the-icons))
 #+end_src
 *** Theme-less
 **** Set background
@@ -309,6 +310,10 @@ Swiper is ivy-enhanced isearch.
   (define-key ivy-minibuffer-map (kbd "C-:") 'ivy-dired)
 #+end_src 
 * Moving Around
+** neotree
+#+begin_src emacs-lisp :tangle yes
+  (use-package neotree)
+#+end_src
 ** Crux
 #+begin_src emacs-lisp :tangle yes
   (use-package crux
@@ -490,8 +495,8 @@ For editing Lisp code.
                 ("M-c _"  . wrap-with-underscores)
                 ("M-c `"  . wrap-with-back-quotes)) 
     :init
-    (add-hook 'emacs-lisp-mode-hook 'turn-on-smartparens-mode)
-    (add-hook 'clojure-mode-hook 'turn-on-smartparens-mode)
+    (add-hook 'emacs-lisp-mode-hook 'turn-on-smartparens-strict-mode)
+    (add-hook 'clojure-mode-hook 'turn-on-smartparens-strict-mode)
     :config
     (require 'smartparens-config)
     (defmacro def-pairs (pairs)

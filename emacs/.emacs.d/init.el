@@ -84,7 +84,9 @@
   :config
   (add-hook 'find-file-hook 'doom-buffer-mode)
   (add-hook 'minibuffer-setup-hook 'doom-brighten-minibuffer)
-  (require 'doom-neotree))
+  (require 'doom-neotree)
+  (setq doom-enable-brighter-comments t)
+  (use-package all-the-icons))
 
 (defun open-next-line (arg)
   "Move to the next line and then opens a line.
@@ -186,6 +188,8 @@
      "Not completing files currently")))
 
 (define-key ivy-minibuffer-map (kbd "C-:") 'ivy-dired)
+
+(use-package neotree)
 
 (use-package crux
   :commands (crux-switch-to-previous-buffer)
@@ -309,8 +313,8 @@
               ("M-c _"  . wrap-with-underscores)
               ("M-c `"  . wrap-with-back-quotes)) 
   :init
-  (add-hook 'emacs-lisp-mode-hook 'turn-on-smartparens-mode)
-  (add-hook 'clojure-mode-hook 'turn-on-smartparens-mode)
+  (add-hook 'emacs-lisp-mode-hook 'turn-on-smartparens-strict-mode)
+  (add-hook 'clojure-mode-hook 'turn-on-smartparens-strict-mode)
   :config
   (require 'smartparens-config)
   (defmacro def-pairs (pairs)
