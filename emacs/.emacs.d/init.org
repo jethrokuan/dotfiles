@@ -331,6 +331,7 @@ Swiper is ivy-enhanced isearch.
 ** avy
 Use avy to move between visible text.
 #+begin_src emacs-lisp :tangle yes
+
   (use-package avy
     :bind* (("C-'" . avy-goto-char)
             ("C-," . avy-goto-char-2))
@@ -400,6 +401,12 @@ Save the cursor location for files I've visited.
     (key-chord-define-global ",." 'neotree-toggle))
 #+end_src
 * Editing Text
+** visual-regexp
+#+begin_src emacs-lisp :tangle yes
+  (use-package visual-regexp
+    :bind* (("C-M-%" . vr/query-replace)
+            ("C-c m" . vr/mc-mark)))
+#+end_src
 ** electric-pair mode
 #+begin_src emacs-lisp :tangle yes
   (add-hook 'after-init-hook (lambda () (electric-pair-mode 1)))
@@ -432,8 +439,8 @@ A port of Sublime Text's multiple-cursors functionality.
 ** expand-region
 Use this often, and in combination with multiple-cursors.
 #+begin_src emacs-lisp :tangle yes
-(use-package expand-region
-  :bind (("C-=" . er/expand-region)))
+  (use-package expand-region
+    :bind (("C-=" . er/expand-region)))
 #+end_src
 ** paredit
 For editing Lisp code.
@@ -1272,7 +1279,7 @@ Useful when handling git merge conflicts.
 ** firestarter
 #+begin_src emacs-lisp :tangle yes
 (use-package firestarter
-  :bind ("C-c m s" . firestarter-mode)
+  :bind ("C-c M s" . firestarter-mode)
   :init (put 'firestarter 'safe-local-variable 'identity))
 #+end_src
 ** Paradox
@@ -1287,21 +1294,21 @@ Use Paradox instead of the default =package-list-packages=. =jethro/paradox-user
 #+begin_src emacs-lisp :tangle yes
 (use-package focus
   :diminish focus-mode
-  :bind ("C-c m f" . focus-mode))
+  :bind ("C-c M f" . focus-mode))
 #+end_src
 ** artbollocks
 Prevent usage of passive voice, weasel words and other common grammatical mistakes.
 #+begin_src emacs-lisp :tangle yes
 (use-package artbollocks-mode
-  :bind (("C-c m a" . artbollocks-mode))
+  :bind (("C-c M a" . artbollocks-mode))
   :config
   (add-hook 'text-mode-hook 'artbollocks-mode))
 #+end_src
 ** darkroom
 #+begin_src emacs-lisp :tangle yes
 (use-package darkroom
-  :bind (("C-c m d" . darkroom-mode)
-         ("C-c m t" . darkroom-tentative-mode)))
+  :bind (("C-c M d" . darkroom-mode)
+         ("C-c M t" . darkroom-tentative-mode)))
 #+end_src
 ** bury-successful-compilation
 Closes compile buffer if there are no errors.

@@ -243,6 +243,10 @@
   (key-chord-define-global "yy" 'counsel-yank-pop)
   (key-chord-define-global ",." 'neotree-toggle))
 
+(use-package visual-regexp
+  :bind* (("C-M-%" . vr/query-replace)
+          ("C-c m" . vr/mc-mark)))
+
 (add-hook 'after-init-hook (lambda () (electric-pair-mode 1)))
 
 (use-package electric-align
@@ -920,7 +924,7 @@
           ("q" . "queue"))))
 
 (use-package firestarter
-  :bind ("C-c m s" . firestarter-mode)
+  :bind ("C-c M s" . firestarter-mode)
   :init (put 'firestarter 'safe-local-variable 'identity))
 
 (use-package paradox
@@ -930,16 +934,16 @@
 
 (use-package focus
   :diminish focus-mode
-  :bind ("C-c m f" . focus-mode))
+  :bind ("C-c M f" . focus-mode))
 
 (use-package artbollocks-mode
-  :bind (("C-c m a" . artbollocks-mode))
+  :bind (("C-c M a" . artbollocks-mode))
   :config
   (add-hook 'text-mode-hook 'artbollocks-mode))
 
 (use-package darkroom
-  :bind (("C-c m d" . darkroom-mode)
-         ("C-c m t" . darkroom-tentative-mode)))
+  :bind (("C-c M d" . darkroom-mode)
+         ("C-c M t" . darkroom-tentative-mode)))
 
 (use-package bury-successful-compilation
   :config
