@@ -137,7 +137,7 @@
    ("M-a" . counsel-M-x)
    ("C-M-i" . counsel-imenu)
    ("C-x C-f" . counsel-find-file)
-   ("C-c d" . counsel-dired-jump)
+   ("C-x j" . counsel-dired-jump)
    ("C-c j" . counsel-git-grep)
    ("C-c k" . counsel-ag)
    ("C-c l" . counsel-locate)
