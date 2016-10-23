@@ -78,15 +78,9 @@
 (setq-default explicit-shell-file-name "/bin/bash")
 (setq-default shell-file-name "/bin/bash")
 
-(use-package doom-themes
-  :init
-  (load-theme 'doom-one t)
-  :config
-  (add-hook 'find-file-hook 'doom-buffer-mode)
-  (add-hook 'minibuffer-setup-hook 'doom-brighten-minibuffer)
-  (require 'doom-neotree)
-  (setq doom-enable-brighter-comments t)
-  (use-package all-the-icons))
+(add-to-list 'default-frame-alist '(background-color . "ivory"))
+
+(set-face-attribute 'region nil :background "salmon")
 
 (defun open-next-line (arg)
   "Move to the next line and then opens a line.

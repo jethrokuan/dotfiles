@@ -157,7 +157,7 @@ The following code will delete all backup files that are older than a certain da
 #+end_src
 ** Theme
 *** Doom Theme
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
   (use-package doom-themes
     :init
     (load-theme 'doom-one t)
@@ -170,11 +170,11 @@ The following code will delete all backup files that are older than a certain da
 #+end_src
 *** Theme-less
 **** Set background
- #+begin_src emacs-lisp :tangle no
+ #+begin_src emacs-lisp :tangle yes
    (add-to-list 'default-frame-alist '(background-color . "ivory"))
  #+end_src
 **** Set highlight colour
- #+begin_src emacs-lisp :tangle no
+ #+begin_src emacs-lisp :tangle yes
  (set-face-attribute 'region nil :background "salmon")
  #+end_src
 ** Keybindings
