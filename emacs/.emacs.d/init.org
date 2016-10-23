@@ -54,10 +54,10 @@ Validate is a package that checks for and reports Emacs config errors.
 ** TODO Setup GNUs with Gmail
 ** Custom font
 I use Hack, patched with Powerline. Other good alternatives include Source Code Pro.
-
+*** Source Code Pro
 #+BEGIN_SRC emacs-lisp :tangle yes
 (add-to-list 'default-frame-alist
-             '(font . "Hack-12"))
+             '(font . "Inconsolata-14"))
 #+END_SRC
 
 ** UI Cruft
