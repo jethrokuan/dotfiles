@@ -215,6 +215,11 @@
          ("C-M-p" . dumb-jump-back)
          ("C-M-q" . dumb-jump-quick-look)))
 
+(defun prev-window ()
+   (interactive)
+   (other-window -1))
+
+(bind-key* "M-\"" 'prev-window)
 (bind-key* "M-'" 'other-window)
 
 (defun jethro/dired-mode-setup-hook ()
@@ -395,6 +400,11 @@
   (add-hook 'text-mode-hook 'flyspell-mode)
   (add-hook 'org-mode-hook 'flyspell-mode)
   (add-hook 'markdown-mode-hook 'flyspell-mode))
+
+(use-package slime
+  :config
+  (setq inferior-lisp-program "/usr/bin/sbcl")
+  (setq slime-contribs '(slime-fancy)))
 
 (bind-key "C-c C-k" 'eval-buffer)
 
