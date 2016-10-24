@@ -1068,8 +1068,8 @@ We need =htmlize= to add syntax highlighting to org-exports for HTML files.
 I use export to LaTeX through ox-latex, using xelatex for a nicer export template.
 #+begin_src emacs-lisp :tangle yes
   (setq org-latex-pdf-process
-        '("xelatex -shell-escape -interaction nonstopmode %f"
-          "xelatex -shell-escape -interaction nonstopmode %f"))
+        '("pdflatex -shell-escape -interaction nonstopmode %f"
+          "pdflatex -shell-escape -interaction nonstopmode %f"))
   (require 'ox-latex)
   (setq org-latex-tables-booktabs t)
   (setq org-latex-listings 'minted)
@@ -1110,19 +1110,30 @@ I use export to LaTeX through ox-latex, using xelatex for a nicer export templat
                  ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
   (add-to-list 'org-latex-classes
                '("books"
-                 "\\documentclass[10pt,oneside]{tufte-book}
-                        \\usepackage{charter}                       
+                 "\\documentclass[oneside]{tufte-book}
+                        \\usepackage{charter}
+                        \\usepackage{microtype}
                         \\usepackage{booktabs}
-                        \\usepackage{amsmath}
+                        \\usepackage{xspace}
                         \\usepackage{minted}
-                        \\usemintedstyle{borland}
-                        \\usepackage{color}
-                        \\usepackage{enumitem}
-                        \\setlist{nosep}
+                        \\usemintedstyle{bw}
+                        \\newcommand{\\hangp}[1]{\\makebox[0pt][r]{(}#1\\makebox[0pt][l]{)}}
                         \\usepackage{graphicx}
-                        \\usepackage[a4paper,left=3cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
+    
                         \\usepackage{hyperref}
-                        \\hypersetup {colorlinks = true, allcolors = red}
+                        %\\hypersetup{colorlinks}
+
+                        \\newcommand{\\openepigraph}[2]{%
+                          %\\sffamily\\fontsize{14}{16}\\selectfont
+                          \\begin{fullwidth}
+                          \\sffamily\\large
+                          \\begin{doublespace}
+                          \\noindent\\allcaps{#1}\\\\% epigraph
+                          \\noindent\\allcaps{#2}% author
+                          \\end{doublespace}
+                          \\end{fullwidth}
+                        }
+
                         \\title{}
                         [NO-DEFAULT-PACKAGES]
                         [NO-PACKAGES]"
