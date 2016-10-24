@@ -181,6 +181,22 @@
 
 (define-key ivy-minibuffer-map (kbd "C-:") 'ivy-dired)
 
+(setq jethro/org-files "~/.org/gtd/")
+
+(defun jethro/find-org-file (file-str) 
+  (find-file (concat (file-name-directory jethro/org-files) file-str)))
+
+(defun jethro/find-work-file ()
+  (interactive)
+  (jethro/find-org-file "work.org"))
+
+(defun jethro/find-school-file ()
+  (interactive)
+  (jethro/find-org-file "school.org"))
+
+(bind-key* "<f1> w" 'jethro/find-work-file)
+(bind-key* "<f1> s" 'jethro/find-school-file)
+
 (use-package neotree)
 
 (use-package crux
@@ -776,8 +792,8 @@
                ("\\paragraph{%s}" . "\\paragraph*{%s}")
                ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 (add-to-list 'org-latex-classes
-             '("notes"
-               "\\documentclass[10pt,oneside]{amsbook}
+             '("books"
+               "\\documentclass[10pt,oneside]{tufte-book}
                       \\usepackage{charter}                       
                       \\usepackage{booktabs}
                       \\usepackage{amsmath}
