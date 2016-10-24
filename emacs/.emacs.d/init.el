@@ -38,8 +38,6 @@
 (setq inhibit-splash-screen t)
 (setq inhibit-startup-message t)
 
-(setq initial-buffer-choice "~/.org/gtd/next_actions.org")
-
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 (delete-selection-mode +1)

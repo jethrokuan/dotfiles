@@ -72,11 +72,6 @@ Remove useless toolbars and splash screens.
 (setq inhibit-startup-message t)
 #+end_src
 
-** Show =next_actions= file
-#+begin_src emacs-lisp :tangle yes
-  (setq initial-buffer-choice "~/.org/gtd/next_actions.org")
-#+end_src
-
 ** Use y/n over yes/no
 Always prefer the shorter y/n over yes/no.
 
