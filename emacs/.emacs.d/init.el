@@ -29,7 +29,7 @@
       browse-url-generic-program "chromium")
 
 (add-to-list 'default-frame-alist
-             '(font . "Inconsolata-14"))
+             '(font . "Inconsolata-12"))
 
 (tooltip-mode -1)
 (tool-bar-mode -1)
