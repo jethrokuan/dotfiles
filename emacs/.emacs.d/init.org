@@ -738,6 +738,7 @@ For editing Lisp code.
 *** Skewer
 #+begin_src emacs-lisp :tangle yes
   (use-package skewer-mode
+    :mode "\\.js\\'"
     :bind
     (:map skewer-mode-map
           ("C-c C-k" . skewer-load-buffer)))
