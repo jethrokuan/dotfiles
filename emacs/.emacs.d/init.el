@@ -506,9 +506,10 @@
 
 (use-package skewer-mode
   :mode "\\.js\\'"
-  :bind
-  (:map skewer-mode-map
-        ("C-c C-k" . skewer-load-buffer)))
+  :bind (:map skewer-mode-map
+              ("C-c C-k" . skewer-load-buffer))
+  :config
+  (add-hook 'js2-mode-hook 'skewer-mode))
 
 (use-package js2-mode
   :mode ("\\.js\\'" . js2-mode)
