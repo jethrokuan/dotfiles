@@ -504,8 +504,7 @@
 
 (flycheck-add-mode 'javascript-eslint 'js2-mode)
 
-(use-package skewer-mode
-  :mode "\\.js\\'"
+(use-package skewer-mode  
   :bind (:map skewer-mode-map
               ("C-c C-k" . skewer-load-buffer))
   :config
