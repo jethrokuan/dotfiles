@@ -621,7 +621,7 @@ For editing Lisp code.
 #+END_SRC
 ** Emacs Lisp
 #+begin_src emacs-lisp :tangle yes
-(bind-key "C-c C-k" 'eval-buffer)
+  (bind-key "C-c C-k" 'eval-buffer emacs-lisp-mode-map)
 #+end_src
 ** Go
 #+begin_src emacs-lisp :tangle yes
@@ -735,8 +735,15 @@ For editing Lisp code.
 #+begin_src emacs-lisp :tangle yes
   (flycheck-add-mode 'javascript-eslint 'js2-mode)
 #+end_src
-*** js-comint
+*** Skewer
 #+begin_src emacs-lisp :tangle yes
+  (use-package skewer-mode
+    :bind
+    (:map skewer-mode-map
+          ("C-c C-k" . skewer-load-buffer)))
+#+end_src
+*** js-comint
+#+begin_src emacs-lisp :tangle no
   (use-package js-comint
     :config
     (add-hook 'js2-mode-hook

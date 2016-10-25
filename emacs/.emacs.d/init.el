@@ -414,7 +414,7 @@
   (setq inferior-lisp-program "/usr/bin/sbcl")
   (setq slime-contribs '(slime-fancy)))
 
-(bind-key "C-c C-k" 'eval-buffer)
+(bind-key "C-c C-k" 'eval-buffer emacs-lisp-mode-map)
 
 (use-package go-mode
   :mode ("\\.go\\'" . go-mode)
@@ -504,15 +504,10 @@
 
 (flycheck-add-mode 'javascript-eslint 'js2-mode)
 
-(use-package js-comint
-  :config
-  (add-hook 'js2-mode-hook
-            (lambda ()
-              (local-set-key (kbd "C-x C-e") 'js-send-last-sexp)
-              (local-set-key (kbd "C-M-x") 'js-send-last-sexp-and-go)
-              (local-set-key (kbd "C-c b") 'js-send-buffer)
-              (local-set-key (kbd "C-c C-b") 'js-send-buffer-and-go)
-              (local-set-key (kbd "C-c l") 'js-load-file-and-go))))
+(use-package skewer-mode
+  :bind
+  (:map skewer-mode-map
+        ("C-c C-k" . skewer-load-buffer)))
 
 (use-package js2-mode
   :mode ("\\.js\\'" . js2-mode)
