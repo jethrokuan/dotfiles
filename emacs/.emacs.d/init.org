@@ -173,7 +173,7 @@ The following code will delete all backup files that are older than a certain da
 #+begin_src emacs-lisp :tangle yes
   (use-package creamsody-theme
     :init
-    (load-theme 'creamsody-theme t)
+    (load-theme 'creamsody t)
     :config
     (creamsody-modeline))
 #+end_src
@@ -889,8 +889,8 @@ Show fill-column.
 ** Smart-mode-line
 #+begin_src emacs-lisp :tangle yes
   (use-package smart-mode-line
-    :config
-    (setq sml/theme 'light)
+    :config   
+    (setq sml/theme 'dark)
     (add-hook 'after-init-hook 'sml/setup)
     (setq sml/name-width 30)
     (setq sml/shorten-directory t)

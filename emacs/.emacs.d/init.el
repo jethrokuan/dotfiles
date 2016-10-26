@@ -78,7 +78,7 @@
 
 (use-package creamsody-theme
   :init
-  (load-theme 'creamsody-theme t)
+  (load-theme 'creamsody t)
   :config
   (creamsody-modeline))
 
@@ -596,8 +596,8 @@
 (use-package page-break-lines)
 
 (use-package smart-mode-line
-  :config
-  (setq sml/theme 'light)
+  :config   
+  (setq sml/theme 'dark)
   (add-hook 'after-init-hook 'sml/setup)
   (setq sml/name-width 30)
   (setq sml/shorten-directory t)
