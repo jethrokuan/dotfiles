@@ -165,13 +165,18 @@ The following code will delete all backup files that are older than a certain da
 #+end_src
 *** Theme-less
 **** Set background
- #+begin_src emacs-lisp :tangle yes
+ #+begin_src emacs-lisp :tangle no
    (add-to-list 'default-frame-alist '(background-color . "ivory"))
+   (set-face-attribute 'region nil :background "salmon")
  #+end_src
-**** Set highlight colour
- #+begin_src emacs-lisp :tangle yes
- (set-face-attribute 'region nil :background "salmon")
- #+end_src
+*** Creamsody Theme
+#+begin_src emacs-lisp :tangle yes
+  (use-package creamsody-theme
+    :init
+    (load-theme 'creamsody-theme t)
+    :config
+    (creamsody-modeline))
+#+end_src
 ** Keybindings
 *** Opening Lines
 #+begin_src emacs-lisp :tangle yes
@@ -914,7 +919,7 @@ Show fill-column.
 (display-time-mode 1)
 #+end_src
 ** nyan-mode
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
   (use-package nyan-mode
     :config
     (nyan-mode 1))

@@ -76,9 +76,11 @@
 (setq-default explicit-shell-file-name "/bin/bash")
 (setq-default shell-file-name "/bin/bash")
 
-(add-to-list 'default-frame-alist '(background-color . "ivory"))
-
-(set-face-attribute 'region nil :background "salmon")
+(use-package creamsody-theme
+  :init
+  (load-theme 'creamsody-theme t)
+  :config
+  (creamsody-modeline))
 
 (defun open-next-line (arg)
   "Move to the next line and then opens a line.
@@ -620,10 +622,6 @@
 
 (setq display-time-24hr-format t)
 (display-time-mode 1)
-
-(use-package nyan-mode
-  :config
-  (nyan-mode 1))
 
 (defhydra hydra-zoom (global-map "<f2>")
   "zoom"
