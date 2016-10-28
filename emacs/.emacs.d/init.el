@@ -183,7 +183,7 @@
 
 (define-key ivy-minibuffer-map (kbd "C-:") 'ivy-dired)
 
-(setq jethro/org-files "~/.org/gtd/")
+(setq jethro/org-files "~/.org/")
 
 (defun jethro/find-org-file (file-str) 
   (find-file (concat (file-name-directory jethro/org-files) file-str)))
@@ -685,9 +685,7 @@
 
 (defvar jethro/org-agenda-files
   (append
-   ;;(file-expand-wildcards "~/.org/*.org")
-   (file-expand-wildcards "~/.org/calendars/*.org")
-   (file-expand-wildcards "~/.org/gtd/*.org"))
+   (file-expand-wildcards "~/.org/*.org"))
   "Files to include in org-agenda-files")
 
 (setq org-agenda-files jethro/org-agenda-files)
@@ -847,13 +845,11 @@
 (defun jethro/org-after-save-init ()
   (org-babel-tangle))
 
-(use-package gtd-mode
-  :bind (("C-c x" . gtd-clear-inbox)
-         ("C-c i". gtd-into-inbox))
-  :ensure f
-  :load-path "elisp/"
-  :config
-  (gtd-mode 1))
+(use-package deft
+  :bind ("<f8>" . deft)
+  :commands (deft)
+  :config (setq deft-directory "~/.org/"
+                deft-extensions '("org")))
 
 (use-package epresent
   :bind ("<f5>"))
