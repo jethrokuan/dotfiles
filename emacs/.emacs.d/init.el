@@ -846,10 +846,15 @@
   (org-babel-tangle))
 
 (use-package deft
-  :bind ("<f8>" . deft)
-  :commands (deft)
-  :config (setq deft-directory "~/.org/"
-                deft-extensions '("org")))
+  :bind* (("<f8>" . deft)
+          ("C-x C-g" . deft-find-file)) 
+  :config
+  (setq deft-directory "~/.org/"
+        deft-extensions '("org")
+        deft-use-filename-as-title t
+        deft-file-naming-rules '((noslash . "_")
+                                 (nospace . "_")
+                                 (case-fn . downcase))))
 
 (use-package epresent
   :bind ("<f5>"))
