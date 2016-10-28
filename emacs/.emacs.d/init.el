@@ -209,8 +209,8 @@
           ("C-a" . crux-move-beginning-of-line)
           ("M-o" . crux-smart-open-line)
           ("C-c r" . crux-rename-file-and-buffer)
-          ("C-c d" . crux-duplicate-current-line-or-region)
-          ("C-c M-d" . crux-duplicate-and-comment-current-line-or-region)
+          ("M-d" . crux-duplicate-current-line-or-region)
+          ("M-D" . crux-duplicate-and-comment-current-line-or-region)
           ("s-o" . crux-smart-open-line-above)))
 
 (use-package avy
@@ -846,12 +846,14 @@
   (org-babel-tangle))
 
 (use-package deft
-  :bind* (("<f8>" . deft)
+  :bind* (("C-c d" . deft)
           ("C-x C-g" . deft-find-file)) 
   :config
   (setq deft-directory "~/.org/"
         deft-extensions '("org")
         deft-use-filename-as-title t
+        deft-default-extension "org"
+        deft-use-filter-string-for-filename t
         deft-file-naming-rules '((noslash . "_")
                                  (nospace . "_")
                                  (case-fn . downcase))))
