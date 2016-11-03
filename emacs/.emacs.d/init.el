@@ -283,6 +283,8 @@
 (use-package expand-region
   :bind (("C-=" . er/expand-region)))
 
+(use-package iedit)
+
 (use-package smartparens
   :bind (:map smartparens-mode-map
               ("C-M-a" . sp-beginning-of-sexp)
@@ -682,6 +684,8 @@
   (setq org-capture-templates
         '(("b" "Book" entry (file "~/.org/books.org")
            "* TO-READ %(org-set-tags)%? %i\n")
+          ("p" "Personal" entry (file "~/.org/personal.org")
+           "* TODO %?\n")
           ("s" "School" entry (file "~/.org/school.org")
            "* TODO %?\n")
           ("w" "Work" entry (file "~/.org/work.org")

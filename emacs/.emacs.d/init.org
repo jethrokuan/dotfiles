@@ -465,6 +465,10 @@ Use this often, and in combination with multiple-cursors.
   (use-package expand-region
     :bind (("C-=" . er/expand-region)))
 #+end_src
+** edit
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package iedit)
+#+END_SRC
 ** paredit
 For editing Lisp code.
 #+begin_src emacs-lisp :tangle no
@@ -1008,6 +1012,8 @@ We need =htmlize= to add syntax highlighting to org-exports for HTML files.
     (setq org-capture-templates
           '(("b" "Book" entry (file "~/.org/books.org")
              "* TO-READ %(org-set-tags)%? %i\n")
+            ("p" "Personal" entry (file "~/.org/personal.org")
+             "* TODO %?\n")
             ("s" "School" entry (file "~/.org/school.org")
              "* TODO %?\n")
             ("w" "Work" entry (file "~/.org/work.org")
