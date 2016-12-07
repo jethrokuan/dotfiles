@@ -742,7 +742,11 @@ For editing Lisp code.
 ** JS
 *** Flycheck
 #+begin_src emacs-lisp :tangle yes
+  (setq-default flycheck-disabled-checkers
+                (append flycheck-disabled-checkers
+                        '(javascript-jshint)))
   (flycheck-add-mode 'javascript-eslint 'js2-mode)
+  (flycheck-add-mode 'javascript-eslint 'web-mode)
 #+end_src
 *** Skewer
 #+begin_src emacs-lisp :tangle yes

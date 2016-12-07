@@ -506,7 +506,11 @@
   :config (progn
             (setq scss-compile-at-save nil)))
 
+(setq-default flycheck-disabled-checkers
+              (append flycheck-disabled-checkers
+                      '(javascript-jshint)))
 (flycheck-add-mode 'javascript-eslint 'js2-mode)
+(flycheck-add-mode 'javascript-eslint 'web-mode)
 
 (use-package skewer-mode  
   :bind (:map skewer-mode-map
@@ -802,7 +806,7 @@
                       \\usemintedstyle{bw}
                       \\newcommand{\\hangp}[1]{\\makebox[0pt][r]{(}#1\\makebox[0pt][l]{)}}
                       \\usepackage{graphicx}
-  
+
                       \\usepackage{hyperref}
                       %\\hypersetup{colorlinks}
 
