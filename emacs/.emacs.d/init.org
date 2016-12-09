@@ -267,7 +267,7 @@ Counsel contains ivy enhancements for commonly-used functions.
 #+end_src
 ** Swiper
 Swiper is ivy-enhanced isearch.
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
   (use-package swiper
     :bind*
     (("C-s" . swiper)

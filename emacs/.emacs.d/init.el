@@ -148,15 +148,6 @@
   (setq ivy-initial-inputs-alist nil)
   (define-key ivy-minibuffer-map (kbd "<return>") 'ivy-alt-done))
 
-(use-package swiper
-  :bind*
-  (("C-s" . swiper)
-   ("C-r" . swiper)
-   ("C-M-s" . swiper-all))
-  :bind
-  (:map read-expression-map
-        ("C-r" . counsel-expression-history)))
-
 (setq ivy-re-builders-alist
       '((ivy-switch-buffer . ivy--regex-plus)
         (swiper . ivy--regex-plus)
