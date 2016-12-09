@@ -170,7 +170,7 @@ The following code will delete all backup files that are older than a certain da
    (set-face-attribute 'region nil :background "salmon")
  #+end_src
 *** Creamsody Theme
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
   (use-package creamsody-theme
     :init
     (load-theme 'creamsody t)
@@ -231,6 +231,12 @@ The following code will delete all backup files that are older than a certain da
 #+begin_src emacs-lisp :tangle yes
   (use-package hydra)
 #+end_src
+*** Ample Theme
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (use-package ample-theme
+    :init
+    (load-theme 'ample t))
+#+END_SRC
 * Ivy
 I've recently switched over from =helm= to =ivy=. Ivy is simpler, and easier to extend.
 ** flx

@@ -76,12 +76,6 @@
 (setq-default explicit-shell-file-name "/bin/bash")
 (setq-default shell-file-name "/bin/bash")
 
-(use-package creamsody-theme
-  :init
-  (load-theme 'creamsody t)
-  :config
-  (creamsody-modeline))
-
 (defun open-next-line (arg)
   "Move to the next line and then opens a line.
    See also `newline-and-indent'."
@@ -121,6 +115,10 @@
                     (call-interactively 'compile)))
 
 (use-package hydra)
+
+(use-package ample-theme
+  :init
+  (load-theme 'ample t))
 
 (use-package flx)
 
