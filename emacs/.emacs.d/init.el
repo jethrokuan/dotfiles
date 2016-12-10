@@ -472,6 +472,7 @@
          ("\\.html\\.erb\\'" . web-mode)
          ("\\.mustache\\'" . web-mode)
          ("\\.jinja\\'" . web-mode)
+         ("\\.njk\\'" . web-mode)
          ("\\.php\\'" . web-mode))
   :config
   (setq web-mode-enable-css-colorization t)
