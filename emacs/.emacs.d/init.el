@@ -789,27 +789,15 @@
              '("books"
                "\\documentclass[oneside]{tufte-book}
                       \\usepackage{charter}
-                      \\usepackage{microtype}
                       \\usepackage{booktabs}
-                      \\usepackage{xspace}
                       \\usepackage{minted}
                       \\usemintedstyle{bw}
-                      \\newcommand{\\hangp}[1]{\\makebox[0pt][r]{(}#1\\makebox[0pt][l]{)}}
                       \\usepackage{graphicx}
 
                       \\usepackage{hyperref}
-                      %\\hypersetup{colorlinks}
+                      \\hypersetup{colorlinks}
 
-                      \\newcommand{\\openepigraph}[2]{%
-                        %\\sffamily\\fontsize{14}{16}\\selectfont
-                        \\begin{fullwidth}
-                        \\sffamily\\large
-                        \\begin{doublespace}
-                        \\noindent\\allcaps{#1}\\\\% epigraph
-                        \\noindent\\allcaps{#2}% author
-                        \\end{doublespace}
-                        \\end{fullwidth}
-                      }
+                      \\setlength{\\parskip}{1em}
 
                       \\title{}
                       [NO-DEFAULT-PACKAGES]
