@@ -684,8 +684,10 @@ For editing Lisp code.
 #+end_src
 ** Fish
 #+begin_src emacs-lisp :tangle yes
-(use-package fish-mode
-  :mode ("\\.fish\\'" . fish-mode))
+  (use-package fish-mode
+    :mode ("\\.fish\\'" . fish-mode)
+    :init (add-hook 'fish-mode-hook
+                    (lambda () (aggressive-indent-mode -1))))
 #+end_src
 ** Rust
 #+begin_src emacs-lisp :tangle yes

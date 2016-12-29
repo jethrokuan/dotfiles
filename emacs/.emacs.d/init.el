@@ -449,7 +449,9 @@
                              (file-name-sans-extension file)))))))
 
 (use-package fish-mode
-  :mode ("\\.fish\\'" . fish-mode))
+  :mode ("\\.fish\\'" . fish-mode)
+  :init (add-hook 'fish-mode-hook
+                  (lambda () (aggressive-indent-mode -1))))
 
 (use-package rust-mode
   :mode ("\\.rs\\'" . rust-mode))
