@@ -214,12 +214,14 @@
          ("C-M-p" . dumb-jump-back)
          ("C-M-q" . dumb-jump-quick-look)))
 
-(defun prev-window ()
-   (interactive)
-   (other-window -1))
-
-(bind-key* "M-\"" 'prev-window)
-(bind-key* "M-'" 'other-window)
+(use-package windmove
+  ;; :defer 4
+  :ensure t
+  :config
+  ;; use command key on Mac
+  (windmove-default-keybindings 'super)
+  ;; wrap around at edges
+  (setq windmove-wrap-around t))
 
 (defun jethro/dired-mode-setup-hook ()
   "hook for dired-mode"
