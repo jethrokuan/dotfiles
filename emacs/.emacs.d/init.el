@@ -25,8 +25,9 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
-(setq browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program "chromium")
+(setq browse-url-browser-function 'browse-url-firefox
+      browse-url-new-window-flag  t
+      browse-url-firefox-new-window-is-tab t)
 
 (add-to-list 'default-frame-alist
              '(font . "Inconsolata-12"))
@@ -396,9 +397,11 @@
           (use-package company-quickhelp
             :config (company-quickhelp-mode 1))))
 
-(use-package flyspell
-  :ensure f
+(use-package flyspell 
+  :ensure f 
   :diminish flyspell-mode
+  :init
+  (setenv "DICTIONARY" "en_GB")
   :config
   (add-hook 'text-mode-hook 'flyspell-mode)
   (add-hook 'org-mode-hook 'flyspell-mode)
