@@ -1213,8 +1213,9 @@ I like to keep my books in sorted order, alphanumerically, and then by TODO keyw
   (use-package deft
     :bind* (("C-c d" . deft)
             ("C-x C-g" . deft-find-file)) 
+    :bind (("C-c C-r" . deft-rename-file))
     :config
-    (setq deft-directory "~/.org/"
+    (setq deft-directory "~/.org/deft/"
           deft-extensions '("org")
           deft-use-filename-as-title t
           deft-default-extension "org"
