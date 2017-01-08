@@ -241,7 +241,8 @@ The following code will delete all backup files that are older than a certain da
 * Mail
 ** Notmuch
 #+BEGIN_SRC emacs-lisp :tangle yes
-(use-package notmuch)
+  (use-package notmuch
+    :bind (("<f12>" . notmuch)))
 #+END_SRC
 * Ivy
 I've recently switched over from =helm= to =ivy=. Ivy is simpler, and easier to extend.
@@ -1012,7 +1013,7 @@ We need =htmlize= to add syntax highlighting to org-exports for HTML files.
 #+end_src
 ** Basic Configuration
 #+begin_src emacs-lisp :tangle yes
-  (use-package org
+  (use-package org-plus-contrib
     :bind (("C-c c" . org-capture)
            ("C-c a" . org-agenda)
            ("C-c l" . org-store-link))
@@ -1042,6 +1043,10 @@ We need =htmlize= to add syntax highlighting to org-exports for HTML files.
             ("w" "Work" entry (file "~/.org/work.org")
              "* TODO %?\n"))))
 #+end_src
+** org-notmuch
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (require 'org-notmuch)
+#+END_SRC
 ** org-agenda
    #+begin_src emacs-lisp :tangle yes
      (defvar jethro/org-agenda-files
