@@ -473,7 +473,7 @@ Use this often, and in combination with multiple-cursors.
   (use-package expand-region
     :bind (("C-=" . er/expand-region)))
 #+end_src
-** edit
+** iedit
 #+BEGIN_SRC emacs-lisp :tangle yes
 (use-package iedit)
 #+END_SRC
