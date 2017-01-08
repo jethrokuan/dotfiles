@@ -36,6 +36,7 @@ Validate is a package that checks for and reports Emacs config errors.
     :demand t)
 #+end_src
 ** User configuration
+** 
 #+begin_src emacs-lisp :tangle yes
 (setq user-full-name "Jethro Kuan"
       user-mail-address "jethrokuan95@gmail.com")
@@ -52,7 +53,6 @@ Validate is a package that checks for and reports Emacs config errors.
         browse-url-new-window-flag  t
         browse-url-firefox-new-window-is-tab t)
 #+end_src
-** TODO Setup GNUs with Gmail
 ** Custom font
 I use Hack, patched with Powerline. Other good alternatives include Source Code Pro.
 *** Source Code Pro
@@ -237,6 +237,11 @@ The following code will delete all backup files that are older than a certain da
   (use-package ample-theme
     :init
     (load-theme 'ample t))
+#+END_SRC
+* Mail
+** Notmuch
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package notmuch)
 #+END_SRC
 * Ivy
 I've recently switched over from =helm= to =ivy=. Ivy is simpler, and easier to extend.
