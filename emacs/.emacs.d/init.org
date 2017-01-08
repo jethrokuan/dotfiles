@@ -620,9 +620,11 @@ For editing Lisp code.
 #+end_src
 ** Spellcheck with Flyspell
 #+begin_src emacs-lisp :tangle yes
-  (use-package flyspell
-    :ensure f
+  (use-package flyspell 
+    :ensure f 
     :diminish flyspell-mode
+    :init
+    (setenv "DICTIONARY" "en_GB")
     :config
     (add-hook 'text-mode-hook 'flyspell-mode)
     (add-hook 'org-mode-hook 'flyspell-mode)
