@@ -48,8 +48,9 @@ Validate is a package that checks for and reports Emacs config errors.
 #+END_SRC
 ** Default browser
 #+begin_src emacs-lisp :tangle yes
-(setq browse-url-browser-function 'browse-url-generic
-      browse-url-generic-program "chromium")
+  (setq browse-url-browser-function 'browse-url-firefox
+        browse-url-new-window-flag  t
+        browse-url-firefox-new-window-is-tab t)
 #+end_src
 ** TODO Setup GNUs with Gmail
 ** Custom font
