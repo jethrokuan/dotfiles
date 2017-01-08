@@ -238,11 +238,17 @@ The following code will delete all backup files that are older than a certain da
     :init
     (load-theme 'ample t))
 #+END_SRC
-* Mail
-** Notmuch
+* Mail (notmuch)
+** Basic Setup
 #+BEGIN_SRC emacs-lisp :tangle yes
   (use-package notmuch
     :bind (("<f12>" . notmuch)))
+#+END_SRC
+** Goobook
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (require 'notmuch-address)
+  (setq notmuch-address-command "~/.emacs.d/goobook")
+  (notmuch-address-message-insinuate)
 #+END_SRC
 * Ivy
 I've recently switched over from =helm= to =ivy=. Ivy is simpler, and easier to extend.
