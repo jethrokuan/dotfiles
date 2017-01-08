@@ -1032,17 +1032,14 @@ We need =htmlize= to add syntax highlighting to org-exports for HTML files.
           '((nil :maxlevel . 3)
             (org-agenda-files :maxlevel . 3)))
     (setq org-use-fast-todo-selection t)
-    (setq org-treat-S-cursor-todo-selection-as-state-change nil)
-    (setq org-capture-templates
-          '(("b" "Book" entry (file "~/.org/books.org")
-             "* TO-READ %(org-set-tags)%? %i\n")
-            ("p" "Personal" entry (file "~/.org/personal.org")
-             "* TODO %?\n")
-            ("s" "School" entry (file "~/.org/school.org")
-             "* TODO %?\n")
-            ("w" "Work" entry (file "~/.org/work.org")
-             "* TODO %?\n"))))
+    (setq org-treat-S-cursor-todo-selection-as-state-change nil))
 #+end_src
+** org-capture
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (setq org-capture-templates
+        '(("m" "Mail" entry (file+headline "~/.org/inbox.org" "Mail")
+           "* TODO %?\n%a" :prepend t :jump-to-captured t)))
+#+END_SRC
 ** org-notmuch
 #+BEGIN_SRC emacs-lisp :tangle yes
   (require 'org-notmuch)
