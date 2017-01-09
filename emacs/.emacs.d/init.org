@@ -697,6 +697,26 @@ For editing Lisp code.
                              file
                              (file-name-sans-extension file)))))))
 #+end_src
+** Java
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (use-package eclim
+    :config 
+    (global-eclim-mode))
+#+END_SRC
+*** company-emacs-eclim
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (use-package company-emacs-eclim
+    :config
+    (company-emacs-eclim-setup))
+#+END_SRC
+*** gradle
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (use-package gradle-mode
+    :config
+    (add-hook 'java-mode-hook (lambda ()
+                                (gradle-mode 1))))
+
+#+END_SRC
 ** Fish
 #+begin_src emacs-lisp :tangle yes
   (use-package fish-mode

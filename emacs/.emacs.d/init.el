@@ -454,6 +454,19 @@
                              file
                              (file-name-sans-extension file)))))))
 
+(use-package eclim
+  :config 
+  (global-eclim-mode))
+
+(use-package company-emacs-eclim
+  :config
+  (company-emacs-eclim-setup))
+
+(use-package gradle-mode
+  :config
+  (add-hook 'java-mode-hook (lambda ()
+                              (gradle-mode 1))))
+
 (use-package fish-mode
   :mode ("\\.fish\\'" . fish-mode)
   :init (add-hook 'fish-mode-hook
