@@ -701,7 +701,10 @@ For editing Lisp code.
 #+BEGIN_SRC emacs-lisp :tangle yes
   (use-package eclim
     :config 
-    (global-eclim-mode))
+    (global-eclim-mode)
+    (setq help-at-pt-display-when-idle t)
+    (setq help-at-pt-timer-delay 0.1)
+    (help-at-pt-set-timer))
 #+END_SRC
 *** company-emacs-eclim
 #+BEGIN_SRC emacs-lisp :tangle yes
