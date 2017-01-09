@@ -445,6 +445,15 @@
                                                 (set (make-local-variable 'company-backends) '(company-go))
                                                 (company-mode))))))
 
+(add-hook 'c-mode-hook
+          (lambda ()
+            (unless (file-exists-p "Makefile")
+              (set (make-local-variable 'compile-command)
+                   (let ((file (file-name-nondirectory buffer-file-name)))
+                     (format "cc -Wall %s -o %s --std=c99"
+                             file
+                             (file-name-sans-extension file)))))))
+
 (add-hook 'c++-mode-hook
           (lambda ()
             (unless (file-exists-p "Makefile")
