@@ -1032,70 +1032,9 @@ Displays added/modified/deleted on the left.
  The rest of this document describes customizations I use in my setup,
  how I structure org-mode files, and other changes to fit the way I
  want org-mode to work.
-*** Organizing Your Life Into Org Files
-    :PROPERTIES:
-    :CUSTOM_ID: OrgFiles
-    :END:
-
- Tasks are separated into logical groupings or projects.  
- Use separate org files for large task groupings and 
- subdirectories for collections of files for multiple
- projects that belong together.
-
- Here are sample files that I use.
-
- The following org files collect non-work related tasks:
-
- | Filename     | Description                                |
- |--------------+--------------------------------------------|
- | todo.org     | Personal tasks and things to keep track of |
- | gsoc2009.org | Google Summer of Code stuff for 2009       |
- | farm.org     | Farm related tasks                         |
- | mark.org     | Tasks related to my son Mark               |
- | org.org      | Org-mode related tasks                     |
- | git.org      | Git related tasks                          |
-
- The following org-file collects org capture notes and tasks:
-
- | Filename   | Description         |
- |------------+---------------------|
- | refile.org | Capture task bucket |
-
- The following work-related org-files keep my business notes (using
- fictitious client names)
-
- | Filename    | Description                             |
- |-------------+-----------------------------------------|
- | norang.org  | Norang tasks and notes                  |
- | XYZ.org     | XYZ Corp tasks and notes                |
- | ABC.org     | ABC Ltd tasks                           |
- | ABC-DEF.org | ABC Ltd tasks for their client DEF Corp |
- | ABC-KKK.org | ABC Ltd tasks for their client KKK Inc  |
- | YYY.org     | YYY Inc tasks                           |
-
- Org-mode is great for dealing with multiple clients and client
- projects.  An org file becomes the collection of projects, notes,
- etc. for a single client or client-project.
-
- Client ABC Ltd. has multiple customer systems that I work on.
- Separating the tasks for each client-customer into separate org files
- helps keep things logically grouped and since clients come and go this
- allows entire org files to be added or dropped from my agenda to keep
- only what is important visible in agenda views.
-
- Other org files are used for publishing only and do not contribute to the agenda.
- See [[#Publishing][Publishing and Exporting]] for more details.
 *** Agenda Setup
-    :PROPERTIES:
-    :CUSTOM_ID: AgendaSetup
-    :END:
  #+begin_src emacs-lisp :tangle yes
-   (defvar jethro/org-agenda-files
-     (append
-      (file-expand-wildcards "~/.org/gtd/*.org"))
-     "Files to include in org-agenda-files")
-
-   (setq org-agenda-files jethro/org-agenda-files)
+   (setq org-agenda-files (file-expand-wildcards "~/.org/gtd/*.org"))
  #+end_src
 
 *** Org File Structure
@@ -1202,68 +1141,55 @@ Displays added/modified/deleted on the left.
  Here is the keybinding setup in lisp:
  #+header: :tangle yes
  #+begin_src emacs-lisp
- ;; Custom Key Bindings
- (global-set-key (kbd "<f12>") 'org-agenda)
- (global-set-key (kbd "<f5>") 'bh/org-todo)
- (global-set-key (kbd "<S-f5>") 'bh/widen)
- (global-set-key (kbd "<f7>") 'bh/set-truncate-lines)
- (global-set-key (kbd "<f8>") 'org-cycle-agenda-files)
- (global-set-key (kbd "<f9> <f9>") 'bh/show-org-agenda)
- (global-set-key (kbd "<f9> c") 'calendar)
- (global-set-key (kbd "<f9> f") 'boxquote-insert-file)
- (global-set-key (kbd "<f9> g") 'gnus)
- (global-set-key (kbd "<f9> h") 'bh/hide-other)
- (global-set-key (kbd "<f9> n") 'bh/toggle-next-task-display)
+   ;; Custom Key Bindings
+   (global-set-key (kbd "<f12>") 'org-agenda)
+   (global-set-key (kbd "<f5> c") 'calendar)
+   (global-set-key (kbd "<f2> h") 'bh/hide-other)
+   (global-set-key (kbd "<f2> n") 'bh/toggle-next-task-display)
 
- (global-set-key (kbd "<f9> I") 'bh/punch-in)
- (global-set-key (kbd "<f9> O") 'bh/punch-out)
+   (global-set-key (kbd "<f2> o") 'bh/make-org-scratch)
 
- (global-set-key (kbd "<f9> o") 'bh/make-org-scratch)
+   (global-set-key (kbd "<f2> s") 'bh/switch-to-scratch)
 
- (global-set-key (kbd "<f9> r") 'boxquote-region)
- (global-set-key (kbd "<f9> s") 'bh/switch-to-scratch)
+   (global-set-key (kbd "<f2> t") 'bh/insert-inactive-timestamp)
+   (global-set-key (kbd "<f2> T") 'bh/toggle-insert-inactive-timestamp)
 
- (global-set-key (kbd "<f9> t") 'bh/insert-inactive-timestamp)
- (global-set-key (kbd "<f9> T") 'bh/toggle-insert-inactive-timestamp)
+   (global-set-key (kbd "<f2> v") 'visible-mode)
+   (global-set-key (kbd "<f2> l") 'org-toggle-link-display)
+   (global-set-key (kbd "M-<f2>") 'org-toggle-inline-images)
+   (global-set-key (kbd "C-x n r") 'narrow-to-region)
+   (global-set-key (kbd "C-<f10>") 'next-buffer)
+   (global-set-key (kbd "<f11>") 'org-clock-goto)
+   (global-set-key (kbd "C-<f11>") 'org-clock-in)
+   (global-set-key (kbd "C-s-<f12>") 'bh/save-then-publish)
+   (global-set-key (kbd "C-c c") 'org-capture)
 
- (global-set-key (kbd "<f9> v") 'visible-mode)
- (global-set-key (kbd "<f9> l") 'org-toggle-link-display)
- (global-set-key (kbd "<f9> SPC") 'bh/clock-in-last-task)
- (global-set-key (kbd "C-<f9>") 'previous-buffer)
- (global-set-key (kbd "M-<f9>") 'org-toggle-inline-images)
- (global-set-key (kbd "C-x n r") 'narrow-to-region)
- (global-set-key (kbd "C-<f10>") 'next-buffer)
- (global-set-key (kbd "<f11>") 'org-clock-goto)
- (global-set-key (kbd "C-<f11>") 'org-clock-in)
- (global-set-key (kbd "C-s-<f12>") 'bh/save-then-publish)
- (global-set-key (kbd "C-c c") 'org-capture)
+   (defun bh/hide-other ()
+     (interactive)
+     (save-excursion
+       (org-back-to-heading 'invisible-ok)
+       (hide-other)
+       (org-cycle)
+       (org-cycle)
+       (org-cycle)))
 
- (defun bh/hide-other ()
-   (interactive)
-   (save-excursion
-     (org-back-to-heading 'invisible-ok)
-     (hide-other)
-     (org-cycle)
-     (org-cycle)
-     (org-cycle)))
+   (defun bh/set-truncate-lines ()
+     "Toggle value of truncate-lines and refresh window display."
+     (interactive)
+     (setq truncate-lines (not truncate-lines))
+     ;; now refresh window display (an idiom from simple.el):
+     (save-excursion
+       (set-window-start (selected-window)
+                         (window-start (selected-window)))))
 
- (defun bh/set-truncate-lines ()
-   "Toggle value of truncate-lines and refresh window display."
-   (interactive)
-   (setq truncate-lines (not truncate-lines))
-   ;; now refresh window display (an idiom from simple.el):
-   (save-excursion
-     (set-window-start (selected-window)
-                       (window-start (selected-window)))))
+   (defun bh/make-org-scratch ()
+     (interactive)
+     (find-file "/tmp/publish/scratch.org")
+     (gnus-make-directory "/tmp/publish"))
 
- (defun bh/make-org-scratch ()
-   (interactive)
-   (find-file "/tmp/publish/scratch.org")
-   (gnus-make-directory "/tmp/publish"))
-
- (defun bh/switch-to-scratch ()
-   (interactive)
-   (switch-to-buffer "*scratch*"))
+   (defun bh/switch-to-scratch ()
+     (interactive)
+     (switch-to-buffer "*scratch*"))
  #+end_src
 
  The main reason I have special key bindings (like =F11=, and =F12=) is
@@ -1513,28 +1439,22 @@ Displays added/modified/deleted on the left.
 
  #+header: :tangle yes
  #+begin_src emacs-lisp
- (setq org-directory "~/.org/gtd/")
- (setq org-default-notes-file "~/.org/gtd/inbox.org")
+   (setq org-directory "~/.org/gtd/")
+   (setq org-default-notes-file "~/.org/gtd/inbox.org")
 
- ;; I use C-c c to start capture mode
- (global-set-key (kbd "C-c c") 'org-capture)
+   ;; I use C-c c to start capture mode
+   (global-set-key (kbd "C-c c") 'org-capture)
 
- ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
- (setq org-capture-templates
-       (quote (("t" "todo" entry (file "~/.org/gtd/inbox.org")
-                "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
-               ("r" "respond" entry (file "~/.org/gtd/inbox.org")
-                "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
-               ("n" "note" entry (file "~/.org/gtd/inbox.org")
-                "* %? :NOTE:\n%U\n%a\n" :clock-in t :clock-resume t) 
-               ("w" "org-protocol" entry (file "~/.org/gtd/inbox.org")
-                "* TODO Review %c\n%U\n" :immediate-finish t)
-               ("m" "Meeting" entry (file "~/.org/gtd/inbox.org")
-                "* MEETING with %? :MEETING:\n%U" :clock-in t :clock-resume t)
-               ("p" "Phone call" entry (file "~/.org/gtd/inbox.org")
-                "* PHONE %? :PHONE:\n%U" :clock-in t :clock-resume t)
-               ("h" "Habit" entry (file "~/.org/inbox.org")
-                "* NEXT %?\n%U\n%a\nSCHEDULED: %(format-time-string \"%<<%Y-%m-%d %a .+1d/3d>>\")\n:PROPERTIES:\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:\n"))))
+   ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
+   (setq org-capture-templates
+         (quote (("t" "todo" entry (file "~/.org/gtd/inbox.org")
+                  "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
+                 ("r" "respond" entry (file "~/.org/gtd/inbox.org")
+                  "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
+                 ("n" "note" entry (file "~/.org/gtd/inbox.org")
+                  "* %? :NOTE:\n%U\n%a\n" :clock-in t :clock-resume t) 
+                 ("w" "org-protocol" entry (file "~/.org/gtd/inbox.org")
+                  "* TODO Review %c\n%U\n" :immediate-finish t))))
  #+end_src
 
  Capture mode now handles automatically clocking in and out of a
@@ -2051,719 +1971,6 @@ Displays added/modified/deleted on the left.
  supposed to be working on now from the list of returned results.
 
  This helps to keep my agenda clutter-free.
-** Time Clocking
-   :PROPERTIES:
-   :CUSTOM_ID: Clocking
-   :END:
-
- Okay, I admit it.  I'm a clocking fanatic.
-
- I clock everything at work.  Org-mode makes this really easy.  I'd
- rather clock too much stuff than not enough so I find it's easier to
- get in the habit of clocking everything.
-
- This makes it possible to look back at the day and see where I'm
- spending too much time, or not enough time on specific projects.  This
- also helps a lot when you need to estimate how long something is going
- to take to do -- you can use your clocking data from similar tasks to
- help tune your estimates so they are more accurate.
-
- Without clocking data it's hard to tell how long something took to do
- after the fact.
-
- I now use the concept of =punching in= and =punching out= at the start
- and end of my work day.  I punch in when I arrive at work, punch out
- for lunch, punch in after lunch, and punch out at the end of the day.
- Every minute is clocked between punch-in and punch-out times.
-
- Punching in defines a default task to clock time on whenever the clock
- would normally stop.  I found that with the default org-mode setup I
- would lose clocked minutes during the day, a minute here, a minute
- there, and that all adds up.  This is especially true if you write
- notes when moving to a DONE state - in this case the clock normally
- stops before you have composed the note -- and good notes take a few
- minutes to write.
-
- My clocking setup basically works like this:
-
- - Punch in (start the clock)
-   - This clocks in a predefined task by =org-id= that is the default
-     task to clock in whenever the clock normally stops
- - Clock in tasks normally, and let moving to a DONE state clock out
-   - clocking out automatically clocks time on a parent task or moves
-     back to the predefined default task if no parent exists.
- - Continue clocking whatever tasks you work on
- - Punch out (stop the clock)
-
- I'm free to change the default task multiple times during the day but 
- with the clock moving up the project tree on clock out I no longer 
- need to do this.  I simply have a single task that gets clocked in
- when I punch-in.
-
- If I punch-in with a prefix on a task in =Project X= then that task
- automatically becomes the default task and all clocked time goes on
- that project until I either punch out or punch in some other task.
-
- My org files look like this:
-
- =todo.org=:
- #+begin_src org :exports src
- ,#+FILETAGS: PERSONAL
- ...
- ,* Tasks
- ,** Organization
-    :PROPERTIES:
-    :CLOCK_MODELINE_TOTAL: today
-    :ID:       eb155a82-92b2-4f25-a3c6-0304591af2f9
-    :END:
-    ...
- #+end_src
-
- If I am working on some task, then I simply clock in on the task.
- Clocking out moves the clock up to a parent task with a todo keyword
- (if any) which keeps the clock time in the same subtree.  If there
- is no parent task with a todo keyword then the clock moves back to
- the default clocking task until I punch out or clock in some other
- task.  When an interruption occurs I start a capture task which
- keeps clocked time on the interruption task until I close it with
- C-c C-c.
-
- This works really well for me.
-
- For example, consider the following org file:
-
- #+begin_src org :exports src
- ,* TODO Project A
- ,** NEXT TASK 1
- ,** TODO TASK 2
- ,** TODO TASK 3
- ,* Tasks
- ,** TODO Some miscellaneous task
- #+end_src
-
- I'll work on this file in the following sequence:
-
- 1. I punch in with =F9-I= at the start of my day
-
-    That clocks in the =Organization= task by id in my =todo.org= file.
-
- 2. =F12-SPC= to review my block agenda
-
-    Pick 'TODO Some miscellaneous task' to work on next and clock that in with =I=
-    The clock is now on 'TODO Some miscellaneous task'
-
- 3. I complete that task and mark it done with =C-c C-t d=
-
-    This stops the clock and moves it back to the =Organization= task.
-
- 4. Now I want to work on =Project A= so I clock in =Task 1=
-
-    I work on Task 1 and mark it =DONE=.  This clocks out =Task 1= and moves
-    the clock to =Project A=.  Now I work on =Task 2= and clock that in.
-
- The entire time I'm working on and clocking some subtask of =Project A=
- all of the clock time in the interval is applied somewhere to the =Project A=
- tree.  When I eventually mark =Project A= done then the clock will move
- back to the default organization task.
-*** Clock Setup
-    :PROPERTIES:
-    :CUSTOM_ID: ClockSetup
-    :END:
-
- To get started we need to punch in which clocks in the default
- task and keeps the clock running.  This is now simply a matter of
- punching in the clock with =F9 I=.  You can do this anywhere.
- Clocking out will now clock in the parent task (if there is one
- with a todo keyword) or clock in the default task if not parent
- exists.
-
- Keeping the clock running when moving a subtask to a =DONE= state
- means clocking continues to apply to the project task.  I can pick the
- next task from the parent and clock that in without losing a minute or
- two while I'm deciding what to work on next.
-
- I keep clock times, state changes, and other notes in the =:LOGBOOK:=
- drawer.
-
- I have the following org-mode settings for clocking:
-
- #+header: :tangle yes
- #+begin_src emacs-lisp
- ;;
- ;; Resume clocking task when emacs is restarted
- (org-clock-persistence-insinuate)
- ;;
- ;; Show lot of clocking history so it's easy to pick items off the C-F11 list
- (setq org-clock-history-length 23)
- ;; Resume clocking task on clock-in if the clock is open
- (setq org-clock-in-resume t)
- ;; Change tasks to NEXT when clocking in
- (setq org-clock-in-switch-to-state 'bh/clock-in-to-next)
- ;; Separate drawers for clocking and logs
- (setq org-drawers (quote ("PROPERTIES" "LOGBOOK")))
- ;; Save clock data and state changes and notes in the LOGBOOK drawer
- (setq org-clock-into-drawer t)
- ;; Sometimes I change tasks I'm clocking quickly - this removes clocked tasks with 0:00 duration
- (setq org-clock-out-remove-zero-time-clocks t)
- ;; Clock out when moving task to a done state
- (setq org-clock-out-when-done t)
- ;; Save the running clock and all clock history when exiting Emacs, load it on startup
- (setq org-clock-persist t)
- ;; Do not prompt to resume an active clock
- (setq org-clock-persist-query-resume nil)
- ;; Enable auto clock resolution for finding open clocks
- (setq org-clock-auto-clock-resolution (quote when-no-clock-is-running))
- ;; Include current clocking task in clock reports
- (setq org-clock-report-include-clocking-task t)
-
- (setq bh/keep-clock-running nil)
-
- (defun bh/clock-in-to-next (kw)
-   "Switch a task from TODO to NEXT when clocking in.
- Skips capture tasks, projects, and subprojects.
- Switch projects and subprojects from NEXT back to TODO"
-   (when (not (and (boundp 'org-capture-mode) org-capture-mode))
-     (cond
-      ((and (member (org-get-todo-state) (list "TODO"))
-            (bh/is-task-p))
-       "NEXT")
-      ((and (member (org-get-todo-state) (list "NEXT"))
-            (bh/is-project-p))
-       "TODO"))))
-
- (defun bh/find-project-task ()
-   "Move point to the parent (project) task if any"
-   (save-restriction
-     (widen)
-     (let ((parent-task (save-excursion (org-back-to-heading 'invisible-ok) (point))))
-       (while (org-up-heading-safe)
-         (when (member (nth 2 (org-heading-components)) org-todo-keywords-1)
-           (setq parent-task (point))))
-       (goto-char parent-task)
-       parent-task)))
-
- (defun bh/punch-in (arg)
-   "Start continuous clocking and set the default task to the
- selected task.  If no task is selected set the Organization task
- as the default task."
-   (interactive "p")
-   (setq bh/keep-clock-running t)
-   (if (equal major-mode 'org-agenda-mode)
-       ;;
-       ;; We're in the agenda
-       ;;
-       (let* ((marker (org-get-at-bol 'org-hd-marker))
-              (tags (org-with-point-at marker (org-get-tags-at))))
-         (if (and (eq arg 4) tags)
-             (org-agenda-clock-in '(16))
-           (bh/clock-in-organization-task-as-default)))
-     ;;
-     ;; We are not in the agenda
-     ;;
-     (save-restriction
-       (widen)
-       ; Find the tags on the current task
-       (if (and (equal major-mode 'org-mode) (not (org-before-first-heading-p)) (eq arg 4))
-           (org-clock-in '(16))
-         (bh/clock-in-organization-task-as-default)))))
-
- (defun bh/punch-out ()
-   (interactive)
-   (setq bh/keep-clock-running nil)
-   (when (org-clock-is-active)
-     (org-clock-out))
-   (org-agenda-remove-restriction-lock))
-
- (defun bh/clock-in-default-task ()
-   (save-excursion
-     (org-with-point-at org-clock-default-task
-       (org-clock-in))))
-
- (defun bh/clock-in-parent-task ()
-   "Move point to the parent (project) task if any and clock in"
-   (let ((parent-task))
-     (save-excursion
-       (save-restriction
-         (widen)
-         (while (and (not parent-task) (org-up-heading-safe))
-           (when (member (nth 2 (org-heading-components)) org-todo-keywords-1)
-             (setq parent-task (point))))
-         (if parent-task
-             (org-with-point-at parent-task
-               (org-clock-in))
-           (when bh/keep-clock-running
-             (bh/clock-in-default-task)))))))
-
- (defvar bh/organization-task-id "eb155a82-92b2-4f25-a3c6-0304591af2f9")
-
- (defun bh/clock-in-organization-task-as-default ()
-   (interactive)
-   (org-with-point-at (org-id-find bh/organization-task-id 'marker)
-     (org-clock-in '(16))))
-
- (defun bh/clock-out-maybe ()
-   (when (and bh/keep-clock-running
-              (not org-clock-clocking-in)
-              (marker-buffer org-clock-default-task)
-              (not org-clock-resolving-clocks-due-to-idleness))
-     (bh/clock-in-parent-task)))
-
- (add-hook 'org-clock-out-hook 'bh/clock-out-maybe 'append)
- #+end_src
-
- I used to clock in tasks by ID using the following function but with
- the new punch-in and punch-out I don't need these as much anymore.
- =f9-SPC= calls =bh/clock-in-last-task= which switches the clock back
- to the previously clocked task.
-
- #+header: :tangle yes
- #+begin_src emacs-lisp
- (require 'org-id)
- (defun bh/clock-in-task-by-id (id)
-   "Clock in a task by id"
-   (org-with-point-at (org-id-find id 'marker)
-     (org-clock-in nil)))
-
- (defun bh/clock-in-last-task (arg)
-   "Clock in the interrupted task if there is one
- Skip the default task and get the next one.
- A prefix arg forces clock in of the default task."
-   (interactive "p")
-   (let ((clock-in-to-task
-          (cond
-           ((eq arg 4) org-clock-default-task)
-           ((and (org-clock-is-active)
-                 (equal org-clock-default-task (cadr org-clock-history)))
-            (caddr org-clock-history))
-           ((org-clock-is-active) (cadr org-clock-history))
-           ((equal org-clock-default-task (car org-clock-history)) (cadr org-clock-history))
-           (t (car org-clock-history)))))
-     (widen)
-     (org-with-point-at clock-in-to-task
-       (org-clock-in nil))))
- #+end_src
-*** Clocking in
-    :PROPERTIES:
-    :CUSTOM_ID: ClockingIn
-    :END:
-
- When I start or continue working on a task I clock it in with any of the following:
-
-   - =C-c C-x C-i= 
-   - =I= in the agenda
-   - =I= speed key on the first character of the heading line
-   - =f9 I= while on the task in the agenda
-   - =f9 I= while in the task in an org file
-**** Setting a default clock task
-     :PROPERTIES:
-     :CUSTOM_ID: ClockingInDefaultTask
-     :END:
-
- I have a default =** Organization= task in my todo.org file that
- I tend to put miscellaneous clock time on.  This is the task I
- clock in on when I punch in at the start of my work day with
- =F9-I=.  While reorganizing my org-files, reading email,
- clearing my inbox, and doing other planning work that isn't for
- a specific project I'll clock in this task.  Punching-in
- anywhere clocks in this Organization task as the default task.
-
- If I want to change the default clocking task I just visit the
- new task in any org buffer and clock it in with =C-u C-u C-c C-x
- C-i=.  Now this new task that collects miscellaneous clock
- minutes when the clock would normally stop.
-
- You can quickly clock in the default clocking task with =C-u C-c
- C-x C-i d=.  Another option is to repeatedly clock out so the
- clock moves up the project tree until you clock out the
- top-level task and the clock moves to the default task.
-**** Using the clock history to clock in old tasks
-     :PROPERTIES:
-     :CUSTOM_ID: ClockingInByClockHistory
-     :END:
-
- You can use the clock history to restart clocks on old tasks you've
- clocked or to jump directly to a task you have clocked previously.  I
- use this mainly to clock in whatever got interrupted by something.
-
- Consider the following scenario:
-
- - You are working on and clocking =Task A= (Organization)
- - You get interrupted and switch to =Task B= (Document my use of org-mode)
- - You complete =Task B= (Document my use of org-mode)
- - Now you want to go back to =Task A= (Organization) again to continue
-
- This is easy to deal with.  
-
- 1. Clock in =Task A=, work on it
- 2. Go to =Task B= (or create a new task) and clock it in
- 3. When you are finished with =Task B= hit =C-u C-c C-x C-i i=
-
- This displays a clock history selection window like the following and
- selects the interrupted =[i]= entry.
-
- *Clock history selection buffer for C-u C-c C-x C-i*
- #+begin_example
- Default Task
- [d] norang          Organization                          <-- Task B
- The task interrupted by starting the last one
- [i] norang          Organization                          <-- Task B
- Current Clocking Task
- [c] org             NEXT Document my use of org-mode      <-- Task A
- Recent Tasks
- [1] org             NEXT Document my use of org-mode      <-- Task A
- [2] norang          Organization                          <-- Task B
- ...
- [Z] org             DONE Fix default section links        <-- 35 clock task entries ago
- #+end_example
-*** Clock Everything - Create New Tasks
-    :PROPERTIES:
-    :CUSTOM_ID: ClockEverythingWithNewTasks
-    :END:
-
- In order to clock everything you need a task for everything.  That's
- fine for planned projects but interruptions inevitably occur and you
- need some place to record whatever time you spend on that
- interruption.
-
- To deal with this we create a new capture task to record the thing we
- are about to do.  The workflow goes something like this:
-
- - You are clocking some task and an interruption occurs
- - Create a quick capture task journal entry =C-c c j=
- - Type the heading
- - go do that thing (eat lunch, whatever)
- - file it =C-c C-c=, this restores the clock back to the previous clocking task
- - clock something else in or continue with the current clocking task
-
- This means you can ignore the details like where this task really
- belongs in your org file layout and just get on with completing the
- thing.  Refiling a bunch of tasks later in a group when it is
- convenient to refile the tasks saves time in the long run.
-
- If it's a one-shot uninteresting task (like a coffee break) I create
- a capture journal entry for it that goes to the diary.org date tree.
- If it's a task that actually needs to be tracked and marked done, and 
- applied to some project then I create a capture task instead which files it in 
- refile.org.
-*** Finding tasks to clock in
-    :PROPERTIES:
-    :CUSTOM_ID: FindTasksToClockIn
-    :END:
-
- To find a task to work on I use one of the following options
- (generally listed most frequently used first)
-
- - Use the clock history C-u C-c C-x C-i
-   Go back to something I was clocking that is not finished
- - Pick something off today's block agenda
-   =SCHEDULED= or =DEADLINE= items that need to be done soon
- - Pick something off the =NEXT= tasks agenda view
-   Work on some unfinished task to move to completion
- - Pick something off the other task list 
- - Use an agenda view with filtering to pick something to work on
-
- Punching in on the task you select will restrict the agenda view to that project
- so you can focus on just that thing for some period of time.
-*** Editing clock entries
-    :PROPERTIES:
-    :CUSTOM_ID: EditingClockEntries
-    :END:
-
- Sometimes it is necessary to edit clock entries so they reflect
- reality.  I find I do this for maybe 2-3 entries in a week.
-
- Occassionally I cannot clock in a task on time because I'm away from
- my computer.  In this case the previous clocked task is still running
- and counts time for both tasks which is wrong.
-
- I make a note of the time and then when I get back to my computer I
- clock in the right task and edit the start and end times to correct
- the clock history.
-
- To visit the clock line for an entry quickly use the agenda log mode.
- =F12 a l= shows all clock lines for today.  I use this to navigate to
- the appropriate clock lines quickly.  F11 goes to the current clocked
- task but the agenda log mode is better for finding and visiting older
- clock entries.
-
- Use =F12 a l= to open the agenda in log mode and show only logged
- clock times.  Move the cursor down to the clock line you need to edit
- and hit =TAB= and you're there.
-
- To edit a clock entry just put the cursor on the part of the date you
- want to edit (use the keyboard not the mouse - since the clicking on
- the timestamp with the mouse goes back to the agenda for that day) and
- hit the =S-<up arrow>= or =S-<down arrow>= keys to change the time.
-
- The following setting makes time editing use discrete minute intervals (no rounding)
- increments:
- #+header: :tangle yes
- #+begin_src emacs-lisp
- (setq org-time-stamp-rounding-minutes (quote (1 1)))
- #+end_src
-
- Editing the time with the shift arrow combination also updates the
- total for the clock line which is a nice convenience.
-
- I always check that I haven't created task overlaps when fixing time
- clock entries by viewing them with log mode on in the agenda.  There
- is a new view in the agenda for this -- just hit =v c= in the daily 
- agenda and clock gaps and overlaps are identified.
-
- I want my clock entries to be as accurate as possible.
-
- The following setting shows 1 minute clocking gaps.
- #+header: :tangle yes
- #+begin_src emacs-lisp
- (setq org-agenda-clock-consistency-checks
-       (quote (:max-duration "4:00"
-               :min-duration 0
-               :max-gap 0
-               :gap-ok-around ("4:00"))))
- #+end_src
-** Time reporting and tracking
-   :PROPERTIES:
-   :CUSTOM_ID: TimeReportingAndTracking
-   :END:
-*** Billing clients based on clocked time
-    :PROPERTIES:
-    :CUSTOM_ID: BillingClientsForClockedTime
-    :END:
-
- At the beginning of the month I invoice my clients for work done last
- month.  This is where I review my clocking data for correctness before
- billing for the clocked time.
-
- Billing for clocked time basically boils down to the following steps:
-
- 1. Verify that the clock data is complete and correct
- 2. Use clock reports to summarize time spent
- 3. Create an invoice based on the clock data
-
-    I currently create invoices in an external software package
-    based on the org-mode clock data.
-
- 4. Archive complete tasks so they are out of the way.
-
-    See [[#Archiving][Archiving]] for more details.
-**** Verify that the clock data is complete and correct
-     :PROPERTIES:
-     :CUSTOM_ID: VerifyingClockData
-     :END:
-
- Since I change tasks often (sometimes more than once in a minute) I
- use the following setting to remove clock entries with a zero
- duration.
- #+header: :tangle yes
- #+begin_src emacs-lisp
- ;; Sometimes I change tasks I'm clocking quickly - this removes clocked tasks with 0:00 duration
- (setq org-clock-out-remove-zero-time-clocks t)
- #+end_src
-
- This setting just keeps my clocked log entries clean - only keeping
- clock entries that contribute to the clock report.
-
- Before invoicing for clocked time it is important to make sure your
- clocked time data is correct.  If you have a clocked time with an
- entry that is not closed (ie. it has no end time) then that is a hole
- in your clocked day and it gets counted as zero (0) for time spent on
- the task when generating clock reports.  Counting it as zero is almost
- certainly wrong.
-
- To check for unclosed clock times I use the agenda-view clock check
- (=v c= in the agenda).  This view shows clocking gaps and overlaps in
- the agenda.
-
- To check the last month's clock data I use =F12 a v m b v c=
- which shows a full month in the agenda, moves to the previous
- month, and shows the clocked times only.  It's important to
- remove any agenda restriction locks and filters when checking
- the logs for gaps and overlaps.
-
- The clocked-time only display in the agenda makes it easy to quickly
- scan down the list to see if an entry is missing an end time.  If an
- entry is not closed you can manually fix the clock entry based on
- other clock info around that time.
-**** Using clock reports to summarize time spent
-     :PROPERTIES:
-     :CUSTOM_ID: ClockReports
-     :END:
-
- Billable time for clients are kept in separate org files.
-
- To get a report of time spent on tasks for =XYZ.org= you simply visit
- the =XYZ.org= file and run an agenda clock report for the last month
- with =F12 < a v m b R=.  This limits the agenda to this one file,
- shows the agenda for a full month, moves to last month, and generates
- a clock report.
-
- My agenda org clock report settings show 5 levels of detail with links
- to the tasks.  I like wider reports than the default compact setting
- so I override the =:narrow= value.
- #+header: :tangle yes
- #+begin_src emacs-lisp
- ;; Agenda clock report parameters
- (setq org-agenda-clockreport-parameter-plist
-       (quote (:link t :maxlevel 5 :fileskip0 t :compact t :narrow 80)))
- #+end_src
-
- I used to have a monthly clock report dynamic block in each project
- org file and manually updated them at the end of my billing cycle.  I
- used this as the basis for billing my clients for time spent on their
- projects.  I found updating the dynamic blocks fairly tedious when you
- have more than a couple of files for the month.
-
- I have since moved to using agenda clock reports shortly after that
- feature was added.  I find this much more convenient.  The data isn't
- normally for consumption by anyone else so the format of the agenda
- clock report format is great for my use-case.
-*** Task Estimates and column view
-    :PROPERTIES:
-    :CUSTOM_ID: TaskEstimates
-    :END:
-
- Estimating how long tasks take to complete is a difficult skill to
- master.  Org-mode makes it easy to practice creating estimates for
- tasks and then clock the actual time it takes to complete.
-
- By repeatedly estimating tasks and reviewing how your estimate relates
- to the actual time clocked you can tune your estimating skills.
-**** Creating a task estimate with column mode
-     :PROPERTIES:
-     :CUSTOM_ID: CreatingTaskEstimates
-     :END:
-
- I use =properties= and =column view= to do project estimates.
-
- I set up column view globally with the following headlines
- #+header: :tangle yes
- #+begin_src emacs-lisp
- ; Set default column view headings: Task Effort Clock_Summary
- (setq org-columns-default-format "%80ITEM(Task) %10Effort(Effort){:} %10CLOCKSUM")
- #+end_src
-
- This makes column view show estimated task effort and clocked times
- side-by-side which is great for reviewing your project estimates.
-
- A property called =Effort= records the estimated amount of time a
- given task will take to complete.  The estimate times I use are one
- of:
-
- - 10 minutes
- - 30 minutes
- - 1 hour
- - 2 hours
- - 3 hours
- - 4 hours
- - 5 hours
- - 6 hours
- - 7 hours
- - 8 hours
-
- These are stored for easy use in =column mode= in the global property
- =Effort_ALL=.
- #+header: :tangle yes
- #+begin_src emacs-lisp
- ; global Effort estimate values
- ; global STYLE property values for completion
- (setq org-global-properties (quote (("Effort_ALL" . "0:15 0:30 0:45 1:00 2:00 3:00 4:00 5:00 6:00 0:00")
-                                     ("STYLE_ALL" . "habit"))))
- #+end_src
-
- To create an estimate for a task or subtree start column mode with
- =C-c C-x C-c= and collapse the tree with =c=.  This shows a table
- overlayed on top of the headlines with the task name, effort estimate,
- and clocked time in columns.
-
- With the cursor in the =Effort= column for a task you can easily set
- the estimated effort value with the quick keys =1= through =9=.
-
- After setting the effort values exit =column mode= with =q=.
-**** Saving your estimate
-     :PROPERTIES:
-     :CUSTOM_ID: SavingEstimate
-     :END:
-
- For fixed price jobs where you provide your estimate to a client, then
- work to complete the project it is useful to save the original
- estimate that is provided to the client.
-
- Save your original estimate by creating a dynamic clock report table
- at the top of your estimated project subtree.  Entering =C-c C-x i
- RET= inserts a clock table report with your estimated values and any
- clocked time to date.
-
- #+begin_src org :exports src
- Original Estimate
- ,#+BEGIN: columnview :hlines 1 :id local
- | Task                        | Estimated Effort | CLOCKSUM |
- |-----------------------------+------------------+----------|
- | ** TODO Project to estimate |             5:40 |          |
- | *** TODO Step 1             |             0:10 |          |
- | *** TODO Step 2             |             0:10 |          |
- | *** TODO Step 3             |             5:10 |          |
- | **** TODO Step 3.1          |             2:00 |          |
- | **** TODO Step 3.2          |             3:00 |          |
- | **** TODO Step 3.3          |             0:10 |          |
- | *** TODO Step 4             |             0:10 |          |
- ,#+END:
- #+end_src
- I normally delete the =#+BEGIN:= and =#+END:= lines from the original
- table after providing the estimate to the client to ensure I don't
- accidentally update the table by hitting =C-c C-c= on the =#+BEGIN:=
- line.
-
- Saving the original estimate data makes it possible to refine the
- project tasks into subtasks as you work on the project without losing
- the original estimate data.
-**** Reviewing your estimate
-     :PROPERTIES:
-     :CUSTOM_ID: ReviewingEstimates
-     :END:
-
- =Column view= is great for reviewing your estimate.  This shows your
- estimated time value and the total clock time for the project
- side-by-side.
-
- Creating a dynamic clock table with =C-c C-x i RET= is a great way to
- save this project review if you need to make it available to other
- applications.
-
- =C-c C-x C-d= also provides a quick summary of clocked time for the
- current org file.
-*** Providing progress reports to others
-    :PROPERTIES:
-    :CUSTOM_ID: ProgressReporting
-    :END:
- [2012-02-12 Sun 16:11]
-
- When someone wants details of what I've done recently I simple generate a
- log report in the agenda with tasks I've completed and state changes combined
- with a clock report for the appropriate time period.
-
- The following setting shows closed tasks and state changes in the
- agenda.  Combined with the agenda clock report ('R') I can quickly
- generate all of the details required.
-
- #+header: :tangle yes
- #+begin_src emacs-lisp
- ;; Agenda log mode items to display (closed and state changes by default)
- (setq org-agenda-log-mode-items (quote (closed state)))
- #+end_src
-
- To generate the report I pull up the agenda for the appropriate time frame
- (today, yesterday, this week, or last week) and hit the key sequence
- =l R= to add the log report (without clocking data lines) and the agenda clock
- report at the end.
-
- Then it's simply a matter of exporting the resulting agenda in some useful format
- to provide to other people.  =C-x C-w /tmp/agenda.html RET= exports to HTML
- and =C-x C-w /tmp/agenda.txt RET= exports to plain text.  Other formats are 
- available but I use these two the most.
-
- Combining this export with tag filters and =C-u R= can limit the
- report to exactly the tags that people are interested in.
-
 ** Tags
    :PROPERTIES:
    :CUSTOM_ID: Tags
@@ -3325,6 +2532,17 @@ Displays added/modified/deleted on the left.
        (if (bh/is-subproject-p)
            nil
          next-headline)))
+
+   (defun bh/find-project-task ()
+     "Move point to the parent (project) task if any"
+     (save-restriction
+       (widen)
+       (let ((parent-task (save-excursion (org-back-to-heading 'invisible-ok) (point))))
+         (while (org-up-heading-safe)
+           (when (member (nth 2 (org-heading-components)) org-todo-keywords-1)
+             (setq parent-task (point))))
+         (goto-char parent-task)
+         parent-task)))
  #+end_src
 ** Archiving
    :PROPERTIES:
