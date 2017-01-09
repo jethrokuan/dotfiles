@@ -1022,7 +1022,8 @@ Displays added/modified/deleted on the left.
    (use-package org-plus-contrib
      :bind (("C-c l" . org-store-link)
             ("C-c a" . org-agenda)
-            ("C-c b" . org-iswitchb))
+            ("C-c b" . org-iswitchb)
+            ("C-c c" . org-capture))
      :config
      (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode)))
  #+end_src
@@ -1142,17 +1143,12 @@ Displays added/modified/deleted on the left.
  #+header: :tangle yes
  #+begin_src emacs-lisp
    ;; Custom Key Bindings
-   (global-set-key (kbd "<f12>") 'org-agenda)
-   (global-set-key (kbd "<f5> c") 'calendar)
+   (global-set-key (kbd "<f12>") 'org-agenda)  
    (global-set-key (kbd "<f2> h") 'bh/hide-other)
    (global-set-key (kbd "<f2> n") 'bh/toggle-next-task-display)
 
    (global-set-key (kbd "<f2> o") 'bh/make-org-scratch)
-
    (global-set-key (kbd "<f2> s") 'bh/switch-to-scratch)
-
-   (global-set-key (kbd "<f2> t") 'bh/insert-inactive-timestamp)
-   (global-set-key (kbd "<f2> T") 'bh/toggle-insert-inactive-timestamp)
 
    (global-set-key (kbd "<f2> v") 'visible-mode)
    (global-set-key (kbd "<f2> l") 'org-toggle-link-display)
@@ -1160,9 +1156,8 @@ Displays added/modified/deleted on the left.
    (global-set-key (kbd "C-x n r") 'narrow-to-region)
    (global-set-key (kbd "C-<f10>") 'next-buffer)
    (global-set-key (kbd "<f11>") 'org-clock-goto)
-   (global-set-key (kbd "C-<f11>") 'org-clock-in)
-   (global-set-key (kbd "C-s-<f12>") 'bh/save-then-publish)
-   (global-set-key (kbd "C-c c") 'org-capture)
+   (global-set-key (kbd "<f3>") 'org-clock-in)
+   (global-set-key (kbd "<f3>") 'org-clock-out)
 
    (defun bh/hide-other ()
      (interactive)
@@ -1445,16 +1440,24 @@ Displays added/modified/deleted on the left.
    ;; I use C-c c to start capture mode
    (global-set-key (kbd "C-c c") 'org-capture)
 
+   (defvar jethro/org-basic-inbox-template "* TODO %^{Task}
+   :PROPERTIES:
+   :EFFORT: %^{effort|1:00|0:05|0:15|0:30|2:00|4:00}
+   :END:
+   Captured %<%Y-%m-%d %H:%M>
+   %a
+   %i
+   %?
+   ")
+
    ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
    (setq org-capture-templates
-         (quote (("t" "todo" entry (file "~/.org/gtd/inbox.org")
-                  "* TODO %?\n%U\n%a\n" :clock-in t :clock-resume t)
-                 ("r" "respond" entry (file "~/.org/gtd/inbox.org")
-                  "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
-                 ("n" "note" entry (file "~/.org/gtd/inbox.org")
-                  "* %? :NOTE:\n%U\n%a\n" :clock-in t :clock-resume t) 
-                 ("w" "org-protocol" entry (file "~/.org/gtd/inbox.org")
-                  "* TODO Review %c\n%U\n" :immediate-finish t))))
+         '(("t" "todo" entry (file "~/.org/gtd/inbox.org")
+            ,jethro/org-basic-inbox-template)
+           ("r" "respond" entry (file "~/.org/gtd/inbox.org")
+            "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t) 
+           ("w" "org-protocol" entry (file "~/.org/gtd/inbox.org")
+            "* TODO Review %c\n%U\n" :immediate-finish t)))
  #+end_src
 
  Capture mode now handles automatically clocking in and out of a
@@ -1477,19 +1480,6 @@ Displays added/modified/deleted on the left.
  #+end_src
  I have the following setup to remove these empty =LOGBOOK= drawers if
  they occur.
-
- #+header: :tangle yes
- #+begin_src emacs-lisp
- ;; Remove empty LOGBOOK drawers on clock out
- (defun bh/remove-empty-drawer-on-clock-out ()
-   (interactive)
-   (save-excursion
-     (beginning-of-line 0)
-     (org-remove-empty-drawer-at "LOGBOOK" (point))))
-
- (add-hook 'org-clock-out-hook 'bh/remove-empty-drawer-on-clock-out 'append)
-
- #+end_src
 
 *** Separate file for Capture Tasks
     :PROPERTIES:
@@ -1626,37 +1616,6 @@ Displays added/modified/deleted on the left.
 
  Refiling all of my tasks tends to take less than a minute so I
  normally do this a couple of times a day.
-*** Refiling Notes
-    :PROPERTIES:
-    :CUSTOM_ID: RefilingNotes
-    :END:
-
- I keep a =* Notes= headline in most of my org-mode files.  Notes have
- a =NOTE= tag which is created by the capture template for notes.  This
- allows finding notes across multiple files easily using the agenda
- search functions.
-
- Notes created by capture tasks go first to =refile.org= and are later
- refiled to the appropriate project file.  Some notes that are project
- related get filed to the appropriate project instead of under the
- catchall =* NOTES= task.  Generally these types of notes are specific
- to the project and not generally useful -- so removing them from the
- notes list when the project is archived makes sense.
-*** Refiling Phone Calls and Meetings
-    :PROPERTIES:
-    :CUSTOM_ID: RefilingPhoneCalls
-    :END:
-
- Phone calls and meetings are handled using capture mode.  I time my
- calls and meetings using the capture mode template settings to clock
- in and out the capture task while the phone call or meeting is in
- progress.
-
- Phone call and meeting tasks collect in =refile.org= and are later
- refiled to the appropriate location.  Some phone calls are billable
- and we want these tracked in the appropriate category.  I refile my
- phone call and meeting tasks under the appropriate project so time
- tracking and reports are as accurate as possible.
 ** Custom agenda views
    :PROPERTIES:
    :CUSTOM_ID: CustomAgendaViews
@@ -1699,86 +1658,79 @@ Displays added/modified/deleted on the left.
 
  #+header: :tangle yes
  #+begin_src emacs-lisp
- ;; Do not dim blocked tasks
- (setq org-agenda-dim-blocked-tasks nil)
+   ;; Do not dim blocked tasks
+   (setq org-agenda-dim-blocked-tasks nil)
 
- ;; Compact the block agenda view
- (setq org-agenda-compact-blocks t)
+   ;; Compact the block agenda view
+   (setq org-agenda-compact-blocks t)
 
- ;; Custom agenda command definitions
- (setq org-agenda-custom-commands
-       (quote (("N" "Notes" tags "NOTE"
-                ((org-agenda-overriding-header "Notes")
-                 (org-tags-match-list-sublevels t)))
-               ("h" "Habits" tags-todo "STYLE=\"habit\""
-                ((org-agenda-overriding-header "Habits")
-                 (org-agenda-sorting-strategy
-                  '(todo-state-down effort-up category-keep))))
-               (" " "Agenda"
-                ((agenda "" nil)
-                 (tags "REFILE"
-                       ((org-agenda-overriding-header "Tasks to Refile")
-                        (org-tags-match-list-sublevels nil)))
-                 (tags-todo "-CANCELLED/!"
-                            ((org-agenda-overriding-header "Stuck Projects")
-                             (org-agenda-skip-function 'bh/skip-non-stuck-projects)
-                             (org-agenda-sorting-strategy
-                              '(category-keep))))
-                 (tags-todo "-HOLD-CANCELLED/!"
-                            ((org-agenda-overriding-header "Projects")
-                             (org-agenda-skip-function 'bh/skip-non-projects)
-                             (org-tags-match-list-sublevels 'indented)
-                             (org-agenda-sorting-strategy
-                              '(category-keep))))
-                 (tags-todo "-CANCELLED/!NEXT"
-                            ((org-agenda-overriding-header (concat "Project Next Tasks"
-                                                                   (if bh/hide-scheduled-and-waiting-next-tasks
-                                                                       ""
-                                                                     " (including WAITING and SCHEDULED tasks)")))
-                             (org-agenda-skip-function 'bh/skip-projects-and-habits-and-single-tasks)
-                             (org-tags-match-list-sublevels t)
-                             (org-agenda-todo-ignore-scheduled bh/hide-scheduled-and-waiting-next-tasks)
-                             (org-agenda-todo-ignore-deadlines bh/hide-scheduled-and-waiting-next-tasks)
-                             (org-agenda-todo-ignore-with-date bh/hide-scheduled-and-waiting-next-tasks)
-                             (org-agenda-sorting-strategy
-                              '(todo-state-down effort-up category-keep))))
-                 (tags-todo "-REFILE-CANCELLED-WAITING-HOLD/!"
-                            ((org-agenda-overriding-header (concat "Project Subtasks"
-                                                                   (if bh/hide-scheduled-and-waiting-next-tasks
-                                                                       ""
-                                                                     " (including WAITING and SCHEDULED tasks)")))
-                             (org-agenda-skip-function 'bh/skip-non-project-tasks)
-                             (org-agenda-todo-ignore-scheduled bh/hide-scheduled-and-waiting-next-tasks)
-                             (org-agenda-todo-ignore-deadlines bh/hide-scheduled-and-waiting-next-tasks)
-                             (org-agenda-todo-ignore-with-date bh/hide-scheduled-and-waiting-next-tasks)
-                             (org-agenda-sorting-strategy
-                              '(category-keep))))
-                 (tags-todo "-REFILE-CANCELLED-WAITING-HOLD/!"
-                            ((org-agenda-overriding-header (concat "Standalone Tasks"
-                                                                   (if bh/hide-scheduled-and-waiting-next-tasks
-                                                                       ""
-                                                                     " (including WAITING and SCHEDULED tasks)")))
-                             (org-agenda-skip-function 'bh/skip-project-tasks)
-                             (org-agenda-todo-ignore-scheduled bh/hide-scheduled-and-waiting-next-tasks)
-                             (org-agenda-todo-ignore-deadlines bh/hide-scheduled-and-waiting-next-tasks)
-                             (org-agenda-todo-ignore-with-date bh/hide-scheduled-and-waiting-next-tasks)
-                             (org-agenda-sorting-strategy
-                              '(category-keep))))
-                 (tags-todo "-CANCELLED+WAITING|HOLD/!"
-                            ((org-agenda-overriding-header (concat "Waiting and Postponed Tasks"
-                                                                   (if bh/hide-scheduled-and-waiting-next-tasks
-                                                                       ""
-                                                                     " (including WAITING and SCHEDULED tasks)")))
-                             (org-agenda-skip-function 'bh/skip-non-tasks)
-                             (org-tags-match-list-sublevels nil)
-                             (org-agenda-todo-ignore-scheduled bh/hide-scheduled-and-waiting-next-tasks)
-                             (org-agenda-todo-ignore-deadlines bh/hide-scheduled-and-waiting-next-tasks)))
-                 (tags "-REFILE/"
-                       ((org-agenda-overriding-header "Tasks to Archive")
-                        (org-agenda-skip-function 'bh/skip-non-archivable-tasks)
-                        (org-tags-match-list-sublevels nil))))
-                nil))))
-
+   ;; Custom agenda command definitions
+   (setq org-agenda-custom-commands
+         (quote ((" " "Agenda"
+                  ((agenda "" nil)
+                   (tags "REFILE"
+                         ((org-agenda-overriding-header "Tasks to Refile")
+                          (org-tags-match-list-sublevels nil)))
+                   (tags-todo "-CANCELLED/!"
+                              ((org-agenda-overriding-header "Stuck Projects")
+                               (org-agenda-skip-function 'bh/skip-non-stuck-projects)
+                               (org-agenda-sorting-strategy
+                                '(category-keep))))
+                   (tags-todo "-HOLD-CANCELLED/!"
+                              ((org-agenda-overriding-header "Projects")
+                               (org-agenda-skip-function 'bh/skip-non-projects)
+                               (org-tags-match-list-sublevels 'indented)
+                               (org-agenda-sorting-strategy
+                                '(category-keep))))
+                   (tags-todo "-CANCELLED/!NEXT"
+                              ((org-agenda-overriding-header (concat "Project Next Tasks"
+                                                                     (if bh/hide-scheduled-and-waiting-next-tasks
+                                                                         ""
+                                                                       " (including WAITING and SCHEDULED tasks)")))
+                               (org-agenda-skip-function 'bh/skip-projects-and-habits-and-single-tasks)
+                               (org-tags-match-list-sublevels t)
+                               (org-agenda-todo-ignore-scheduled bh/hide-scheduled-and-waiting-next-tasks)
+                               (org-agenda-todo-ignore-deadlines bh/hide-scheduled-and-waiting-next-tasks)
+                               (org-agenda-todo-ignore-with-date bh/hide-scheduled-and-waiting-next-tasks)
+                               (org-agenda-sorting-strategy
+                                '(todo-state-down effort-up category-keep))))
+                   (tags-todo "-REFILE-CANCELLED-WAITING-HOLD/!"
+                              ((org-agenda-overriding-header (concat "Project Subtasks"
+                                                                     (if bh/hide-scheduled-and-waiting-next-tasks
+                                                                         ""
+                                                                       " (including WAITING and SCHEDULED tasks)")))
+                               (org-agenda-skip-function 'bh/skip-non-project-tasks)
+                               (org-agenda-todo-ignore-scheduled bh/hide-scheduled-and-waiting-next-tasks)
+                               (org-agenda-todo-ignore-deadlines bh/hide-scheduled-and-waiting-next-tasks)
+                               (org-agenda-todo-ignore-with-date bh/hide-scheduled-and-waiting-next-tasks)
+                               (org-agenda-sorting-strategy
+                                '(category-keep))))
+                   (tags-todo "-REFILE-CANCELLED-WAITING-HOLD/!"
+                              ((org-agenda-overriding-header (concat "Standalone Tasks"
+                                                                     (if bh/hide-scheduled-and-waiting-next-tasks
+                                                                         ""
+                                                                       " (including WAITING and SCHEDULED tasks)")))
+                               (org-agenda-skip-function 'bh/skip-project-tasks)
+                               (org-agenda-todo-ignore-scheduled bh/hide-scheduled-and-waiting-next-tasks)
+                               (org-agenda-todo-ignore-deadlines bh/hide-scheduled-and-waiting-next-tasks)
+                               (org-agenda-todo-ignore-with-date bh/hide-scheduled-and-waiting-next-tasks)
+                               (org-agenda-sorting-strategy
+                                '(category-keep))))
+                   (tags-todo "-CANCELLED+WAITING|HOLD/!"
+                              ((org-agenda-overriding-header (concat "Waiting and Postponed Tasks"
+                                                                     (if bh/hide-scheduled-and-waiting-next-tasks
+                                                                         ""
+                                                                       " (including WAITING and SCHEDULED tasks)")))
+                               (org-agenda-skip-function 'bh/skip-non-tasks)
+                               (org-tags-match-list-sublevels nil)
+                               (org-agenda-todo-ignore-scheduled bh/hide-scheduled-and-waiting-next-tasks)
+                               (org-agenda-todo-ignore-deadlines bh/hide-scheduled-and-waiting-next-tasks))) 
+                   (tags "-REFILE/"
+                         ((org-agenda-overriding-header "Tasks to Archive")
+                          (org-agenda-skip-function 'bh/skip-non-archivable-tasks)
+                          (org-tags-match-list-sublevels nil))))
+                  nil))))
+                  
  #+end_src
 
  My block agenda view looks like this when not narrowed to a project.
@@ -2119,54 +2071,10 @@ Displays added/modified/deleted on the left.
 
  - =WAITING=
    - =CANCELLED=
-** Handling Notes
-   :PROPERTIES:
-   :CUSTOM_ID: HandlingNotes
-   :END:
-
-   Notes are little gems of knowledge that you come across during your
-   day.  They are just like tasks except there is nothing to do (except
-   learn and memorize the gem of knowledge).  Unfortunately there are way
-   too many gems to remember and my head explodes just thinking about it.
-
-   org-mode to the rescue!
-
-   Often I'll find some cool feature or thing I want to remember while
-   reading the org-mode and git mailing lists in Gnus.  To create a note
-   I use my note capture template =C-c c n=, type a heading for the note
-   and =C-c C-c= to save it.  The only other thing to do is to refile it
-   (later) to the appropriate project file.
-
-   I have an agenda view just to find notes.  Notes are refiled to an
-   appropriate project file and task.  If there is no specific task it
-   belongs to it goes to the catchall =* Notes= task.  I generally have a
-   catchall notes task in every project file.  Notes are created with a
-   =NOTE= tag already applied by the capture template so I'm free to
-   refile the note anywhere.  As long as the note is in a project file
-   that contributes to my agenda (ie. in org-agenda-files) then I can
-   find the note back easily with my notes agenda view by hitting the key
-   combination =F12 N=.  I'm free to limit the agenda view of notes using
-   standard agenda tag filtering.
-
-   Short notes with a meaningful headline are a great way to remember
-   technical details without the need to actually remember anything -
-   other than how to find them back when you need them using =F12 N=.
-
-   Notes that are project related and not generally useful can be
-   archived with the project and removed from the agenda when the project
-   is removed.
-
-   So my org notes go in org.org and my git notes go in git.org both
-   under the =* Notes= task.  I'll forever be able to find those.  A note
-   about some work project detail I want to remember with the project is
-   filed to the project task under the appropriate work org-mode file and
-   eventually gets removed from the agenda when the project is complete
-   and archived.
 ** GTD stuff
    :PROPERTIES:
    :CUSTOM_ID: GTD
-   :END:
-
+   :
  Most of my day is deadline/schedule driven.
  I work off of the agenda first and then pick items from the todo lists as
  outlined in [[#WhatDoIWorkOnNext][What do I work on next?]]
@@ -2544,6 +2452,10 @@ Displays added/modified/deleted on the left.
          (goto-char parent-task)
          parent-task)))
  #+end_src
+*** Effort Estimates
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (setq org-global-properties (quote (("Effort_ALL" . "0 0:10 0:20 0:30 1:00 1:30 2:00 3:00 4:00 6:00 8:00 10:00 20:00"))))
+#+END_SRC
 ** Archiving
    :PROPERTIES:
    :CUSTOM_ID: Archiving
