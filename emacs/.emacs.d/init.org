@@ -726,6 +726,7 @@ For editing Lisp code.
 *** gradle
 #+BEGIN_SRC emacs-lisp :tangle yes
   (use-package gradle-mode
+    :diminish gradle-mode
     :config
     (add-hook 'java-mode-hook (lambda ()
                                 (gradle-mode 1))))

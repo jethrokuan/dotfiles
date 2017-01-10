@@ -475,6 +475,7 @@
   (company-emacs-eclim-setup))
 
 (use-package gradle-mode
+  :diminish gradle-mode
   :config
   (add-hook 'java-mode-hook (lambda ()
                               (gradle-mode 1))))
