@@ -464,6 +464,7 @@
                              (file-name-sans-extension file)))))))
 
 (use-package eclim
+  :bind (("<f9>" . eclim-run-class))
   :config 
   (global-eclim-mode)
   (setq help-at-pt-display-when-idle t)
