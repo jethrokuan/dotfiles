@@ -152,6 +152,12 @@ The following code will delete all backup files that are older than a certain da
   (setq-default shell-file-name "/bin/bash")
 #+end_src
 ** Theme
+*** Github Theme
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (use-package github-theme
+    :init
+    (load-theme 'github t))
+#+END_SRC
 *** Doom Theme
 #+begin_src emacs-lisp :tangle no
   (use-package doom-themes
@@ -368,6 +374,7 @@ Swiper is ivy-enhanced isearch.
 ** Anzu
 #+BEGIN_SRC emacs-lisp :tangle yes
   (use-package anzu
+    :diminish anzu-mode 
     :config
     (global-anzu-mode +1)
     (define-key isearch-mode-map [remap isearch-query-replace]  #'anzu-isearch-query-replace)
@@ -963,7 +970,7 @@ Show fill-column.
 (use-package page-break-lines)
 #+end_src
 ** Smart-mode-line
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
   (use-package smart-mode-line
     :config
     (add-hook 'after-init-hook 'sml/setup)
