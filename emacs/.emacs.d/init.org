@@ -152,8 +152,12 @@ The following code will delete all backup files that are older than a certain da
   (setq-default shell-file-name "/bin/bash")
 #+end_src
 ** Theme
-*** Github Theme
+*** Adwaita
 #+BEGIN_SRC emacs-lisp :tangle yes
+  (load-theme 'adwaita t)
+#+END_SRC
+*** Github Theme
+#+BEGIN_SRC emacs-lisp :tangle no
   (use-package github-theme
     :init
     (load-theme 'github t))

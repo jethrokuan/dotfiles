@@ -77,6 +77,8 @@
 (setq-default explicit-shell-file-name "/bin/bash")
 (setq-default shell-file-name "/bin/bash")
 
+(load-theme 'adwaita t)
+
 (defun open-next-line (arg)
   "Move to the next line and then opens a line.
    See also `newline-and-indent'."
@@ -205,6 +207,13 @@
           ("M-d" . crux-duplicate-current-line-or-region)
           ("M-D" . crux-duplicate-and-comment-current-line-or-region)
           ("s-o" . crux-smart-open-line-above)))
+
+(use-package anzu
+  :diminish anzu-mode 
+  :config
+  (global-anzu-mode +1)
+  (define-key isearch-mode-map [remap isearch-query-replace]  #'anzu-isearch-query-replace)
+  (define-key isearch-mode-map [remap isearch-query-replace-regexp] #'anzu-isearch-query-replace-regexp))
 
 (use-package avy
   :bind* (("C-'" . avy-goto-char)
@@ -625,30 +634,6 @@
 (add-hook 'prog-mode-hook 'whitespace-mode)
 
 (use-package page-break-lines)
-
-(use-package smart-mode-line
-  :config
-  (add-hook 'after-init-hook 'sml/setup)
-  (setq sml/name-width 30)
-  (setq sml/shorten-directory t)
-  (setq sml/shorten-modes t)
-  (setq sml/mode-width 'full)
-  (setq sml/replacer-regexp-list
-        '(("^~/.org/" ":O:")
-          ("^~/\\.emacs\\.d/" ":ED")))
-  (setq rm-blacklist
-        (format "^ \\(%s\\)$"
-                (mapconcat #'identity
-                           '("FlyC.*"
-                             "Projectile.*"
-                             "GitGutter"
-                             "ivy"
-                             "company"
-                             ""
-                             "doom"
-                             ","
-                             "ElDoc")
-                           "\\|"))))
 
 (setq display-time-24hr-format t)
 (display-time-mode 1)
