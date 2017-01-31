@@ -949,6 +949,45 @@ Additional support for Vue.js projects.
     :config
     (flycheck-clojure-setup))
 #+end_src
+** Latex
+*** AucTeX
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (use-package auctex
+    :defer t
+    :init
+    (setq TeX-command-default latex-build-command
+          TeX-auto-save t
+          TeX-parse-self t
+          TeX-syntactic-comment t
+          ;; Synctex support
+          TeX-source-correlate-start-server nil
+          ;; Don't insert line-break at inline math
+          LaTeX-fill-break-at-separators nil)
+    (setq TeX-view-program-list '(("Evince" "evince --page-index=%(outpage) %o")
+                                  ("qpdfview" "qpdfview %o#%(outpage)")))
+    (setq TeX-view-program-selection '((output-pdf "qpdfview")
+                                       (output-pdf "Evince")))
+    (when latex-enable-auto-fill
+      (add-hook 'LaTeX-mode-hook 'latex/auto-fill-mode))
+    (when latex-enable-folding
+      (add-hook 'LaTeX-mode-hook 'TeX-fold-mode))
+    (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
+    (add-hook 'LaTeX-mode-hook 'TeX-source-correlate-mode)
+    (add-hook 'LaTeX-mode-hook 'TeX-PDF-mode))
+  (use-package auctex-latexmk)
+#+END_SRC
+*** Autocomplete support
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (use-package company-auctex
+    :defer t
+    :init
+    (progn
+      (push 'company-auctex-labels company-backends-LaTeX-mode)
+      (push 'company-auctex-bibs company-backends-LaTeX-mode)
+      (push '(company-auctex-macros
+              company-auctex-symbols
+              company-auctex-environments) company-backends-LaTeX-mode)))
+#+END_SRC
 * Visual Enhancements
 ** linum-mode (Disabled)
 #+begin_src emacs-lisp :tangle no
