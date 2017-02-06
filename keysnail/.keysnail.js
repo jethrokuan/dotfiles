@@ -102,10 +102,6 @@ key.setGlobalKey(["C-x", "s"], function (ev) {
   command.focusElement(command.elementsRetrieverButton, 0);
 }, 'Focus to the first button', true);
 
-key.setGlobalKey('M-w', function (ev) {
-  command.copyRegion(ev);
-}, 'Copy selected text', true);
-
 key.setGlobalKey('C-s', function (ev) {
   command.iSearchForwardKs(ev);
 }, 'Emacs like incremental search forward', true);
@@ -118,31 +114,35 @@ key.setGlobalKey(["C-x", "k"], function (ev) {
   BrowserCloseTabOrWindow();
 }, 'Close tab / window', false);
 
+key.setGlobalKey(["C-w"], function(ev) {
+  BrowserCloseTabOrWindow(); 
+}, 'Close tab/window', false);
+
 key.setGlobalKey(["C-x", "K"], function (ev) {
-  closeWindow(true);
-}, 'Close the window', false);
+    closeWindow(true);
+  }, 'Close the window', false);
 
 key.setGlobalKey(["C-c", "u"], function (ev) {
   undoCloseTab();
-}, 'Undo closed tab', false);
+  }, 'Undo closed tab', false);
 
-key.setGlobalKey(["C-x", "n"], function (ev) {
-  OpenBrowserWindow();
-}, 'Open new window', false);
+  key.setGlobalKey(["C-x", "n"], function (ev) {
+    OpenBrowserWindow();
+  }, 'Open new window', false);
 
-key.setGlobalKey('C-M-l', function (ev) {
-  getBrowser().mTabContainer.advanceSelectedTab(1, true);
-}, 'Select next tab', false);
+  key.setGlobalKey('C-M-l', function (ev) {
+    getBrowser().mTabContainer.advanceSelectedTab(1, true);
+  }, 'Select next tab', false);
 
-key.setGlobalKey('C-M-h', function (ev) {
-  getBrowser().mTabContainer.advanceSelectedTab(-1, true);
-}, 'Select previous tab', false);
+  key.setGlobalKey('C-M-h', function (ev) {
+    getBrowser().mTabContainer.advanceSelectedTab(-1, true);
+  }, 'Select previous tab', false);
 
-key.setGlobalKey(["C-x", "C-c"], function (ev) {
-  goQuitApplication();
-}, 'Exit Firefox', true);
+  key.setGlobalKey(["C-x", "C-c"], function (ev) {
+    goQuitApplication();
+  }, 'Exit Firefox', true);
 
-key.setGlobalKey(["C-x", "o"], function (ev, arg) {
+  key.setGlobalKey(["C-x", "o"], function (ev, arg) {
   command.focusOtherFrame(arg);
 }, 'Select next frame', false);
 
@@ -158,13 +158,9 @@ key.setGlobalKey(["C-x", "C-s"], function (ev) {
   saveDocument(window.content.document);
 }, 'Save current page to the file', true);
 
-key.setGlobalKey(["C-c", "C-c", "C-v"], function (ev) {
+key.setGlobalKey(["C-c", "C-v"], function (ev) {
   toJavaScriptConsole();
 }, 'Display JavaScript console', true);
-
-key.setGlobalKey(["C-c", "C-c", "C-c"], function (ev) {
-  command.clearConsole();
-}, 'Clear Javascript console', true);
 
 key.setEditKey(["C-x", "h"], function (ev) {
   command.selectAll(ev);
@@ -268,9 +264,17 @@ key.setEditKey('C-k', function (ev) {
   command.killLine(ev);
 }, 'Kill the rest of the line', false);
 
-key.setEditKey('C-y', command.yank, 'Paste (Yank)', false);
+key.setEditKey('C-v', command.yank, 'Paste (Yank)', false);
 
-key.setEditKey('M-y', command.yankPop, 'Paste pop (Yank pop)', true);
+key.setGlobalKey('M-w', function (ev) {
+  command.copyRegion(ev);
+  setCaretMode(false);
+}, 'Copy selected text', true);
+
+key.setViewKey(['C-c', 'M-c'], function (ev, arg) {
+  display.echoStatusBar("Copy URL to clipboard");
+  command.setClipboardText(getBrowser().contentDocument.URL);
+}, 'Copy URL to clipboard');
 
 key.setEditKey('C-M-y', function (ev) {
   if (!command.kill.ring.length)
@@ -288,12 +292,6 @@ key.setEditKey('C-M-y', function (ev) {
   );
 }, 'Show kill-ring and select text to paste', true);
 
-key.setEditKey('C-w', function (ev) {
-  goDoCommand("cmd_copy");
-  goDoCommand("cmd_delete");
-  command.resetMark(ev);
-}, 'Cut current region', true);
-
 key.setEditKey(["C-x", "r", "d"], function (ev, arg) {
   command.replaceRectangle(ev.originalTarget, "", false, !arg);
 }, 'Delete text in the region-rectangle', true);
@@ -310,7 +308,7 @@ key.setEditKey(["C-x", "r", "o"], function (ev) {
 }, 'Blank out the region-rectangle, shifting text right', true);
 
 key.setEditKey(["C-x", "r", "k"], function (ev, arg) {
-  command.kill.buffer = command.killRectangle(ev.originalTarget, !arg);
+  
 }, 'Delete the region-rectangle and save it as the last killed one', true);
 
 key.setEditKey(["C-x", "r", "y"], function (ev) {
@@ -387,11 +385,6 @@ key.setViewKey('V', function (aEvent, aArg) {
 }, 'Back');
 
 key.setViewKey('V', function (aEvent, aArg) {
-  var nthHistory = 3;
-  content.history.go(-1 * nthHistory);
-}, 'Back 3 pages');
-
-key.setGlobalKey(['C-c','C-v'], function (aEvent, aArg) {
   var nthHistory = 3;
   content.history.go(-1 * nthHistory);
 }, 'Back 3 pages');
@@ -533,8 +526,10 @@ key.setGlobalKey(['C-c','C-i'], function (ev, arg) {
 hook.setHook('PluginLoaded', function () {
   if (!plugins.hok) return;
 
+  plugins.options.hok.hint_keys = "aoeuhtns";
   /* HoK 1.3.9+ required */
   plugins.hok.pOptions.selector = plugins.hok.pOptions.selector
+  
   /* feedly */
     + ", *[data-uri]" + ", *[data-selector-toggle]" + ", *[data-page-action]" + ", *[data-app-action]"
   /* google plus */
