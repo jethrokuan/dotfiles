@@ -457,20 +457,20 @@ key.setCaretKey([["M->"], ["G"]], function (ev) {
   ev.target.ksMarked ? goDoCommand("cmd_selectEndLine") : goDoCommand("cmd_endLine");
 }, 'Move caret to the end of the line', false);
 
-key.setCaretKey('J', function (ev) {
+key.setCaretKey('n', function (ev) {
   util.getSelectionController().scrollLine(true);
 }, 'Scroll line down', false);
 
-key.setCaretKey('K', function (ev) {
+key.setCaretKey('t', function (ev) {
   util.getSelectionController().scrollLine(false);
 }, 'Scroll line up', false);
 
-key.setCaretKey(',', function (ev) {
+key.setCaretKey('h', function (ev) {
   util.getSelectionController().scrollHorizontal(true);
   goDoCommand("cmd_scrollLeft");
 }, 'Scroll left', false);
 
-key.setCaretKey('.', function (ev) {
+key.setCaretKey('s', function (ev) {
   goDoCommand("cmd_scrollRight");
   util.getSelectionController().scrollHorizontal(false);
 }, 'Scroll right', false);
@@ -487,15 +487,15 @@ key.setCaretKey(':', function (ev, arg) {
   shell.input(null, arg);
 }, 'List and execute commands', true);
 
-key.setCaretKey('R', function (ev) {
+key.setCaretKey('r', function (ev) {
   BrowserReload();
 }, 'Reload the page', true);
 
-key.setCaretKey('B', function (ev) {
+key.setCaretKey('b', function (ev) {
   BrowserBack();
 }, 'Back', false);
 
-key.setCaretKey('F', function (ev) {
+key.setCaretKey('f', function (ev) {
   BrowserForward();
 }, 'Forward', false);
 
@@ -517,7 +517,7 @@ key.setCaretKey('M-n', function (ev) {
 
 
 // {{ caret-mode
-key.setGlobalKey(['C-c','C-i'], function (ev, arg) {
+key.setGlobalKey('C-=', function (ev, arg) {
   util.setBoolPref("accessibility.browsewithcaret", !util.isCaretEnabled());
 }, 'Enter to caret mode', true);
 // }}
