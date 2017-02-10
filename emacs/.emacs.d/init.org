@@ -58,7 +58,7 @@ I use Hack, patched with Powerline. Other good alternatives include Source Code 
 *** Source Code Pro
 #+BEGIN_SRC emacs-lisp :tangle yes
 (add-to-list 'default-frame-alist
-             '(font . "Inconsolata-12"))
+             '(font . "Inconsolata\-g-12"))
 #+END_SRC
 
 ** UI Cruft

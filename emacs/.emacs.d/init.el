@@ -30,7 +30,7 @@
       browse-url-firefox-new-window-is-tab t)
 
 (add-to-list 'default-frame-alist
-             '(font . "Inconsolata-12"))
+             '(font . "Inconsolata\-g-12"))
 
 (tooltip-mode -1)
 (tool-bar-mode -1)
