@@ -30,7 +30,7 @@
       browse-url-firefox-new-window-is-tab t)
 
 (add-to-list 'default-frame-alist
-             '(font . "Inconsolata\-g-12"))
+             '(font . "Inconsolata\-g for Powerline-12"))
 
 (tooltip-mode -1)
 (tool-bar-mode -1)
@@ -627,9 +627,8 @@
 
 (use-package auctex
   :defer t
-  :init
-  (setq TeX-command-default latex-build-command
-        TeX-auto-save t
+  :config
+  (setq TeX-auto-save t
         TeX-parse-self t
         TeX-syntactic-comment t
         ;; Synctex support
@@ -650,14 +649,7 @@
 (use-package auctex-latexmk)
 
 (use-package company-auctex
-  :defer t
-  :init
-  (progn
-    (push 'company-auctex-labels company-backends-LaTeX-mode)
-    (push 'company-auctex-bibs company-backends-LaTeX-mode)
-    (push '(company-auctex-macros
-            company-auctex-symbols
-            company-auctex-environments) company-backends-LaTeX-mode)))
+  :defer t)
 
 (global-hl-line-mode 1)
 

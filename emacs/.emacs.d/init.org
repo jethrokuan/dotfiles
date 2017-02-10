@@ -57,8 +57,8 @@ Validate is a package that checks for and reports Emacs config errors.
 I use Hack, patched with Powerline. Other good alternatives include Source Code Pro.
 *** Source Code Pro
 #+BEGIN_SRC emacs-lisp :tangle yes
-(add-to-list 'default-frame-alist
-             '(font . "Inconsolata\-g-12"))
+  (add-to-list 'default-frame-alist
+               '(font . "Inconsolata\-g for Powerline-12"))
 #+END_SRC
 
 ** UI Cruft
@@ -954,9 +954,8 @@ Additional support for Vue.js projects.
 #+BEGIN_SRC emacs-lisp :tangle yes
   (use-package auctex
     :defer t
-    :init
-    (setq TeX-command-default latex-build-command
-          TeX-auto-save t
+    :config
+    (setq TeX-auto-save t
           TeX-parse-self t
           TeX-syntactic-comment t
           ;; Synctex support
@@ -979,14 +978,7 @@ Additional support for Vue.js projects.
 *** Autocomplete support
 #+BEGIN_SRC emacs-lisp :tangle yes
   (use-package company-auctex
-    :defer t
-    :init
-    (progn
-      (push 'company-auctex-labels company-backends-LaTeX-mode)
-      (push 'company-auctex-bibs company-backends-LaTeX-mode)
-      (push '(company-auctex-macros
-              company-auctex-symbols
-              company-auctex-environments) company-backends-LaTeX-mode)))
+    :defer t)
 #+END_SRC
 * Visual Enhancements
 ** linum-mode (Disabled)
