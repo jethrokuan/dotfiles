@@ -29,8 +29,10 @@
       browse-url-new-window-flag  t
       browse-url-firefox-new-window-is-tab t)
 
+(add-to-list 'initial-frame-alist
+             '(font . "Source Code Pro for Powerline-12"))
 (add-to-list 'default-frame-alist
-             '(font . "Inconsolata\-g for Powerline-12"))
+             '(font . "Source Code Pro for Powerline-12"))
 
 (tooltip-mode -1)
 (tool-bar-mode -1)
@@ -178,26 +180,9 @@
 
 (define-key ivy-minibuffer-map (kbd "C-:") 'ivy-dired)
 
-(setq jethro/org-files "~/.org/")
-
-(defun jethro/find-org-file (file-str) 
-  (find-file (concat (file-name-directory jethro/org-files) file-str)))
-
-(defun jethro/find-work-file ()
-  (interactive)
-  (jethro/find-org-file "work.org"))
-
-(defun jethro/find-school-file ()
-  (interactive)
-  (jethro/find-org-file "school.org"))
-
-(bind-key* "<f1> w" 'jethro/find-work-file)
-(bind-key* "<f1> s" 'jethro/find-school-file)
-
 (use-package neotree)
 
-(use-package crux
-  :commands (crux-switch-to-previous-buffer)
+(use-package crux 
   :bind* (("C-c o" . crux-open-with)
           ("C-c n" . crux-cleanup-buffer-or-region)
           ("C-c D" . crux-delete-file-and-buffer)
@@ -207,6 +192,8 @@
           ("M-d" . crux-duplicate-current-line-or-region)
           ("M-D" . crux-duplicate-and-comment-current-line-or-region)
           ("s-o" . crux-smart-open-line-above)))
+
+(bind-key* "<f8>" 'browse-url-of-buffer)
 
 (use-package anzu
   :diminish anzu-mode 
@@ -220,12 +207,6 @@
           ("C-," . avy-goto-char-2))
   :config
   (setq avy-keys '(?h ?t ?n ?s)))
-
-(use-package dumb-jump
-  :diminish dumb-jump-mode
-  :bind (("C-M-g" . dumb-jump-go)
-         ("C-M-p" . dumb-jump-back)
-         ("C-M-q" . dumb-jump-quick-look)))
 
 (use-package windmove
   ;; :defer 4
@@ -453,15 +434,6 @@
               :config (add-hook 'go-mode-hook (lambda ()
                                                 (set (make-local-variable 'company-backends) '(company-go))
                                                 (company-mode))))))
-
-(add-hook 'c-mode-hook
-          (lambda ()
-            (unless (file-exists-p "Makefile")
-              (set (make-local-variable 'compile-command)
-                   (let ((file (file-name-nondirectory buffer-file-name)))
-                     (format "cc -Wall %s -o %s --std=c99"
-                             file
-                             (file-name-sans-extension file)))))))
 
 (add-hook 'c++-mode-hook
           (lambda ()
@@ -1246,23 +1218,9 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
   (shell-command (format "cd %s && git add -A && git commit -m \"%s\" && git push origin master" dir "New changes: $(date)")))
 
 (setq jethro/emacsd-site-dir "~/Documents/Code/emacsd_site/")
-(setq jethro/books-dir "~/Documents/Code/books/")
 
 (setq org-publish-project-alist
-      '(("books"
-         ;; Path to your org files.
-         :publishing-function org-html-publish-to-html
-         :publishing-directory jethro/books-dir
-         :base-directory "~/.org/"
-         :completion-function (lambda () 
-                                (shell-command (format "cd %s && ruby books.rb && git add -A && git commit -m \"%s\" && git push origin master" jethro/books-dir "New changes: $(date)")))
-         :exclude ".*"
-         :include ["books.org"]
-         :with-emphasize t
-         :with-todo-keywords t
-         :with-toc nil
-         :html-preamble t)
-        ("emacs.d"
+      '(("emacs.d"
          :publishing-function org-html-publish-to-html
          :publishing-directory jethro/emacsd-site-dir
          :base-directory "~/.emacs.d/"
