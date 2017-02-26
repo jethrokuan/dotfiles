@@ -21,7 +21,7 @@ EOF
 
 if [ -z $@ ]
 then
-    locate /home/jethro/
+    rg $HOME --files
 else 
     xdg-open "$@" > /dev/null &
 fi
