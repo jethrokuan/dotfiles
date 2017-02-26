@@ -676,6 +676,9 @@
   :config
   (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode)))
 
+(add-hook 'org-mode-hook (lambda ()
+                           (auto-fill-mode 1)))
+
 (setq org-agenda-files (file-expand-wildcards "~/.org/gtd/*.org"))
 
 ;; Custom Key Bindings

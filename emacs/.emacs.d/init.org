@@ -1089,9 +1089,7 @@ Displays added/modified/deleted on the left.
     :PROPERTIES:
     :CUSTOM_ID: Setup
     :END:
-
- #+header: :tangle yes
- #+begin_src emacs-lisp :exports none
+ #+begin_src emacs-lisp :tangle yes
    (use-package org-plus-contrib
      :bind (("C-c l" . org-store-link)
             ("C-c a" . org-agenda)
@@ -1100,12 +1098,12 @@ Displays added/modified/deleted on the left.
      :config
      (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode)))
  #+end_src
-
- That's all you need to get started using headlines and lists in org-mode.
-
- The rest of this document describes customizations I use in my setup,
- how I structure org-mode files, and other changes to fit the way I
- want org-mode to work.
+*** Enabling auto-fill-mode
+This enables `auto-fill-mode` for org-mode files
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (add-hook 'org-mode-hook (lambda ()
+                             (auto-fill-mode 1)))
+#+END_SRC
 *** Agenda Setup
  #+begin_src emacs-lisp :tangle yes
    (setq org-agenda-files (file-expand-wildcards "~/.org/gtd/*.org"))
