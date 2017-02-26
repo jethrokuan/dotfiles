@@ -256,6 +256,15 @@ The following code will delete all backup files that are older than a certain da
   (use-package notmuch
     :bind (("<f10>" . notmuch)))
 #+END_SRC
+** Keybindings
+*** mark as read
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (define-key notmuch-search-mode-map "R"
+    (lambda ()
+      "mark message as read"
+      (interactive)
+      (notmuch-search-tag '("-unread"))))
+#+END_SRC
 ** Goobook
 #+BEGIN_SRC emacs-lisp :tangle yes
   (require 'notmuch-address)

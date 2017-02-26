@@ -124,6 +124,12 @@
 (use-package notmuch
   :bind (("<f10>" . notmuch)))
 
+(define-key notmuch-search-mode-map "R"
+  (lambda ()
+    "mark message as read"
+    (interactive)
+    (notmuch-search-tag '("-unread"))))
+
 (require 'notmuch-address)
 (setq notmuch-address-command "~/.emacs.d/goobook")
 (notmuch-address-message-insinuate)
