@@ -140,7 +140,7 @@
    ("C-x j" . counsel-dired-jump)
    ("C-x l" . counsel-locate)
    ("C-c j" . counsel-git-grep)
-   ("C-c k" . counsel-ag) 
+   ("C-c k" . counsel-rg)
    ("M-y" . counsel-yank-pop))
   :bind (:map help-map
               ("f" . counsel-describe-function)
