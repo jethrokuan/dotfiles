@@ -122,13 +122,13 @@
 (use-package hydra)
 
 (use-package notmuch
-  :bind (("<f10>" . notmuch)))
-
-(define-key notmuch-search-mode-map "R"
+  :bind (("<f10>" . notmuch))
+  :config
+  (define-key notmuch-search-mode-map "R"
   (lambda ()
     "mark message as read"
     (interactive)
-    (notmuch-search-tag '("-unread"))))
+    (notmuch-search-tag '("-unread")))))
 
 (require 'notmuch-address)
 (setq notmuch-address-command "~/.emacs.d/goobook")
