@@ -808,10 +808,11 @@ Captured %<%Y-%m-%d %H:%M>
 (defun make-capture-frame ()
   "Create a new frame and run org-capture."
   (interactive)
-  (make-frame '((name . "capture")
-                (width . 120)
-                (height . 15)))
-  (select-frame-by-name "capture")
+  (select-frame
+   (make-frame '((window-system . x)
+                 (name . "capture")
+                 (width . 120)
+                 (height . 15)))) 
   (setq word-wrap 1)
   (setq truncate-lines nil)
   (org-capture nil "t"))
