@@ -775,9 +775,17 @@ Captured %<%Y-%m-%d %H:%M>
       `(("t" "todo" entry (file "~/.org/gtd/inbox.org")
          ,jethro/org-basic-inbox-template)
         ("r" "respond" entry (file "~/.org/gtd/inbox.org")
-         "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t) 
-        ("x" "org-protocol" entry (file "~/.org/gtd/inbox.org")
-         "* TODO Review %c\n%U\n" :immediate-finish t)))
+         "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)))
+
+(use-package org-protocol-capture-html
+  :ensure f
+  :load-path "./elisp/org-protocol-capture-html"
+  :config
+  (require 'org-protocol)
+  (require 'org-protocol-capture-html)
+  (add-to-list 'org-capture-templates
+               '("w" "Web site" entry (file "~/.org/gtd/inbox.org")
+                 "* %?\n%c\n%:initial")))
 
 (defadvice org-capture-finalize
     (after delete-capture-frame activate)

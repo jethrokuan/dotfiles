@@ -1511,9 +1511,17 @@ This enables `auto-fill-mode` for org-mode files
          `(("t" "todo" entry (file "~/.org/gtd/inbox.org")
             ,jethro/org-basic-inbox-template)
            ("r" "respond" entry (file "~/.org/gtd/inbox.org")
-            "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t) 
-           ("x" "org-protocol" entry (file "~/.org/gtd/inbox.org")
-            "* TODO Review %c\n%U\n" :immediate-finish t)))
+            "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)))
+
+   (use-package org-protocol-capture-html
+     :ensure f
+     :load-path "./elisp/org-protocol-capture-html"
+     :config
+     (require 'org-protocol)
+     (require 'org-protocol-capture-html)
+     (add-to-list 'org-capture-templates
+                  '("w" "Web site" entry (file "~/.org/gtd/inbox.org")
+                    "* %?\n%c\n%:initial")))
  #+end_src
 
  Capture mode now handles automatically clocking in and out of a
@@ -1536,54 +1544,6 @@ This enables `auto-fill-mode` for org-mode files
  #+end_src
  I have the following setup to remove these empty =LOGBOOK= drawers if
  they occur.
-
-*** Separate file for Capture Tasks
-    :PROPERTIES:
-    :CUSTOM_ID: CaptureRefileOrg
-    :END:
-
- I have a single org file which is the target for my capture templates.
-
- I store notes, tasks, phone calls, and org-protocol tasks in
- =refile.org=.  I used to use multiple files but found that didn't
- really have any advantage over a single file.
-
- Normally this file is empty except for a single line at the top which
- creates a =REFILE= tag for anything in the file.
-
- The file has a single permanent line at the top like this
- #+begin_src org :exports src
- ,#+FILETAGS: REFILE
- #+end_src
-*** Capture Tasks is all about being FAST
-    :PROPERTIES:
-    :CUSTOM_ID: CaptureTasksAreFast
-    :END:
-
- Okay I'm in the middle of something and oh yeah - I have to remember
- to do that.  I don't stop what I'm doing.  I'm probably clocking a
- project I'm working on and I don't want to lose my focus on that but I
- can't afford to forget this little thing that just came up.
-
- So what do I do?  Hit =C-c c= to start capture mode and select =t=
- since it's a new task and I get a buffer like this:
-
- #+begin_src org :exports src
- ,* TODO 
-   [2010-08-05 Thu 21:06]
-
-   [[file:~/git/org-mode-doc/org-mode.org::*Capture%20Tasks%20is%20all%20about%20being%20FAST][Capture Tasks is all about being FAST]]
- #+end_src
-
- Enter the details of the TODO item and =C-c C-c= to file it away in
- refile.org and go right back to what I'm really working on secure in
- the knowledge that that item isn't going to get lost and I don't have
- to think about it anymore at all now.
-
- The amount of time I spend entering the captured note is clocked.  The
- capture templates are set to automatically clock in and out of the
- capture task.  This is great for interruptions and telephone calls
- too.
 ** org-capture shortcut
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defadvice org-capture-finalize
