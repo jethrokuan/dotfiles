@@ -1,2 +1,2 @@
 #!/bin/bash
-emacsclient -c -n -e "(make-capture-frame)" > /dev/null
+emacsclient -n -e "(make-capture-frame)" > /dev/null
