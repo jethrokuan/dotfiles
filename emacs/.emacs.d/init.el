@@ -761,9 +761,6 @@
 (setq org-directory "~/.org/gtd/")
 (setq org-default-notes-file "~/.org/gtd/inbox.org")
 
-;; I use C-c c to start capture mode
-(global-set-key (kbd "C-c c") 'org-capture)
-
 (defvar jethro/org-basic-inbox-template "* TODO %^{Task}
 :PROPERTIES:
 :EFFORT: %^{effort|1:00|0:05|0:15|0:30|2:00|4:00}
@@ -779,7 +776,7 @@ Captured %<%Y-%m-%d %H:%M>
          ,jethro/org-basic-inbox-template)
         ("r" "respond" entry (file "~/.org/gtd/inbox.org")
          "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t) 
-        ("w" "org-protocol" entry (file "~/.org/gtd/inbox.org")
+        ("x" "org-protocol" entry (file "~/.org/gtd/inbox.org")
          "* TODO Review %c\n%U\n" :immediate-finish t)))
 
 (defadvice org-capture-finalize

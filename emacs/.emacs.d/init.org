@@ -1493,29 +1493,9 @@ This enables `auto-fill-mode` for org-mode files
     :PROPERTIES:
     :CUSTOM_ID: CaptureTemplates
     :END:
-
- When a new task needs to be added I categorize it into one of a few
- things:
-
- - A phone call (p)
- - A meeting (m)
- - An email I need to respond to (r)
- - A new task (t)
- - A new note (n)
- - An interruption (j)
- - A new habit (h)
-
- and pick the appropriate capture task.
-
- Here is my setup for org-capture
-
- #+header: :tangle yes
- #+begin_src emacs-lisp
+ #+begin_src emacs-lisp :tangle yes
    (setq org-directory "~/.org/gtd/")
    (setq org-default-notes-file "~/.org/gtd/inbox.org")
-
-   ;; I use C-c c to start capture mode
-   (global-set-key (kbd "C-c c") 'org-capture)
 
    (defvar jethro/org-basic-inbox-template "* TODO %^{Task}
    :PROPERTIES:
@@ -1532,7 +1512,7 @@ This enables `auto-fill-mode` for org-mode files
             ,jethro/org-basic-inbox-template)
            ("r" "respond" entry (file "~/.org/gtd/inbox.org")
             "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t) 
-           ("w" "org-protocol" entry (file "~/.org/gtd/inbox.org")
+           ("x" "org-protocol" entry (file "~/.org/gtd/inbox.org")
             "* TODO Review %c\n%U\n" :immediate-finish t)))
  #+end_src
 
