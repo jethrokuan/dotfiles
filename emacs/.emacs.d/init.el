@@ -276,59 +276,16 @@
 
 (use-package iedit)
 
-(use-package smartparens
-  :bind (:map smartparens-mode-map
-              ("C-M-a" . sp-beginning-of-sexp)
-              ("C-M-e" . sp-end-of-sexp)
-
-              ("C-<down>" . sp-down-sexp)
-              ("C-<up>"   . sp-up-sexp)
-              ("M-<down>" . sp-backward-down-sexp)
-              ("M-<up>"   . sp-backward-up-sexp)
-
-              ("C-M-f" . sp-forward-sexp)
-              ("C-M-b" . sp-backward-sexp)
-
-              ("C-M-n" . sp-next-sexp)
-              ("C-M-p" . sp-previous-sexp)
-
-              ("C-S-f" . sp-forward-symbol)
-              ("C-S-b" . sp-backward-symbol)
-
-              ("C-<right>" . sp-forward-slurp-sexp)
-              ("M-<right>" . sp-forward-barf-sexp)
-              ("C-<left>"  . sp-backward-slurp-sexp)
-              ("M-<left>"  . sp-backward-barf-sexp)
-
-              ("C-M-t" . sp-transpose-sexp)
-              ("C-M-k" . sp-kill-sexp)
-              ("C-k"   . sp-kill-hybrid-sexp)
-              ("M-k"   . sp-backward-kill-sexp)
-              ("C-M-w" . sp-copy-sexp)
-
-              ("C-M-d" . delete-sexp)
-
-              ("M-<backspace>" . backward-kill-word)
-              ("C-<backspace>" . sp-backward-kill-word)
-              ([remap sp-backward-kill-word] . backward-kill-word)
-
-              ("M-[" . sp-backward-unwrap-sexp)
-              ("M-]" . sp-unwrap-sexp)
-
-              ("C-x C-t" . sp-transpose-hybrid-sexp)
-
-              ("M-c ("  . wrap-with-parens)
-              ("M-c ["  . wrap-with-brackets)
-              ("M-c {"  . wrap-with-braces)
-              ("M-c '"  . wrap-with-single-quotes)
-              ("M-c \"" . wrap-with-double-quotes)
-              ("M-c _"  . wrap-with-underscores)
-              ("M-c `"  . wrap-with-back-quotes)) 
+(use-package smartparens 
   :init
   (add-hook 'emacs-lisp-mode-hook 'turn-on-smartparens-strict-mode)
   (add-hook 'clojure-mode-hook 'turn-on-smartparens-strict-mode)
   :config
   (require 'smartparens-config)
+  (setq sp-base-key-bindings 'paredit)
+  (setq sp-autoskip-closing-pair 'always)
+  (setq sp-hybrid-kill-entire-symbol nil)
+  (sp-use-paredit-bindings)
   (defmacro def-pairs (pairs)
     `(progn
        ,@(loop for (key . val) in pairs
@@ -685,7 +642,7 @@
 (add-hook 'org-mode-hook (lambda ()
                            (auto-fill-mode 1)))
 
-(setq org-agenda-files (file-expand-wildcards "~/.org/gtd/*.org"))
+(setq org-agenda-files (file-expand-wildcards "~/.org/gtd/[a-zA-z]*.org"))
 
 ;; Custom Key Bindings
 (global-set-key (kbd "<f12>") 'org-agenda)  
