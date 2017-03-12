@@ -658,8 +658,6 @@
 (global-set-key (kbd "C-x n r") 'narrow-to-region)
 (global-set-key (kbd "C-<f10>") 'next-buffer)
 (global-set-key (kbd "<f11>") 'org-clock-goto)
-(global-set-key (kbd "<f3>") 'org-clock-in)
-(global-set-key (kbd "<f3>") 'org-clock-out)
 
 (defun bh/hide-other ()
   (interactive)
@@ -1465,3 +1463,5 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 (use-package bury-successful-compilation
   :config
   (bury-successful-compilation 1))
+
+(use-package spotify)

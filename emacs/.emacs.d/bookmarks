@@ -3,10 +3,10 @@
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
 (("org-capture-last-stored-marker"
- (filename . "~/.org/gtd/nushackers.org")
- (front-context-string . "** TODO Add a pr")
- (rear-context-string . "017-01-12 16:13\n")
- (position . 147))
+ (filename . "~/.org/gtd/school.org")
+ (front-context-string . "** TODO Review h")
+ (rear-context-string . "017-03-01 13:39\n")
+ (position . 1202))
 ("next_actions.org"
  (filename . "~/.org/gtd/next_actions.org")
  (front-context-string . "#+TODO: NEXT | D")
@@ -78,13 +78,13 @@
 #1=(#("org-capture-last-stored" 0 23
       (bmkp-full-record #1#))
     (filename . "~/.org/gtd/inbox.org")
-    (front-context-string . "* TODO Add a pro")
-    (rear-context-string . "*Money][Money]]\n")
-    (position . 598))
+    (front-context-string . "* TODO Review ha")
+    (rear-context-string . "docx][Reading]]\n")
+    (position . 312))
 #1=(#("org-refile-last-stored" 0 22
       (bmkp-full-record #1#))
-    (filename . "~/.org/gtd/nushackers.org")
-    (front-context-string . "** TODO Add a pr")
-    (rear-context-string . "017-01-12 16:13\n")
-    (position . 147))
+    (filename . "~/.org/gtd/school.org")
+    (front-context-string . "** TODO Review h")
+    (rear-context-string . "017-03-01 13:39\n")
+    (position . 1202))
 )
