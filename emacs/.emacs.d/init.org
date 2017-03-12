@@ -418,7 +418,7 @@ Ace-window makes it easier to move between windows.
 ** dired
 *** Hide details
 Hide details and only show file and folder names.
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp :tangle no
   (defun jethro/dired-mode-setup-hook ()
     "hook for dired-mode"
     (dired-hide-details-mode 1))

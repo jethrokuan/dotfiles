@@ -223,12 +223,6 @@
   ;; wrap around at edges
   (setq windmove-wrap-around t))
 
-(defun jethro/dired-mode-setup-hook ()
-  "hook for dired-mode"
-  (dired-hide-details-mode 1))
-
-(add-hook 'dired-mode-hook 'jethro/dired-mode-setup-hook)
-
 (setq dired-listing-switches "-aBhl  --group-directories-first")
 
 (setq dired-recursive-copies (quote always))
