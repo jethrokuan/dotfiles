@@ -230,6 +230,8 @@
 
 (require 'dired-x)
 
+(setq wdired-allow-to-change-permissions t)
+
 (save-place-mode 1)
 
 (use-package key-chord

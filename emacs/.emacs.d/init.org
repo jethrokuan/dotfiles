@@ -438,6 +438,10 @@ Hide details and only show file and folder names.
 #+begin_src emacs-lisp :tangle yes
   (require 'dired-x)
 #+end_src
+*** allow editing of permissions
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (setq wdired-allow-to-change-permissions t)
+#+END_SRC
 ** save-place-mode
 Save the cursor location for files I've visited.
 #+begin_src emacs-lisp :tangle yes
