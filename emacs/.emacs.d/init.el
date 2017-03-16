@@ -769,8 +769,8 @@ Captured %<%Y-%m-%d %H:%M>
   (require 'org-protocol)
   (require 'org-protocol-capture-html)
   (add-to-list 'org-capture-templates
-               '("w" "Web site" entry (file "~/.org/gtd/inbox.org")
-                 "* %?\n%c\n%:initial")))
+               '("w" "Web site" entry (file "~/.org/gtd/websites.org")
+                 "* %c\n%:initial")))
 
 (defadvice org-capture-finalize
     (after delete-capture-frame activate)

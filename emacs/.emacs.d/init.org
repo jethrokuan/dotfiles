@@ -1506,8 +1506,8 @@ This enables `auto-fill-mode` for org-mode files
      (require 'org-protocol)
      (require 'org-protocol-capture-html)
      (add-to-list 'org-capture-templates
-                  '("w" "Web site" entry (file "~/.org/gtd/inbox.org")
-                    "* %?\n%c\n%:initial")))
+                  '("w" "Web site" entry (file "~/.org/gtd/websites.org")
+                    "* %c\n%:initial")))
  #+end_src
 
  Capture mode now handles automatically clocking in and out of a
