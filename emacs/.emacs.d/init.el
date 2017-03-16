@@ -250,6 +250,13 @@ The app is chosen from your OS's preference."
   ;; wrap around at edges
   (setq windmove-wrap-around t))
 
+(setq dired-isearch-filenames 'dwim)
+
+(setq delete-by-moving-to-trash t)
+
+(require 'find-dired)
+(setq find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld"))
+
 (setq dired-listing-switches "-aBhl  --group-directories-first")
 
 (setq dired-recursive-copies (quote always))
@@ -259,18 +266,20 @@ The app is chosen from your OS's preference."
 
 (setq wdired-allow-to-change-permissions t)
 
-(save-place-mode 1)
-
-(use-package key-chord
+(use-package dired-k
   :config
-  (key-chord-mode 1)
-  (key-chord-define-global "mw" 'avy-goto-word-1)   
-  (key-chord-define-global "jk" 'avy-goto-char)
-  (key-chord-define-global "JJ" 'crux-switch-to-previous-buffer)
-  (key-chord-define-global "FF" 'counsel-find-file)
-  (key-chord-define-global "xx" 'execute-extended-command)
-  (key-chord-define-global "yy" 'counsel-yank-pop)
-  (key-chord-define-global ",." 'neotree-toggle))
+  (define-key dired-mode-map (kbd "K") 'dired-k)
+  (setq dired-k-style 'git))
+
+(use-package dired-narrow
+  :bind (:map dired-mode-map
+              ("N" . dired-narrow-fuzzy)))
+
+(use-package dired-ranger
+  :bind (:map dired-mode-map
+              ("C" . dired-ranger-copy)
+              ("P" . dired-ranger-paste)
+              ("M" . dired-ranger-move)))
 
 (use-package visual-regexp
   :bind* (("C-M-%" . vr/query-replace)

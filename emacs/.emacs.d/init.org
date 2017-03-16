@@ -443,6 +443,19 @@ Ace-window makes it easier to move between windows.
     (setq aw-keys '(?h ?t ?n ?s)))
 #+end_src
 ** dired
+*** isearch in dired
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (setq dired-isearch-filenames 'dwim)
+#+END_SRC
+*** trash files instead of deleting them
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (setq delete-by-moving-to-trash t)
+#+END_SRC
+*** find-dired
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (require 'find-dired)
+  (setq find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld"))
+#+END_SRC
 *** Hide details
 Hide details and only show file and folder names.
 #+begin_src emacs-lisp :tangle no
@@ -469,24 +482,27 @@ Hide details and only show file and folder names.
 #+BEGIN_SRC emacs-lisp :tangle yes
   (setq wdired-allow-to-change-permissions t)
 #+END_SRC
-** save-place-mode
-Save the cursor location for files I've visited.
-#+begin_src emacs-lisp :tangle yes
-  (save-place-mode 1)
-#+end_src
-** key-chord
-#+begin_src emacs-lisp :tangle yes
-  (use-package key-chord
+*** dired-k
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (use-package dired-k
     :config
-    (key-chord-mode 1)
-    (key-chord-define-global "mw" 'avy-goto-word-1)   
-    (key-chord-define-global "jk" 'avy-goto-char)
-    (key-chord-define-global "JJ" 'crux-switch-to-previous-buffer)
-    (key-chord-define-global "FF" 'counsel-find-file)
-    (key-chord-define-global "xx" 'execute-extended-command)
-    (key-chord-define-global "yy" 'counsel-yank-pop)
-    (key-chord-define-global ",." 'neotree-toggle))
-#+end_src
+    (define-key dired-mode-map (kbd "K") 'dired-k)
+    (setq dired-k-style 'git))
+#+END_SRC
+*** dired-narrow
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (use-package dired-narrow
+    :bind (:map dired-mode-map
+                ("N" . dired-narrow-fuzzy)))
+#+END_SRC
+*** dired-ranger
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (use-package dired-ranger
+    :bind (:map dired-mode-map
+                ("C" . dired-ranger-copy)
+                ("P" . dired-ranger-paste)
+                ("M" . dired-ranger-move)))
+#+END_SRC
 * Editing Text
 ** visual-regexp
 #+begin_src emacs-lisp :tangle yes
