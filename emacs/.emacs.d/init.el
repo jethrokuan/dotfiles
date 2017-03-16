@@ -186,8 +186,6 @@
 
 (define-key ivy-minibuffer-map (kbd "C-:") 'ivy-dired)
 
-(use-package neotree)
-
 (use-package crux 
   :bind* (("C-c o" . crux-open-with)
           ("C-c n" . crux-cleanup-buffer-or-region)

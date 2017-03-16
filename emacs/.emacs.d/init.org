@@ -164,18 +164,6 @@ The following code will delete all backup files that are older than a certain da
     :init
     (load-theme 'github t))
 #+END_SRC
-*** Doom Theme
-#+begin_src emacs-lisp :tangle no
-  (use-package doom-themes
-    :init
-    (load-theme 'doom-one t)
-    :config
-    (add-hook 'find-file-hook 'doom-buffer-mode)
-    (add-hook 'minibuffer-setup-hook 'doom-brighten-minibuffer)
-    (require 'doom-neotree)
-    (setq doom-enable-brighter-comments t)
-    (use-package all-the-icons))
-#+end_src
 *** Theme-less
 **** Set background
  #+begin_src emacs-lisp :tangle no
@@ -347,10 +335,6 @@ Swiper is ivy-enhanced isearch.
   (define-key ivy-minibuffer-map (kbd "C-:") 'ivy-dired)
 #+end_src 
 * Moving Around
-** neotree
-#+begin_src emacs-lisp :tangle yes
-  (use-package neotree)
-#+end_src
 ** Crux
 #+begin_src emacs-lisp :tangle yes
   (use-package crux 
