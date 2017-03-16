@@ -1076,9 +1076,6 @@ Displays added/modified/deleted on the left.
    :PROPERTIES:
    :CUSTOM_ID: GettingStarted
    :END:
-
- Getting started with =org-mode= is really easy.  You only need a few lines in your
- emacs startup to use the latest version of org-mode from the =git= repository.
 *** Org-Mode Setup
     :PROPERTIES:
     :CUSTOM_ID: Setup
@@ -1103,158 +1100,18 @@ This enables `auto-fill-mode` for org-mode files
    (setq org-agenda-files (file-expand-wildcards "~/.org/gtd/[a-zA-z]*.org"))
  #+end_src
 
-*** Org File Structure
-    :PROPERTIES:
     :CUSTOM_ID: OrgFileStructure
     :END:
-
- Most of my org files are set up with level 1 headings as main
- categories only.  Tasks and projects normally start as level 2.
-
- Here are some examples of my level 1 headings in
-
- =todo.org=:
-
- - Special Dates
-
-   Includes level 2 headings for
-
-   - Birthdays
-   - Anniversaries
-   - Holidays
-
- - Finances
- - Health and Recreation
- - House Maintenance
- - Lawn and Garden Maintenance
- - Notes
- - Tasks
- - Vehicle Maintenance
- - Passwords
-
-
- =norang.org=:
-
- - System Maintenance
- - Payroll
- - Accounting
- - Finances
- - Hardware Maintenance
- - Tasks
- - Research and Development
- - Notes
- - Purchase Order Tracking
- - Passwords
-
- Each of these level 1 tasks normally has a =property drawer=
- specifying the category for any tasks in that tree.  Level 1 headings
- are set up like this:
-
- #+begin_src org :exports src
- ,* Health and Recreation
-   :PROPERTIES:
-   :CATEGORY: Health
-   :END:
-   ...
- ,* House Maintenance
-   :PROPERTIES:
-   :CATEGORY: House
-   :END:
- #+end_src
 *** Key bindings
     :PROPERTIES:
     :CUSTOM_ID: KeyBindings
     :END:
-
- I live in the agenda.  To make getting to the agenda faster I mapped
- =F12= to the sequence =C-c a= since I'm using it hundreds of times a
- day.
-
- I have the following custom key bindings set up for my emacs (sorted by frequency).
-
- | Key     | For                                             | Used       |
- |---------+-------------------------------------------------+------------|
- | F12     | Agenda (1 key less than C-c a)                  | Very Often |
- | C-c b   | Switch to org file                              | Very Often |
- | F11     | Goto currently clocked item                     | Very Often |
- | C-c c   | Capture a task                                  | Very Often |
- | C-F11   | Clock in a task (show menu with prefix)         | Often      |
- | f9 g    | Gnus - I check mail regularly                   | Often      |
- | f5      | Show todo items for this subtree                | Often      |
- | S-f5    | Widen                                           | Often      |
- | f9 b    | Quick access to bbdb data                       | Often      |
- | f9 c    | Calendar access                                 | Often      |
- | C-S-f12 | Save buffers and publish current project        | Often      |
- | C-c l   | Store a link for retrieval with C-c C-l         | Often      |
- | f8      | Go to next org file in org-agenda-files         | Sometimes  |
- | f9 r    | Boxquote selected region                        | Sometimes  |
- | f9 t    | Insert inactive timestamp                       | Sometimes  |
- | f9 v    | Toggle visible mode (for showing/editing links) | Sometimes  |
- | C-f9    | Previous buffer                                 | Sometimes  |
- | C-f10   | Next buffer                                     | Sometimes  |
- | C-x n r | Narrow to region                                | Sometimes  |
- | f9 f    | Boxquote insert a file                          | Sometimes  |
- | f9 i    | Info manual                                     | Sometimes  |
- | f9 I    | Punch Clock In                                  | Sometimes  |
- | f9 O    | Punch Clock Out                                 | Sometimes  |
- | f9 o    | Switch to org scratch buffer                    | Sometimes  |
- | f9 s    | Switch to scratch buffer                        | Sometimes  |
- | f9 h    | Hide other tasks                                | Rare       |
- | f7      | Toggle line truncation/wrap                     | Rare       |
- | f9 T    | Toggle insert inactive timestamp                | Rare       |
- | C-c a   | Enter Agenda (minimal emacs testing)            | Rare       |
-
  Here is the keybinding setup in lisp:
  #+header: :tangle yes
  #+begin_src emacs-lisp
-   ;; Custom Key Bindings
-   (global-set-key (kbd "<f12>") 'org-agenda)  
-   (global-set-key (kbd "<f2> h") 'bh/hide-other)
-   (global-set-key (kbd "<f2> n") 'bh/toggle-next-task-display)
-
-   (global-set-key (kbd "<f2> o") 'bh/make-org-scratch)
-   (global-set-key (kbd "<f2> s") 'bh/switch-to-scratch)
-
-   (global-set-key (kbd "<f2> v") 'visible-mode)
-   (global-set-key (kbd "<f2> l") 'org-toggle-link-display)
-   (global-set-key (kbd "M-<f2>") 'org-toggle-inline-images)
-   (global-set-key (kbd "C-x n r") 'narrow-to-region)
-   (global-set-key (kbd "C-<f10>") 'next-buffer)
    (global-set-key (kbd "<f11>") 'org-clock-goto)
-
-   (defun bh/hide-other ()
-     (interactive)
-     (save-excursion
-       (org-back-to-heading 'invisible-ok)
-       (hide-other)
-       (org-cycle)
-       (org-cycle)
-       (org-cycle)))
-
-   (defun bh/set-truncate-lines ()
-     "Toggle value of truncate-lines and refresh window display."
-     (interactive)
-     (setq truncate-lines (not truncate-lines))
-     ;; now refresh window display (an idiom from simple.el):
-     (save-excursion
-       (set-window-start (selected-window)
-                         (window-start (selected-window)))))
-
-   (defun bh/make-org-scratch ()
-     (interactive)
-     (find-file "/tmp/publish/scratch.org")
-     (gnus-make-directory "/tmp/publish"))
-
-   (defun bh/switch-to-scratch ()
-     (interactive)
-     (switch-to-buffer "*scratch*"))
  #+end_src
-
- The main reason I have special key bindings (like =F11=, and =F12=) is
- so that the keys work in any mode.  If I'm in the Gnus summary buffer
- then =C-u C-c C-x C-i= doesn't work, but the =C-F11= key combination
- does and this saves me time since I don't have to visit an org-mode
- buffer first just to clock in a recent task.
+ 
 ** Tasks and States
    :PROPERTIES:
    :CUSTOM_ID: TasksAndStates
@@ -1457,24 +1314,27 @@ This enables `auto-fill-mode` for org-mode files
                ("NEXT" ("WAITING") ("CANCELLED") ("HOLD"))
                ("DONE" ("WAITING") ("CANCELLED") ("HOLD")))))
  #+end_src
+*** Clocking
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (defun jethro/clock-in-to-next (kw)
+    "Switch a task from TODO to NEXT when clocking in.
+  Skips capture tasks, projects, and subprojects.
+  Switch projects and subprojects from NEXT back to TODO"
+    (when (not (and (boundp 'org-capture-mode) org-capture-mode))
+      (cond
+       ((and (member (org-get-todo-state) (list "TODO"))
+             (bh/is-task-p))
+        "NEXT")
+       ((and (member (org-get-todo-state) (list "NEXT"))
+             (bh/is-project-p))
+        "TODO"))))
+
+  (setq org-clock-in-switch-to-state 'jethro/clock-in-to-next)
+#+END_SRC
 ** Adding New Tasks Quickly with Org Capture
    :PROPERTIES:
    :CUSTOM_ID: Capture
    :END:
-
- Org Capture mode replaces remember mode for capturing tasks and notes.
-
- To add new tasks efficiently I use a minimal number of capture
- templates.  I used to have lots of capture templates, one for each
- org-file.  I'd start org-capture with =C-c c= and then pick a template
- that filed the task under =* Tasks= in the appropriate file.
-
- I found I still needed to refile these capture tasks again to the
- correct location within the org-file so all of these different capture
- templates weren't really helping at all.  Since then I've changed my
- workflow to use a minimal number of capture templates -- I create the
- new task quickly and refile it once.  This also saves me from
- maintaining my org-capture templates when I add a new org file.
 *** Capture Templates
     :PROPERTIES:
     :CUSTOM_ID: CaptureTemplates
@@ -1507,29 +1367,8 @@ This enables `auto-fill-mode` for org-mode files
      (require 'org-protocol-capture-html)
      (add-to-list 'org-capture-templates
                   '("w" "Web site" entry (file "~/.org/gtd/websites.org")
-                    "* %c\n%:initial")))
+                    "* %c\n%:initial" :immediate-finish t))
  #+end_src
-
- Capture mode now handles automatically clocking in and out of a
- capture task.  This all works out of the box now without special hooks.
- When I start a capture mode task the task is clocked in as specified
- by =:clock-in t= and when the task is filed with =C-c C-c= the clock 
- resumes on the original clocking task.
-
- The quick clocking in and out of capture mode tasks (often it takes
- less than a minute to capture some new task details) can leave
- empty clock drawers in my tasks which aren't really useful.  Since I
- remove clocking lines with 0:00 length I end up with a clock drawer
- like this:
-
- #+begin_src org :exports src
- ,* TODO New Capture Task
-   :LOGBOOK:
-   :END:
-   [2010-05-08 Sat 13:53]
- #+end_src
- I have the following setup to remove these empty =LOGBOOK= drawers if
- they occur.
 ** org-capture shortcut
 #+BEGIN_SRC emacs-lisp :tangle yes
   (defadvice org-capture-finalize
@@ -1571,125 +1410,40 @@ This enables `auto-fill-mode` for org-mode files
    :PROPERTIES:
    :CUSTOM_ID: Refiling
    :END:
-
- Refiling tasks is easy.  After collecting a bunch of new tasks in my
- refile.org file using capture mode I need to move these to the
- correct org file and topic.  All of my active org-files are in my
- =org-agenda-files= variable and contribute to the agenda.
-
- I collect capture tasks in refile.org for up to a week.  These now
- stand out daily on my block agenda and I usually refile them during
- the day.  I like to keep my refile task list empty.
 *** Refile Setup
     :PROPERTIES:
     :CUSTOM_ID: RefileSetup
     :END:
-
- To refile tasks in org you need to tell it where you want to refile things.
-
- In my setup I let any file in =org-agenda-files= and the current file
- contribute to the list of valid refile targets.  
-
- I've recently moved to using IDO to complete targets directly.  I find
- this to be faster than my previous complete in steps setup.  At first
- I didn't like IDO but after reviewing the documentation again and
- learning about =C-SPC= to limit target searches I find it is much
- better than my previous complete-in-steps setup.  Now when I want to
- refile something I do =C-c C-w= to start the refile process, then type
- something to get some matching targets, then =C-SPC= to restrict the
- matches to the current list, then continue searching with some other
- text to find the target I need.  =C-j= also selects the current
- completion as the final target.  I like this a lot.  I show full
- outline paths in the targets so I can have the same heading in
- multiple subtrees or projects and still tell them apart while
- refiling.
-
- I now exclude =DONE= state tasks as valid refile targets.  This helps to keep the
- refile target list to a reasonable size.
-
  Here is my refile configuration:
  #+header: :tangle yes
  #+begin_src emacs-lisp
- ; Targets include this file and any file contributing to the agenda - up to 9 levels deep
- (setq org-refile-targets (quote ((nil :maxlevel . 9)
-                                  (org-agenda-files :maxlevel . 9))))
+   ; Targets include this file and any file contributing to the agenda - up to 9 levels deep
+   (setq org-refile-targets (quote ((nil :maxlevel . 9)
+                                    (org-agenda-files :maxlevel . 9))))
 
- ; Use full outline paths for refile targets - we file directly with IDO
- (setq org-refile-use-outline-path t)
+   ; Use full outline paths for refile targets - we file directly with IDO
+   (setq org-refile-use-outline-path t)
 
- ; Targets complete directly with IDO
- (setq org-outline-path-complete-in-steps nil)
+   ; Targets complete directly with IDO
+   (setq org-outline-path-complete-in-steps nil)
 
- ; Allow refile to create parent tasks with confirmation
- (setq org-refile-allow-creating-parent-nodes (quote confirm))
+   ; Allow refile to create parent tasks with confirmation
+   (setq org-refile-allow-creating-parent-nodes 'confirm)
 
- (setq org-completion-use-ido t)
- 
- ;;;; Refile settings
- ; Exclude DONE state tasks from refile targets
- (defun bh/verify-refile-target ()
-   "Exclude todo keywords with a done state from refile targets"
-   (not (member (nth 2 (org-heading-components)) org-done-keywords)))
+   (setq org-completion-use-ido t)
 
- (setq org-refile-target-verify-function 'bh/verify-refile-target)
+   ;;;; Refile settings
+   (defun jethro/verify-refile-target ()
+     "Exclude todo keywords with a done state from refile targets"
+     (not (member (nth 2 (org-heading-components)) org-done-keywords)))
+
+   (setq org-refile-target-verify-function 'jethro/verify-refile-target)
  #+end_src
 
- To refile a task to my =norang.org= file under =System Maintenance= I
- just put the cursor on the task and hit =C-c C-w= and enter =nor C-SPC
- sys RET= and it's done.  IDO completion makes locating targets a snap.
-*** Refiling Tasks
-    :PROPERTIES:
-    :CUSTOM_ID: RefilingTasks
-    :END:
-
- Tasks to refile are in their own section of the block agenda.  To find
- tasks to refile I run my agenda view with =F12 SPC= and scroll down to
- second section of the block agenda: =Tasks to Refile=.  This view
- shows all tasks (even ones marked in a =done= state).
-
- Bulk refiling in the agenda works very well for multiple tasks going
- to the same place.  Just mark the tasks with =m= and then =B r= to
- refile all of them to a new location.  Occasionally I'll also refile
- tasks as subtasks of the current clocking task using =C-2 C-c C-w=
- from the =refile.org= file.
-
- Refiling all of my tasks tends to take less than a minute so I
- normally do this a couple of times a day.
 ** Custom agenda views
    :PROPERTIES:
    :CUSTOM_ID: CustomAgendaViews
    :END:
-
- I now have one block agenda view that has everything on it.  I also
- keep separate single view agenda commands for use on my slower Eee
- PC - since it takes prohibitively long to generate my block agenda on
- that slow machine.  I'm striving to simplify my layout with everything
- at my fingertips in a single agenda on my workstation which is where I
- spend the bulk of my time.
-
- Most of my old custom agenda views were rendered obsolete when
- filtering functionality was added to the agenda in newer versions of
- =org-mode= and now with block agenda functionality I can combine
- everything into a single view.
-
- Custom agenda views are used for:
- - Single block agenda shows the following
-   - overview of today
-   - Finding tasks to be refiled
-   - Finding stuck projects
-   - Finding NEXT tasks to work on
-   - Show all related tasks
-   - Reviewing projects
-   - Finding tasks waiting on something
-   - Findings tasks to be archived
- - Finding notes
- - Viewing habits
-
- If I want just today's calendar view then =F12 a= is still faster than
- generating the block agenda - especially if I want to view a week or
- month's worth of information, or check my clocking data.  In that case
- the extra detail on the block agenda view is never really needed and I
- don't want to spend time waiting for it to be generated.
 *** Setup
     :PROPERTIES:
     :CUSTOM_ID: CustomAgendaViewSetup
@@ -1713,14 +1467,15 @@ This enables `auto-fill-mode` for org-mode files
              (tags-todo "-CANCELLED/!"
                         ((org-agenda-overriding-header "Stuck Projects")
                          (org-agenda-skip-function 'bh/skip-non-stuck-projects)
-                         (org-agenda-sorting-strategy
-                          '(category-keep))))
+                         (org-agenda-sorting-strategy '(category-keep)))) 
+             (todo "TODO"
+                   ((org-agenda-overriding-header "School Work")
+                    (org-agenda-files '("~/.org/gtd/school.org"))))
              (tags-todo "-HOLD-CANCELLED/!"
                         ((org-agenda-overriding-header "Projects")
                          (org-agenda-skip-function 'bh/skip-non-projects)
                          (org-tags-match-list-sublevels 'indented)
-                         (org-agenda-sorting-strategy
-                          '(category-keep))))
+                         (org-agenda-sorting-strategy '(category-keep))))
              (tags-todo "-CANCELLED/!NEXT"
                         ((org-agenda-overriding-header (concat "Project Next Tasks"
                                                                (if bh/hide-scheduled-and-waiting-next-tasks
@@ -1748,7 +1503,7 @@ This enables `auto-fill-mode` for org-mode files
                         ((org-agenda-overriding-header (concat "Standalone Tasks"
                                                                (if bh/hide-scheduled-and-waiting-next-tasks
                                                                    ""
-                                                                 " (including WAITING and SCHEDULED tasks)")))
+                                                                 " (including WAITING and SCHEDULED tasks)"))) 
                          (org-agenda-skip-function 'bh/skip-project-tasks)
                          (org-agenda-todo-ignore-scheduled bh/hide-scheduled-and-waiting-next-tasks)
                          (org-agenda-todo-ignore-deadlines bh/hide-scheduled-and-waiting-next-tasks)
@@ -1769,33 +1524,7 @@ This enables `auto-fill-mode` for org-mode files
                     (org-agenda-skip-function 'bh/skip-non-archivable-tasks)
                     (org-tags-match-list-sublevels nil))))
             nil)))
-
  #+end_src
-
- My block agenda view looks like this when not narrowed to a project.
- This shows top-level projects and =NEXT= tasks but hides the project details since
- we are not focused on any particular project.
-
- *NOTE:* This agenda screen shot is out of date and does not currently match the agenda setup in this document.
- This will be fixed soon.
-
- [[file:block-agenda-nonproject.png]]
-
- After selecting a project (with =P= on any task in the agenda) the block agenda changes to show the project and
- any subprojects in the Projects section.  Tasks show project-related tasks that are hidden when not
- narrowed to a project.
-
- This makes it easy to focus on the task at hand.
-
- *NOTE:* This agenda screen shot is out of date and does not currently match the agenda setup in this document.
- This will be fixed soon.
-
-
- [[file:block-agenda-project.png]]
-
- I generally work top-down on the agenda.  Things with deadlines and
- scheduled dates (planned to work on today or earlier) show up in the
- agenda at the top.
 
  My day goes generally like this:
 

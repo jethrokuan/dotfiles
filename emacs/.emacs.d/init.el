@@ -674,47 +674,7 @@ The app is chosen from your OS's preference."
 
 (setq org-agenda-files (file-expand-wildcards "~/.org/gtd/[a-zA-z]*.org"))
 
-;; Custom Key Bindings
-(global-set-key (kbd "<f12>") 'org-agenda)  
-(global-set-key (kbd "<f2> h") 'bh/hide-other)
-(global-set-key (kbd "<f2> n") 'bh/toggle-next-task-display)
-
-(global-set-key (kbd "<f2> o") 'bh/make-org-scratch)
-(global-set-key (kbd "<f2> s") 'bh/switch-to-scratch)
-
-(global-set-key (kbd "<f2> v") 'visible-mode)
-(global-set-key (kbd "<f2> l") 'org-toggle-link-display)
-(global-set-key (kbd "M-<f2>") 'org-toggle-inline-images)
-(global-set-key (kbd "C-x n r") 'narrow-to-region)
-(global-set-key (kbd "C-<f10>") 'next-buffer)
 (global-set-key (kbd "<f11>") 'org-clock-goto)
-
-(defun bh/hide-other ()
-  (interactive)
-  (save-excursion
-    (org-back-to-heading 'invisible-ok)
-    (hide-other)
-    (org-cycle)
-    (org-cycle)
-    (org-cycle)))
-
-(defun bh/set-truncate-lines ()
-  "Toggle value of truncate-lines and refresh window display."
-  (interactive)
-  (setq truncate-lines (not truncate-lines))
-  ;; now refresh window display (an idiom from simple.el):
-  (save-excursion
-    (set-window-start (selected-window)
-                      (window-start (selected-window)))))
-
-(defun bh/make-org-scratch ()
-  (interactive)
-  (find-file "/tmp/publish/scratch.org")
-  (gnus-make-directory "/tmp/publish"))
-
-(defun bh/switch-to-scratch ()
-  (interactive)
-  (switch-to-buffer "*scratch*"))
 
 (setq org-todo-keywords
       (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
@@ -743,6 +703,21 @@ The app is chosen from your OS's preference."
               ("NEXT" ("WAITING") ("CANCELLED") ("HOLD"))
               ("DONE" ("WAITING") ("CANCELLED") ("HOLD")))))
 
+(defun jethro/clock-in-to-next (kw)
+  "Switch a task from TODO to NEXT when clocking in.
+Skips capture tasks, projects, and subprojects.
+Switch projects and subprojects from NEXT back to TODO"
+  (when (not (and (boundp 'org-capture-mode) org-capture-mode))
+    (cond
+     ((and (member (org-get-todo-state) (list "TODO"))
+           (bh/is-task-p))
+      "NEXT")
+     ((and (member (org-get-todo-state) (list "NEXT"))
+           (bh/is-project-p))
+      "TODO"))))
+
+(setq org-clock-in-switch-to-state 'jethro/clock-in-to-next)
+
 (setq org-directory "~/.org/gtd/")
 (setq org-default-notes-file "~/.org/gtd/inbox.org")
 
@@ -770,7 +745,7 @@ Captured %<%Y-%m-%d %H:%M>
   (require 'org-protocol-capture-html)
   (add-to-list 'org-capture-templates
                '("w" "Web site" entry (file "~/.org/gtd/websites.org")
-                 "* %c\n%:initial")))
+                 "* %c\n%:initial" :immediate-finish t))
 
 (defadvice org-capture-finalize
     (after delete-capture-frame activate)
@@ -818,17 +793,16 @@ Captured %<%Y-%m-%d %H:%M>
 (setq org-outline-path-complete-in-steps nil)
 
 ; Allow refile to create parent tasks with confirmation
-(setq org-refile-allow-creating-parent-nodes (quote confirm))
+(setq org-refile-allow-creating-parent-nodes 'confirm)
 
 (setq org-completion-use-ido t)
 
 ;;;; Refile settings
-; Exclude DONE state tasks from refile targets
-(defun bh/verify-refile-target ()
+(defun jethro/verify-refile-target ()
   "Exclude todo keywords with a done state from refile targets"
   (not (member (nth 2 (org-heading-components)) org-done-keywords)))
 
-(setq org-refile-target-verify-function 'bh/verify-refile-target)
+(setq org-refile-target-verify-function 'jethro/verify-refile-target)
 
 ;; Do not dim blocked tasks
 (setq org-agenda-dim-blocked-tasks nil)
@@ -846,14 +820,15 @@ Captured %<%Y-%m-%d %H:%M>
           (tags-todo "-CANCELLED/!"
                      ((org-agenda-overriding-header "Stuck Projects")
                       (org-agenda-skip-function 'bh/skip-non-stuck-projects)
-                      (org-agenda-sorting-strategy
-                       '(category-keep))))
+                      (org-agenda-sorting-strategy '(category-keep)))) 
+          (todo "TODO"
+                ((org-agenda-overriding-header "School Work")
+                 (org-agenda-files '("~/.org/gtd/school.org"))))
           (tags-todo "-HOLD-CANCELLED/!"
                      ((org-agenda-overriding-header "Projects")
                       (org-agenda-skip-function 'bh/skip-non-projects)
                       (org-tags-match-list-sublevels 'indented)
-                      (org-agenda-sorting-strategy
-                       '(category-keep))))
+                      (org-agenda-sorting-strategy '(category-keep))))
           (tags-todo "-CANCELLED/!NEXT"
                      ((org-agenda-overriding-header (concat "Project Next Tasks"
                                                             (if bh/hide-scheduled-and-waiting-next-tasks
@@ -881,7 +856,7 @@ Captured %<%Y-%m-%d %H:%M>
                      ((org-agenda-overriding-header (concat "Standalone Tasks"
                                                             (if bh/hide-scheduled-and-waiting-next-tasks
                                                                 ""
-                                                              " (including WAITING and SCHEDULED tasks)")))
+                                                              " (including WAITING and SCHEDULED tasks)"))) 
                       (org-agenda-skip-function 'bh/skip-project-tasks)
                       (org-agenda-todo-ignore-scheduled bh/hide-scheduled-and-waiting-next-tasks)
                       (org-agenda-todo-ignore-deadlines bh/hide-scheduled-and-waiting-next-tasks)
