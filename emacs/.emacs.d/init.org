@@ -1367,7 +1367,7 @@ This enables `auto-fill-mode` for org-mode files
      (require 'org-protocol-capture-html)
      (add-to-list 'org-capture-templates
                   '("w" "Web site" entry (file "~/.org/gtd/websites.org")
-                    "* %c\n%:initial" :immediate-finish t))
+                    "* %c\n%:initial" :immediate-finish t)))
  #+end_src
 ** org-capture shortcut
 #+BEGIN_SRC emacs-lisp :tangle yes

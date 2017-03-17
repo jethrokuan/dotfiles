@@ -741,7 +741,7 @@ Captured %<%Y-%m-%d %H:%M>
   (require 'org-protocol-capture-html)
   (add-to-list 'org-capture-templates
                '("w" "Web site" entry (file "~/.org/gtd/websites.org")
-                 "* %c\n%:initial" :immediate-finish t))
+                 "* %c\n%:initial" :immediate-finish t)))
 
 (defadvice org-capture-finalize
     (after delete-capture-frame activate)
