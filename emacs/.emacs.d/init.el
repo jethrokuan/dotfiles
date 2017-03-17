@@ -72,10 +72,6 @@
 
 (load "~/.emacs.d/secrets.el" t)
 
-(use-package exec-path-from-shell
-  :demand t
-  :init (exec-path-from-shell-initialize))
-
 (setq-default explicit-shell-file-name "/bin/bash")
 (setq-default shell-file-name "/bin/bash")
 
