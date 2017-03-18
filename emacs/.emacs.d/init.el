@@ -1,3 +1,4 @@
+
 (when (>= emacs-major-version 24)
   (require 'package)
   (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
@@ -529,8 +530,6 @@ The app is chosen from your OS's preference."
   (add-hook 'js2-mode-hook #'js2-refactor-mode)
   (js2r-add-keybindings-with-prefix "C-c C-j"))
 
-(use-package jade)
-
 (use-package vue-mode
   :mode "\\.vue\\'")
 
@@ -607,7 +606,6 @@ The app is chosen from your OS's preference."
   (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
   (add-hook 'LaTeX-mode-hook 'TeX-source-correlate-mode)
   (add-hook 'LaTeX-mode-hook 'TeX-PDF-mode))
-(use-package auctex-latexmk)
 
 (use-package company-auctex
   :defer t)

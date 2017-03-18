@@ -854,10 +854,6 @@ npm install -g tern
     (add-hook 'js2-mode-hook #'js2-refactor-mode)
     (js2r-add-keybindings-with-prefix "C-c C-j"))
 #+end_src
-*** Jade
-#+begin_src emacs-lisp :tangle yes
-(use-package jade)
-#+end_src
 *** Vue-mode
 Additional support for Vue.js projects.
 
@@ -954,7 +950,6 @@ Additional support for Vue.js projects.
     (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
     (add-hook 'LaTeX-mode-hook 'TeX-source-correlate-mode)
     (add-hook 'LaTeX-mode-hook 'TeX-PDF-mode))
-  (use-package auctex-latexmk)
 #+END_SRC
 *** Autocomplete support
 #+BEGIN_SRC emacs-lisp :tangle yes
