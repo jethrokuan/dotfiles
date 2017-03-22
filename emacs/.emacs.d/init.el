@@ -1,4 +1,3 @@
-
 (when (>= emacs-major-version 24)
   (require 'package)
   (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
@@ -72,6 +71,10 @@
       (delete-file file))))
 
 (load "~/.emacs.d/secrets.el" t)
+
+(use-package exec-path-from-shell 
+  :config
+  (exec-path-from-shell-initialize))
 
 (setq-default explicit-shell-file-name "/bin/bash")
 (setq-default shell-file-name "/bin/bash")

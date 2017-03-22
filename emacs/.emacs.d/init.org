@@ -142,7 +142,7 @@ The following code will delete all backup files that are older than a certain da
 (load "~/.emacs.d/secrets.el" t)
 #+end_src
 ** Add PATH to eshell
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp :tangle yes
   (use-package exec-path-from-shell 
     :config
     (exec-path-from-shell-initialize))
