@@ -653,6 +653,19 @@ For editing Lisp code.
 #+begin_src emacs-lisp :tangle yes
   (bind-key "C-c C-k" 'eval-buffer emacs-lisp-mode-map)
 #+end_src
+** Nix
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (use-package nix-mode
+    :config
+    (add-hook 'nix-mode-hook (lambda ()
+                               (aggressive-indent-mode -1))))
+#+END_SRC
+*** completion
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (use-package company-nixos-options
+    :config
+    (add-to-list 'company-backends 'company-nixos-options))
+#+END_SRC
 ** Go
 #+begin_src emacs-lisp :tangle yes
 (use-package go-mode
