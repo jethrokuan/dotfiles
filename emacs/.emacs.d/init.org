@@ -1119,7 +1119,10 @@ This enables `auto-fill-mode` for org-mode files
  #+begin_src emacs-lisp
    (global-set-key (kbd "<f11>") 'org-clock-goto)
  #+end_src
- 
+** Column view
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (setq org-columns-default-format "%14SCHEDULED %Effort{:} %1PRIORITY %TODO %50ITEM %TAGS")
+#+END_SRC
 ** Tasks and States
    :PROPERTIES:
    :CUSTOM_ID: TasksAndStates
