@@ -79,7 +79,9 @@
 (setq-default explicit-shell-file-name "/bin/bash")
 (setq-default shell-file-name "/bin/bash")
 
-(load-theme 'adwaita t)
+(use-package zenburn-theme
+  :init
+  (load-theme 'zenburn t))
 
 (defun open-next-line (arg)
   "Move to the next line and then opens a line.
@@ -682,21 +684,11 @@ The app is chosen from your OS's preference."
 
 (global-set-key (kbd "<f11>") 'org-clock-goto)
 
-(setq org-columns-default-format "%14SCHEDULED %Effort{:} %1PRIORITY %TODO %50ITEM %TAGS")
+(setq org-columns-default-format "%Effort{:} %5CLOCKSUM(CLK) %5CLOCKSUM_T(CLK_T) %TODO %ITEM")
 
 (setq org-todo-keywords
       (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
-              (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE" "MEETING"))))
-
-(setq org-todo-keyword-faces
-      (quote (("TODO" :foreground "red" :weight bold)
-              ("NEXT" :foreground "blue" :weight bold)
-              ("DONE" :foreground "forest green" :weight bold)
-              ("WAITING" :foreground "orange" :weight bold)
-              ("HOLD" :foreground "magenta" :weight bold)
-              ("CANCELLED" :foreground "forest green" :weight bold)
-              ("MEETING" :foreground "forest green" :weight bold)
-              ("PHONE" :foreground "forest green" :weight bold))))
+              (sequence "WAITING(w@/!)" "HOLD(h@/!)"))))
 
 (setq org-use-fast-todo-selection t)
 
