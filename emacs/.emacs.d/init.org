@@ -2112,7 +2112,7 @@ This enables `auto-fill-mode` for org-mode files
    Skip project and sub-project tasks, habits, and loose non-project tasks."
      (save-restriction
        (widen)
-       (let* ((subtree-end (save-excursion (org-end-of-subtrqee t)))
+       (let* ((subtree-end (save-excursion (org-end-of-subtree t)))
               (next-headline (save-excursion (or (outline-next-heading) (point-max)))))
          (cond
           ((bh/is-project-p) next-headline) 
