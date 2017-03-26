@@ -2,20 +2,20 @@
 * Introduction
 * Basic Setup
 ** Add MELPA and Org Repository
-Add package archives. Note that I'm using HTTP, HTTPS did not work for me. To configure HTTPS, simply replace occurrences of http with https.
+   Add package archives. Note that I'm using HTTP, HTTPS did not work for me. To configure HTTPS, simply replace occurrences of http with https.
 
-#+BEGIN_SRC emacs-lisp :tangle yes
+   #+BEGIN_SRC emacs-lisp :tangle yes
 (when (>= emacs-major-version 24)
   (require 'package)
   (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
   (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
   (package-initialize))
-#+END_SRC
+   #+END_SRC
 
 ** Add [[https://github.com/jwiegley/use-package/issues/70][use-package]]
-Use-package allows for isolation of package configuration, while maintaining tidiness and performance.
+   Use-package allows for isolation of package configuration, while maintaining tidiness and performance.
 
-#+BEGIN_SRC emacs-lisp :tangle yes
+   #+BEGIN_SRC emacs-lisp :tangle yes
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
@@ -27,106 +27,106 @@ Use-package allows for isolation of package configuration, while maintaining tid
   (require 'bind-key)
   (require 'diminish)
   (setq use-package-always-ensure t))
-#+END_SRC
+   #+END_SRC
 
 ** Add validate
-Validate is a package that checks for and reports Emacs config errors.
-#+begin_src emacs-lisp :tangle yes
+   Validate is a package that checks for and reports Emacs config errors.
+   #+begin_src emacs-lisp :tangle yes
   (use-package validate
     :demand t)
-#+end_src
+   #+end_src
 ** User configuration
 ** 
-#+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
 (setq user-full-name "Jethro Kuan"
       user-mail-address "jethrokuan95@gmail.com")
-#+end_src
+   #+end_src
 
 ** Custom file
-#+BEGIN_SRC emacs-lisp :tangle yes
+   #+BEGIN_SRC emacs-lisp :tangle yes
   (setq custom-file "~/.emacs.d/custom.el")
   (load custom-file)
-#+END_SRC
+   #+END_SRC
 ** Default browser
-#+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
   (setq browse-url-browser-function 'browse-url-firefox
         browse-url-new-window-flag  t
         browse-url-firefox-new-window-is-tab t)
-#+end_src
+   #+end_src
 ** Custom font
-I use Hack, patched with Powerline. Other good alternatives include Source Code Pro.
+   I use Hack, patched with Powerline. Other good alternatives include Source Code Pro.
 *** Source Code Pro
-#+BEGIN_SRC emacs-lisp :tangle yes
+    #+BEGIN_SRC emacs-lisp :tangle yes
   (add-to-list 'initial-frame-alist
                '(font . "Source Code Pro for Powerline-12"))
   (add-to-list 'default-frame-alist
                '(font . "Source Code Pro for Powerline-12"))
-#+END_SRC
+    #+END_SRC
 
 ** UI Cruft
-Remove useless toolbars and splash screens.
+   Remove useless toolbars and splash screens.
 
-#+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
 (tooltip-mode -1)
 (tool-bar-mode -1)
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 (setq inhibit-splash-screen t)
 (setq inhibit-startup-message t)
-#+end_src
+   #+end_src
 
 ** Use y/n over yes/no
-Always prefer the shorter y/n over yes/no.
+   Always prefer the shorter y/n over yes/no.
 
-#+BEGIN_SRC emacs-lisp :tangle yes
+   #+BEGIN_SRC emacs-lisp :tangle yes
 (defalias 'yes-or-no-p 'y-or-n-p)
-#+END_SRC
+   #+END_SRC
 
 ** Replace region when typing
-Type over a selected region, instead of deleting before typing.
+   Type over a selected region, instead of deleting before typing.
 
-#+BEGIN_SRC emacs-lisp :tangle yes
+   #+BEGIN_SRC emacs-lisp :tangle yes
 (delete-selection-mode +1)
-#+end_src
+   #+end_src
 
 ** Sentences
-Emacs uses double-spaces by default. Use single spaces by default:
+   Emacs uses double-spaces by default. Use single spaces by default:
 
-#+BEGIN_QUOTE
-NOTE: This will cause an indistinction between sentences and name abbrieviations (eg. E. B. White)
-#+END_QUOTE
+   #+BEGIN_QUOTE
+   NOTE: This will cause an indistinction between sentences and name abbrieviations (eg. E. B. White)
+   #+END_QUOTE
 
-#+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
 (setq sentence-end-double-space nil)
-#+end_src
+   #+end_src
 
 ** Tab with 2 spaces
-#+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
 (setq-default tab-width 2)
 (setq-default js-indent-level 2)
 (setq-default indent-tabs-mode nil)
-#+end_src
+   #+end_src
 
 ** Don't wrap lines
-Don't wrap lines for coding. Create a hook that enables wrapping, for modes like org-mode and markdown-mode.
+   Don't wrap lines for coding. Create a hook that enables wrapping, for modes like org-mode and markdown-mode.
 
-#+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
 (setq-default truncate-lines t)
 (defun trunc-lines-hook ()
   (setq truncate-lines nil))
-#+end_src
+   #+end_src
 
 ** Backup directory
-#+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
   (setq backup-directory-alist
         `((".*" . ,temporary-file-directory)))
   (setq auto-save-file-name-transforms
         `((".*" ,temporary-file-directory t)))
-#+end_src
+   #+end_src
 
-The following code will delete all backup files that are older than a certain date:
+   The following code will delete all backup files that are older than a certain date:
 
-#+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
 (message "Deleting old backup files...")
 (let ((week (* 60 60 24 7))
       (current (float-time (current-time))))
@@ -136,37 +136,37 @@ The following code will delete all backup files that are older than a certain da
                   week))
       (message "%s" file)
       (delete-file file))))
-#+end_src
+   #+end_src
 ** Load secrets
-#+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
 (load "~/.emacs.d/secrets.el" t)
-#+end_src
+   #+end_src
 ** Add PATH to eshell
-#+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
   (use-package exec-path-from-shell 
     :config
     (exec-path-from-shell-initialize))
-#+end_src
+   #+end_src
 
 ** Default shell
-#+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
   (setq-default explicit-shell-file-name "/bin/bash")
   (setq-default shell-file-name "/bin/bash")
-#+end_src
+   #+end_src
 ** Theme
 *** Adwaita
-#+BEGIN_SRC emacs-lisp :tangle no
+    #+BEGIN_SRC emacs-lisp :tangle no
   (load-theme 'adwaita t)
-#+END_SRC
+    #+END_SRC
 *** Zenburn Theme
-#+BEGIN_SRC emacs-lisp :tangle yes
+    #+BEGIN_SRC emacs-lisp :tangle yes
   (use-package zenburn-theme
     :init
     (load-theme 'zenburn t))
-#+END_SRC
+    #+END_SRC
 ** Keybindings
 *** Opening Lines
-#+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp :tangle yes
   (defun open-next-line (arg)
     "Move to the next line and then opens a line.
      See also `newline-and-indent'."
@@ -188,45 +188,45 @@ The following code will delete all backup files that are older than a certain da
 
   (bind-key* "C-o" 'open-next-line)
   (bind-key* "M-o" 'open-previous-line)
-#+end_src
+    #+end_src
 *** Nuke all buffers with =C-c !=
-#+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp :tangle yes
   (defun jethro/nuke-all-buffers ()
     (interactive)
     (mapcar 'kill-buffer (buffer-list))
     (delete-other-windows))
 
   (bind-key* "C-c !" 'jethro/nuke-all-buffers)
-#+end_src
+    #+end_src
 *** eshell with =C-x m=
-#+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp :tangle yes
   (bind-key* "C-x m" 'eshell)
-#+end_src
+    #+end_src
 *** mark-paragraph with =M-p=
-#+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp :tangle yes
   (bind-key* "M-p" 'mark-paragraph)
-#+end_src
+    #+end_src
 *** compile with =<f9>=
-#+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp :tangle yes
   (bind-key* "<f9>" (lambda ()
                       (interactive)
                       (setq-local compilation-read-command nil)
                       (call-interactively 'compile)))
-#+end_src
+    #+end_src
 **** 
 ** Hydra
-#+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
   (use-package hydra)
-#+end_src
+   #+end_src
 *** Ample Theme
-#+BEGIN_SRC emacs-lisp :tangle no
+    #+BEGIN_SRC emacs-lisp :tangle no
   (use-package ample-theme
     :init
     (load-theme 'ample t))
-#+END_SRC
+    #+END_SRC
 * Mail (notmuch)
 ** Basic Setup
-#+BEGIN_SRC emacs-lisp :tangle yes
+   #+BEGIN_SRC emacs-lisp :tangle yes
   (use-package notmuch
     :bind (("<f10>" . notmuch))
     :config
@@ -235,23 +235,23 @@ The following code will delete all backup files that are older than a certain da
       "mark message as read"
       (interactive)
       (notmuch-search-tag '("-unread")))))
-#+END_SRC
+   #+END_SRC
 ** Goobook
-#+BEGIN_SRC emacs-lisp :tangle yes
+   #+BEGIN_SRC emacs-lisp :tangle yes
   (require 'notmuch-address)
   (setq notmuch-address-command "~/.emacs.d/goobook")
   (notmuch-address-message-insinuate)
-#+END_SRC
+   #+END_SRC
 * Ivy
-I've recently switched over from =helm= to =ivy=. Ivy is simpler, and easier to extend.
+  I've recently switched over from =helm= to =ivy=. Ivy is simpler, and easier to extend.
 ** flx
-Flx is required for fuzzy-matching.
-#+begin_src emacs-lisp :tangle yes
+   Flx is required for fuzzy-matching.
+   #+begin_src emacs-lisp :tangle yes
 (use-package flx)
-#+end_src
+   #+end_src
 ** Counsel
-Counsel contains ivy enhancements for commonly-used functions.
-#+begin_src emacs-lisp :tangle yes
+   Counsel contains ivy enhancements for commonly-used functions.
+   #+begin_src emacs-lisp :tangle yes
   (use-package counsel
     :demand t
     :bind*
@@ -275,10 +275,10 @@ Counsel contains ivy enhancements for commonly-used functions.
     (setq ivy-display-style 'fancy)
     (setq ivy-initial-inputs-alist nil)
     (define-key ivy-minibuffer-map (kbd "<return>") 'ivy-alt-done))
-#+end_src
+   #+end_src
 ** Swiper
-Swiper is ivy-enhanced isearch.
-#+begin_src emacs-lisp :tangle no
+   Swiper is ivy-enhanced isearch.
+   #+begin_src emacs-lisp :tangle no
   (use-package swiper
     :bind*
     (("C-s" . swiper)
@@ -287,25 +287,25 @@ Swiper is ivy-enhanced isearch.
     :bind
     (:map read-expression-map
           ("C-r" . counsel-expression-history)))
-#+end_src
+   #+end_src
 ** Fuzzy Searching
-#+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
   (setq ivy-re-builders-alist
         '((ivy-switch-buffer . ivy--regex-plus)
           (swiper . ivy--regex-plus)
           (t . ivy--regex-fuzzy)))
-#+end_src
+   #+end_src
 ** Ivy custom actions
-#+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
   (define-key ivy-minibuffer-map (kbd "C-:") 'ivy-dired)
   (define-key ivy-minibuffer-map (kbd "C-c o") 'ivy-occur)
   (define-key read-expression-map (kbd "C-r") 'counsel-expression-history)
   (ivy-set-actions
    t
    '(("I" insert "insert")))
-#+end_src
+   #+end_src
 *** Ivy-dired
-#+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp :tangle yes
   (defun ivy-dired ()
     (interactive)
     (if ivy--directory
@@ -319,10 +319,10 @@ Swiper is ivy-enhanced isearch.
        "Not completing files currently")))
 
   (define-key ivy-minibuffer-map (kbd "C-:") 'ivy-dired)
-#+end_src 
+    #+end_src 
 * Moving Around
 ** Crux
-#+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
   (use-package crux 
     :bind* (("C-c o" . crux-open-with)
             ("C-c n" . crux-cleanup-buffer-or-region)
@@ -333,9 +333,9 @@ Swiper is ivy-enhanced isearch.
             ("M-d" . crux-duplicate-current-line-or-region)
             ("M-D" . crux-duplicate-and-comment-current-line-or-region)
             ("s-o" . crux-smart-open-line-above)))
-#+end_src
+   #+end_src
 ** Open file
-#+BEGIN_SRC emacs-lisp :tangle yes
+   #+BEGIN_SRC emacs-lisp :tangle yes
   (defun jethro/open-in-external-app ()
     "Open the current file or dired marked files in external app.
   The app is chosen from your OS's preference."
@@ -364,37 +364,37 @@ Swiper is ivy-enhanced isearch.
            (lambda (-fpath) (let ((process-connection-type nil))
                               (start-process "" nil "xdg-open" -fpath))) -file-list))))))
   (bind-key* "<f8>" 'jethro/open-in-external-app)
-#+END_SRC
+   #+END_SRC
 ** Anzu
-#+BEGIN_SRC emacs-lisp :tangle yes
+   #+BEGIN_SRC emacs-lisp :tangle yes
   (use-package anzu
     :diminish anzu-mode 
     :config
     (global-anzu-mode +1)
     (define-key isearch-mode-map [remap isearch-query-replace]  #'anzu-isearch-query-replace)
     (define-key isearch-mode-map [remap isearch-query-replace-regexp] #'anzu-isearch-query-replace-regexp))
-#+END_SRC
+   #+END_SRC
 ** avy
-Use avy to move between visible text.
-#+begin_src emacs-lisp :tangle yes
+   Use avy to move between visible text.
+   #+begin_src emacs-lisp :tangle yes
 
   (use-package avy
     :bind* (("C-'" . avy-goto-char)
             ("C-," . avy-goto-char-2))
     :config
     (setq avy-keys '(?h ?t ?n ?s)))
-#+end_src
+   #+end_src
 ** dumb-jump
-Use it to jump to function definitions. Requires no external depedencies.
-#+begin_src emacs-lisp :tangle no
+   Use it to jump to function definitions. Requires no external depedencies.
+   #+begin_src emacs-lisp :tangle no
 (use-package dumb-jump
   :diminish dumb-jump-mode
   :bind (("C-M-g" . dumb-jump-go)
          ("C-M-p" . dumb-jump-back)
          ("C-M-q" . dumb-jump-quick-look)))
-#+end_src
+   #+end_src
 ** Window switching
-#+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
   (use-package windmove
     ;; :defer 4
     :ensure t
@@ -403,133 +403,133 @@ Use it to jump to function definitions. Requires no external depedencies.
     (windmove-default-keybindings 'super)
     ;; wrap around at edges
     (setq windmove-wrap-around t))
-#+end_src
+   #+end_src
 ** ace-window (disabled)
-Ace-window makes it easier to move between windows.
-#+begin_src emacs-lisp :tangle no
+   Ace-window makes it easier to move between windows.
+   #+begin_src emacs-lisp :tangle no
   (use-package ace-window
     :bind ("M-'" . ace-window)
     :config
     (setq aw-keys '(?h ?t ?n ?s)))
-#+end_src
+   #+end_src
 ** dired
 *** isearch in dired
-#+BEGIN_SRC emacs-lisp :tangle yes
+    #+BEGIN_SRC emacs-lisp :tangle yes
   (setq dired-isearch-filenames 'dwim)
-#+END_SRC
+    #+END_SRC
 *** trash files instead of deleting them
-#+BEGIN_SRC emacs-lisp :tangle yes
+    #+BEGIN_SRC emacs-lisp :tangle yes
   (setq delete-by-moving-to-trash t)
-#+END_SRC
+    #+END_SRC
 *** find-dired
-#+BEGIN_SRC emacs-lisp :tangle yes
+    #+BEGIN_SRC emacs-lisp :tangle yes
   (require 'find-dired)
   (setq find-ls-option '("-print0 | xargs -0 ls -ld" . "-ld"))
-#+END_SRC
+    #+END_SRC
 *** Hide details
-Hide details and only show file and folder names.
-#+begin_src emacs-lisp :tangle no
+    Hide details and only show file and folder names.
+    #+begin_src emacs-lisp :tangle no
   (defun jethro/dired-mode-setup-hook ()
     "hook for dired-mode"
     (dired-hide-details-mode 1))
 
   (add-hook 'dired-mode-hook 'jethro/dired-mode-setup-hook)
-#+end_src
+    #+end_src
 *** Sort directories first
-#+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp :tangle yes
 (setq dired-listing-switches "-aBhl  --group-directories-first")
-#+end_src
+    #+end_src
 *** Recursive Copying and Deleting
-#+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp :tangle yes
   (setq dired-recursive-copies (quote always))
   (setq dired-recursive-deletes (quote top))
-#+end_src
+    #+end_src
 *** dired-jump from file
-#+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp :tangle yes
   (require 'dired-x)
-#+end_src
+    #+end_src
 *** allow editing of permissions
-#+BEGIN_SRC emacs-lisp :tangle yes
+    #+BEGIN_SRC emacs-lisp :tangle yes
   (setq wdired-allow-to-change-permissions t)
-#+END_SRC
+    #+END_SRC
 *** dired-k
-#+BEGIN_SRC emacs-lisp :tangle yes
+    #+BEGIN_SRC emacs-lisp :tangle yes
   (use-package dired-k
     :config
     (define-key dired-mode-map (kbd "K") 'dired-k)
     (setq dired-k-style 'git))
-#+END_SRC
+    #+END_SRC
 *** dired-narrow
-#+BEGIN_SRC emacs-lisp :tangle yes
+    #+BEGIN_SRC emacs-lisp :tangle yes
   (use-package dired-narrow
     :bind (:map dired-mode-map
                 ("N" . dired-narrow-fuzzy)))
-#+END_SRC
+    #+END_SRC
 *** dired-ranger
-#+BEGIN_SRC emacs-lisp :tangle yes
+    #+BEGIN_SRC emacs-lisp :tangle yes
   (use-package dired-ranger
     :bind (:map dired-mode-map
                 ("C" . dired-ranger-copy)
                 ("P" . dired-ranger-paste)
                 ("M" . dired-ranger-move)))
-#+END_SRC
+    #+END_SRC
 * Editing Text
 ** visual-regexp
-#+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
   (use-package visual-regexp
     :bind* (("C-M-%" . vr/query-replace)
             ("C-c m" . vr/mc-mark)))
-#+end_src
+   #+end_src
 ** electric-pair mode
-#+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
   (add-hook 'after-init-hook (lambda () (electric-pair-mode 1)))
-#+end_src
+   #+end_src
 ** electric-align
-Use multiple spaces to align code and text.
-#+begin_src emacs-lisp :tangle yes
+   Use multiple spaces to align code and text.
+   #+begin_src emacs-lisp :tangle yes
 (use-package electric-align
   :ensure f
   :load-path "elisp/"
   :diminish electric-align-mode
   :config (add-hook 'prog-mode-hook 'electric-align-mode))
-#+end_src
+   #+end_src
 ** aggressive-indent
-Keep your text indented at all times. Remember to turn this off for indentation-dependent languages like Python and Haml.
-#+begin_src emacs-lisp :tangle yes
+   Keep your text indented at all times. Remember to turn this off for indentation-dependent languages like Python and Haml.
+   #+begin_src emacs-lisp :tangle yes
 (use-package aggressive-indent
   :diminish aggressive-indent-mode
   :config (add-hook 'prog-mode-hook 'aggressive-indent-mode))
-#+end_src
+   #+end_src
 ** multiple-cursors
-A port of Sublime Text's multiple-cursors functionality.
-#+begin_src emacs-lisp :tangle yes
+   A port of Sublime Text's multiple-cursors functionality.
+   #+begin_src emacs-lisp :tangle yes
 (use-package multiple-cursors
   :bind (("C-M-c" . mc/edit-lines)
          ("C->" . mc/mark-next-like-this)
          ("C-<" . mc/mark-previous-like-this)
          ("C-c C-<" . mc/mark-all-like-this)))
-#+end_src
+   #+end_src
 ** expand-region
-Use this often, and in combination with multiple-cursors.
-#+begin_src emacs-lisp :tangle yes
+   Use this often, and in combination with multiple-cursors.
+   #+begin_src emacs-lisp :tangle yes
   (use-package expand-region
     :bind (("C-=" . er/expand-region)))
-#+end_src
+   #+end_src
 ** iedit
-#+BEGIN_SRC emacs-lisp :tangle yes
+   #+BEGIN_SRC emacs-lisp :tangle yes
 (use-package iedit)
-#+END_SRC
+   #+END_SRC
 ** paredit
-For editing Lisp code.
-#+begin_src emacs-lisp :tangle no
+   For editing Lisp code.
+   #+begin_src emacs-lisp :tangle no
 (use-package paredit
   :diminish paredit-mode
   :config
   (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
   (add-hook 'clojure-mode-hook 'paredit-mode))
-#+end_src
+   #+end_src
 ** smartparens
-#+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
   (use-package smartparens 
     :init
     (add-hook 'emacs-lisp-mode-hook 'turn-on-smartparens-strict-mode)
@@ -558,9 +558,9 @@ For editing Lisp code.
                 (single-quote . "'")
                 (double-quote . "\"")
                 (back-quote   . "`"))))
-#+end_src
+   #+end_src
 ** zap-up-to-char
-#+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
   (autoload 'zap-up-to-char "misc"
     "Kill up to, but not including ARGth occurrence of CHAR.
 
@@ -568,15 +568,15 @@ For editing Lisp code.
     'interactive)
 
   (bind-key* "M-z" 'zap-up-to-char)
-#+end_src
+   #+end_src
 ** move-text
-#+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
   (use-package move-text
     :bind (("M-<up>" . move-text-up)
            ("M-<down>" . move-text-down)))
-#+end_src
+   #+end_src
 ** Linting with Flycheck
-#+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
   (use-package flycheck
     :config
     (global-set-key (kbd "C-c f")
@@ -594,16 +594,16 @@ For editing Lisp code.
     (use-package flycheck-pos-tip
       :config (flycheck-pos-tip-mode))
     (add-hook 'prog-mode-hook 'global-flycheck-mode))
-#+end_src
+   #+end_src
 ** Templating with Yasnippet
-#+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
   (use-package yasnippet
     :diminish yas-global-mode yas-minor-mode
     :init (add-hook 'after-init-hook 'yas-global-mode)
     :config (setq yas-snippet-dirs '("~/.emacs.d/snippets/")))
-#+end_src
+   #+end_src
 ** Autocompletions with Company
-#+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
 (use-package company
   :diminish company-mode
   :init (progn
@@ -616,9 +616,9 @@ For editing Lisp code.
                 company-transformers '(company-sort-by-occurrence))
           (use-package company-quickhelp
             :config (company-quickhelp-mode 1))))
-#+end_src
+   #+end_src
 ** Spellcheck with Flyspell
-#+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
   (use-package flyspell 
     :ensure f 
     :diminish flyspell-mode
@@ -626,34 +626,34 @@ For editing Lisp code.
     (setenv "DICTIONARY" "en_GB")
     :config   
     (add-hook 'markdown-mode-hook 'flyspell-mode))
-#+end_src
+   #+end_src
 * Language Support
 ** Common Lisp
-#+BEGIN_SRC emacs-lisp :tangle yes
+   #+BEGIN_SRC emacs-lisp :tangle yes
   (use-package slime
     :config
     (setq inferior-lisp-program "/usr/bin/sbcl")
     (setq slime-contribs '(slime-fancy)))
-#+END_SRC
+   #+END_SRC
 ** Emacs Lisp
-#+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
   (bind-key "C-c C-k" 'eval-buffer emacs-lisp-mode-map)
-#+end_src
+   #+end_src
 ** Nix
-#+BEGIN_SRC emacs-lisp :tangle yes
+   #+BEGIN_SRC emacs-lisp :tangle yes
   (use-package nix-mode
     :config
     (add-hook 'nix-mode-hook (lambda ()
                                (aggressive-indent-mode -1))))
-#+END_SRC
+   #+END_SRC
 *** completion
-#+BEGIN_SRC emacs-lisp :tangle yes
+    #+BEGIN_SRC emacs-lisp :tangle yes
   (use-package company-nixos-options
     :config
     (add-to-list 'company-backends 'company-nixos-options))
-#+END_SRC
+    #+END_SRC
 ** Go
-#+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
 (use-package go-mode
   :mode ("\\.go\\'" . go-mode)
   :config (progn
@@ -683,9 +683,9 @@ For editing Lisp code.
               :config (add-hook 'go-mode-hook (lambda ()
                                                 (set (make-local-variable 'company-backends) '(company-go))
                                                 (company-mode))))))
-#+end_src
+   #+end_src
 ** C
-#+BEGIN_SRC emacs-lisp :tangle no
+   #+BEGIN_SRC emacs-lisp :tangle no
   (add-hook 'c-mode-hook
             (lambda ()
               (unless (file-exists-p "Makefile")
@@ -694,10 +694,10 @@ For editing Lisp code.
                        (format "cc -Wall %s -o %s --std=c99"
                                file
                                (file-name-sans-extension file)))))))
-#+END_SRC
+   #+END_SRC
 ** C++
 *** C++ compile function
-#+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp :tangle yes
 (add-hook 'c++-mode-hook
           (lambda ()
             (unless (file-exists-p "Makefile")
@@ -706,9 +706,9 @@ For editing Lisp code.
                      (format "g++ -Wall -s -pedantic-errors %s -o %s --std=c++14"
                              file
                              (file-name-sans-extension file)))))))
-#+end_src
+    #+end_src
 ** Java
-#+BEGIN_SRC emacs-lisp :tangle yes
+   #+BEGIN_SRC emacs-lisp :tangle yes
   (use-package eclim
     :bind (("<f9>" . eclim-run-class))
     :config 
@@ -716,36 +716,36 @@ For editing Lisp code.
     (setq help-at-pt-display-when-idle t)
     (setq help-at-pt-timer-delay 0.1)
     (help-at-pt-set-timer))
-#+END_SRC
+   #+END_SRC
 *** company-emacs-eclim
-#+BEGIN_SRC emacs-lisp :tangle yes
+    #+BEGIN_SRC emacs-lisp :tangle yes
   (use-package company-emacs-eclim
     :config
     (company-emacs-eclim-setup))
-#+END_SRC
+    #+END_SRC
 *** gradle
-#+BEGIN_SRC emacs-lisp :tangle yes
+    #+BEGIN_SRC emacs-lisp :tangle yes
   (use-package gradle-mode
     :diminish gradle-mode
     :config
     (add-hook 'java-mode-hook (lambda ()
                                 (gradle-mode 1))))
 
-#+END_SRC
+    #+END_SRC
 ** Fish
-#+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
   (use-package fish-mode
     :mode ("\\.fish\\'" . fish-mode)
     :init (add-hook 'fish-mode-hook
                     (lambda () (aggressive-indent-mode -1))))
-#+end_src
+   #+end_src
 ** Rust
-#+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
 (use-package rust-mode
   :mode ("\\.rs\\'" . rust-mode))
-#+end_src
+   #+end_src
 ** Python
-#+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
   (use-package elpy
     :mode ("\\.py\\'" . elpy-mode)
     :init
@@ -758,10 +758,10 @@ For editing Lisp code.
       (add-hook 'elpy-mode-hook 'flycheck-mode))
     (elpy-enable)
     (setq elpy-rpc-backend "jedi"))
-#+end_src
+   #+end_src
 ** HTML
 *** Web-mode
- #+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp :tangle yes
    (use-package web-mode
      :mode (("\\.html\\'" . web-mode)
             ("\\.html\\.erb\\'" . web-mode)
@@ -773,50 +773,50 @@ For editing Lisp code.
      (setq web-mode-enable-css-colorization t)
      (setq web-mode-code-indent-offset 2)
      (setq web-mode-markup-indent-offset 2))
- #+end_src
+    #+end_src
 *** Emmet-mode
- #+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp :tangle yes
 (use-package emmet-mode
   :diminish emmet-mode
   :config
   (add-hook 'web-mode-hook 'emmet-mode)
   (add-hook 'vue-mode-hook 'emmet-mode))
- #+end_src
+    #+end_src
 ** CSS
 *** Rainbow-mode
- #+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp :tangle yes
    (use-package rainbow-mode
      :diminish rainbow-mode
      :config
      (add-hook 'css-mode-hook 'rainbow-mode)
      (add-hook 'scss-mode-hook 'rainbow-mode))
- #+end_src
+    #+end_src
 *** SCSS-mode
- #+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp :tangle yes
  (use-package scss-mode
    :mode "\\.scss\\'" 
    :config (progn
              (setq scss-compile-at-save nil)))
- #+end_src
+    #+end_src
 ** JS
 *** Flycheck
-#+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp :tangle yes
   (setq-default flycheck-disabled-checkers
                 (append flycheck-disabled-checkers
                         '(javascript-jshint)))
   (flycheck-add-mode 'javascript-eslint 'js2-mode)
   (flycheck-add-mode 'javascript-eslint 'web-mode)
-#+end_src
+    #+end_src
 *** Skewer
-#+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp :tangle yes
   (use-package skewer-mode  
     :bind (:map skewer-mode-map
                 ("C-c C-k" . skewer-load-buffer))
     :config
     (add-hook 'js2-mode-hook 'skewer-mode))
-#+end_src
+    #+end_src
 *** js-comint
-#+begin_src emacs-lisp :tangle no
+    #+begin_src emacs-lisp :tangle no
   (use-package js-comint
     :config
     (add-hook 'js2-mode-hook
@@ -826,15 +826,15 @@ For editing Lisp code.
                 (local-set-key (kbd "C-c b") 'js-send-buffer)
                 (local-set-key (kbd "C-c C-b") 'js-send-buffer-and-go)
                 (local-set-key (kbd "C-c l") 'js-load-file-and-go))))
-#+end_src
+    #+end_src
 *** JS2-mode
 
-Here I also added =tern-mode=. This requires the tern executable:
-#+begin_src bash :tangle no
+    Here I also added =tern-mode=. This requires the tern executable:
+    #+begin_src bash :tangle no
 npm install -g tern
-#+end_src
+    #+end_src
 
-#+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp :tangle yes
   (use-package js2-mode
     :mode ("\\.js\\'" . js2-mode)
     :config
@@ -845,40 +845,40 @@ npm install -g tern
       (use-package company-tern
         :config
         (add-to-list 'company-backends 'company-tern))))
-#+end_src
+    #+end_src
 *** JS2-refactor
-#+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp :tangle yes
   (use-package js2-refactor
     :config
     (add-hook 'js2-mode-hook #'js2-refactor-mode)
     (js2r-add-keybindings-with-prefix "C-c C-j"))
-#+end_src
+    #+end_src
 *** Vue-mode
-Additional support for Vue.js projects.
+    Additional support for Vue.js projects.
 
- #+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp :tangle yes
  (use-package vue-mode
    :mode "\\.vue\\'")
- #+end_src
+    #+end_src
 ** JSON
- #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
  (use-package json-mode
    :mode "\\.json\\'"
    :config (add-hook 'json-mode-hook (lambda ()
                                        (make-local-variable 'js-indent-level)
                                        (setq js-indent-level 2))))
- #+end_src
+   #+end_src
 ** Markdown
-#+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
 (use-package markdown-mode
   :mode ("\\.md\\'" . markdown-mode)
   :config (progn
             (setq markdown-command "multimarkdown")
             (add-hook 'markdown-mode-hook #'trunc-lines-hook)))
-#+end_src
+   #+end_src
 ** Clojure
 *** Clojure-mode
-#+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp :tangle yes
   (use-package clojure-mode
     :mode (("\\.clj\\'" . clojure-mode)
            ("\\.boot\\'" . clojure-mode)
@@ -890,9 +890,9 @@ Additional support for Vue.js projects.
     (add-hook 'clojure-mode-hook #'subword-mode)
     (add-hook 'clojure-mode-hook #'cider-mode)
     (add-hook 'clojure-mode-hook #'clj-refactor-mode))
-#+end_src
+    #+end_src
 *** Cider
-#+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp :tangle yes
   (use-package cider
     :init
     (add-hook 'cider-mode-hook #'clj-refactor-mode)
@@ -911,23 +911,23 @@ Additional support for Vue.js projects.
           cider-repl-result-prefix ";; => ")
     (setq cider-cljs-lein-repl "(do (use 'figwheel-sidecar.repl-api) (start-figwheel!) (cljs-repl))")
     (cider-repl-toggle-pretty-printing))
-#+end_src
+    #+end_src
 *** clj-refactor
-#+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp :tangle yes
 (use-package clj-refactor
   :defines cljr-add-keybindings-with-prefix
   :diminish clj-refactor-mode
   :config (cljr-add-keybindings-with-prefix "C-c C-j"))
-#+end_src
+    #+end_src
 *** Squiggly-clojure
-#+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp :tangle yes
   (use-package flycheck-clojure
     :config
     (flycheck-clojure-setup))
-#+end_src
+    #+end_src
 ** Latex
 *** AucTeX
-#+BEGIN_SRC emacs-lisp :tangle yes
+    #+BEGIN_SRC emacs-lisp :tangle yes
   (use-package auctex
     :defer t
     :config
@@ -949,38 +949,38 @@ Additional support for Vue.js projects.
     (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
     (add-hook 'LaTeX-mode-hook 'TeX-source-correlate-mode)
     (add-hook 'LaTeX-mode-hook 'TeX-PDF-mode))
-#+END_SRC
+    #+END_SRC
 *** Autocomplete support
-#+BEGIN_SRC emacs-lisp :tangle yes
+    #+BEGIN_SRC emacs-lisp :tangle yes
   (use-package company-auctex
     :defer t)
-#+END_SRC
+    #+END_SRC
 * Visual Enhancements
 ** linum-mode (Disabled)
-#+begin_src emacs-lisp :tangle no
+   #+begin_src emacs-lisp :tangle no
 (add-hook 'prog-mode-hook 
   (lambda ()
     (linum-mode 1)))
-#+end_src
+   #+end_src
 ** hl-line-mode
-#+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
 (global-hl-line-mode 1)
-#+end_src
+   #+end_src
 ** whitespace-mode
-Show fill-column.
-#+begin_src emacs-lisp :tangle yes
+   Show fill-column.
+   #+begin_src emacs-lisp :tangle yes
 (require 'whitespace)
 (setq whitespace-line-column 80) ;; limit line length
 (setq whitespace-style '(face lines-tail))
 
 (add-hook 'prog-mode-hook 'whitespace-mode)
-#+end_src
+   #+end_src
 ** Page-break-lines
-#+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
 (use-package page-break-lines)
-#+end_src
+   #+end_src
 ** Smart-mode-line
-#+begin_src emacs-lisp :tangle no
+   #+begin_src emacs-lisp :tangle no
   (use-package smart-mode-line
     :config
     (add-hook 'after-init-hook 'sml/setup)
@@ -1004,59 +1004,59 @@ Show fill-column.
                                ","
                                "ElDoc")
                              "\\|"))))
-#+end_src
+   #+end_src
 *** Showing time
-#+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp :tangle yes
 (setq display-time-24hr-format t)
 (display-time-mode 1)
-#+end_src
+    #+end_src
 ** nyan-mode
-#+begin_src emacs-lisp :tangle no
+   #+begin_src emacs-lisp :tangle no
   (use-package nyan-mode
     :config
     (nyan-mode 1))
-#+end_src
+   #+end_src
 ** Zooming
-#+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle yes
 (defhydra hydra-zoom (global-map "<f2>")
   "zoom"
   ("i" text-scale-increase "in")
   ("o" text-scale-decrease "out"))
-#+end_src
+   #+end_src
 ** beacon
-Beacon makes sure you don't lose track of your cursor when jumping around a buffer.
-#+begin_src emacs-lisp :tangle yes
+   Beacon makes sure you don't lose track of your cursor when jumping around a buffer.
+   #+begin_src emacs-lisp :tangle yes
   (use-package beacon
     :diminish beacon-mode
     :config
     (beacon-mode 1)
     (setq beacon-push-mark 10))
-#+end_src
+   #+end_src
 ** show-paren
-Always show matching parenthesis.
-#+begin_src emacs-lisp :tangle yes
+   Always show matching parenthesis.
+   #+begin_src emacs-lisp :tangle yes
 (show-paren-mode 1)
 (setq show-paren-delay 0)
-#+end_src
+   #+end_src
 ** golden-ratio
-Give the working window more screen estate.
-#+begin_src emacs-lisp :tangle yes
+   Give the working window more screen estate.
+   #+begin_src emacs-lisp :tangle yes
 (use-package golden-ratio
   :diminish golden-ratio-mode
   :config (progn
             (add-to-list 'golden-ratio-extra-commands 'ace-window)
             (golden-ratio-mode 1)))
-#+end_src
+   #+end_src
 ** volatile-highlights
-Highlights recently copied/pasted text.
-#+begin_src emacs-lisp :tangle yes
+   Highlights recently copied/pasted text.
+   #+begin_src emacs-lisp :tangle yes
 (use-package volatile-highlights
   :diminish volatile-highlights-mode
   :config (volatile-highlights-mode t))
-#+end_src
+   #+end_src
 ** git-gutter-fringe+
-Displays added/modified/deleted on the left.
-#+begin_src emacs-lisp :tangle yes
+   Displays added/modified/deleted on the left.
+   #+begin_src emacs-lisp :tangle yes
   (use-package git-gutter-fringe+
     :config
     (global-git-gutter+-mode)
@@ -1064,7 +1064,7 @@ Displays added/modified/deleted on the left.
     (set-face-foreground 'git-gutter+-added    "SeaGreen")
     (set-face-foreground 'git-gutter+-deleted  "IndianRed")
     (setq git-gutter-fr+-side 'left-fringe))
-#+end_src
+   #+end_src
 * Org-mode
 ** Getting Started
    :PROPERTIES:
@@ -1107,7 +1107,7 @@ This enables `auto-fill-mode` for org-mode files
  #+end_src
 ** Column view
 #+BEGIN_SRC emacs-lisp :tangle yes
-  (setq org-columns-default-format "%Effort{:} %5CLOCKSUM(CLK) %5CLOCKSUM_T(CLK_T) %TODO %ITEM")
+  (setq org-columns-default-format "%Effort{:} %5CLOCKSUM(CLK) %5CLOCKSUM_T(CLK_T) %1PRIORITY(P) %TODO %ITEM")
 #+END_SRC
 ** Tasks and States
    :PROPERTIES:
@@ -1451,13 +1451,16 @@ This enables `auto-fill-mode` for org-mode files
              (tags "REFILE"
                    ((org-agenda-overriding-header "Tasks to Refile")
                     (org-tags-match-list-sublevels nil)))
+             (todo "NEXT"
+                   ((org-agenda-overriding-header "School Next Tasks")
+                    (org-agenda-files '("~/.org/gtd/school.org"))))
+             (todo "TODO"
+                   ((org-agenda-overriding-header "School Todos")
+                    (org-agenda-files '("~/.org/gtd/school.org"))))
              (tags-todo "-CANCELLED/!"
                         ((org-agenda-overriding-header "Stuck Projects")
                          (org-agenda-skip-function 'bh/skip-non-stuck-projects)
                          (org-agenda-sorting-strategy '(category-keep)))) 
-             (todo "TODO"
-                   ((org-agenda-overriding-header "School Work")
-                    (org-agenda-files '("~/.org/gtd/school.org"))))
              (tags-todo "-HOLD-CANCELLED/!"
                         ((org-agenda-overriding-header "Projects")
                          (org-agenda-skip-function 'bh/skip-non-projects)
@@ -1569,51 +1572,8 @@ This enables `auto-fill-mode` for org-mode files
  is something that is available to work on /now/, it is the next
  logical step in some project.
 
- I used to have a special keyword =ONGOING= for things that I do a lot
- and want to clock but never really start/end.  I had a special agenda
- view for =ONGOING= tasks that I would pull up to easily find the thing
- I want to clock.
-
- Since then I've moved away from using the =ONGOING= todo keyword.
- Having an agenda view that shows =NEXT= tasks makes it easy to pick
- the thing to clock - and I don't have to remember if I need to look in
- the =ONGOING= list or the =NEXT= list when looking for the task to
- clock-in.  The =NEXT= list is basically 'what is current' - any task
- that moves a project forward.  I want to find the thing to work on as
- fast as I can and actually do work on it - not spend time hunting
- through my org files for the task that needs to be clocked-in.
-
  To drop a task off the =NEXT= list simply move it back to the =TODO=
  state.
-*** Reading email, newsgroups, and conversations on IRC
-    :PROPERTIES:
-    :CUSTOM_ID: ReadingMailNewsIRC
-    :END:
-
- When reading email, newsgroups, and conversations on IRC I just let
- the default task (normally =** Organization=) clock the time I spend on
- these tasks.  To read email I go to Gnus and read everything in my
- inboxes.  If there are emails that require a response I use
- org-capture to create a new task with a heading of 'Respond to <user>'
- for each one.  This automatically links to the email in the task and
- makes it easy to find later.  Some emails are quick to respond to and
- some take research and a significant amount of time to complete.  I
- clock each one in it's own task just in case I need that clocked time
- later.  The capture template for Repond To tasks is now scheduled for
- today so I can refile the task to the appropriate org file without
- losing the task for a week.
-
- Next, I go to my newly created tasks to be refiled from the block
- agenda with =F12 a= and clock in an email task and deal with it.
- Repeat this until all of the 'Respond to <user>' tasks are marked
- =DONE=.
-
- I read email and newgroups in Gnus so I don't separate clocked time
- for quickly looking at things.  If an article has a useful piece of
- information I want to remember I create a note for it with =C-c c n=
- and enter the topic and file it.  This takes practically no time at
- all and I know the note is safely filed for later retrieval.  The time
- I spend in the capture buffer is clocked with that capture note.
 *** Filtering
     :PROPERTIES:
     :CUSTOM_ID: CustomAgendaViewFiltering
@@ -1699,19 +1659,6 @@ This enables `auto-fill-mode` for org-mode files
  find tasks with a specific tag easily across your large number of
  org-mode files.
 
- Some tags are mutually exclusive.  These are defined in a group so
- that only one of the tags can be applied to a task at a time
- (disregarding tag inheritance).  I use these types for tags for
- applying context to a task.  (Work tasks have an =@office= tag, and
- are done at the office, Farm tasks have an =@farm= tag and are done at
- the farm -- I can't change the oil on the tractor if I'm not at the
- farm... so I hide these and other tasks by filtering my agenda view to
- only =@office= tasks when I'm at the office.)
-
- Tasks are grouped together in org-files and a =#+FILETAGS:= entry
- applies a tag to all tasks in the file.  I use this to apply a tag to
- all tasks in the file.  My norang.org file creates a NORANG file tag
- so I can filter tasks in the agenda in the norang.org file easily.
 *** Tags
     :PROPERTIES:
     :CUSTOM_ID: OrgTagAlist
@@ -2165,11 +2112,10 @@ This enables `auto-fill-mode` for org-mode files
    Skip project and sub-project tasks, habits, and loose non-project tasks."
      (save-restriction
        (widen)
-       (let* ((subtree-end (save-excursion (org-end-of-subtree t)))
+       (let* ((subtree-end (save-excursion (org-end-of-subtrqee t)))
               (next-headline (save-excursion (or (outline-next-heading) (point-max)))))
          (cond
-          ((bh/is-project-p)
-           next-headline) 
+          ((bh/is-project-p) next-headline) 
           ((and (bh/is-project-subtree-p)
                 (member (org-get-todo-state) (list "NEXT")))
            subtree-end)
@@ -2215,68 +2161,16 @@ This enables `auto-fill-mode` for org-mode files
    :PROPERTIES:
    :CUSTOM_ID: Archiving
    :END:
-*** Archiving Subtrees
-    :PROPERTIES:
-    :CUSTOM_ID: ArchivingSubtrees
-    :END:
-
- My archiving procedure has changed.  I used to move entire subtrees to
- a separate archive file for the project.  Task subtrees in =FILE.org=
- get archived to =FILE.org_archive= using the =a y= command in the
- agenda.
-
- I still archive to the same archive file as before but now I archive
- any done state todo task that is old enough to archive.  Tasks to
- archive are listed automatically at the end of my block agenda and
- these are guaranteed to be old enough that I've already billed any
- time associated with these tasks.  This cleans up my project trees and
- removes the old tasks that are no longer interesting.  The archived
- tasks get extra property data created during the archive procedure so
- that it is possible to reconstruct exactly where the archived entry
- came from in the rare case where you want to unarchive something.
-
- My archive files are huge but so far I haven't found a need to split
- them by year (or decade) :)
-
- Archivable tasks show up in the last section of my block agenda when a
- new month starts.  Any tasks that are done but have no timestamps this
- month or last month (ie. they are over 30 days old) are available to
- archive.  Timestamps include closed dates, notes, clock data, etc - any
- active or inactive timestamp in the task.
-
- Archiving is trivial.  Just mark all of the entries in the block agenda
- using the =m= key and then archive them all to the appropriate place
- with =B $=.  This normally takes less than 5 minutes once a month.
 *** Archive Setup
     :PROPERTIES:
     :CUSTOM_ID: ArchiveSetup
     :END:
-
- I no longer use an =ARCHIVE= property in my subtrees.  Tasks can just
- archive normally to the =Archived Tasks= heading in the archive file.
-
- The following setting ensures that task states are untouched when they
- are archived.  This makes it possible to archive tasks that are not
- marked =DONE=.  By default tasks are archived under the heading =*
- Archived Tasks= in the archive file.
-
- This archiving function does not keep your project trees intact.  It
- archives done state tasks after they are old enough to they are
- removed from the main org file.  It should be possible to reconstruct
- the original tree from the archive detail properties but I've never
- needed to do this yet.  The archived detail is very useful the few
- times a year I actually need to look for some archived data but most
- of the time I just move it out of the way and keep it for historical
- purposes.
-
- #+header: :tangle yes
- #+begin_src emacs-lisp
+ #+begin_src emacs-lisp :tangle yes
  (setq org-archive-mark-done nil)
  (setq org-archive-location "%s_archive::* Archived Tasks")
  #+end_src
 
- #+header: :tangle yes
- #+begin_src emacs-lisp
+ #+begin_src emacs-lisp :tangle yes
  (defun bh/skip-non-archivable-tasks ()
    "Skip trees that are not available for archiving"
    (save-restriction
@@ -2300,32 +2194,6 @@ This enables `auto-fill-mode` for org-mode files
              (or subtree-end (point-max)))
          next-headline))))
  #+end_src
-*** Archive Tag - Hiding Information
-    :PROPERTIES:
-    :CUSTOM_ID: ArchiveTagHidesInfo
-    :END:
-
- The only time I set the ARCHIVE tag on a task is to prevent it from
- opening by default because it has tons of information I don't really
- need to look at on a regular basis.  I can open the task with C-TAB if
- I need to see the gory details (like a huge table of data related to
- the task) but normally I don't need that information displayed.
-*** When to Archive
-    :PROPERTIES:
-    :CUSTOM_ID: WhenToArchive
-    :END:
-
- Archiving monthly works well for me.  I keep completed tasks around
- for at least 30 days before archiving them.  This keeps current
- clocking information for the last 30 days out of the archives.  This
- keeps my files that contribute to the agenda fairly current (this
- month, and last month, and anything that is unfinished).  I only
- rarely visit tasks in the archive when I need to pull up ancient
- history for something.
-
- Archiving keeps my main working files clutter-free.  If I ever need
- the detail for the archived tasks they are available in the
- appropriate archive file.
 ** Reminders
    :PROPERTIES:
    :CUSTOM_ID: Reminders

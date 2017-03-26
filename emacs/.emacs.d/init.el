@@ -684,7 +684,7 @@ The app is chosen from your OS's preference."
 
 (global-set-key (kbd "<f11>") 'org-clock-goto)
 
-(setq org-columns-default-format "%Effort{:} %5CLOCKSUM(CLK) %5CLOCKSUM_T(CLK_T) %TODO %ITEM")
+(setq org-columns-default-format "%Effort{:} %5CLOCKSUM(CLK) %5CLOCKSUM_T(CLK_T) %1PRIORITY(P) %TODO %ITEM")
 
 (setq org-todo-keywords
       (quote ((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
@@ -817,13 +817,16 @@ Captured %<%Y-%m-%d %H:%M>
           (tags "REFILE"
                 ((org-agenda-overriding-header "Tasks to Refile")
                  (org-tags-match-list-sublevels nil)))
+          (todo "NEXT"
+                ((org-agenda-overriding-header "School Next Tasks")
+                 (org-agenda-files '("~/.org/gtd/school.org"))))
+          (todo "TODO"
+                ((org-agenda-overriding-header "School Todos")
+                 (org-agenda-files '("~/.org/gtd/school.org"))))
           (tags-todo "-CANCELLED/!"
                      ((org-agenda-overriding-header "Stuck Projects")
                       (org-agenda-skip-function 'bh/skip-non-stuck-projects)
                       (org-agenda-sorting-strategy '(category-keep)))) 
-          (todo "TODO"
-                ((org-agenda-overriding-header "School Work")
-                 (org-agenda-files '("~/.org/gtd/school.org"))))
           (tags-todo "-HOLD-CANCELLED/!"
                      ((org-agenda-overriding-header "Projects")
                       (org-agenda-skip-function 'bh/skip-non-projects)
@@ -1129,11 +1132,10 @@ Skip project and sub-project tasks, and project related tasks."
 Skip project and sub-project tasks, habits, and loose non-project tasks."
   (save-restriction
     (widen)
-    (let* ((subtree-end (save-excursion (org-end-of-subtree t)))
+    (let* ((subtree-end (save-excursion (org-end-of-subtrqee t)))
            (next-headline (save-excursion (or (outline-next-heading) (point-max)))))
       (cond
-       ((bh/is-project-p)
-        next-headline) 
+       ((bh/is-project-p) next-headline) 
        ((and (bh/is-project-subtree-p)
              (member (org-get-todo-state) (list "NEXT")))
         subtree-end)
