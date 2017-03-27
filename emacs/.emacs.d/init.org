@@ -835,16 +835,17 @@ npm install -g tern
     #+end_src
 
     #+begin_src emacs-lisp :tangle yes
-  (use-package js2-mode
-    :mode ("\\.js\\'" . js2-mode)
-    :config
-    (use-package tern
-      :diminish tern-mode
-      :config    
-      (add-hook 'js2-mode-hook 'tern-mode)
-      (use-package company-tern
+      (use-package js2-mode
+        :mode ("\\.js\\'" . js2-mode)
         :config
-        (add-to-list 'company-backends 'company-tern))))
+        (use-package tern
+          :diminish tern-mode
+          :config
+          (setq js-switch-indent-offset 2)
+          (add-hook 'js2-mode-hook 'tern-mode) 
+          (use-package company-tern
+            :config
+            (add-to-list 'company-backends 'company-tern))))
     #+end_src
 *** JS2-refactor
     #+begin_src emacs-lisp :tangle yes
