@@ -819,9 +819,13 @@ Captured %<%Y-%m-%d %H:%M>
                  (org-tags-match-list-sublevels nil)))
           (todo "NEXT"
                 ((org-agenda-overriding-header "School Next Tasks")
+                 (org-agenda-todo-ignore-scheduled t)
+                 (org-agenda-todo-ignore-deadlines t)
                  (org-agenda-files '("~/.org/gtd/school.org"))))
           (todo "TODO"
                 ((org-agenda-overriding-header "School Todos")
+                 (org-agenda-todo-ignore-scheduled t)
+                 (org-agenda-todo-ignore-deadlines t) 
                  (org-agenda-files '("~/.org/gtd/school.org"))))
           (tags-todo "-CANCELLED/!"
                      ((org-agenda-overriding-header "Stuck Projects")
@@ -1201,23 +1205,10 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
             (or subtree-end (point-max)))
         next-headline))))
 
-; Erase all reminders and rebuilt reminders for today from the agenda
-(defun bh/org-agenda-to-appt ()
-  (interactive)
-  (setq appt-time-msg-list nil)
-  (org-agenda-to-appt))
-
-; Rebuild the reminders everytime the agenda is displayed
-(add-hook 'org-finalize-agenda-hook 'bh/org-agenda-to-appt 'append)
-
-; This is at the end of my .emacs - so appointments are set up when Emacs starts
-(bh/org-agenda-to-appt)
-
-; Activate appointments so we get notifications
-(appt-activate t)
-
-; If we leave Emacs running overnight - reset the appointments one minute after midnight
-(run-at-time "24:01" nil 'bh/org-agenda-to-appt)
+(use-package org-alert
+  :config
+  (org-alert-enable)
+  (setq alert-default-style 'libnotify))
 
 (use-package htmlize
   :config
