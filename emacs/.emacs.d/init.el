@@ -533,8 +533,9 @@ The app is chosen from your OS's preference."
   :config
   (use-package tern
     :diminish tern-mode
-    :config    
-    (add-hook 'js2-mode-hook 'tern-mode)
+    :config
+    (setq js-switch-indent-offset 2)
+    (add-hook 'js2-mode-hook 'tern-mode) 
     (use-package company-tern
       :config
       (add-to-list 'company-backends 'company-tern))))
