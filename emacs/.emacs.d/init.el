@@ -722,48 +722,36 @@ Switch projects and subprojects from NEXT back to TODO"
 (setq org-directory "~/.org/gtd/")
 (setq org-default-notes-file "~/.org/gtd/inbox.org")
 
-(defvar jethro/org-basic-inbox-template "* TODO %^{Task}
+(defvar jethro/org-basic-inbox-template "* TODO [#B] %?
 :PROPERTIES:
 :EFFORT: %^{effort|1:00|0:05|0:15|0:30|2:00|4:00}
 :END:
 Captured %<%Y-%m-%d %H:%M>
 %a
 %i
-%?")
+")
+
+(require 'org-protocol)
 
 ;; Capture templates for: TODO tasks, Notes, appointments, phone calls, meetings, and org-protocol
 (setq org-capture-templates
       `(("t" "todo" entry (file "~/.org/gtd/inbox.org")
          ,jethro/org-basic-inbox-template)
         ("r" "respond" entry (file "~/.org/gtd/inbox.org")
-         "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)))
+         "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
+        ("w" "Web site" entry (file "~/.org/gtd/websites.org")
+         "* %c\n %(progn (setq jethro/delete-frame-after-capture t))" :immediate-finish t)))
 
-(use-package org-protocol-capture-html
-  :ensure f
-  :load-path "./elisp/org-protocol-capture-html"
-  :config
-  (require 'org-protocol)
-  (require 'org-protocol-capture-html)
-  (add-to-list 'org-capture-templates
-               '("w" "Web site" entry (file "~/.org/gtd/websites.org")
-                 "* %c\n%:initial" :immediate-finish t)))
+(defvar jethro/delete-frame-after-capture nil
+  "Whether to delete the last frame after the current capture")
 
-(defadvice org-capture-finalize
-    (after delete-capture-frame activate)
-  "Advise capture-finalize to close the frame"
-  (if (equal "capture" (frame-parameter nil 'name))
-      (delete-frame)))
-
-(defadvice org-capture-destroy
-    (after delete-capture-frame activate)
-  "Advise capture-destroy to close the frame"
-  (if (equal "capture" (frame-parameter nil 'name))
-      (delete-frame)))
-
-;; make the frame contain a single window. by default org-capture
-;; splits the window.
-(add-hook 'org-capture-mode-hook
-          'delete-other-windows)
+(defun jethro/delete-frame-if-neccessary (&rest r)
+  (if (or (equal "capture" (frame-parameter nil 'name))
+          jethro/delete-frame-after-capture)
+      (progn
+        (setq jethro/delete-frame-after-capture nil)
+        (delete-frame))
+    (setq jethro/delete-frame-after-capture nil)))
 
 (defadvice org-switch-to-buffer-other-window
     (after supress-window-splitting activate)
@@ -781,7 +769,12 @@ Captured %<%Y-%m-%d %H:%M>
                  (height . 15)))) 
   (setq word-wrap 1)
   (setq truncate-lines nil)
+  (setq jethro/delete-frame-after-capture t)
   (org-capture nil "t"))
+
+(advice-add 'org-capture-finalize :after 'jethro/delete-frame-if-neccessary)
+(advice-add 'org-capture-kill :after 'jethro/delete-frame-if-neccessary)
+(advice-add 'org-capture-refile :after 'jethro/delete-frame-if-neccessary)
 
 ; Targets include this file and any file contributing to the agenda - up to 9 levels deep
 (setq org-refile-targets (quote ((nil :maxlevel . 9)
