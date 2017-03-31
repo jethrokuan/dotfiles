@@ -60,16 +60,6 @@
 (setq auto-save-file-name-transforms
       `((".*" ,temporary-file-directory t)))
 
-(message "Deleting old backup files...")
-(let ((week (* 60 60 24 7))
-      (current (float-time (current-time))))
-  (dolist (file (directory-files temporary-file-directory t))
-    (when (and (backup-file-name-p file)
-               (> (- current (float-time (fifth (file-attributes file))))
-                  week))
-      (message "%s" file)
-      (delete-file file))))
-
 (load "~/.emacs.d/secrets.el" t)
 
 (use-package exec-path-from-shell 
@@ -539,6 +529,17 @@ The app is chosen from your OS's preference."
     (use-package company-tern
       :config
       (add-to-list 'company-backends 'company-tern))))
+
+(use-package js-doc
+  :config
+  (setq js-doc-mail-address "jethrokuan95@gmail.com"
+        js-doc-author (format "Jethro Kuan <%s>" js-doc-mail-address)
+        js-doc-url "http://www.jethrokuan.com/"
+        js-doc-license "MIT")
+  (add-hook 'js2-mode-hook
+            #'(lambda ()
+                (define-key js2-mode-map "\C-ci" 'js-doc-insert-function-doc)
+                (define-key js2-mode-map "@" 'js-doc-insert-tag))))
 
 (use-package js2-refactor
   :config

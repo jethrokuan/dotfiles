@@ -126,7 +126,7 @@
 
    The following code will delete all backup files that are older than a certain date:
 
-   #+begin_src emacs-lisp :tangle yes
+   #+begin_src emacs-lisp :tangle no
 (message "Deleting old backup files...")
 (let ((week (* 60 60 24 7))
       (current (float-time (current-time))))
@@ -847,6 +847,19 @@ npm install -g tern
             :config
             (add-to-list 'company-backends 'company-tern))))
     #+end_src
+*** js-doc
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (use-package js-doc
+    :config
+    (setq js-doc-mail-address "jethrokuan95@gmail.com"
+          js-doc-author (format "Jethro Kuan <%s>" js-doc-mail-address)
+          js-doc-url "http://www.jethrokuan.com/"
+          js-doc-license "MIT")
+    (add-hook 'js2-mode-hook
+              #'(lambda ()
+                  (define-key js2-mode-map "\C-ci" 'js-doc-insert-function-doc)
+                  (define-key js2-mode-map "@" 'js-doc-insert-tag))))
+#+END_SRC
 *** JS2-refactor
     #+begin_src emacs-lisp :tangle yes
   (use-package js2-refactor
