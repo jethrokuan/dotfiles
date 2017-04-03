@@ -739,9 +739,9 @@ Captured %<%Y-%m-%d %H:%M>
       `(("t" "todo" entry (file "~/.org/gtd/inbox.org")
          ,jethro/org-basic-inbox-template)
         ("r" "respond" entry (file "~/.org/gtd/inbox.org")
-         "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t)
+         "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t) 
         ("w" "Web site" entry (file "~/.org/gtd/websites.org")
-         "* %c\n %(progn (setq jethro/delete-frame-after-capture t))" :immediate-finish t)))
+         "* %c\n" :immediate-finish t)))
 
 (defvar jethro/delete-frame-after-capture nil
   "Whether to delete the last frame after the current capture")
