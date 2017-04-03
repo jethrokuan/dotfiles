@@ -3,7 +3,7 @@ IMAPAccount gmail
 Host imap.gmail.com
 User jethrokuan95@gmail.com
 # To store the password in an encrypted file use PassCmd instead of Pass
-PassCmd "pass Email/jethrokuan95@gmail.com"
+PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mail.gpg"
 #
 # Use SSL
 SSLType IMAPS
@@ -19,8 +19,6 @@ MaildirStore gmail-local
 # The trailing "/" is important
 Path ~/.mail/gmail/
 Inbox ~/.mail/gmail/Inbox
-SubFolders Verbatim
-
 
 Channel gmail
 Master :gmail-remote:
