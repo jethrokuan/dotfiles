@@ -438,24 +438,6 @@ The app is chosen from your OS's preference."
                              file
                              (file-name-sans-extension file)))))))
 
-(use-package eclim
-  :bind (("<f9>" . eclim-run-class))
-  :config 
-  (global-eclim-mode)
-  (setq help-at-pt-display-when-idle t)
-  (setq help-at-pt-timer-delay 0.1)
-  (help-at-pt-set-timer))
-
-(use-package company-emacs-eclim
-  :config
-  (company-emacs-eclim-setup))
-
-(use-package gradle-mode
-  :diminish gradle-mode
-  :config
-  (add-hook 'java-mode-hook (lambda ()
-                              (gradle-mode 1))))
-
 (use-package fish-mode
   :mode ("\\.fish\\'" . fish-mode)
   :init (add-hook 'fish-mode-hook

@@ -707,31 +707,6 @@
                              file
                              (file-name-sans-extension file)))))))
     #+end_src
-** Java
-   #+BEGIN_SRC emacs-lisp :tangle yes
-  (use-package eclim
-    :bind (("<f9>" . eclim-run-class))
-    :config 
-    (global-eclim-mode)
-    (setq help-at-pt-display-when-idle t)
-    (setq help-at-pt-timer-delay 0.1)
-    (help-at-pt-set-timer))
-   #+END_SRC
-*** company-emacs-eclim
-    #+BEGIN_SRC emacs-lisp :tangle yes
-  (use-package company-emacs-eclim
-    :config
-    (company-emacs-eclim-setup))
-    #+END_SRC
-*** gradle
-    #+BEGIN_SRC emacs-lisp :tangle yes
-  (use-package gradle-mode
-    :diminish gradle-mode
-    :config
-    (add-hook 'java-mode-hook (lambda ()
-                                (gradle-mode 1))))
-
-    #+END_SRC
 ** Fish
    #+begin_src emacs-lisp :tangle yes
   (use-package fish-mode
