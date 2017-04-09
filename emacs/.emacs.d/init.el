@@ -477,12 +477,6 @@ The app is chosen from your OS's preference."
   (add-hook 'web-mode-hook 'emmet-mode)
   (add-hook 'vue-mode-hook 'emmet-mode))
 
-(use-package rainbow-mode
-  :diminish rainbow-mode
-  :config
-  (add-hook 'css-mode-hook 'rainbow-mode)
-  (add-hook 'scss-mode-hook 'rainbow-mode))
-
 (use-package scss-mode
   :mode "\\.scss\\'" 
   :config (progn

@@ -759,7 +759,7 @@
     #+end_src
 ** CSS
 *** Rainbow-mode
-    #+begin_src emacs-lisp :tangle yes
+    #+begin_src emacs-lisp :tangle no
    (use-package rainbow-mode
      :diminish rainbow-mode
      :config
