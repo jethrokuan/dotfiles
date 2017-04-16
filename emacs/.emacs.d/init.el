@@ -834,11 +834,12 @@ Captured %<%Y-%m-%d %H:%M>
                      ((org-agenda-overriding-header (concat "Standalone Tasks"
                                                             (if bh/hide-scheduled-and-waiting-next-tasks
                                                                 ""
-                                                              " (including WAITING and SCHEDULED tasks)"))) 
+                                                              " (including WAITING and SCHEDULED tasks)")))
+                      (org-agenda-files (remove "~/.org/gtd/school.org" org-agenda-files))
                       (org-agenda-skip-function 'bh/skip-project-tasks)
-                      (org-agenda-todo-ignore-scheduled bh/hide-scheduled-and-waiting-next-tasks)
-                      (org-agenda-todo-ignore-deadlines bh/hide-scheduled-and-waiting-next-tasks)
-                      (org-agenda-todo-ignore-with-date bh/hide-scheduled-and-waiting-next-tasks)
+                      (org-agenda-todo-ignore-scheduled t)
+                      (org-agenda-todo-ignore-deadlines t)
+                      (org-agenda-todo-ignore-with-date t)
                       (org-agenda-sorting-strategy
                        '(category-keep))))
           (tags-todo "-CANCELLED+WAITING|HOLD/!"
