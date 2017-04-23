@@ -129,7 +129,7 @@
 (use-package flx)
 
 (use-package counsel
-  :demand t
+  :diminish ivy-mode
   :bind*
   (("C-c C-r" . ivy-resume)
    ("M-a" . counsel-M-x)
@@ -138,19 +138,21 @@
    ("C-x j" . counsel-dired-jump)
    ("C-x l" . counsel-locate)
    ("C-c j" . counsel-git-grep)
-   ("C-c k" . counsel-rg)
+   ("C-c s" . counsel-rg)
+   ("C-c f" . counsel-recentf)
    ("M-y" . counsel-yank-pop))
-  :bind (:map help-map
+  :bind ((:map help-map
               ("f" . counsel-describe-function)
               ("v" . counsel-describe-variable)
               ("l" . counsel-info-lookup-symbol))
+         (:map ivy-minibuffer-map
+               ("<return>" . ivy-alt-done)))
   :config
   (ivy-mode 1)
   (setq counsel-find-file-at-point t)
   (setq ivy-use-virtual-buffers t)
   (setq ivy-display-style 'fancy)
-  (setq ivy-initial-inputs-alist nil)
-  (define-key ivy-minibuffer-map (kbd "<return>") 'ivy-alt-done))
+  (setq ivy-initial-inputs-alist nil))
 
 (setq ivy-re-builders-alist
       '((ivy-switch-buffer . ivy--regex-plus)
@@ -336,7 +338,7 @@ The app is chosen from your OS's preference."
 
 (use-package flycheck
   :config
-  (global-set-key (kbd "C-c f")
+  (global-set-key (kbd "C-c h f")
                   (defhydra hydra-flycheck
                     (:pre (progn (setq hydra-lv t) (flycheck-list-errors))
                           :post (progn (setq hydra-lv nil) (quit-windows-on "*Flycheck errors*"))
@@ -635,6 +637,7 @@ The app is chosen from your OS's preference."
   :config (volatile-highlights-mode t))
 
 (use-package git-gutter-fringe+
+  :diminish git-gutter+-mode
   :config
   (global-git-gutter+-mode)
   (set-face-foreground 'git-gutter+-modified "gold1")
@@ -1316,17 +1319,15 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
   :bind ("<f5>"))
 
 (use-package smerge-mode
-  :functions smerge-next smerge-prev smerge-keep-all smerge-keep-mine smerge-keep-other
   :config
-  (progn
-    (global-set-key (kbd "C-c s")
-                    (defhydra hydra-smerge (:body-pre (smerge-mode 1) :color red)
-                      "Smerge mode"
-                      ("<down>" smerge-next        "Next conflict")
-                      ("<up>"   smerge-prev        "Previous conflict")
-                      ("M-a"    smerge-keep-all    "Keep all")
-                      ("M-m"    smerge-keep-mine   "Keep mine")
-                      ("M-o"    smerge-keep-other  "Keep other")))))
+  (global-set-key (kbd "C-c h s")
+                  (defhydra hydra-smerge (:pre (smerge-mode 1) :color red :post (smerge-mode -1))
+                    "Smerge mode"
+                    ("<down>" smerge-next        "Next conflict")
+                    ("<up>"   smerge-prev        "Previous conflict")
+                    ("M-a"    smerge-keep-all    "Keep all")
+                    ("M-m"    smerge-keep-mine   "Keep mine")
+                    ("M-o"    smerge-keep-other  "Keep other"))))
 
 (use-package magit  
   :bind (("s-g" . magit-status)
