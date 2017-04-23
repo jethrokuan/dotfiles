@@ -147,39 +147,34 @@
               ("v" . counsel-describe-variable)
               ("l" . counsel-info-lookup-symbol)))
   :config
+  (defun ivy-dired ()
+    (interactive)
+    (if ivy--directory
+        (ivy-quit-and-run
+         (dired ivy--directory)
+         (when (re-search-forward
+                (regexp-quote
+                 (substring ivy--current 0 -1)) nil t)
+           (goto-char (match-beginning 0))))
+      (user-error
+       "Not completing files currently")))
   (ivy-mode 1)
   (setq counsel-find-file-at-point t)
   (setq ivy-use-virtual-buffers t)
   (setq ivy-display-style 'fancy)
   (setq ivy-initial-inputs-alist nil)
-  (define-key ivy-minibuffer-map (kbd "<return>") 'ivy-alt-done)
-  (define-key ivy-minibuffer-map (kbd "M-<return>") 'ivy-immediate-done))
-
-(setq ivy-re-builders-alist
+  (setq ivy-re-builders-alist'
       '((ivy-switch-buffer . ivy--regex-plus)
         (swiper . ivy--regex-plus)
         (t . ivy--regex-fuzzy)))
-
-(define-key ivy-minibuffer-map (kbd "C-:") 'ivy-dired)
-(define-key ivy-minibuffer-map (kbd "C-c o") 'ivy-occur)
-(define-key read-expression-map (kbd "C-r") 'counsel-expression-history)
-(ivy-set-actions
- t
- '(("I" insert "insert")))
-
-(defun ivy-dired ()
-  (interactive)
-  (if ivy--directory
-      (ivy-quit-and-run
-       (dired ivy--directory)
-       (when (re-search-forward
-              (regexp-quote
-               (substring ivy--current 0 -1)) nil t)
-         (goto-char (match-beginning 0))))
-    (user-error
-     "Not completing files currently")))
-
-(define-key ivy-minibuffer-map (kbd "C-:") 'ivy-dired)
+  (define-key ivy-minibuffer-map (kbd "C-:") 'ivy-dired)
+  (define-key ivy-minibuffer-map (kbd "C-c o") 'ivy-occur)
+  (define-key read-expression-map (kbd "C-r") 'counsel-expression-history)
+  (ivy-set-actions
+    t
+    '(("I" insert "insert")))
+  (define-key ivy-minibuffer-map (kbd "<return>") 'ivy-alt-done)
+  (define-key ivy-minibuffer-map (kbd "M-<return>") 'ivy-immediate-done))
 
 (use-package crux 
   :bind* (("C-c o" . crux-open-with)
