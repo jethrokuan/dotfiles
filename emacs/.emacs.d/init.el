@@ -710,7 +710,7 @@ Captured %<%Y-%m-%d %H:%M>
          ,jethro/org-basic-inbox-template :immediate-finish t)
         ("r" "respond" entry (file "~/.org/gtd/inbox.org")
          "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t) 
-        ("w" "Web site" entry (file "~/.org/gtd/websites.org")
+        ("w" "Web site" entry (file "~/.org/deft/websites.org")
          "* %c\n" :immediate-finish t)))
 
 (defvar jethro/delete-frame-after-capture nil

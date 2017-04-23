@@ -1324,7 +1324,7 @@ This enables `auto-fill-mode` for org-mode files
             ,jethro/org-basic-inbox-template :immediate-finish t)
            ("r" "respond" entry (file "~/.org/gtd/inbox.org")
             "* NEXT Respond to %:from on %:subject\nSCHEDULED: %t\n%U\n%a\n" :clock-in t :clock-resume t :immediate-finish t) 
-           ("w" "Web site" entry (file "~/.org/gtd/websites.org")
+           ("w" "Web site" entry (file "~/.org/deft/websites.org")
             "* %c\n" :immediate-finish t)))
  #+end_src
 ** org-capture shortcut
