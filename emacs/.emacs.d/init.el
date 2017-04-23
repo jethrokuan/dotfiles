@@ -298,34 +298,29 @@ The app is chosen from your OS's preference."
 
 (use-package iedit)
 
-(use-package smartparens 
+(use-package smartparens
   :init
   (add-hook 'emacs-lisp-mode-hook 'turn-on-smartparens-strict-mode)
   (add-hook 'clojure-mode-hook 'turn-on-smartparens-strict-mode)
+  (add-hook 'org-mode-hook 'turn-on-smartparens-strict-mode)
+  (add-hook 'js2-mode-hook 'turn-on-smartparens-strict-mode)
   :config
   (require 'smartparens-config)
-  (setq sp-base-key-bindings 'paredit)
-  (setq sp-autoskip-closing-pair 'always)
-  (setq sp-hybrid-kill-entire-symbol nil)
-  (sp-use-paredit-bindings)
-  (defmacro def-pairs (pairs)
-    `(progn
-       ,@(loop for (key . val) in pairs
-               collect
-               `(defun ,(read (concat
-                               "wrap-with-"
-                               (prin1-to-string key)
-                               "s"))
-                    (&optional arg)
-                  (interactive "p")
-                  (sp-wrap-with-pair ,val)))))
 
-  (def-pairs ((paren        . "(")
-              (bracket      . "[")
-              (brace        . "{")
-              (single-quote . "'")
-              (double-quote . "\"")
-              (back-quote   . "`"))))
+  ;; Org-mode config
+  (sp-with-modes 'org-mode
+    (sp-local-pair "*" "*" :actions '(insert wrap) :unless '(sp-point-after-word-p sp-point-at-bol-p) :wrap "C-*" :skip-match 'sp--org-skip-asterisk)
+    (sp-local-pair "_" "_" :unless '(sp-point-after-word-p) :wrap "C-_")
+    (sp-local-pair "/" "/" :unless '(sp-point-after-word-p) :post-handlers '(("[d1]" "SPC")))
+    (sp-local-pair "~" "~" :unless '(sp-point-after-word-p) :post-handlers '(("[d1]" "SPC")))
+    (sp-local-pair "=" "=" :unless '(sp-point-after-word-p) :post-handlers '(("[d1]" "SPC")))
+    (sp-local-pair "«" "»"))
+
+  (defun sp--org-skip-asterisk (ms mb me)
+    (or (and (= (line-beginning-position) mb)
+             (eq 32 (char-after (1+ mb))))
+        (and (= (1+ (line-beginning-position)) me)
+             (eq 32 (char-after me))))))
 
 (autoload 'zap-up-to-char "misc"
   "Kill up to, but not including ARGth occurrence of CHAR.
