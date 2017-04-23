@@ -2248,11 +2248,29 @@ I use export to LaTeX through ox-latex, using xelatex for a nicer export templat
         '("pdflatex -shell-escape -interaction nonstopmode %f"
           "pdflatex -shell-escape -interaction nonstopmode %f"))
   (require 'ox-latex)
+  (setq org-latex-default-table-environment "tabularx")
   (setq org-latex-tables-booktabs t)
   (setq org-latex-listings 'minted)
   (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
   (setq org-latex-classes
-        '(("book"
+        '(("article"
+           "\\documentclass[8pt]{article}
+            \\usepackage[margin={0.8in,1in}, a4paper]{geometry}
+            \\usepackage{booktabs}
+            \\usepackage{hyperref}
+            \\usepackage{tabularx}
+            \\usepackage{parskip}
+            \\setlength\\columnsep{10pt}
+            \\setlength{\\columnseprule}{1pt}
+               [NO-DEFAULT-PACKAGES]
+               [PACKAGES]
+               [EXTRA]"
+           ("\\section{%s}" . "\\section*{%s}")
+           ("\\subsection{%s}" . "\\subsection*{%s}")
+           ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+           ("\\paragraph{%s}" . "\\paragraph*{%s}")
+           ("\\subparagraph{%s}" . "\\subparagraph*{%s}")) 
+          ("book"
            "\\documentclass[10pt]{memoir}
                         \\usepackage{charter}
                         \\usepackage[T1]{fontenc}
