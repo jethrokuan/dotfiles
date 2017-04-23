@@ -137,6 +137,7 @@
    ("C-x C-f" . counsel-find-file)
    ("C-x j" . counsel-dired-jump)
    ("C-x l" . counsel-locate)
+   ("C-c g" . counsel-git)
    ("C-c j" . counsel-git-grep)
    ("C-c s" . counsel-rg)
    ("C-c f" . counsel-recentf)
@@ -144,15 +145,15 @@
   :bind ((:map help-map
               ("f" . counsel-describe-function)
               ("v" . counsel-describe-variable)
-              ("l" . counsel-info-lookup-symbol))
-         (:map ivy-minibuffer-map
-               ("<return>" . ivy-alt-done)))
+              ("l" . counsel-info-lookup-symbol)))
   :config
   (ivy-mode 1)
   (setq counsel-find-file-at-point t)
   (setq ivy-use-virtual-buffers t)
   (setq ivy-display-style 'fancy)
-  (setq ivy-initial-inputs-alist nil))
+  (setq ivy-initial-inputs-alist nil)
+  (define-key ivy-minibuffer-map (kbd "<return>") 'ivy-alt-done)
+  (define-key ivy-minibuffer-map (kbd "M-<return>") 'ivy-immediate-done))
 
 (setq ivy-re-builders-alist
       '((ivy-switch-buffer . ivy--regex-plus)
