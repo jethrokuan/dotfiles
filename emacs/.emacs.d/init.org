@@ -2291,6 +2291,7 @@ I use export to LaTeX through ox-latex, using xelatex for a nicer export templat
           \\usepackage[margin={0.3in,0.3in}, a4paper,landscape]{geometry}
           \\usepackage{multicol}
           \\usepackage{minted}
+          \\setminted[]{frame=none,fontsize=\\footnotesize}
           \\usepackage{booktabs}
           \\usepackage{titlesec}
           \\usepackage{enumitem}

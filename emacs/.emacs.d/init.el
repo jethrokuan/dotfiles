@@ -1259,6 +1259,7 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
         \\usepackage[margin={0.3in,0.3in}, a4paper,landscape]{geometry}
         \\usepackage{multicol}
         \\usepackage{minted}
+        \\setminted[]{frame=none,fontsize=\\footnotesize}
         \\usepackage{booktabs}
         \\usepackage{titlesec}
         \\usepackage{enumitem}
