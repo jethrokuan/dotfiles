@@ -1253,7 +1253,7 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
         \\usepackage{amsmath}
         \\usepackage{multicol}
         \\usepackage{minted}
-        \\setminted[]{frame=none,fontsize=\\footnotesize,linenos=false}
+        \\setminted_[]{frame=none,fontsize=\\footnotesize,linenos=false}
         \\usepackage{booktabs}
         \\usepackage{titlesec}
         \\usepackage{enumitem}
