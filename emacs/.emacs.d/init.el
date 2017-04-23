@@ -1219,13 +1219,6 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 (setq org-latex-tables-booktabs t)
 (setq org-latex-listings 'minted)
 (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
-(setq org-latex-minted-options
-      '(("frame" "lines")
-        ("linenos")
-        ("numbersep" "5pt")
-        ("framesep" "2mm")
-        ("fontfamily" "tt")))
-
 (setq org-latex-classes
       '(("book"
          "\\documentclass[10pt]{memoir}
@@ -1255,10 +1248,12 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
          ("\\paragraph{%s}" . "\\paragraph*{%s}")
          ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
         ("latex-notes"
-         "\\documentclass[8pt]{amsmath}
+         "\\documentclass[8pt]{article}
         \\usepackage[margin={0.3in,0.3in}, a4paper,landscape]{geometry}
+        \\usepackage{amsmath}
         \\usepackage{multicol}
         \\usepackage{minted}
+        \\setminted[]{frame=none,fontsize=\\footnotesize,linenos=false}
         \\usepackage{booktabs}
         \\usepackage{titlesec}
         \\usepackage{enumitem}
@@ -1275,7 +1270,6 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
         \\setlength{\\columnseprule}{1pt}
         \\usepackage{enumitem}
         \\setlist{nosep}"
-         ("\\chapter{%s}" . "\\chapter*{%s}")
          ("\\section{%s}" . "\\section*{%s}")
          ("\\subsection{%s}" . "\\subsection*{%s}")
          ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
@@ -1286,6 +1280,7 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
   (let ((contents (buffer-string))
         (buffer-name (file-name-sans-extension buffer-file-name)))
     (with-temp-buffer
+      (insert "#+LATEX_CLASS: latex-notes\n")
       (insert contents)
       (goto-char (point-min))
       (org-next-visible-heading 1)
@@ -1299,6 +1294,7 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
   (let ((contents (buffer-string))
         (buffer-name (file-name-sans-extension buffer-file-name)))
     (with-temp-buffer
+      (insert "#+LATEX_CLASS: latex-notes\n")
       (insert contents)
       (goto-char (point-min))
       (org-next-visible-heading 1)
