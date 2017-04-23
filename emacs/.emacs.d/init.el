@@ -1225,9 +1225,10 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
         ("numbersep" "5pt")
         ("framesep" "2mm")
         ("fontfamily" "tt")))
-(add-to-list 'org-latex-classes
-             '("book"
-               "\\documentclass[10pt]{memoir}
+
+(setq org-latex-classes
+      '(("book"
+         "\\documentclass[10pt]{memoir}
                       \\usepackage{charter}
                       \\usepackage[T1]{fontenc}
                       \\usepackage{booktabs}
@@ -1247,35 +1248,72 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
                       \\title{}
                       [NO-DEFAULT-PACKAGES]
                       [NO-PACKAGES]"
-               ("\\chapter{%s}" . "\\chapter*{%s}")
-               ("\\section{%s}" . "\\section*{%s}")
-               ("\\subsection{%s}" . "\\subsection*{%s}")
-               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-               ("\\paragraph{%s}" . "\\paragraph*{%s}")
-               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-(add-to-list 'org-latex-classes
-             '("books"
-               "\\documentclass[oneside]{tufte-book}
-                      \\usepackage{charter}
-                      \\usepackage{booktabs}
-                      \\usepackage{minted}
-                      \\usemintedstyle{bw}
-                      \\usepackage{graphicx}
+         ("\\chapter{%s}" . "\\chapter*{%s}")
+         ("\\section{%s}" . "\\section*{%s}")
+         ("\\subsection{%s}" . "\\subsection*{%s}")
+         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+         ("\\paragraph{%s}" . "\\paragraph*{%s}")
+         ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))
+        ("latex-notes"
+         "\\documentclass[8pt]{amsmath}
+        \\usepackage[margin={0.3in,0.3in}, a4paper,landscape]{geometry}
+        \\usepackage{multicol}
+        \\usepackage{minted}
+        \\usepackage{booktabs}
+        \\usepackage{titlesec}
+        \\usepackage{enumitem}
+        \\usepackage[compact]{titlesec}
+        \\titlespacing{\\section}{0pt}{*2}{*0}
+        \\titlespacing{\\subsection}{0pt}{*2}{*0}
+        \\titlespacing{\\subsubsection}{0pt}{*2}{*0}
+        \\titleformat*{\\section}{\\large\\bfseries}
+        \\titleformat*{\\subsection}{\\normalsize\\bfseries}
+        \\titleformat*{\\subsubsection}{\\normalsize\\bfseries}
+        \\usemintedstyle{bw}
+        \\setlist[itemize]{leftmargin=*}
+        \\setlength\\columnsep{10pt}
+        \\setlength{\\columnseprule}{1pt}
+        \\usepackage{enumitem}
+        \\setlist{nosep}"
+         ("\\chapter{%s}" . "\\chapter*{%s}")
+         ("\\section{%s}" . "\\section*{%s}")
+         ("\\subsection{%s}" . "\\subsection*{%s}")
+         ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+         ("\\paragraph{%s}" . "\\paragraph*{%s}")
+         ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 
-                      \\usepackage{hyperref}
-                      \\hypersetup{colorlinks}
+(defun jethro/org-multicol-to-latex (async subtreep visible-only body-only)
+  (let ((contents (buffer-string))
+        (buffer-name (file-name-sans-extension buffer-file-name)))
+    (with-temp-buffer
+      (insert contents)
+      (goto-char (point-min))
+      (org-next-visible-heading 1)
+      (insert "#+BEGIN_EXPORT latex\n\\begin{multicols*}{4}\n#+END_EXPORT\n")
+      (goto-char (point-max))
+      (insert "#+BEGIN_EXPORT latex\n\\end{multicols*}\n#+END_EXPORT")
+      (org-export-to-file 'latex (format "%s.tex" buffer-name)
+        async subtreep visible-only body-only nil))))
 
-                      \\setlength{\\parskip}{1em}
+(defun jethro/org-multicol-to-pdf (async subtreep visible-only body-only)
+  (let ((contents (buffer-string))
+        (buffer-name (file-name-sans-extension buffer-file-name)))
+    (with-temp-buffer
+      (insert contents)
+      (goto-char (point-min))
+      (org-next-visible-heading 1)
+      (insert "#+BEGIN_EXPORT latex\n\\begin{multicols*}{4}\n#+END_EXPORT\n")
+      (goto-char (point-max))
+      (insert "#+BEGIN_EXPORT latex\n\\end{multicols*}\n#+END_EXPORT")
+      (org-export-to-file 'latex (format "%s.tex" buffer-name)
+        async subtreep visible-only body-only nil
+        (lambda (file) (org-latex-compile file))))))
 
-                      \\title{}
-                      [NO-DEFAULT-PACKAGES]
-                      [NO-PACKAGES]"
-               ("\\chapter{%s}" . "\\chapter*{%s}")
-               ("\\section{%s}" . "\\section*{%s}")
-               ("\\subsection{%s}" . "\\subsection*{%s}")
-               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-               ("\\paragraph{%s}" . "\\paragraph*{%s}")
-               ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+(org-export-define-derived-backend 'latex-notes 'latex
+  :menu-entry
+  '(?L "Export to LaTeX notes"
+       ((?l "Export to LaTeX" jethro/org-multicol-to-latex)
+        (?p "Export to PDF" jethro/org-multicol-to-pdf))))
 
 (use-package org-download
   :config
