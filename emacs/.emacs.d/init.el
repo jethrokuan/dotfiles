@@ -129,6 +129,7 @@
 (use-package flx)
 
 (use-package counsel
+  :demand t
   :diminish ivy-mode
   :bind*
   (("C-c C-r" . ivy-resume)
@@ -143,9 +144,9 @@
    ("C-c f" . counsel-recentf)
    ("M-y" . counsel-yank-pop))
   :bind ((:map help-map
-              ("f" . counsel-describe-function)
-              ("v" . counsel-describe-variable)
-              ("l" . counsel-info-lookup-symbol)))
+               ("f" . counsel-describe-function)
+               ("v" . counsel-describe-variable)
+               ("l" . counsel-info-lookup-symbol)))
   :config
   (defun ivy-dired ()
     (interactive)
@@ -164,15 +165,15 @@
   (setq ivy-display-style 'fancy)
   (setq ivy-initial-inputs-alist nil)
   (setq ivy-re-builders-alist'
-      '((ivy-switch-buffer . ivy--regex-plus)
-        (swiper . ivy--regex-plus)
-        (t . ivy--regex-fuzzy)))
+        '((ivy-switch-buffer . ivy--regex-plus)
+          (swiper . ivy--regex-plus)
+          (t . ivy--regex-fuzzy)))
   (define-key ivy-minibuffer-map (kbd "C-:") 'ivy-dired)
   (define-key ivy-minibuffer-map (kbd "C-c o") 'ivy-occur)
   (define-key read-expression-map (kbd "C-r") 'counsel-expression-history)
   (ivy-set-actions
-    t
-    '(("I" insert "insert")))
+   t
+   '(("I" insert "insert")))
   (define-key ivy-minibuffer-map (kbd "<return>") 'ivy-alt-done)
   (define-key ivy-minibuffer-map (kbd "M-<return>") 'ivy-immediate-done))
 
