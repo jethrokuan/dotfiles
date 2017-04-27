@@ -1218,7 +1218,11 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
         "pdflatex -shell-escape -interaction nonstopmode %f"))
 (require 'ox-latex)
 (setq org-latex-default-table-environment "tabular")
-(setq org-latex-packages-alist '("tabularx" "hyperref" "booktabs" "parskip" "geometry"))
+
+(setq org-latex-listings t)
+(setq org-latex-packages-alist '(("" "listings")
+                                 ("" "color")
+                                 ("" "tabularx")))
 (setq org-latex-tables-booktabs t)
 (setq org-latex-listings 'minted)
 (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
@@ -1274,7 +1278,7 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
         \\usepackage{amsmath}
         \\usepackage{multicol}
         \\usepackage{minted}
-        \\setminted_[]{frame=none,fontsize=\\footnotesize,linenos=false}
+        \\setminted[]{frame=none,fontsize=\\footnotesize,linenos=false}
         \\usepackage{booktabs}
         \\usepackage{titlesec}
         \\usepackage{enumitem}
