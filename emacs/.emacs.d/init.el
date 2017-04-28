@@ -1277,8 +1277,6 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
         \\usepackage{hyperref}
         \\usepackage{amsmath}
         \\usepackage{multicol}
-        \\usepackage{minted}
-        \\setminted[]{frame=none,fontsize=\\footnotesize,linenos=false}
         \\usepackage{booktabs}
         \\usepackage{titlesec}
         \\usepackage{enumitem}
@@ -1289,12 +1287,13 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
         \\titleformat*{\\section}{\\large\\bfseries}
         \\titleformat*{\\subsection}{\\normalsize\\bfseries}
         \\titleformat*{\\subsubsection}{\\normalsize\\bfseries}
-        \\usemintedstyle{bw}
         \\setlist[itemize]{leftmargin=*}
         \\setlength\\columnsep{10pt}
-        \\setlength{\\columnseprule}{1pt}
-        \\usepackage{enumitem}
-        \\setlist{nosep}"
+        \\setlength{\\columnseprule}{1pt}       
+        \\setlist{nosep}
+        \\usepackage{minted}
+        \\setminted[]{frame=none,fontsize=\\footnotesize,linenos=false}
+        \\usemintedstyle{bw}"
          ("\\section{%s}" . "\\section*{%s}")
          ("\\subsection{%s}" . "\\subsection*{%s}")
          ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
