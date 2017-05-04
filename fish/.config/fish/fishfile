@@ -1,8 +1,10 @@
+fisherman/all
 fisherman/await
 fisherman/debug
 jethrokuan/fish-direnv
 jethrokuan/fish-emacs
 jethrokuan/fnm
+fisherman/fzf
 fisherman/get
 fisherman/get_file_age
 fisherman/getopts
@@ -10,6 +12,7 @@ fisherman/git_util
 jethrokuan/gitalias
 fisherman/host_info
 fisherman/humanize_duration
+fisherman/koi
 fisherman/last_job_id
 fisherman/menu
 fisherman/mono
