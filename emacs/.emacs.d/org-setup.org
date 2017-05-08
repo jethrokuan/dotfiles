@@ -1,0 +1,58 @@
+#+TITLE: Org Mode for GTD
+#+AUTHOR: Jethro Kuan
+#+STARTUP: showall
+
+* Org Mode for GTD
+This document aims to extensively document my implementation of
+Getting Things Done, a methodology by David Allen. This will always be
+a work-in-progress, and is *fully representative* of the GTD setup I
+am currently using.
+
+This document is written primarily for my own reference.
+However, it is also written with readers who are looking for
+inspiration when implementing GTD in org-mode.
+
+** Reasoning 
+There is no shortage of existing GTD implementations, in org-mode.
+Perhaps the best reference document out there is by Bernt Hansen,
+published [[http://doc.norang.ca/org-mode.html][here]]. However, there are some slight deviations from the GTD
+that David Allen proposes, and some conveniences he takes making the
+GTD system he implements weaker, that can perhaps be solved by writing
+some Elisp. This is a major adaptation of his setup, but with
+additional customizations that make it closer to the ideal system that
+David Allen speaks about.
+
+** Org-mode Setup
+We use =org-plus-contrib=, which contains several contrib plugins that
+may come in handy later, including =org-drill= and some =org-babel=
+language support.
+
+To install =org-plus-contrib=, one has to add the package archive to
+Emacs. This is typically where you also add MELPA.
+
+#+BEGIN_SRC emacs-lisp :tangle no
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+  (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
+  (package-initialize))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package org-plus-contrib
+     :bind (("C-c l" . org-store-link)
+            ("C-c a" . org-agenda)
+            ("C-c b" . org-iswitchb)
+            ("C-c c" . org-capture))
+     :config
+     (add-to-list 'auto-mode-alist '("\\.\\(org\\|org_archive\\|txt\\)$" . org-mode)))
+#+END_SRC
+
+** Organizing Your Life Into Org-mode Files
+Bernt Hansen uses separate files as logical groups, such as a
+separation between work and life. This may suit your purpose, but this
+makes it a lot harder to write general Elisp code for. Once a new
+logical group appears, the code that generates the weekly review would
+have to change as well, for example.
+
+Instead, I use David Allen
