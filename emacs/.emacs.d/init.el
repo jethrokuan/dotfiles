@@ -1,3 +1,6 @@
+(load "server")
+(unless (server-running-p) (server-start))
+
 (when (>= emacs-major-version 24)
   (require 'package)
   (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
@@ -451,7 +454,9 @@ The app is chosen from your OS's preference."
     (remove-hook 'elpy-mode-hook 'elpy-module-highlight-indentation)
     (add-hook 'elpy-mode-hook 'flycheck-mode))
   (elpy-enable)
-  (setq elpy-rpc-backend "jedi"))
+  (use-package py-autopep8
+    :init
+    (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save))
 
 (use-package web-mode
   :mode (("\\.html\\'" . web-mode)
