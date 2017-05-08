@@ -444,9 +444,9 @@ The app is chosen from your OS's preference."
   :mode ("\\.rs\\'" . rust-mode))
 
 (use-package elpy
-  :mode ("\\.py\\'" . elpy-mode)
   :init
   (add-hook 'python-mode-hook (lambda () (aggressive-indent-mode -1)))
+  (add-hook 'python-mode-hook 'elpy-mode)
   :config
   (when (require 'flycheck nil t)
     (remove-hook 'elpy-modules 'elpy-module-flymake)
