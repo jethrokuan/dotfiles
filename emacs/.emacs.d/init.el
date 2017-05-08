@@ -311,8 +311,7 @@ The app is chosen from your OS's preference."
 
   ;; Org-mode config
   (sp-with-modes 'org-mode
-    (sp-local-pair "'" nil :actions :rem)
-    (sp-local-pair "\"" nil :actions :rem)
+    (sp-local-pair "'" nil :actions :rem)        
     (sp-local-pair "*" "*" :actions '(insert wrap) :unless '(sp-point-after-word-p sp-point-at-bol-p) :wrap "C-*" :skip-match 'sp--org-skip-asterisk)
     (sp-local-pair "_" "_" :unless '(sp-point-after-word-p) :wrap "C-_")
     (sp-local-pair "/" "/" :unless '(sp-point-after-word-p) :post-handlers '(("[d1]" "SPC")))
