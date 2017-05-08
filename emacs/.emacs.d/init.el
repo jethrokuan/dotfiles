@@ -456,7 +456,7 @@ The app is chosen from your OS's preference."
   (elpy-enable)
   (use-package py-autopep8
     :init
-    (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save))
+    (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)))
 
 (use-package web-mode
   :mode (("\\.html\\'" . web-mode)
