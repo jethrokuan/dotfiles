@@ -301,6 +301,45 @@ The app is chosen from your OS's preference."
 (use-package iedit)
 
 (use-package smartparens
+  :bind
+  (:map smartparens-mode-map
+        ("C-M-f" . sp-forward-sexp)
+        ("C-M-b" . sp-backward-sexp)
+
+        ("C-M-d" . sp-down-sexp)
+        ("C-M-a" . sp-backward-down-sexp)
+        ("C-S-d" . sp-beginning-of-sexp)
+        ("C-S-a" . sp-end-of-sexp)
+
+        ("C-M-e" . sp-up-sexp)
+        ("C-M-u" . sp-backward-up-sexp)
+        ("C-M-t" . sp-transpose-sexp)
+
+        ("C-M-n" . sp-next-sexp)
+        ("C-M-p" . sp-previous-sexp)
+
+        ("C-M-k" . sp-kill-sexp)
+        ("C-M-w" . sp-copy-sexp)
+
+        ("M-<delete>" . sp-unwrap-sexp)
+        ("M-<backspace>" . sp-backward-unwrap-sexp)
+
+        ("C-<right>" . sp-forward-slurp-sexp)
+        ("C-<left>" . sp-forward-barf-sexp)
+        ("C-M-<left>" . sp-backward-slurp-sexp)
+        ("C-M-<right>" . sp-backward-barf-sexp)
+
+        ("M-D" . sp-splice-sexp)
+        ("C-M-<delete>" . sp-splice-sexp-killing-forward)
+        ("C-M-<backspace>" . sp-splice-sexp-killing-backward)
+        ("C-S-<backspace>" . sp-splice-sexp-killing-around)
+
+        ("C-]" . sp-select-next-thing-exchange)
+        ("C-<left_bracket>" . sp-select-previous-thing)
+        ("C-M-]" . sp-select-next-thing)
+
+        ("M-F" . sp-forward-symbol)
+        ("M-B" . sp-backward-symbol))
   :init
   (add-hook 'emacs-lisp-mode-hook 'turn-on-smartparens-strict-mode)
   (add-hook 'clojure-mode-hook 'turn-on-smartparens-strict-mode)
@@ -325,12 +364,6 @@ The app is chosen from your OS's preference."
              (eq 32 (char-after (1+ mb))))
         (and (= (1+ (line-beginning-position)) me)
              (eq 32 (char-after me))))))
-
-(defun sp--point-after-space-p (id action context)
-  "Return t if point is after a space, nil otherwise.  This
-predicate is only tested on \"insert\" action."
-  (when (eq action 'insert)
-    (= ?\s (char-before (point)))))
 
 (autoload 'zap-up-to-char "misc"
   "Kill up to, but not including ARGth occurrence of CHAR.
@@ -464,6 +497,18 @@ predicate is only tested on \"insert\" action."
 (use-package py-autopep8
   :init
   (add-hook 'python-mode-hook 'py-autopep8-enable-on-save))
+
+(use-package pyvenv)
+
+(use-package pytest
+  :bind (:map python-mode-map
+              ("C-c a" . pytest-all)
+              ("C-c m" . pytest-module)
+              ("C-c ." . pytest-one)
+              ("C-c d" . pytest-directory)
+              ("C-c p a" . pytest-pdb-all)
+              ("C-c p m" . pytest-pdb-module)
+              ("C-c p ." . pytest-pdb-one)))
 
 (use-package web-mode
   :mode (("\\.html\\'" . web-mode)
