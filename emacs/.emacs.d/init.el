@@ -353,7 +353,7 @@ The app is chosen from your OS's preference."
   (sp-with-modes 'org-mode
     (sp-local-pair "'" nil :unless '(sp-point-after-word-p))
     (sp-local-pair "*" "*" :actions '(insert wrap) :unless '(sp-point-after-word-p sp-point-at-bol-p) :wrap "C-*" :skip-match 'sp--org-skip-asterisk)
-    (sp-local-pair "_" "_" :unless '(sp-point-after-word-p) :wrap "C-_")
+    (sp-local-pair "_" "_" :unless '(sp-point-after-word-p))
     (sp-local-pair "/" "/" :unless '(sp-point-after-word-p) :post-handlers '(("[d1]" "SPC")))
     (sp-local-pair "~" "~" :unless '(sp-point-after-word-p) :post-handlers '(("[d1]" "SPC")))
     (sp-local-pair "=" "=" :unless '(sp-point-after-word-p) :post-handlers '(("[d1]" "SPC")))
@@ -492,7 +492,7 @@ The app is chosen from your OS's preference."
 (use-package company-anaconda
   :config
   (eval-after-load "company"
-    '(add-to-list 'company-backends '(company-anaconda :with company-capf))))
+    '(add-to-list 'company-backends '(company-anaconda))))
 
 (use-package py-autopep8
   :init
