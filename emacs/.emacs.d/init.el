@@ -312,7 +312,7 @@ The app is chosen from your OS's preference."
   ;; Org-mode config
 
   (sp-with-modes 'org-mode
-    (sp-local-pair "'" nil :actions nil)
+    (sp-local-pair "'" nil :unless '(sp-point-after-word-p))
     (sp-local-pair "*" "*" :actions '(insert wrap) :unless '(sp-point-after-word-p sp-point-at-bol-p) :wrap "C-*" :skip-match 'sp--org-skip-asterisk)
     (sp-local-pair "_" "_" :unless '(sp-point-after-word-p) :wrap "C-_")
     (sp-local-pair "/" "/" :unless '(sp-point-after-word-p) :post-handlers '(("[d1]" "SPC")))
@@ -325,6 +325,12 @@ The app is chosen from your OS's preference."
              (eq 32 (char-after (1+ mb))))
         (and (= (1+ (line-beginning-position)) me)
              (eq 32 (char-after me))))))
+
+(defun sp--point-after-space-p (id action context)
+  "Return t if point is after a space, nil otherwise.  This
+predicate is only tested on \"insert\" action."
+  (when (eq action 'insert)
+    (= ?\s (char-before (point)))))
 
 (autoload 'zap-up-to-char "misc"
   "Kill up to, but not including ARGth occurrence of CHAR.
@@ -445,20 +451,19 @@ The app is chosen from your OS's preference."
 (use-package rust-mode
   :mode ("\\.rs\\'" . rust-mode))
 
-(use-package elpy
+(use-package anaconda-mode
   :init
-  (add-hook 'python-mode-hook (lambda () (aggressive-indent-mode -1)))
-  (add-hook 'python-mode-hook 'elpy-mode)
+  (add-hook 'python-mode-hook 'anaconda-mode)
+  (add-hook 'python-mode-hook 'anaconda-eldoc-mode))
+
+(use-package company-anaconda
   :config
-  (when (require 'flycheck nil t)
-    (remove-hook 'elpy-modules 'elpy-module-flymake)
-    (remove-hook 'elpy-modules 'elpy-module-yasnippet)
-    (remove-hook 'elpy-mode-hook 'elpy-module-highlight-indentation)
-    (add-hook 'elpy-mode-hook 'flycheck-mode))
-  (elpy-enable)
-  (use-package py-autopep8
-    :init
-    (add-hook 'elpy-mode-hook 'py-autopep8-enable-on-save)))
+  (eval-after-load "company"
+    '(add-to-list 'company-backends '(company-anaconda :with company-capf))))
+
+(use-package py-autopep8
+  :init
+  (add-hook 'python-mode-hook 'py-autopep8-enable-on-save))
 
 (use-package web-mode
   :mode (("\\.html\\'" . web-mode)
