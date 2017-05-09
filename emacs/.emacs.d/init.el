@@ -305,41 +305,23 @@ The app is chosen from your OS's preference."
   (:map smartparens-mode-map
         ("C-M-f" . sp-forward-sexp)
         ("C-M-b" . sp-backward-sexp)
-
-        ("C-M-d" . sp-down-sexp)
-        ("C-M-a" . sp-backward-down-sexp)
-        ("C-S-d" . sp-beginning-of-sexp)
-        ("C-S-a" . sp-end-of-sexp)
-
-        ("C-M-e" . sp-up-sexp)
         ("C-M-u" . sp-backward-up-sexp)
-        ("C-M-t" . sp-transpose-sexp)
-
-        ("C-M-n" . sp-next-sexp)
-        ("C-M-p" . sp-previous-sexp)
-
-        ("C-M-k" . sp-kill-sexp)
-        ("C-M-w" . sp-copy-sexp)
-
-        ("M-<delete>" . sp-unwrap-sexp)
-        ("M-<backspace>" . sp-backward-unwrap-sexp)
-
+        ("C-M-d" . sp-down-sexp)
+        ("C-M-p" . sp-backward-down-sexp)
+        ("C-M-n" . sp-up-sexp)
+        ("M-s" . sp-splice-sexp)
+        ("M-<up>" . sp-splice-sexp-killing-backward)
+        ("M-<down>" . sp-splice-sexp-killing-forward)
+        ("M-r" . sp-splice-sexp-killing-around)
+        ("C-)" . sp-forward-slurp-sexp)
         ("C-<right>" . sp-forward-slurp-sexp)
+        ("C-}" . sp-forward-barf-sexp)
         ("C-<left>" . sp-forward-barf-sexp)
+        ("C-(" . sp-backward-slurp-sexp)
         ("C-M-<left>" . sp-backward-slurp-sexp)
+        ("C-{" . sp-backward-barf-sexp)
         ("C-M-<right>" . sp-backward-barf-sexp)
-
-        ("M-D" . sp-splice-sexp)
-        ("C-M-<delete>" . sp-splice-sexp-killing-forward)
-        ("C-M-<backspace>" . sp-splice-sexp-killing-backward)
-        ("C-S-<backspace>" . sp-splice-sexp-killing-around)
-
-        ("C-]" . sp-select-next-thing-exchange)
-        ("C-<left_bracket>" . sp-select-previous-thing)
-        ("C-M-]" . sp-select-next-thing)
-
-        ("M-F" . sp-forward-symbol)
-        ("M-B" . sp-backward-symbol))
+        ("M-S" . sp-split-sexp))
   :init
   (add-hook 'emacs-lisp-mode-hook 'turn-on-smartparens-strict-mode)
   (add-hook 'clojure-mode-hook 'turn-on-smartparens-strict-mode)
