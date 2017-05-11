@@ -98,8 +98,29 @@ There are a few key things during the processing step:
 
 At the end of the process, the item in =inbox= would have either gone
 into a non-actionable file, or have been filed under an actionable
-file (=projects=, or =next=) with a physical actionable item. To
+file (=projects=, or =next=) with a physical actionable. To
 encourage this, we have a list of verbs.
+
+David Allen recommends processing inbox items top-down or bottom-up,
+one item at a time. I think the notion behind this is great, I really
+like to have an overview of how many items I have left to process, or
+whether I have any repeated items in the inbox.
+
+This process is therefore contigent on several factors:
+1. *There aren't too many items in the inbox at the same time.* Too
+   many items lead to distraction. Fortunately, I've yet to experience
+   this.
+2. *Processing of inbox is more regular.* Keeping inbox zero at all
+   times should be a goal, but not a priority.
+
+*** Org Agenda Inbox View
+
+*** Org TODO Keywords
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "|" "DONE(d)")
+          (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)")))
+#+END_SRC
 
 ** Stage 3: Organizing
 

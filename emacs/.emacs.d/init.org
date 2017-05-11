@@ -1,5 +1,4 @@
 #+TITLE: Jethro's Emacs.d Configuration
-* Introduction
 * Emacs Server
 #+BEGIN_SRC emacs-lisp :tangle yes
   (load "server")
@@ -41,12 +40,14 @@
     :demand t)
    #+end_src
 ** User configuration
-** 
    #+begin_src emacs-lisp :tangle yes
 (setq user-full-name "Jethro Kuan"
       user-mail-address "jethrokuan95@gmail.com")
    #+end_src
-
+** Auto Revert
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (global-auto-revert-mode 1)
+#+END_SRC
 ** Custom file
    #+BEGIN_SRC emacs-lisp :tangle yes
   (setq custom-file "~/.emacs.d/custom.el")
@@ -517,15 +518,6 @@
    #+BEGIN_SRC emacs-lisp :tangle yes
 (use-package iedit)
    #+END_SRC
-** paredit
-   For editing Lisp code.
-   #+begin_src emacs-lisp :tangle no
-(use-package paredit
-  :diminish paredit-mode
-  :config
-  (add-hook 'emacs-lisp-mode-hook 'paredit-mode)
-  (add-hook 'clojure-mode-hook 'paredit-mode))
-   #+end_src
 ** smartparens
    #+begin_src emacs-lisp :tangle yes
      (use-package smartparens

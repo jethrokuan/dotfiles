@@ -25,6 +25,8 @@
 (setq user-full-name "Jethro Kuan"
       user-mail-address "jethrokuan95@gmail.com")
 
+(global-auto-revert-mode 1)
+
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
