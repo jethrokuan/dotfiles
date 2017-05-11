@@ -466,6 +466,8 @@ The app is chosen from your OS's preference."
 (use-package rust-mode
   :mode ("\\.rs\\'" . rust-mode))
 
+(add-hook 'python-mode-hook (lambda () (aggressive-indent-mode -1)))
+
 (use-package anaconda-mode
   :init
   (add-hook 'python-mode-hook 'anaconda-mode)

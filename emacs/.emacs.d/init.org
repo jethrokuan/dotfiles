@@ -736,6 +736,10 @@
   :mode ("\\.rs\\'" . rust-mode))
    #+end_src
 ** Python
+*** Disabling aggressive-indent-mode
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (add-hook 'python-mode-hook (lambda () (aggressive-indent-mode -1)))
+#+END_SRC
 *** Anaconda
 #+BEGIN_SRC emacs-lisp :tangle yes
   (use-package anaconda-mode
