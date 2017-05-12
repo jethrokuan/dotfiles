@@ -505,6 +505,10 @@ The app is chosen from your OS's preference."
               ("C-c p m" . pytest-pdb-module)
               ("C-c p ." . pytest-pdb-one)))
 
+(use-package py-isort
+  :init
+  (add-hook 'before-save-hook 'py-isort-before-save))
+
 (use-package web-mode
   :mode (("\\.html\\'" . web-mode)
          ("\\.html\\.erb\\'" . web-mode)

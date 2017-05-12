@@ -781,6 +781,12 @@
                 ("C-c p m" . pytest-pdb-module)
                 ("C-c p ." . pytest-pdb-one)))
 #+END_SRC
+*** isort
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (use-package py-isort
+    :init
+    (add-hook 'before-save-hook 'py-isort-before-save))
+#+END_SRC
 *** Elpy (Disabled)
     #+begin_src emacs-lisp :tangle no
   (use-package elpy
