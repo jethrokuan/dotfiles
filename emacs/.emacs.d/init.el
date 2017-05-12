@@ -485,6 +485,11 @@ The app is chosen from your OS's preference."
   (eval-after-load "company"
     '(add-to-list 'company-backends '(company-anaconda))))
 
+(use-package py-isort
+  :defer t
+  :init
+  (add-hook 'before-save-hook 'py-isort-before-save))
+
 (use-package yapfify 
   :init
   (add-hook 'python-mode-hook 'yapf-mode))
@@ -504,10 +509,6 @@ The app is chosen from your OS's preference."
               ("C-c p a" . pytest-pdb-all)
               ("C-c p m" . pytest-pdb-module)
               ("C-c p ." . pytest-pdb-one)))
-
-(use-package py-isort
-  :init
-  (add-hook 'before-save-hook 'py-isort-before-save))
 
 (use-package web-mode
   :mode (("\\.html\\'" . web-mode)

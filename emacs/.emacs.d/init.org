@@ -753,6 +753,13 @@
     (eval-after-load "company"
       '(add-to-list 'company-backends '(company-anaconda))))
 #+END_SRC
+*** isort
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (use-package py-isort
+    :defer t
+    :init
+    (add-hook 'before-save-hook 'py-isort-before-save))
+#+END_SRC
 *** yapfify
 #+BEGIN_SRC emacs-lisp :tangle yes
   (use-package yapfify 
@@ -780,12 +787,6 @@
                 ("C-c p a" . pytest-pdb-all)
                 ("C-c p m" . pytest-pdb-module)
                 ("C-c p ." . pytest-pdb-one)))
-#+END_SRC
-*** isort
-#+BEGIN_SRC emacs-lisp :tangle yes
-  (use-package py-isort
-    :init
-    (add-hook 'before-save-hook 'py-isort-before-save))
 #+END_SRC
 *** Elpy (Disabled)
     #+begin_src emacs-lisp :tangle no
