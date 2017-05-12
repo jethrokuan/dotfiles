@@ -485,6 +485,10 @@ The app is chosen from your OS's preference."
   (eval-after-load "company"
     '(add-to-list 'company-backends '(company-anaconda))))
 
+(use-package yapfify 
+  :init
+  (add-hook 'python-mode-hook 'yapf-mode))
+
 (use-package py-autopep8
   :init
   (add-hook 'python-mode-hook 'py-autopep8-enable-on-save))

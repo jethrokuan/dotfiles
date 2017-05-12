@@ -753,6 +753,12 @@
     (eval-after-load "company"
       '(add-to-list 'company-backends '(company-anaconda))))
 #+END_SRC
+*** yapfify
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (use-package yapfify 
+    :init
+    (add-hook 'python-mode-hook 'yapf-mode))
+#+END_SRC
 *** Autopep8
     #+BEGIN_SRC emacs-lisp :tangle yes
   (use-package py-autopep8
