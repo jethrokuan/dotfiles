@@ -405,6 +405,11 @@ The app is chosen from your OS's preference."
   :config   
   (add-hook 'markdown-mode-hook 'flyspell-mode))
 
+(use-package direnv
+  :config
+  (direnv-mode)
+  (setq direnv-always-show-summary t))
+
 (use-package slime
   :config
   (setq inferior-lisp-program "/usr/bin/sbcl")

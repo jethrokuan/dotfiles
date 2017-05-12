@@ -636,6 +636,13 @@
     (add-hook 'markdown-mode-hook 'flyspell-mode))
    #+end_src
 * Language Support
+** Direnv
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (use-package direnv
+    :config
+    (direnv-mode)
+    (setq direnv-always-show-summary t))
+#+END_SRC
 ** Common Lisp
    #+BEGIN_SRC emacs-lisp :tangle yes
   (use-package slime
