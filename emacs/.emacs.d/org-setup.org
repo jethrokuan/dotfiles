@@ -68,11 +68,14 @@ have the files:
 | next        | This contains one-off tasks that don't belong to projects.                                                                |
 | projects    | This contains the list of projects, and their corresponding todo items                                                    |
 
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (setq org-agenda-files (file-expand-wildcards "~/.org/gtd/*.org"))
+#+END_SRC
+
 ** Stage 1: Collecting
-Collecting needs to be as convenient as possible. This is achieved
-easily be using =org-capture=. The capture template is kept as simple
-as possible, to reduce friction in adding captures. Things like
-context can be decided later on in the processing stage.
+Collecting needs to be convenient. This is achieved easily be using
+=org-capture=. The capture template is kept simple, to minimize
+friction in capturing new items as they pop up.
 
 #+BEGIN_SRC emacs-lisp :tangle yes
   (setq org-capture-templates
@@ -84,46 +87,141 @@ context can be decided later on in the processing stage.
 #+END_SRC
 
 ** Stage 2: Processing
-Processing involves sorting the items in =inbox= into their respective
-folders. This process is conducted within =org-agenda=, within a view
-that will display all items in inbox. At the end of the "processing"
-stage, =inbox.org= should be completely blank.
+During predetermined times of each day, the inbox is to be processed,
+each item in =inbox= sorted into their respective folders.
 
-There are a few key things during the processing step:
+=org-agenda= provides a brilliant interface for viewing and processing
+the inbox. At the end of the "processing" stage, =inbox.org= should be
+empty, unless the processing is done on the whim. This will be
+facilitated with an iOS or android app later on.
 
-1. Which file: Is this to be done someday when there's time, or is
+The process is clearly outlined in GTD, but key to the GTD
+implementation here are a few factors:
+
+1. *Which file*: Is this to be done someday when there's time, or is
    this a project (old or new), or is this a simple action?
-2. Adding of context: Is this school-related, or work-related? Do I
+2. *Adding of context*: Is this school-related, or work-related? Do I
    have to be at a specific location to perform this task?
 
-At the end of the process, the item in =inbox= would have either gone
-into a non-actionable file, or have been filed under an actionable
-file (=projects=, or =next=) with a physical actionable. To
-encourage this, we have a list of verbs.
+At the end of the process, the item in =inbox= would have placed in
+either a non-actionable file, or an actionable file (=projects=, or
+=next=) with a physical actionable. To encourage this, we have a list
+of verbs.
 
 David Allen recommends processing inbox items top-down or bottom-up,
-one item at a time. I think the notion behind this is great, I really
-like to have an overview of how many items I have left to process, or
-whether I have any repeated items in the inbox.
+one item at a time. However, I like to have an overview of my inbox,
+so I can estimate the number of items left to process.
 
 This process is therefore contigent on several factors:
-1. *There aren't too many items in the inbox at the same time.* Too
-   many items lead to distraction. Fortunately, I've yet to experience
-   this.
+1. *There aren't too many items in the inbox at the same time.* This
+   can prove to be too distracting. Fortunately, I've yet to
+   experience this.
 2. *Processing of inbox is more regular.* Keeping inbox zero at all
    times should be a goal, but not a priority.
 
 *** Org Agenda Inbox View
-
-*** Org TODO Keywords
+This view is where I see all my inbox items: it is a simple list of
+captured items in =inbox.org=.
 #+BEGIN_SRC emacs-lisp :tangle yes
-  (setq org-todo-keywords
-        '((sequence "TODO(t)" "|" "DONE(d)")
-          (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)")))
+  (setq jethro/org-agenda-inbox-view
+        `("i" "Inbox" todo ""
+          ((org-agenda-files '("~/.org/gtd/inbox.org")))))
+
+  (setq org-agenda-custom-commands
+        `(,jethro/org-agenda-inbox-view))
 #+END_SRC
 
-** Stage 3: Organizing
+*** Org TODO Keywords
+| keyword   | meaning                                                                      |
+|-----------+------------------------------------------------------------------------------|
+| TODO      | An item that has yet to be processed, or cannot be attempted at this moment. |
+| NEXT      | An action that can be completed at this very moment, in the correct context  |
+| DONE      | An item that is completed, and ready to be archived                          |
+| WAITING   | An item that awaits input from an external party                             |
+| HOLD      | An item that is delayed due to circumstance                                  |
+| CANCELLED | An item that was once considered, but no longer to be attempted              |
 
-** Stage 4: Reviewing
+=WAITING=, =HOLD=, and =CANCELLED= are all keywords that require
+supplementary information. For example, who am I waiting for? Or why
+is this item on hold? As such, it is convenient to trigger a note when
+an item transitions to these states. Note that the triggers only
+happen with "slow" state transitions, i.e. =C-c C-t=.
 
-** Stage 5: Doing
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "NEXT(n)" "|" "DONE(d)")
+          (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)")))
+
+  (setq org-log-done 'time)
+  (setq org-log-into-drawer t)
+  (setq org-log-state-notes-insert-after-drawers nil)
+#+END_SRC
+*** The Process
+**** Step 1: Clarifying
+***** Tags
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (setq org-tag-alist (quote ((:startgroup)
+                              ("@errand" . ?e)
+                              ("@office" . ?o)
+                              ("@home" . ?H)
+                              ("@school" . ?s)
+                              (:endgroup)
+                              ("WAITING" . ?w)
+                              ("HOLD" . ?h)
+                              ("CANCELLED" . ?c))))
+
+                                          ; Allow setting single tags without the menu
+  (setq org-fast-tag-selection-single-key nil)
+
+#+END_SRC
+**** Step 2: Organizing
+This step involves refiling the item in the appropriate location. We
+set =org-refile-allow-creating-parent-nodes= to ='confirm=, because this
+allows us to create new projects if there are no matches.
+
+When capturing new projects, it helps to pen down a few things about
+the project:
+
+1. Project Purpose/Principles
+2. Outcome Vision
+
+This is currently done using =org-add-note=, but when my elisp-fu gets
+stronger, I'd create a dedicated buffer with a template each time a
+project is created.
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (setq org-refile-use-outline-path 'file)
+  (setq org-refile-allow-creating-parent-nodes 'confirm)
+  (setq org-refile-targets '((nil :maxlevel . 9)
+                             (org-agenda-files :maxlevel . 9)))
+
+  (defadvice org-refile-new-child (after my-org-refile-new-child activate)
+    (save-excursion
+      (find-file (nth 1 parent-target))
+      (goto-char (org-find-exact-headline-in-buffer child))
+      (org-add-note)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (defun jethro/org-agenda-process-inbox-item (&optional goto rfloc no-update)
+    (interactive "P")
+    (org-agenda-set-tags)
+    (let* ((buffer-orig (buffer-name))
+           (marker (or (org-get-at-bol 'org-hd-marker)
+                       (org-agenda-error)))
+           (buffer (marker-buffer marker))
+           (pos (marker-position marker))
+           (rfloc (org-refile-get-location "Refile to" buffer t)))
+      (with-current-buffer buffer
+        (org-with-wide-buffer
+         (goto-char marker)
+         (let ((org-agenda-buffer-name buffer-orig))
+           (org-remove-subtree-entries-from-agenda))
+         (org-refile goto buffer rfloc)))
+      (org-agenda-redo)))
+
+  (define-key (org-agenda-mode-map) "r" jethro/org-agenda-process-inbox-item)
+#+END_SRC
+** Stage 3: Reviewing
+
+** Stage 4: Doing
