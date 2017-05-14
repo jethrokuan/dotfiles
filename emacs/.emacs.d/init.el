@@ -279,8 +279,6 @@ The app is chosen from your OS's preference."
   :bind* (("C-M-%" . vr/query-replace)
           ("C-c m" . vr/mc-mark)))
 
-(add-hook 'after-init-hook (lambda () (electric-pair-mode 1)))
-
 (use-package electric-align
   :ensure f
   :load-path "elisp/"
