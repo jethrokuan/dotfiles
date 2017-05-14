@@ -1741,30 +1741,30 @@ This enables `auto-fill-mode` for org-mode files
 
  #+header: :tangle yes
  #+begin_src emacs-lisp
- ; Tags with fast selection keys
- (setq org-tag-alist (quote ((:startgroup)
-                             ("@errand" . ?e)
-                             ("@office" . ?o)
-                             ("@home" . ?H)
-                             ("@farm" . ?f)
-                             (:endgroup)
-                             ("WAITING" . ?w)
-                             ("HOLD" . ?h)
-                             ("PERSONAL" . ?P)
-                             ("WORK" . ?W)
-                             ("FARM" . ?F)
-                             ("ORG" . ?O)
-                             ("NORANG" . ?N)
-                             ("crypt" . ?E)
-                             ("NOTE" . ?n)
-                             ("CANCELLED" . ?c)
-                             ("FLAGGED" . ??))))
+   ; Tags with fast selection keys
+   (setq org-tag-alist (quote ((:startgroup)
+                               ("@errand" . ?e)
+                               ("@office" . ?o)
+                               ("@home" . ?H)
+                               ("@farm" . ?f)
+                               (:endgroup)
+                               ("WAITING" . ?w)
+                               ("HOLD" . ?h)
+                               ("PERSONAL" . ?P)
+                               ("WORK" . ?W)
+                               ("FARM" . ?F)
+                               ("ORG" . ?O)
+                               ("NORANG" . ?N)
+                               ("crypt" . ?E)
+                               ("NOTE" . ?n)
+                               ("CANCELLED" . ?c)
+                               ("FLAGGED" . ??))))
 
- ; Allow setting single tags without the menu
- (setq org-fast-tag-selection-single-key (quote expert))
+   ; Allow setting single tags without the menu
+   (setq org-fast-tag-selection-single-key (quote expert))
 
- ; For tag searches ignore tasks with scheduled and deadline dates
- (setq org-agenda-tags-todo-honor-ignore-options t)
+   ; For tag searches ignore tasks with scheduled and deadline dates
+   (setq org-agenda-tags-todo-honor-ignore-options t)
  #+end_src
 *** Filetags
     :PROPERTIES:
