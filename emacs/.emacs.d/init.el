@@ -145,7 +145,7 @@
    ("C-x l" . counsel-locate)
    ("C-c g" . counsel-git)
    ("C-c j" . counsel-git-grep)
-   ("C-c s" . counsel-rg)
+   ("C-c s" . counsel-projectile-rg)
    ("C-c f" . counsel-recentf)
    ("M-y" . counsel-yank-pop))
   :bind ((:map help-map
