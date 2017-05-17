@@ -412,6 +412,11 @@
     (setq aw-keys '(?h ?t ?n ?s)))
    #+end_src
 ** dired
+*** Dired for Mac OSX
+#+BEGIN_SRC emacs-lisp :tangle yes
+  (let ((gls "/usr/local/bin/gls"))
+    (if (file-exists-p gls) (setq insert-directory-program gls)))
+#+END_SRC
 *** isearch in dired
     #+BEGIN_SRC emacs-lisp :tangle yes
   (setq dired-isearch-filenames 'dwim)

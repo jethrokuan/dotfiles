@@ -244,6 +244,9 @@ The app is chosen from your OS's preference."
   ;; wrap around at edges
   (setq windmove-wrap-around t))
 
+(let ((gls "/usr/local/bin/gls"))
+  (if (file-exists-p gls) (setq insert-directory-program gls)))
+
 (setq dired-isearch-filenames 'dwim)
 
 (setq delete-by-moving-to-trash t)
