@@ -97,8 +97,8 @@
   (when 'newline-and-indent
     (indent-according-to-mode)))
 
-(bind-key* "C-o" 'open-next-line)
-(bind-key* "M-o" 'open-previous-line)
+(bind-key "C-o" 'open-next-line)
+(bind-key "M-o" 'open-previous-line)
 
 (defun jethro/nuke-all-buffers ()
   (interactive)
@@ -179,6 +179,7 @@
   (ivy-set-actions
    t
    '(("I" insert "insert")))
+  (define-key ivy-minibuffer-map (kbd "C-o") 'hydra-ivy/body)
   (define-key ivy-minibuffer-map (kbd "<return>") 'ivy-alt-done)
   (define-key ivy-minibuffer-map (kbd "M-<return>") 'ivy-immediate-done))
 
