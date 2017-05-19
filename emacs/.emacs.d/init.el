@@ -476,6 +476,12 @@ The app is chosen from your OS's preference."
 
 (add-hook 'python-mode-hook (lambda () (aggressive-indent-mode -1)))
 
+(setq python-remove-cwd-from-path nil)
+
+(use-package sphinx-doc
+  :init
+  (add-hook 'python-mode-hook (sphinx-doc-mode t)))
+
 (use-package anaconda-mode
   :init
   (add-hook 'python-mode-hook 'anaconda-mode)
