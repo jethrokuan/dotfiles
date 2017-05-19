@@ -179,7 +179,6 @@
   (ivy-set-actions
    t
    '(("I" insert "insert")))
-  (define-key ivy-minibuffer-map (kbd "C-o") 'hydra-ivy/body)
   (define-key ivy-minibuffer-map (kbd "<return>") 'ivy-alt-done)
   (define-key ivy-minibuffer-map (kbd "M-<return>") 'ivy-immediate-done))
 
@@ -1469,6 +1468,9 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
 
 (setq projectile-switch-project-action
       #'projectile-commander)
+(def-projectile-commander-method ?S
+  "Run a search in the project"
+  (counsel-projectile-rg))
 (def-projectile-commander-method ?s
   "Open a *eshell* buffer for the project."
   (projectile-run-eshell))
