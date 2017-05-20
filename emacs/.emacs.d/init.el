@@ -326,6 +326,7 @@ The app is chosen from your OS's preference."
         ("C-M-<right>" . sp-backward-barf-sexp)
         ("M-S" . sp-split-sexp))
   :init
+  (add-hook 'lisp-mode-hook 'turn-on-smartparens-strict-mode)
   (add-hook 'emacs-lisp-mode-hook 'turn-on-smartparens-strict-mode)
   (add-hook 'clojure-mode-hook 'turn-on-smartparens-strict-mode)
   (add-hook 'org-mode-hook 'turn-on-smartparens-strict-mode)

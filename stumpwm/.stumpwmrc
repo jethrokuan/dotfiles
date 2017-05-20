@@ -1,0 +1,3 @@
+;; -*-lisp-*-
+(in-package :stumpwm)
+(load "~/.stumpwm.d/init.lisp")
