@@ -413,8 +413,11 @@ The app is chosen from your OS's preference."
 
 (use-package slime
   :config
-  (setq inferior-lisp-program "/usr/bin/sbcl")
-  (setq slime-contribs '(slime-fancy)))
+  (setq inferior-lisp-program "sbcl")
+  (setq slime-contribs '(slime-fancy))
+  (use-package slime-company
+    :config
+    (slime-setup '(slime-company))))
 
 (bind-key "C-c C-k" 'eval-buffer emacs-lisp-mode-map)
 

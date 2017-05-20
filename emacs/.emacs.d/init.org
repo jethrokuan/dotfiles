@@ -646,10 +646,13 @@
 #+END_SRC
 ** Common Lisp
    #+BEGIN_SRC emacs-lisp :tangle yes
-  (use-package slime
-    :config
-    (setq inferior-lisp-program "/usr/bin/sbcl")
-    (setq slime-contribs '(slime-fancy)))
+     (use-package slime
+       :config
+       (setq inferior-lisp-program "sbcl")
+       (setq slime-contribs '(slime-fancy))
+       (use-package slime-company
+         :config
+         (slime-setup '(slime-company))))
    #+END_SRC
 ** Emacs Lisp
    #+begin_src emacs-lisp :tangle yes
@@ -962,24 +965,24 @@ npm install -g tern
     #+end_src
 *** Cider
     #+begin_src emacs-lisp :tangle yes
-  (use-package cider
-    :init
-    (add-hook 'cider-mode-hook #'clj-refactor-mode)
-    (add-hook 'cider-repl-mode-hook #'company-mode)
-    (add-hook 'cider-mode-hook #'company-mode)
-    :diminish subword-mode
-    :config
-    (setq nrepl-log-messages t                  
-          cider-repl-display-in-current-window t
-          cider-repl-use-clojure-font-lock t    
-          cider-prompt-save-file-on-load 'always-save
-          cider-font-lock-dynamically '(macro core function var)
-          nrepl-hide-special-buffers t
-          cider-show-error-buffer nil
-          cider-overlays-use-font-lock t
-          cider-repl-result-prefix ";; => ")
-    (setq cider-cljs-lein-repl "(do (use 'figwheel-sidecar.repl-api) (start-figwheel!) (cljs-repl))")
-    (cider-repl-toggle-pretty-printing))
+      (use-package cider
+        :init
+        (add-hook 'cider-mode-hook #'clj-refactor-mode)
+        (add-hook 'cider-repl-mode-hook #'company-mode)
+        (add-hook 'cider-mode-hook #'company-mode)
+        :diminish subword-mode
+        :config
+        (setq nrepl-log-messages t                  
+              cider-repl-display-in-current-window t
+              cider-repl-use-clojure-font-lock t    
+              cider-prompt-save-file-on-load 'always-save
+              cider-font-lock-dynamically '(macro core function var)
+              nrepl-hide-special-buffers t
+              cider-show-error-buffer nil
+              cider-overlays-use-font-lock t
+              cider-repl-result-prefix ";; => ")
+        (setq cider-cljs-lein-repl "(do (use 'figwheel-sidecar.repl-api) (start-figwheel!) (cljs-repl))")
+        (cider-repl-toggle-pretty-printing))
     #+end_src
 *** clj-refactor
     #+begin_src emacs-lisp :tangle yes
