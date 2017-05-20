@@ -14,3 +14,133 @@ rofi.line-margin: 31
 rofi.font: Iosevka 24
 rofi.padding: 168
 rofi.fullscreen: true
+
+#define white		#FCFAFE
+#define yellow		#E6DB74
+#define orange		#FD971F
+#define red		#F92672
+#define	magenta		#FD5FF0
+#define violet		#AE81FF
+#define blue		#66D9EF
+#define cyan		#A1EFE4
+#define green		#A6E22E
+#define gray		#474747
+
+#define darkyellow	#968B26
+#define lightyellow	#F3EA98
+#define darkorange	#A45E0A
+#define lightorange	#FEB257
+#define darkred         #A20C41
+#define lightred	#FC5C94
+#define darkmagenta     #A41F99
+#define lightmagenta    #FE87F4
+#define darkviolet      #562AA6
+#define lightviolet     #C2A1FF
+#define darkblue        #21889B
+#define lightblue	#8DE6F7
+#define darkcyan	#349B8D
+#define lightcyan       #BBF7EF
+#define darkgreen       #67930F
+#define lightgreen      #C1F161
+#define darkgray	#333333
+#define lightgray       #6B6B6B
+
+#define bg		#272822
+#define fg		#F8F8F2
+
+Xft*antialias:		true
+Xft*autohint:		true
+Xft*dpi:		92
+
+URxvt*foreground:	fg
+URxvt*background:	bg
+URxvt*cursorColor:	fg
+URxvt*colorUL:		gray
+URxvt*underlineColor:	magenta
+
+! black dark/light
+*color0:		gray
+*color8:		lightgray
+
+! red dark/light
+*color1:		red
+*color9:		lightred
+
+! green dark/light
+*color2:		green
+*color10:		lightgreen
+
+! yellow dark/light
+*color3:		yellow
+*color11:		lightyellow
+
+! blue dark/light
+*color4:		blue
+*color12:		lightblue
+
+! magenta dark/light
+*color5:		magenta
+*color13:		lightmagenta
+
+! cyan dark/light
+*color6:		cyan
+*color14:		lightcyan
+
+! white dark/light
+*color7:		white
+*color15:		white
+
+URxvt*termName:		rxvt-unicode-256color
+URxvt*scrollTtyOutput: false
+URxvt*scrollTtyKeypress: true
+URxvt*scrollWithBuffer: true
+URxvt*saveLines: 3000
+
+URxvt*loginShell: true
+Urxvt*secondaryScroll:  true
+URxvt*secondaryWheel: true
+URxvt*cursorUnderline: false
+URxvt*font: xft:DejaVu Sans Mono:size=10:autohint=true
+!URxvt.transparent: false
+URxvt*borderless: true
+!URxvt.shading: 35
+URxvt*depth: 32
+
+URxvt*urgentOnBell:	true
+URxvt*scrollBar_right:	true
+URxvt*scrollstyle:	plain
+
+! urxvt
+
+!-*- Perl extensions -*-
+! stored in ~/.urxvt/ext/
+URxvt.perl-ext-common: font-size,keyboard-select,color-themes
+URxvt.url-launcher:   firefox
+URxvt.underlineURLs:  True
+URxvt.matcher.button: 1
+
+! font-size
+URxvt.keysym.C-Up:     perl:font-size:increase
+URxvt.keysym.C-Down:   perl:font-size:decrease
+URxvt.keysym.C-S-Up:   perl:font-size:incglobal
+URxvt.keysym.C-S-Down: perl:font-size:decglobal
+URxvt.keysym.C-S-R:    perl:font-size:reset
+URxvt.font-size.step:  4
+! disable default binding for shift on urxvt
+URxvt.iso14755:        false
+URxvt.iso14755_52: false
+
+XTerm*alternateScroll:	true
+XTerm*charClass:	33:48,37-38:48,45-47:48,64:48,58:48,126:48,61:48,63:48,43:48,35:48
+XTerm*fullscreen:	never
+XTerm*metaSendsEscape:	true
+XTerm*scrollKey:	true
+XTerm*background:	bg
+XTerm*foreground:	fg
+XTerm*cursorColor:	fg
+XTerm*faceName:		xft:DejaVu Sans Mono:size=9:antialias=true
+XTerm*termName:		xterm-256color
+XTerm*utf8:		1
+Xterm*borderWidth:	0
+XTerm*toolBar:		off
+XTerm*VT100.translations: #override <Btn1Up>: select-end(PRIMARY, CLIPBOARD, CUT_BUFFER0)
