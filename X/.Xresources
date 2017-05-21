@@ -114,7 +114,7 @@ URxvt*scrollstyle:	plain
 
 !-*- Perl extensions -*-
 ! stored in ~/.urxvt/ext/
-URxvt.perl-ext-common: font-size,keyboard-select,color-themes
+URxvt.perl-ext-common: font-size
 URxvt.url-launcher:   firefox
 URxvt.underlineURLs:  True
 URxvt.matcher.button: 1

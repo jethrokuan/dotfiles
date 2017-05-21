@@ -1,110 +1,115 @@
 # -*- conf -*-
 [global]
-	# Font
-	font = DejaVu Sans Mono 10
+    font = "Monospace 8"
+    allow_markup = yes
+    format = "<b>%s %p</b>\n%b"
+    sort = yes
+    indicate_hidden = true
+    # geometry = "x5"
+    idle_threshold = 0
+    geometry = "300x5-20+20"
+    alignment = center
+    show_age_threshold = 60
+    sticky_history = yes
+    follow = mouse
+    word_wrap = yes
+    separator_height = 2
+    padding = 10
+    horizontal_padding = 10
+    separator_color = frame
+    startup_notification = true
+    dmenu = "/usr/bin/dmenu -p dunst: -nb #FFFFFF -nf #000000 -sb #94DBFF -sf #000000"
+    browser = xdg-open
 
-	# allows a small subset of HTML markup like
-	# <b>bold</b>
-	# <i>italic</i>
-	# <s>strikethrough<s/>
-	# <u>underline<u/>
-	allow_markup = yes
-
-	# The format of the message. Possible variables are:
-	# %a  appname
-	# %s  summary
-	# %b  body
-	# %i  iconname (including its path)
-	# %I  iconname (without its path)
-	# %p  progress value if set ([ 0%] to [100%]) or nothing
-	# Markup is allowed
-	format = "<b>%s</b>\n%b"
-
-	# Sort messages by urgency
-	sort = yes
-
-	# Show # of messages currently hidden (b/c of geometry)
-	indicate_hidden = yes
-
-	# Alignment of message text
-	# Options are "left", "center", and "right"
-	alignment = left
-
-	# Show the age of the message if it's older
-	# than the show_age_threshold seconds, or -1 to disable
-	show_age_threshold = 60
-
-	# Split notifications onto multiple lines if
-	# it doesn't fit due to geometry
-	word_wrap = yes
-
-	# Ignore newlines ('\n') in notifications
-	ignore_newline = no
-
-	# Geometry
-	# [{width}x{height}][+/-{x}][+/-{y}]
-	geometry = "300x5-24+48"
-
-	# Transparency sent to compositor; range 0-100
-	transparency = 10
-
-	# Don't remove messages if the user is idle
-	# for more than idle_threshold seconds, or 0 to disable. 
-	idle_threshold = 120
-
-	# variable if a notification popped up
-	# from history should be sticky or timeout
-	sticky_history = yes
-
-	# The amount of history to be kept
-	history_length = 20
-
-	# The height of a single line. If the height is
-	# smaller than the font height, then it will
-	# get raised to the font height. This adds empty
-	# space above and under the text.
-	line_height = 0
-
-	# Draws a line of height 'separator_height' in
-	# pixels between two notifications, or 0 to disable
-	separator_height = 2
-
-	# Padding between text and separator
-	padding = 8
-
-	# horizontal padding
-	horizontal_padding = 8
-
-	# Separator color:
-	# Possible options:
-	# 	auto: dunst tries to find a color
-	#	      based on the background
-	#	foreground: use the same color as foreground
-	#	frame: use the same color as the frame
-	# 	anything else will be read as an X color
-	separator_color = frame
 
 [frame]
-	width = 0
-	color = "#111113"
-
-[shortcuts]
-	close = mod4+space
-	close_all = mod4+shift+space
-	history = mod4+grave
-	context = mod4+shift+period
+    width = 3
+    color = "#000000"
 
 [urgency_low]
-	background = "#26282B"
-	foreground = "#CECFD1"
-	timeout = 60
+    background = "#ffffff"
+    foreground = "#000000"
+    timeout = 30
 
 [urgency_normal]
-	background = "#26282B"
-	foreground = "#CECFD1"
-	timeout = 60
+    background = "#94DBFF"
+    foreground = "#000000"
+    timeout = 45
 
 [urgency_critical]
-	background = "#26282B"
-	foreground = "#CECFD1"
-	timeout = 0
+    background = "#ff9999"
+    foreground = "#000000"
+    timeout = 0
+
+
+[libpurple_signed]
+    appname = libpurple
+    summary = *igned*
+    urgency = low
+    timeout = 3
+    background = "#ccff33"
+
+[libpurple_came_back]
+    appname = libpurple
+    summary = "*came*"
+    format = ""
+
+[libpurple_went_away]
+    appname = libpurple
+    summary = "*went*"
+    format = ""
+
+[libpurple_says]
+    appname = libpurple
+    summary = *ays*
+    urgency = critical
+    background = "#ccff33"
+
+[libpurple]
+    appname = libpurple
+    urgency = critical
+    background = "#ccff33"
+
+[twitter]
+    appname = Pidgin
+    summary = *twitter.com*
+    urgency = low
+
+[turpial]
+    appname = Turpial
+    urgency = low
+
+[ttytter]
+    summary = "TTYtter*"
+    urgency = low
+
+[dunst-sum]
+    appname = gmailnotify.py
+    summary = "*[dD]unst*"
+    urgency = critical
+
+[dunst-body]
+    appname = gmailnotify.py
+    body = "*[dD]unst*"
+    urgency = critical
+
+[mcabber]
+    appname = notify-send
+    summary = "*jabber*"
+    urgency = critical
+
+[irc]
+    appname = weechat
+    timeout = 0
+    background = "#99FF33"
+    foreground = "#000000"
+
+[XChat]
+    appname = XChat
+    timeout = 0
+    background = "#99FF33"
+    foreground = "#000000"
+
+[test]
+    summary = "*test*"
+background="#22dd22"

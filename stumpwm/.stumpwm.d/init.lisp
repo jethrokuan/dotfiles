@@ -26,7 +26,7 @@
 (defkeys *root-map*
     ("f" "colon1 exec firefox http://www.")
   ("r" "reinit")
-  ("R" "remove"))
+  ("R" "resize"))
 
 (defkeys *applications-map*
     ("f" "firefox")
@@ -34,6 +34,9 @@
 
 (defkeys *top-map*
     ("s-TAB" "fnext")
+  ("M-TAB" "next-in-frame")
+  ("s-m" "mode-line")
   ("s-e" "emacs")
   ("s-space" "exec rofi -show run")
-  ("s-p" '*applications-map*))
+  ("s-p" '*applications-map*)
+  ("s-s" "exec scrot -s ~/foo.png && xclip ~/foo.png && rm ~/foo.png"))

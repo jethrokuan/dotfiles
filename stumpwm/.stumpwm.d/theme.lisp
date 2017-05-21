@@ -11,15 +11,29 @@
 (run-shell-command "xsetroot -cursor_name left_ptr -fg white -bg black")
 
 (run-shell-command *wallpaper-command*)
+(ql:quickload :clx-truetype)
 
-;; Font found with the command xfontsel(1)
-;; When a font is installed, add is directory to the fontPath then run xfontsel
-;; xset +fp /usr/share/fonts/X11/misc/
-(set-font "-*-terminus-*-*-*-*-12-*-*-*-*-*-iso8859-*")
+(load-module "ttf-fonts")
 
-(set-fg-color "grey95")
-(set-bg-color "grey15")
-(set-win-bg-color "black")
-(set-border-color "grey10")
-(set-focus-color "grey72")
-(set-unfocus-color "grey30")
+(setq clx-truetype:*font-dirs* '("/run/current-system/sw/share/X11-fonts/"))
+(clx-truetype:cache-fonts)
+
+(set-font (make-instance 'xft:font :family "Droid Sans Mono" :subfamily
+                         "Regular" :size 10))
+
+(set-focus-color "#01FF70")
+(set-unfocus-color "#3D9970")
+
+
+(setf *maxsize-border-width* 2)
+(setf *transient-border-width* 2)
+(setf *normal-border-width* 2)
+
+(set-fg-color "#EEEEEE")
+(set-bg-color "#3D9970")
+(set-msg-border-width 0)
+(set-border-color "#000000")
+
+(setf *message-window-padding* 50)
+(setf *message-window-gravity* :top
+      *input-window-gravity* :top)
