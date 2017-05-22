@@ -34,7 +34,7 @@
 (setf *time-modeline-string* "^3 %e %b^n^B %l:%M ^b")
 
 (defun get-date-modeline ()
-  (stumpwm:run-shell-command
+  (run-shell-command
    (format nil "date +\"~A\""
            *time-modeline-string*) t))
 
