@@ -40,4 +40,6 @@
   ("s-e" "emacs")
   ("s-space" "exec rofi -show run")
   ("s-p" '*applications-map*)
-  ("s-s" "exec scrot -s ~/tmp.png && xclip -selection c -t image/png -i ~/tmp.png && rm ~/tmp.png"))
+  ("s-s" "exec scrot -s ~/tmp.png && xclip -selection c -t image/png -i ~/tmp.png && rm ~/tmp.png")
+  ("s-S" "exec scrot -m ~/scrot.png")
+  )
