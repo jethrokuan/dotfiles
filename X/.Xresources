@@ -15,80 +15,46 @@ rofi.font: Iosevka 24
 rofi.padding: 168
 rofi.fullscreen: true
 
-#define white		#FCFAFE
-#define yellow		#E6DB74
-#define orange		#FD971F
-#define red		#F92672
-#define	magenta		#FD5FF0
-#define violet		#AE81FF
-#define blue		#66D9EF
-#define cyan		#A1EFE4
-#define green		#A6E22E
-#define gray		#474747
+! Zenburn color-scheme
+URxvt.background              :#3f3f3f
+URxvt.foreground              :#dcdccc
 
-#define darkyellow	#968B26
-#define lightyellow	#F3EA98
-#define darkorange	#A45E0A
-#define lightorange	#FEB257
-#define darkred         #A20C41
-#define lightred	#FC5C94
-#define darkmagenta     #A41F99
-#define lightmagenta    #FE87F4
-#define darkviolet      #562AA6
-#define lightviolet     #C2A1FF
-#define darkblue        #21889B
-#define lightblue	#8DE6F7
-#define darkcyan	#349B8D
-#define lightcyan       #BBF7EF
-#define darkgreen       #67930F
-#define lightgreen      #C1F161
-#define darkgray	#333333
-#define lightgray       #6B6B6B
+! black + red
+!URxvt.color0                 :#3f3f3f
+URxvt.color0                  :#1f1f1f
+URxvt.color1                  :#705050
 
-#define bg		#272822
-#define fg		#F8F8F2
+! green + yellow
+URxvt.color2                  :#60b48a
+URxvt.color3                  :#dfaf8f
+
+! blue + purple
+URxvt.color4                  :#506070
+URxvt.color5                  :#dc8cc3
+
+! cyan + white
+URxvt.color6                  :#8cd0d3
+URxvt.color7                  :#dcdccc
+
+! bright-black + bright-red
+URxvt.color8                  :#709080
+URxvt.color9                  :#dca3a3
+
+! bright-green + bright-yellow
+URxvt.color10                 :#c3bf9f
+URxvt.color11                 :#f0dfaf
+
+! bright-blue + bright-purple
+URxvt.color12                 :#94bff3
+URxvt.color13                 :#ec93d3
+
+! bright-cyan + bright-white
+URxvt.color14                 :#93e0e3
+URxvt.color15 :#ffffff
 
 Xft*antialias:		true
 Xft*autohint:		true
 Xft*dpi:		92
-
-URxvt*foreground:	fg
-URxvt*background:	bg
-URxvt*cursorColor:	fg
-URxvt*colorUL:		gray
-URxvt*underlineColor:	magenta
-
-! black dark/light
-*color0:		gray
-*color8:		lightgray
-
-! red dark/light
-*color1:		red
-*color9:		lightred
-
-! green dark/light
-*color2:		green
-*color10:		lightgreen
-
-! yellow dark/light
-*color3:		yellow
-*color11:		lightyellow
-
-! blue dark/light
-*color4:		blue
-*color12:		lightblue
-
-! magenta dark/light
-*color5:		magenta
-*color13:		lightmagenta
-
-! cyan dark/light
-*color6:		cyan
-*color14:		lightcyan
-
-! white dark/light
-*color7:		white
-*color15:		white
 
 URxvt*termName:		rxvt-unicode-256color
 URxvt*scrollTtyOutput: false
