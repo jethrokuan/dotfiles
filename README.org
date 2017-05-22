@@ -7,7 +7,7 @@ Both machines run [[http://nixos.org][NixOS]] 17.03pre, and [[https://github.com
 I'm a huge fan of the Lisp dialect, and use Emacs as my daily runner.
 
 *Setup as of May 2016*
-[[file:screencap.jpg]]
+[[file:scrot.png]]
 
 
 | purpose       | program | folder     |
