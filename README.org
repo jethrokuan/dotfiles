@@ -1,0 +1,49 @@
+* Jethro's =dotfiles=
+I have 2 main machines:
+1. Dell XPS 13 (2016) 
+2. Custom-built Desktop with dual-monitor
+
+Both machines run [[http://nixos.org][NixOS]] 17.03pre, and [[https://github.com/stumpwm/stumpwm/][StumpWM]] as the window manager.
+I'm a huge fan of the Lisp dialect, and use Emacs as my daily runner.
+
+*Setup as of May 2016*
+[[file:screencap.jpg]]
+
+
+| purpose       | program | folder     |
+|---------------+---------+------------|
+| DE            | X       | [[file:X/][X]]          |
+| wm            | stumpwm | [[file:stumpwm/][.stumpwm.d]] |
+| compositor    | compton | [[file:compton/][compton]]    |
+| editor        | emacs   | [[file:emacs/][.emacs.d]]   |
+| shell         | fish    | [[file:fish/][fish]]       |
+| vcs           | git     | [[file:git/][.gitconfig]] |
+| notifications | dunst   | [[file:dunst/][dunstrc]]    |
+| mail          | mbsync  | [[file:mbsync/][mbsync]]     |
+| music         | ncmpcpp | [[file:ncmpcpp/][ncmpcpp]]    |
+| music         | beets   | [[file:README.org][beets]]      |
+| launcher      | rofi    | [[file:rofi/][rofi]]       |
+| pdf           | zathura | [[file:zathura/][zathura]]    |
+|               | misc    | [[file:scripts/][scripts]]    |
+|               |         |            |
+
+Deprecated:
+| program | folder |
+|---------+--------|
+| xfce    | [[file:xfce/][xfce]]   |
+| nano    | [[file:nano/][nano]]   |
+
+   
+** Installation
+My dotfiles are managed wih =stow=, which is readily available from
+your nearest package manager.
+
+1. clone the repository : =git clone
+   https://github.com/jethrokuan/dotfiles.git ~/= Important: it must be
+   cloned in your $HOME for .stowrc files to work as expected
+2. execute =stow stow= first to install stow global ignore file
+
+** TODO
+- Prettify dunst
+- Configure stumpwm window placements
+- Configure mbsync again, with notmuch on Emacs
