@@ -1,7 +1,7 @@
 # -*- conf -*-
 # vim:ft=cfg
 [global]
-    #font = Monospace 8
+    font = Droid Sans 15
 
     # allow a small subset of html markup:
     # <b>bold</b>
@@ -32,9 +32,9 @@
 
     # alignment of message text.
     # Possible values are "left", "center" and "right"
-    alignment = center
+    alignment = left
 
-    # The frequency with wich text that is longer than the notification
+    # The frequency with which text that is longer than the notification
     # window allows bounces back and forth.
     # This option conflicts with 'word_wrap'.
     # Set to 0 to disable
@@ -62,14 +62,15 @@
     # right side of the screen.  Y is measured from the top and down respectevly.
     # The width can be negative. In this case the actual width is the
     # screen width minus the width defined in within the geometry option.
-    geometry = "0x5+10+150"
+    # geometry = "0x5+20+100"
+      geometry = "300x5+24-24"
 
     # Shrink window if it's smaller than the width. Will be ignored if width is 0.
     shrink = yes
 
     # The transparency of the window. range: [0; 100]
     # This option will only work if a compositing windowmanager is present (e.g. xcompmgr, compiz, etc..)
-    transparency = 0
+    transparency = 10
 
     # Don't remove messages, if the user is idle (no mouse or keyboard input)
     # for longer than idle_threshold seconds.
@@ -89,7 +90,7 @@
     #
     # If this option is set to mouse or keyboard, the monitor option will be
     # ignored.
-    follow = mouse
+    follow = keyboard
 
     # should a notification popped up from history be sticky or
     # timeout as if it would normally do.
@@ -150,27 +151,26 @@
 
     # redisplay last message(s)
     # On the US keyboard layout 'grave' is normally above TAB and left of '1'.
-    history = mod4+plus
+    history = mod1+space
 
     # context menu
-    context = mod4+shift+plus
+    context = mod1+shift+plus
 
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the '#' and following  would be interpreted as a comment.
-    background = "#222222"
-    foreground = "#888888"
+    background = "#705050"
+    foreground = "#1f1f1f"
     timeout = 10
 
 [urgency_normal]
-    background = "#00611C"
-    foreground = "#ffffff"
+    background = "#dfaf8f"
+    foreground = "#1f1f1f"
     timeout = 10
 
 [urgency_critical]
-    background = "#900000"
-    foreground = "#ffffff"
-    timeout = 0
+    background = "#dc8cc3"
+    foreground = "#1f1f1f"
 
 
 # Every section that isn't one of the above is interpreted as a rules
