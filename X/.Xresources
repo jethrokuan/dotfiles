@@ -80,7 +80,7 @@ URxvt*scrollstyle:	plain
 
 !-*- Perl extensions -*-
 ! stored in ~/.urxvt/ext/
-URxvt.perl-ext-common: font-size
+URxvt.perl-ext-common: font-size,tabbed
 URxvt.url-launcher:   firefox
 URxvt.underlineURLs:  True
 URxvt.matcher.button: 1
@@ -88,13 +88,10 @@ URxvt.matcher.button: 1
 ! font-size
 URxvt.keysym.C-Up:     perl:font-size:increase
 URxvt.keysym.C-Down:   perl:font-size:decrease
-URxvt.keysym.C-S-Up:   perl:font-size:incglobal
-URxvt.keysym.C-S-Down: perl:font-size:decglobal
-URxvt.keysym.C-S-R:    perl:font-size:reset
-URxvt.font-size.step:  4
+URxvt.font-size.step:  2
 ! disable default binding for shift on urxvt
-URxvt.iso14755:        false
-URxvt.iso14755_52: false
+! URxvt.iso14755:        false
+! URxvt.iso14755_52: false
 
 XTerm*alternateScroll:	true
 XTerm*charClass:	33:48,37-38:48,45-47:48,64:48,58:48,126:48,61:48,63:48,43:48,35:48
