@@ -752,7 +752,8 @@
 #+BEGIN_SRC emacs-lisp :tangle yes
   (use-package sphinx-doc
     :init
-    (add-hook 'python-mode-hook (sphinx-doc-mode t)))
+    (add-hook 'python-mode-hook (lambda ()
+                                  (sphinx-doc-mode 1))))
 #+END_SRC
 *** Anaconda
 #+BEGIN_SRC emacs-lisp :tangle yes

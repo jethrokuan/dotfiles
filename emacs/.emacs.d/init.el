@@ -484,7 +484,8 @@ The app is chosen from your OS's preference."
 
 (use-package sphinx-doc
   :init
-  (add-hook 'python-mode-hook (sphinx-doc-mode t)))
+  (add-hook 'python-mode-hook (lambda ()
+                                (sphinx-doc-mode 1))))
 
 (use-package anaconda-mode
   :init
