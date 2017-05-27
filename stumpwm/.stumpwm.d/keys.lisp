@@ -37,6 +37,7 @@
   ("s-2" "gselect www")
   ("s-3" "gselect media")
   ("s-4" "gselect chat")
+  ("s-TAB" "fnext")
   ("s-ISO_Left_Tab" "gnext")
   ("M-TAB" "next-in-frame")
   ("M-ISO_Left_Tab" "prev-in-frame")
