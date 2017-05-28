@@ -30,7 +30,7 @@
 
 (setf *screen-mode-line-format*
       (list "^B^3 %g ^n^b %W ^> " 
-            "^B^3^n^b ^n %d %B " 
+            "^B^3^n^b ^n %B | %d | " 
             '(:eval (get-dropbox-status))
             ))
 
