@@ -23,25 +23,22 @@
 (defvar *applications-map* nil
   "keymap for applications")
 
-(defkeys *root-map*
-    ("r" "reinit")
-  ("R" "resize"))
-
 (defkeys *applications-map*
     ("f" "firefox")
   ("t" "urxvt")
   ("s" "spotify"))
 
 (defkeys *top-map*
-    ("XF86AudioLowerVolume" "exec amixer -q sset Master 3%-")
+    ("F12" "reinit")
+  ("XF86AudioLowerVolume" "exec amixer -q sset Master 3%-")
   ("XF86AudioRaiseVolume" "exec amixer -q sset Master 3%+")
   ("XF86AudioMute" "exec amixer -q sset Master toggle")
   ("s-1" "gselect code")
   ("s-2" "gselect www")
   ("s-3" "gselect media")
   ("s-4" "gselect chat")
-  ("s-TAB" "fnext")
-  ("s-ISO_Left_Tab" "gnext")
+  ("s-TAB" "gnext")
+  ("s-ISO_Left_Tab" "gprev")
   ("M-TAB" "next-in-frame")
   ("M-ISO_Left_Tab" "prev-in-frame")
   ("s-m" "mode-line")
