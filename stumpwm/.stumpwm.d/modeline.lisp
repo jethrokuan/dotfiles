@@ -23,17 +23,15 @@
 (setf *window-format* "%m%n%s%10t ")
 (setf *mode-line-timeout* 1)
 
-(setf *time-modeline-string* "^B^3 %e %b %T ^n")
+(setf *time-modeline-string* "^B^3 %e %b %H:%M ^n")
 
-(defun get-date-modeline ()
-  (run-shell-command
-   (format nil "date +\"~A\""
-           *time-modeline-string*) t))
+(defun get-dropbox-status ()
+  (run-shell-command "bash ~/.scripts/dropbox.sh" t))
 
 (setf *screen-mode-line-format*
       (list "^B^3 %g ^n^b %W ^> " 
-            "^B^3^n^b%B  "
-            '(:eval (get-date-modeline))
+            "^B^3^n^b ^n %d %B " 
+            '(:eval (get-dropbox-status))
             ))
 
 (setf *mode-line-border-width* 1)

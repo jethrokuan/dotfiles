@@ -7,3 +7,5 @@ compton --config $XDG_CONFIG_HOME/compton/compton.conf &
 dunst &
 
 urxvtd &
+
+dropbox start &
