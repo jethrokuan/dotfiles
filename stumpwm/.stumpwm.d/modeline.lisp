@@ -1,5 +1,6 @@
 (load-module "battery-portable")
-(load-module "wifi")
+(load-module "cpu")
+(load-module "mem")
 
 (setf *bar-med-color* "^B^3")
 (setf *bar-hi-color* "^B^3")
@@ -30,7 +31,7 @@
 
 (setf *screen-mode-line-format*
       (list "^B^3 %g ^n^b %W ^> " 
-            "^B^3^n^b ^n %B | %d | " 
+            "^B^3^n^b ^n %M | %c %t | %B | %d | " 
             '(:eval (get-dropbox-status))
             ))
 
