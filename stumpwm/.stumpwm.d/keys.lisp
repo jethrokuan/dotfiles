@@ -15,7 +15,10 @@
 
 (defcommand emacs () ()
             "raise emacs if there is a running instance, otherwise start it"
-            (run-or-raise "emacsclient -c -a emacs" '(:title "emacs"))) 
+            (run-or-raise "emacsclient -c -a emacs" '(:title "emacs")))
+
+(defcommand spotify () ()
+            (run-or-raise "spotify" '(:class "Spotify")))
 
 (defvar *applications-map* nil
   "keymap for applications")
@@ -27,7 +30,8 @@
 
 (defkeys *applications-map*
     ("f" "firefox")
-  ("t" "urxvt"))
+  ("t" "urxvt")
+  ("s" "spotify"))
 
 (defkeys *top-map*
     ("XF86AudioLowerVolume" "exec amixer -q sset Master 3%-")
@@ -45,7 +49,7 @@
   ("s-e" "emacs")
   ("s-x" "urxvt")
   ("s-space" "exec rofi -show run")
-  ("s-p" '*applications-map*)
+  ("s-a" '*applications-map*)
   ("s-s" "exec scrot -s ~/tmp.png && xclip -selection c -t image/png -i ~/tmp.png && rm ~/tmp.png")
   ("s-S" "exec scrot -m ~/scrot.png")
   )
