@@ -13,7 +13,7 @@
 
 (define-frame-preference "media"
     (0 t   t :class "smplayer")
-  (0 t    t :class "Spotify"))
+  (0 t t :class "Spotify" :instance "spotify"))
 
 (define-frame-preference "chat"
     (0 t   t :class "Franz"))

@@ -2,7 +2,7 @@
 
 (load-module "amixer")
 
-(set-prefix-key (kbd "s-t"))
+(set-prefix-key (kbd "s-a"))
 
 (defcommand urxvt () ()
             (run-or-raise "urxvtc" '(:class "URxvt")))
@@ -24,8 +24,7 @@
   "keymap for applications")
 
 (defkeys *root-map*
-    ("f" "colon1 exec firefox http://www.")
-  ("r" "reinit")
+    ("r" "reinit")
   ("R" "resize"))
 
 (defkeys *applications-map*
@@ -49,7 +48,7 @@
   ("s-e" "emacs")
   ("s-x" "urxvt")
   ("s-space" "exec rofi -show run")
-  ("s-a" '*applications-map*)
-  ("s-s" "exec scrot -s ~/tmp.png && xclip -selection c -t image/png -i ~/tmp.png && rm ~/tmp.png")
-  ("s-S" "exec scrot -m ~/scrot.png")
+  ("s-A" '*applications-map*)
+  ("SunPrint_Screen" "exec scrot -s ~/tmp.png && xclip -selection c -t image/png -i ~/tmp.png && rm ~/tmp.png")
+  ("C-SunPrint_Screen" "scrot -m ~/scrot.png")
   )
