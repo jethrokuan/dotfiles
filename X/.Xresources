@@ -2,16 +2,12 @@
 ! ROFI Color theme
 ! ------------------------------------------------------------------------------
 rofi.color-enabled: true
-! first two color-window were a013191c
-! a6 = 65% amount of black needed over white for white to be a 7 contrast score
-! b3 = 70%
-! 80 = 50%
-rofi.color-window: argb:a6000000, argb:a6000000, argb:0000000 
-rofi.color-normal: argb:0fdf6e3, #ffffff, argb:0eee8d5, #009688, #ffffff 
-rofi.color-active: #fdf6e3, #268bd2, #eee8d5, #268bd2, #fdf6e3 
-rofi.color-urgent: #fdf6e3, #dc322f, #eee8d5, #dc322f, #fdf6e3
+rofi.color-window: #3f3f3f, #3f3f3f, #80cbc4
+rofi.color-normal: #3f3f3f, #c1c1c1, #3f3f3f, #80cbc4, #ffffff
+rofi.color-active: #3f3f3f, #80cbc4, #3f3f3f, #80cbc4, #80cbc4
+rofi.color-urgent: #3f3f3f, #ff1844, #3f3f3f, #80cbc4, #ff1844
 rofi.line-margin: 31
-rofi.font: Iosevka 24
+rofi.font: Droid Sans 24
 rofi.padding: 168
 rofi.fullscreen: true
 
