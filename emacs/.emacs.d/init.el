@@ -524,8 +524,6 @@ The app is chosen from your OS's preference."
   :init
   (add-hook 'python-mode-hook 'py-autopep8-enable-on-save))
 
-(use-package pyvenv)
-
 (use-package pytest
   :bind (:map python-mode-map
               ("C-c a" . pytest-all)
@@ -536,149 +534,6 @@ The app is chosen from your OS's preference."
               ("C-c p m" . pytest-pdb-module)
               ("C-c p ." . pytest-pdb-one)))
 
-(use-package web-mode
-  :mode (("\\.html\\'" . web-mode)
-         ("\\.html\\.erb\\'" . web-mode)
-         ("\\.mustache\\'" . web-mode)
-         ("\\.jinja\\'" . web-mode)
-         ("\\.njk\\'" . web-mode)
-         ("\\.php\\'" . web-mode))
-  :config
-  (setq web-mode-enable-css-colorization t)
-  (setq web-mode-code-indent-offset 2)
-  (setq web-mode-markup-indent-offset 2))
-
-(use-package emmet-mode
-  :diminish emmet-mode
-  :config
-  (add-hook 'web-mode-hook 'emmet-mode)
-  (add-hook 'vue-mode-hook 'emmet-mode))
-
-(use-package scss-mode
-  :mode "\\.scss\\'" 
-  :config (progn
-            (setq scss-compile-at-save nil)))
-
-(setq-default flycheck-disabled-checkers
-              (append flycheck-disabled-checkers
-                      '(javascript-jshint)))
-(flycheck-add-mode 'javascript-eslint 'js2-mode)
-(flycheck-add-mode 'javascript-eslint 'web-mode)
-
-(use-package skewer-mode  
-  :bind (:map skewer-mode-map
-              ("C-c C-k" . skewer-load-buffer))
-  :config
-  (add-hook 'js2-mode-hook 'skewer-mode))
-
-(use-package js2-mode
-  :mode ("\\.js\\'" . js2-mode)
-  :config
-  (use-package tern
-    :diminish tern-mode
-    :config
-    (setq js-switch-indent-offset 2)
-    (add-hook 'js2-mode-hook 'tern-mode) 
-    (use-package company-tern
-      :config
-      (add-to-list 'company-backends 'company-tern))))
-
-(use-package js-doc
-  :config
-  (setq js-doc-mail-address "jethrokuan95@gmail.com"
-        js-doc-author (format "Jethro Kuan <%s>" js-doc-mail-address)
-        js-doc-url "http://www.jethrokuan.com/"
-        js-doc-license "MIT")
-  (add-hook 'js2-mode-hook
-            #'(lambda ()
-                (define-key js2-mode-map "\C-ci" 'js-doc-insert-function-doc)
-                (define-key js2-mode-map "@" 'js-doc-insert-tag))))
-
-(use-package js2-refactor
-  :config
-  (add-hook 'js2-mode-hook #'js2-refactor-mode)
-  (js2r-add-keybindings-with-prefix "C-c C-j"))
-
-(use-package vue-mode
-  :mode "\\.vue\\'")
-
-(use-package json-mode
-  :mode "\\.json\\'"
-  :config (add-hook 'json-mode-hook (lambda ()
-                                      (make-local-variable 'js-indent-level)
-                                      (setq js-indent-level 2))))
-
-(use-package markdown-mode
-  :mode ("\\.md\\'" . markdown-mode)
-  :config (progn
-            (setq markdown-command "multimarkdown")
-            (add-hook 'markdown-mode-hook #'trunc-lines-hook)))
-
-(use-package clojure-mode
-  :mode (("\\.clj\\'" . clojure-mode)
-         ("\\.boot\\'" . clojure-mode)
-         ("\\.edn\\'" . clojure-mode)
-         ("\\.cljs\\'" . clojurescript-mode)
-         ("\\.cljs\\.hl\\'" . clojurescript-mode))
-  :init
-  (add-hook 'clojure-mode-hook #'eldoc-mode)
-  (add-hook 'clojure-mode-hook #'subword-mode)
-  (add-hook 'clojure-mode-hook #'cider-mode)
-  (add-hook 'clojure-mode-hook #'clj-refactor-mode))
-
-(use-package cider
-  :init
-  (add-hook 'cider-mode-hook #'clj-refactor-mode)
-  (add-hook 'cider-repl-mode-hook #'company-mode)
-  (add-hook 'cider-mode-hook #'company-mode)
-  :diminish subword-mode
-  :config
-  (setq nrepl-log-messages t                  
-        cider-repl-display-in-current-window t
-        cider-repl-use-clojure-font-lock t    
-        cider-prompt-save-file-on-load 'always-save
-        cider-font-lock-dynamically '(macro core function var)
-        nrepl-hide-special-buffers t
-        cider-show-error-buffer nil
-        cider-overlays-use-font-lock t
-        cider-repl-result-prefix ";; => ")
-  (setq cider-cljs-lein-repl "(do (use 'figwheel-sidecar.repl-api) (start-figwheel!) (cljs-repl))")
-  (cider-repl-toggle-pretty-printing))
-
-(use-package clj-refactor
-  :defines cljr-add-keybindings-with-prefix
-  :diminish clj-refactor-mode
-  :config (cljr-add-keybindings-with-prefix "C-c C-j"))
-
-(use-package flycheck-clojure
-  :config
-  (flycheck-clojure-setup))
-
-(use-package auctex
-  :defer t
-  :config
-  (setq TeX-auto-save t
-        TeX-parse-self t
-        TeX-syntactic-comment t
-        ;; Synctex support
-        TeX-source-correlate-start-server nil
-        ;; Don't insert line-break at inline math
-        LaTeX-fill-break-at-separators nil)
-  (setq TeX-view-program-list '(("Evince" "evince --page-index=%(outpage) %o")
-                                ("qpdfview" "qpdfview %o#%(outpage)")))
-  (setq TeX-view-program-selection '((output-pdf "qpdfview")
-                                     (output-pdf "Evince")))
-  (when latex-enable-auto-fill
-    (add-hook 'LaTeX-mode-hook 'latex/auto-fill-mode))
-  (when latex-enable-folding
-    (add-hook 'LaTeX-mode-hook 'TeX-fold-mode))
-  (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
-  (add-hook 'LaTeX-mode-hook 'TeX-source-correlate-mode)
-  (add-hook 'LaTeX-mode-hook 'TeX-PDF-mode))
-
-(use-package company-auctex
-  :defer t)
-
 (global-hl-line-mode 1)
 
 (require 'whitespace)
@@ -688,6 +543,30 @@ The app is chosen from your OS's preference."
 (add-hook 'prog-mode-hook 'whitespace-mode)
 
 (use-package page-break-lines)
+
+(use-package smart-mode-line
+  :config
+  (add-hook 'after-init-hook 'sml/setup)
+  (setq sml/theme 'respectful)
+  (setq sml/name-width 30)
+  (setq sml/shorten-directory t)
+  (setq sml/shorten-modes t)
+  (setq sml/mode-width 'full)
+  (setq sml/replacer-regexp-list
+        '(("^~/.org/" ":O:")
+          ("^~/\\.emacs\\.d/" ":ED")))
+  (setq rm-blacklist
+        (format "^ \\(%s\\)$"
+                (mapconcat #'identity
+                           '("FlyC.*"
+                             "Projectile.*"
+                             "GitGutter"
+                             "ivy"
+                             "company"
+                             ""
+                             ","
+                             "ElDoc")
+                           "\\|"))))
 
 (setq display-time-24hr-format t)
 (display-time-mode 1)

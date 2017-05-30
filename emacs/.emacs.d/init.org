@@ -802,10 +802,6 @@
     :init
     (add-hook 'python-mode-hook 'py-autopep8-enable-on-save))
     #+END_SRC
-*** Pyvenv
-#+BEGIN_SRC emacs-lisp :tangle yes
-  (use-package pyvenv)
-#+END_SRC
 *** Pytest
 #+BEGIN_SRC emacs-lisp :tangle yes
   (use-package pytest
@@ -818,231 +814,6 @@
                 ("C-c p m" . pytest-pdb-module)
                 ("C-c p ." . pytest-pdb-one)))
 #+END_SRC
-*** Elpy (Disabled)
-    #+begin_src emacs-lisp :tangle no
-  (use-package elpy
-    :init
-    (add-hook 'python-mode-hook (lambda () (aggressive-indent-mode -1)))
-    (add-hook 'python-mode-hook 'elpy-mode)
-    :config
-    (when (require 'flycheck nil t)
-      (remove-hook 'elpy-modules 'elpy-module-flymake)
-      (remove-hook 'elpy-modules 'elpy-module-yasnippet)
-      (remove-hook 'elpy-mode-hook 'elpy-module-highlight-indentation)
-      (add-hook 'elpy-mode-hook 'flycheck-mode))
-    (elpy-enable))
-#+end_src
-
-** HTML
-*** Web-mode
-    #+begin_src emacs-lisp :tangle yes
-   (use-package web-mode
-     :mode (("\\.html\\'" . web-mode)
-            ("\\.html\\.erb\\'" . web-mode)
-            ("\\.mustache\\'" . web-mode)
-            ("\\.jinja\\'" . web-mode)
-            ("\\.njk\\'" . web-mode)
-            ("\\.php\\'" . web-mode))
-     :config
-     (setq web-mode-enable-css-colorization t)
-     (setq web-mode-code-indent-offset 2)
-     (setq web-mode-markup-indent-offset 2))
-    #+end_src
-*** Emmet-mode
-    #+begin_src emacs-lisp :tangle yes
-(use-package emmet-mode
-  :diminish emmet-mode
-  :config
-  (add-hook 'web-mode-hook 'emmet-mode)
-  (add-hook 'vue-mode-hook 'emmet-mode))
-    #+end_src
-** CSS
-*** Rainbow-mode
-    #+begin_src emacs-lisp :tangle no
-   (use-package rainbow-mode
-     :diminish rainbow-mode
-     :config
-     (add-hook 'css-mode-hook 'rainbow-mode)
-     (add-hook 'scss-mode-hook 'rainbow-mode))
-    #+end_src
-*** SCSS-mode
-    #+begin_src emacs-lisp :tangle yes
- (use-package scss-mode
-   :mode "\\.scss\\'" 
-   :config (progn
-             (setq scss-compile-at-save nil)))
-    #+end_src
-** JS
-*** Flycheck
-    #+begin_src emacs-lisp :tangle yes
-      (setq-default flycheck-disabled-checkers
-                    (append flycheck-disabled-checkers
-                            '(javascript-jshint)))
-      (flycheck-add-mode 'javascript-eslint 'js2-mode)
-      (flycheck-add-mode 'javascript-eslint 'web-mode)
-    #+end_src
-*** Skewer
-    #+begin_src emacs-lisp :tangle yes
-  (use-package skewer-mode  
-    :bind (:map skewer-mode-map
-                ("C-c C-k" . skewer-load-buffer))
-    :config
-    (add-hook 'js2-mode-hook 'skewer-mode))
-    #+end_src
-*** js-comint
-    #+begin_src emacs-lisp :tangle no
-  (use-package js-comint
-    :config
-    (add-hook 'js2-mode-hook
-              (lambda ()
-                (local-set-key (kbd "C-x C-e") 'js-send-last-sexp)
-                (local-set-key (kbd "C-M-x") 'js-send-last-sexp-and-go)
-                (local-set-key (kbd "C-c b") 'js-send-buffer)
-                (local-set-key (kbd "C-c C-b") 'js-send-buffer-and-go)
-                (local-set-key (kbd "C-c l") 'js-load-file-and-go))))
-    #+end_src
-*** JS2-mode
-
-    Here I also added =tern-mode=. This requires the tern executable:
-    #+begin_src bash :tangle no
-npm install -g tern
-    #+end_src
-
-    #+begin_src emacs-lisp :tangle yes
-      (use-package js2-mode
-        :mode ("\\.js\\'" . js2-mode)
-        :config
-        (use-package tern
-          :diminish tern-mode
-          :config
-          (setq js-switch-indent-offset 2)
-          (add-hook 'js2-mode-hook 'tern-mode) 
-          (use-package company-tern
-            :config
-            (add-to-list 'company-backends 'company-tern))))
-    #+end_src
-*** js-doc
-#+BEGIN_SRC emacs-lisp :tangle yes
-  (use-package js-doc
-    :config
-    (setq js-doc-mail-address "jethrokuan95@gmail.com"
-          js-doc-author (format "Jethro Kuan <%s>" js-doc-mail-address)
-          js-doc-url "http://www.jethrokuan.com/"
-          js-doc-license "MIT")
-    (add-hook 'js2-mode-hook
-              #'(lambda ()
-                  (define-key js2-mode-map "\C-ci" 'js-doc-insert-function-doc)
-                  (define-key js2-mode-map "@" 'js-doc-insert-tag))))
-#+END_SRC
-*** JS2-refactor
-    #+begin_src emacs-lisp :tangle yes
-  (use-package js2-refactor
-    :config
-    (add-hook 'js2-mode-hook #'js2-refactor-mode)
-    (js2r-add-keybindings-with-prefix "C-c C-j"))
-    #+end_src
-*** Vue-mode
-    Additional support for Vue.js projects.
-
-    #+begin_src emacs-lisp :tangle yes
- (use-package vue-mode
-   :mode "\\.vue\\'")
-    #+end_src
-** JSON
-   #+begin_src emacs-lisp :tangle yes
- (use-package json-mode
-   :mode "\\.json\\'"
-   :config (add-hook 'json-mode-hook (lambda ()
-                                       (make-local-variable 'js-indent-level)
-                                       (setq js-indent-level 2))))
-   #+end_src
-** Markdown
-   #+begin_src emacs-lisp :tangle yes
-(use-package markdown-mode
-  :mode ("\\.md\\'" . markdown-mode)
-  :config (progn
-            (setq markdown-command "multimarkdown")
-            (add-hook 'markdown-mode-hook #'trunc-lines-hook)))
-   #+end_src
-** Clojure
-*** Clojure-mode
-    #+begin_src emacs-lisp :tangle yes
-  (use-package clojure-mode
-    :mode (("\\.clj\\'" . clojure-mode)
-           ("\\.boot\\'" . clojure-mode)
-           ("\\.edn\\'" . clojure-mode)
-           ("\\.cljs\\'" . clojurescript-mode)
-           ("\\.cljs\\.hl\\'" . clojurescript-mode))
-    :init
-    (add-hook 'clojure-mode-hook #'eldoc-mode)
-    (add-hook 'clojure-mode-hook #'subword-mode)
-    (add-hook 'clojure-mode-hook #'cider-mode)
-    (add-hook 'clojure-mode-hook #'clj-refactor-mode))
-    #+end_src
-*** Cider
-    #+begin_src emacs-lisp :tangle yes
-      (use-package cider
-        :init
-        (add-hook 'cider-mode-hook #'clj-refactor-mode)
-        (add-hook 'cider-repl-mode-hook #'company-mode)
-        (add-hook 'cider-mode-hook #'company-mode)
-        :diminish subword-mode
-        :config
-        (setq nrepl-log-messages t                  
-              cider-repl-display-in-current-window t
-              cider-repl-use-clojure-font-lock t    
-              cider-prompt-save-file-on-load 'always-save
-              cider-font-lock-dynamically '(macro core function var)
-              nrepl-hide-special-buffers t
-              cider-show-error-buffer nil
-              cider-overlays-use-font-lock t
-              cider-repl-result-prefix ";; => ")
-        (setq cider-cljs-lein-repl "(do (use 'figwheel-sidecar.repl-api) (start-figwheel!) (cljs-repl))")
-        (cider-repl-toggle-pretty-printing))
-    #+end_src
-*** clj-refactor
-    #+begin_src emacs-lisp :tangle yes
-(use-package clj-refactor
-  :defines cljr-add-keybindings-with-prefix
-  :diminish clj-refactor-mode
-  :config (cljr-add-keybindings-with-prefix "C-c C-j"))
-    #+end_src
-*** Squiggly-clojure
-    #+begin_src emacs-lisp :tangle yes
-  (use-package flycheck-clojure
-    :config
-    (flycheck-clojure-setup))
-    #+end_src
-** Latex
-*** AucTeX
-    #+BEGIN_SRC emacs-lisp :tangle yes
-  (use-package auctex
-    :defer t
-    :config
-    (setq TeX-auto-save t
-          TeX-parse-self t
-          TeX-syntactic-comment t
-          ;; Synctex support
-          TeX-source-correlate-start-server nil
-          ;; Don't insert line-break at inline math
-          LaTeX-fill-break-at-separators nil)
-    (setq TeX-view-program-list '(("Evince" "evince --page-index=%(outpage) %o")
-                                  ("qpdfview" "qpdfview %o#%(outpage)")))
-    (setq TeX-view-program-selection '((output-pdf "qpdfview")
-                                       (output-pdf "Evince")))
-    (when latex-enable-auto-fill
-      (add-hook 'LaTeX-mode-hook 'latex/auto-fill-mode))
-    (when latex-enable-folding
-      (add-hook 'LaTeX-mode-hook 'TeX-fold-mode))
-    (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
-    (add-hook 'LaTeX-mode-hook 'TeX-source-correlate-mode)
-    (add-hook 'LaTeX-mode-hook 'TeX-PDF-mode))
-    #+END_SRC
-*** Autocomplete support
-    #+BEGIN_SRC emacs-lisp :tangle yes
-  (use-package company-auctex
-    :defer t)
-    #+END_SRC
 * Visual Enhancements
 ** linum-mode (Disabled)
    #+begin_src emacs-lisp :tangle no
@@ -1068,30 +839,30 @@ npm install -g tern
 (use-package page-break-lines)
    #+end_src
 ** Smart-mode-line
-   #+begin_src emacs-lisp :tangle no
-  (use-package smart-mode-line
-    :config
-    (add-hook 'after-init-hook 'sml/setup)
-    (setq sml/name-width 30)
-    (setq sml/shorten-directory t)
-    (setq sml/shorten-modes t)
-    (setq sml/mode-width 'full)
-    (setq sml/replacer-regexp-list
-          '(("^~/.org/" ":O:")
-            ("^~/\\.emacs\\.d/" ":ED")))
-    (setq rm-blacklist
-          (format "^ \\(%s\\)$"
-                  (mapconcat #'identity
-                             '("FlyC.*"
-                               "Projectile.*"
-                               "GitGutter"
-                               "ivy"
-                               "company"
-                               ""
-                               "doom"
-                               ","
-                               "ElDoc")
-                             "\\|"))))
+   #+begin_src emacs-lisp :tangle yes
+     (use-package smart-mode-line
+       :config
+       (add-hook 'after-init-hook 'sml/setup)
+       (setq sml/theme 'respectful)
+       (setq sml/name-width 30)
+       (setq sml/shorten-directory t)
+       (setq sml/shorten-modes t)
+       (setq sml/mode-width 'full)
+       (setq sml/replacer-regexp-list
+             '(("^~/.org/" ":O:")
+               ("^~/\\.emacs\\.d/" ":ED")))
+       (setq rm-blacklist
+             (format "^ \\(%s\\)$"
+                     (mapconcat #'identity
+                                '("FlyC.*"
+                                  "Projectile.*"
+                                  "GitGutter"
+                                  "ivy"
+                                  "company"
+                                  ""
+                                  ","
+                                  "ElDoc")
+                                "\\|"))))
    #+end_src
 *** Showing time
     #+begin_src emacs-lisp :tangle yes
