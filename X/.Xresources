@@ -76,7 +76,7 @@ URxvt*scrollstyle:	plain
 
 !-*- Perl extensions -*-
 ! stored in ~/.urxvt/ext/
-URxvt.perl-ext-common: font-size,tabbed
+URxvt.perl-ext-common: font-size,tabbed,clipboard
 URxvt.url-launcher:   firefox
 URxvt.underlineURLs:  True
 URxvt.matcher.button: 1
@@ -88,6 +88,13 @@ URxvt.font-size.step:  2
 ! disable default binding for shift on urxvt
 ! URxvt.iso14755:        false
 ! URxvt.iso14755_52: false
+
+! Clipboard
+! update clipboard whenever primary gets updated
+URxvt.clipboard.autocopy: true
+URxvt.keysym.M-c: perl:clipboard:copy
+URxvt.keysym.M-v: perl:clipboard:paste
+URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
 
 XTerm*alternateScroll:	true
 XTerm*charClass:	33:48,37-38:48,45-47:48,64:48,58:48,126:48,61:48,63:48,43:48,35:48
