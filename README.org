@@ -12,10 +12,11 @@ I'm a huge fan of the Lisp dialect, and use Emacs as my daily runner.
 
 | purpose       | program | folder     |
 |---------------+---------+------------|
+| OS            | NixOS   | [[https://github.com/jethrokuan/nix-config/][nix-config]] |
 | DE            | X       | [[file:X/][X]]          |
 | wm            | stumpwm | [[file:stumpwm/][.stumpwm.d]] |
 | compositor    | compton | [[file:compton/][compton]]    |
-| editor        | emacs   | [[file:emacs/][.emacs.d]]   |
+| editor        | emacs   | [[https://github.com/jethrokuan/.emacs.d/][.emacs.d]]   |
 | shell         | fish    | [[file:fish/][fish]]       |
 | vcs           | git     | [[file:git/][.gitconfig]] |
 | notifications | dunst   | [[file:dunst/][dunstrc]]    |
