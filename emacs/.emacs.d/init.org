@@ -603,6 +603,13 @@
                          ("q"  nil)))
        (use-package flycheck-pos-tip
          :config (flycheck-pos-tip-mode))
+
+       ;; Turn the mode-line red when there are errors 
+       (use-package flycheck-color-mode-line
+         :config
+         (with-eval-after-load "flycheck"
+           (setq flycheck-highlighting-mode 'symbols)
+           (add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode)))
        (add-hook 'prog-mode-hook 'global-flycheck-mode))
    #+end_src
 ** Templating with Yasnippet
@@ -614,18 +621,25 @@
    #+end_src
 ** Autocompletions with Company
    #+begin_src emacs-lisp :tangle yes
-(use-package company
-  :diminish company-mode
-  :init (progn
-          (add-hook 'after-init-hook 'global-company-mode)
-          (setq company-dabbrev-ignore-case nil
-                company-dabbrev-code-ignore-case nil
-                company-dabbrev-downcase nil
-                company-idle-delay 0
-                company-begin-commands '(self-insert-command)
-                company-transformers '(company-sort-by-occurrence))
-          (use-package company-quickhelp
-            :config (company-quickhelp-mode 1))))
+     (use-package company
+       :diminish company-mode
+       :config
+       (add-hook 'after-init-hook 'global-company-mode)
+       (setq company-global-modes '(not term-mode))
+       (setq company-minimum-prefix-length 2
+             company-dabbrev-ignore-case nil
+             company-dabbrev-downcase nil
+             company-dabbrev-code-ignore-case nil
+             company-dabbrev-downcase nil
+             company-idle-delay 0
+             company-show-numbers t
+             company-tooltip-align-annotations t
+             company-require-match nil
+             company-transformers '(company-sort-by-occurrence))
+       (use-package company-quickhelp
+         :config
+         (setq company-quickhelp-delay 1)
+         (company-quickhelp-mode 1)))
    #+end_src
 ** Spellcheck with Flyspell
    #+begin_src emacs-lisp :tangle yes
@@ -861,11 +875,11 @@
 ** JS
 *** Flycheck
     #+begin_src emacs-lisp :tangle yes
-  (setq-default flycheck-disabled-checkers
-                (append flycheck-disabled-checkers
-                        '(javascript-jshint)))
-  (flycheck-add-mode 'javascript-eslint 'js2-mode)
-  (flycheck-add-mode 'javascript-eslint 'web-mode)
+      (setq-default flycheck-disabled-checkers
+                    (append flycheck-disabled-checkers
+                            '(javascript-jshint)))
+      (flycheck-add-mode 'javascript-eslint 'js2-mode)
+      (flycheck-add-mode 'javascript-eslint 'web-mode)
     #+end_src
 *** Skewer
     #+begin_src emacs-lisp :tangle yes

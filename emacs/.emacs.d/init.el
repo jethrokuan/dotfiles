@@ -379,6 +379,13 @@ The app is chosen from your OS's preference."
                     ("q"  nil)))
   (use-package flycheck-pos-tip
     :config (flycheck-pos-tip-mode))
+
+  ;; Turn the mode-line red when there are errors 
+  (use-package flycheck-color-mode-line
+    :config
+    (with-eval-after-load "flycheck"
+      (setq flycheck-highlighting-mode 'symbols)
+      (add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode)))
   (add-hook 'prog-mode-hook 'global-flycheck-mode))
 
 (use-package yasnippet
@@ -388,16 +395,23 @@ The app is chosen from your OS's preference."
 
 (use-package company
   :diminish company-mode
-  :init (progn
-          (add-hook 'after-init-hook 'global-company-mode)
-          (setq company-dabbrev-ignore-case nil
-                company-dabbrev-code-ignore-case nil
-                company-dabbrev-downcase nil
-                company-idle-delay 0
-                company-begin-commands '(self-insert-command)
-                company-transformers '(company-sort-by-occurrence))
-          (use-package company-quickhelp
-            :config (company-quickhelp-mode 1))))
+  :config
+  (add-hook 'after-init-hook 'global-company-mode)
+  (setq company-global-modes '(not term-mode))
+  (setq company-minimum-prefix-length 2
+        company-dabbrev-ignore-case nil
+        company-dabbrev-downcase nil
+        company-dabbrev-code-ignore-case nil
+        company-dabbrev-downcase nil
+        company-idle-delay 0
+        company-show-numbers t
+        company-tooltip-align-annotations t
+        company-require-match nil
+        company-transformers '(company-sort-by-occurrence))
+  (use-package company-quickhelp
+    :config
+    (setq company-quickhelp-delay 1)
+    (company-quickhelp-mode 1)))
 
 (use-package flyspell 
   :ensure f 
