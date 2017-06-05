@@ -46,11 +46,13 @@ URxvt.color13                 :#ec93d3
 
 ! bright-cyan + bright-white
 URxvt.color14                 :#93e0e3
-URxvt.color15 :#ffffff
+URxvt.color15                 :#ffffff
 
-Xft*antialias:		true
-Xft*autohint:		true
-Xft*dpi:		92
+Xft.antialias:		1
+Xft.autohint:		0
+Xft.lcdfilter: lcddefault
+Xft.hintstlye: hintfull
+Xft.dpi:		184
 
 URxvt*termName:		rxvt-unicode-256color
 URxvt*scrollTtyOutput: false
