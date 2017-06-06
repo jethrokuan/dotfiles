@@ -27,12 +27,17 @@
 (setf *time-modeline-string* "^B^3 %e %b %H:%M ^n")
 
 (defun get-dropbox-status ()
-  (run-shell-command "bash ~/.scripts/dropbox.sh" t))
+  (run-shell-command "bash ~/.scripts/dropbox.sh | tr -d '[:cntrl:]'" t))
+
+
+(defun get-ssid ()
+  (run-shell-command "nmcli -t -f name connection show --active | tr -d '[:cntrl:]'" t))
 
 (setf *screen-mode-line-format*
-      (list "^B^3 %g ^n^b %W ^> " 
-            "^B^3^n^b ^n %M | %c %t | %B | %d | " 
-            '(:eval (get-dropbox-status))
+      (list "^B^3 %g ^n^b %W ^> "
+            '(:eval (get-ssid))
+            " |^B^3^n^b ^n %M | %c %t | %B | %d | " 
+            '(:eval (get-dropbox-status)) 
             ))
 
 (setf *mode-line-border-width* 1)

@@ -55,8 +55,8 @@
 (set-font (make-instance 'xft:font :family "Droid Sans" :subfamily
                          "Regular" :size 11))
 
-(set-focus-color zenburn-green)
-(set-unfocus-color zenburn-green-1)
+(set-focus-color zenburn-red)
+(set-unfocus-color zenburn-green)
 
 
 (setf *maxsize-border-width* 1)
