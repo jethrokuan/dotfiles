@@ -6,5 +6,5 @@
 
 (load (concat *stumpwm-config-dir* "utils.lisp"))
 
-(load-mods '("quickload" "startup" "theme" "modeline" "keys" "groups" "windows")) ;; missing swank
+(load-mods '("quickload" "theme" "modeline" "keys" "groups" "windows")) ;; missing swank
 
