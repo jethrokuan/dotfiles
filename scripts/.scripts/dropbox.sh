@@ -1,11 +1,20 @@
 #!/bin/bash
 stat=$(dropbox status)
+word=""
 
-if   echo $stat | grep -q "Up to date"; then word=DONE
-elif echo $stat | grep -q "Downloading"; then word=DL
-elif echo $stat | grep -q "Connecting"; then word=CONN
-elif echo $stat | grep -q "Uploading"; then word=UL
-else word=ERR
+if [[ $stat == *"Up to date"* ]]; then
+    word="DONE"
+elif [[ $stat == *"Upgrading"* ]]; then
+    # Note: Dropbox is still running while upgrading (NixOS woes)
+    word="DONE"
+elif [[ $stat == *"Connecting"* ]]; then
+    word="CONN"
+elif [[ $stat == *"Uploading"* ]]; then
+    word="UL"
+elif [[ $stat == *"Downloading"* ]]; then
+    word="DL"
+else
+    word="ERR"
 fi
 
-echo -e "DB: $word";
+echo -e "$word";
