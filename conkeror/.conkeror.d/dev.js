@@ -60,4 +60,4 @@ interactive("examine-element",
             },
             $browser_object = browser_object_dom_node);
 
-define_key(default_global_map, "x", "examine-element");
+define_key(default_base_keymap, "C-x x", "examine-element");

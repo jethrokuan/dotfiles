@@ -1,7 +1,7 @@
 homepage = "http://en.wikipedia.org/wiki/Special:Random";
 
-define_key(default_global_keymap, "M-a", "execute-extended-command");
-define_key(default_global_keymap, "G", "find-url-new-buffer");
+define_key(default_base_keymap, "M-a", "execute-extended-command");
+define_key(default_base_keymap, "G", "find-url-new-buffer");
 
 view_source_use_external_editor = true;
 editor_shell_command = "urxvt -e emacsclient -nw";
