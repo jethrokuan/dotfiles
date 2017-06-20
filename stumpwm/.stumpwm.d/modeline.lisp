@@ -29,18 +29,22 @@
 (defun get-dropbox-status ()
   (run-shell-command "bash ~/.scripts/dropbox.sh | tr -d '[:cntrl:]'" t))
 
+(defun get-current-song ()
+  (run-shell-command "bash ~/.scripts/get-current-song | tr -d '[:cntrl:]'" t))
 
 (defun get-ssid ()
   (run-shell-command "nmcli -t -f name connection show --active | tr -d '[:cntrl:]'" t))
 
 (setf *screen-mode-line-format*
-      (list "^B^3 %g ^n^b %W ^> "
+      (list "^B^3 %g ^n^b %W ^>  "
+            '(:eval (get-current-song))
+            " | "
             '(:eval (get-ssid))
-            " |^B^3^n^b ^n %M | %c %t | %B | %d | " 
+            " |^B^3^n^b ^n %c %t | %B | %d | " 
             '(:eval (get-dropbox-status)) 
             ))
 
-(setf *mode-line-border-width* 1)
+(setf *mode-line-border-width* 0)
 (setf *mode-line-background-color* zenburn-bg)
 (setf *mode-line-foreground-color* zenburn-fg)
 

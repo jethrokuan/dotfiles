@@ -20,13 +20,17 @@
 (defcommand spotify () ()
             (run-or-raise "spotify" '(:class "Spotify")))
 
+(defcommand conkeror () ()
+            (run-or-raise "conkeror" '(:class "Conkeror")))
+
 (defvar *applications-map* nil
   "keymap for applications")
 
 (defkeys *applications-map*
     ("f" "firefox")
   ("t" "urxvt")
-  ("s" "spotify"))
+  ("s" "spotify")
+  ("c" "conkeror"))
 
 (defkeys *top-map*
     ("F12" "reinit")

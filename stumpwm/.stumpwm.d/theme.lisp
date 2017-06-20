@@ -38,13 +38,9 @@
 (setq zenburn-magenta   "#DC8CC3")
 
 
-(defvar *wallpaper-command* "nitrogen --restore"
-  "Wallpaper command.")
-
 ;; Use Xcursor theme
 (run-shell-command "xsetroot -cursor_name left_ptr -fg white -bg black")
 
-(run-shell-command *wallpaper-command*)
 (ql:quickload :clx-truetype)
 
 (load-module "ttf-fonts")
@@ -58,10 +54,10 @@
 (set-focus-color zenburn-red)
 (set-unfocus-color zenburn-green)
 
-
-(setf *maxsize-border-width* 1)
-(setf *transient-border-width* 1)
-(setf *normal-border-width* 1)
+(setf *maxsize-border-width* 0)
+(setf *transient-border-width* 0)
+(setf *normal-border-width* 0)
+(setf *window-border-style* :none)
 
 (set-fg-color zenburn-fg)
 (set-bg-color zenburn-bg+1)
