@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+echo  -e "$(mpc current)"
+exit 0
