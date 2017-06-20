@@ -34,6 +34,8 @@
 
 (defkeys *top-map*
     ("F12" "reinit")
+  ("XF86MonBrightnessDown" "exec xbacklight -dec 10")
+  ("XF86MonBrightnessUp" "exec xbacklight -inc 10")
   ("XF86AudioLowerVolume" "exec amixer -q sset Master 3%-")
   ("XF86AudioRaiseVolume" "exec amixer -q sset Master 3%+")
   ("XF86AudioMute" "exec amixer -q sset Master toggle")
