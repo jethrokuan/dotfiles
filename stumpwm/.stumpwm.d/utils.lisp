@@ -45,3 +45,26 @@
                ,@(loop for i in couples collect
                       `(define-key map (kbd ,(first i)) ,(second i)))
                map))))
+
+
+(defmacro without-windows-placement-rules (&rest body)
+  `(let ((rules *window-placement-rules*))
+     (clear-window-placement-rules)
+     ,@body
+     (run-with-timer 1 nil (lambda ()
+                             (setf *window-placement-rules* rules)))))
+
+(defun popup ()
+  "Split vertically or horizontally depending on the context."
+  (let* ((group (current-group))
+         (frame (tile-group-current-frame group)))
+    (if (> (frame-width frame) (frame-height frame))
+        (hsplit)
+        (vsplit))
+    (fnext)))
+
+(defmacro with-popup (&rest body)
+  "Split depending on the context and evaluate BODY."
+  `(progn
+     (popup)
+     ,@body))

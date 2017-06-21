@@ -2,7 +2,7 @@
 
 (load-module "amixer")
 
-(set-prefix-key (kbd "s-z"))
+(set-prefix-key (kbd "C-t"))
 
 (defcommand urxvt () ()
             (run-or-raise "urxvtc" '(:class "URxvt")))
@@ -23,14 +23,31 @@
 (defcommand conkeror () ()
             (run-or-raise "conkeror" '(:class "Conkeror")))
 
+(defcommand popup-urxvt () ()
+            "popup new urxvt window"
+            (with-popup
+                (without-windows-placement-rules
+                    (run-shell-command "urxvtc"))))
+
 (defvar *applications-map* nil
   "keymap for applications")
 
 (defkeys *applications-map*
     ("f" "firefox")
   ("t" "urxvt")
+  ("T" "popup-urxvt")
   ("s" "spotify")
   ("c" "conkeror"))
+
+(defkeys *root-map*
+    ("0" "remove")
+  ("1" "only")
+  ("2" "vsplit")
+  ("3" "hsplit")
+  ("g" *groups-map*)
+  ("s" "select") 
+  ("r" "iresize")
+  ("w" "windowlist-by-class"))
 
 (defkeys *top-map*
     ("F12" "reinit")
@@ -38,7 +55,7 @@
   ("XF86MonBrightnessUp" "exec xbacklight -inc 10")
   ("XF86AudioLowerVolume" "exec amixer -q sset Master 3%-")
   ("XF86AudioRaiseVolume" "exec amixer -q sset Master 3%+")
-  ("XF86AudioMute" "exec amixer -q sset Master toggle")
+  ("XF86AudioMute" "qexec amixer -q sset Master toggle")
   ("s-1" "gselect code")
   ("s-2" "gselect www")
   ("s-3" "gselect media")
