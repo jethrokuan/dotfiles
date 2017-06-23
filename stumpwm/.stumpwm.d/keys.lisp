@@ -39,6 +39,15 @@
   ("s" "spotify")
   ("c" "conkeror"))
 
+(define-key *root-map* (kbd "0") "remove")
+(define-key *root-map* (kbd "1") "only")
+(define-key *root-map* (kbd "2") "vsplit")
+(define-key *root-map* (kbd "3") "hsplit")
+(define-key *root-map* (kbd "g") *groups-map*)
+(define-key *root-map* (kbd "s") "select")
+(define-key *root-map* (kbd "r") "iresize")
+(define-key *root-map* (kbd "w") "windowlist-by-class")
+
 (defkeys *root-map*
     ("0" "remove")
   ("1" "only")
@@ -55,7 +64,7 @@
   ("XF86MonBrightnessUp" "exec xbacklight -inc 10")
   ("XF86AudioLowerVolume" "exec amixer -q sset Master 3%-")
   ("XF86AudioRaiseVolume" "exec amixer -q sset Master 3%+")
-  ("XF86AudioMute" "qexec amixer -q sset Master toggle")
+  ("XF86AudioMute" "exec amixer -q sset Master toggle")
   ("s-1" "gselect code")
   ("s-2" "gselect www")
   ("s-3" "gselect media")
