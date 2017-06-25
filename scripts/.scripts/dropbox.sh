@@ -13,6 +13,8 @@ elif [[ $stat == *"Uploading"* ]]; then
     word="UL"
 elif [[ $stat == *"Downloading"* ]]; then
     word="DL"
+elif [[ $stat == *" isn't running!"* ]]; then
+    word="DOWN"
 else
     word="ERR"
 fi
