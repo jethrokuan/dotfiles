@@ -80,12 +80,11 @@
   ("s-a" '*applications-map*)
   ("SunPrint_Screen" "exec scrot -s ~/tmp.png && xclip -selection c -t image/png -i ~/tmp.png && rm ~/tmp.png")
   ("C-SunPrint_Screen" "scrot -m ~/scrot.png")
-  
+  ("s-p" "exec rofi-pass")
   ("s-h" "move-focus left")
   ("s-t" "move-focus down")
   ("s-n" "move-focus up")
   ("s-s" "move-focus right")
-
   ("s-H" "move-window left")
   ("s-T" "move-window down")
   ("s-N" "move-window up")
