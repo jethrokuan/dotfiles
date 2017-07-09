@@ -1,3 +1,5 @@
+(in-package :stumpwm)
+
 (load-module "battery-portable")
 (load-module "cpu")
 (load-module "mem")
@@ -37,10 +39,10 @@
 
 (setf *screen-mode-line-format*
       (list "^B^3 %g ^n^b %W ^>  "
-            '(:eval (get-current-song))
-            " | "
+            ;; '(:eval (get-current-song))
+            ;; " | "
             '(:eval (get-ssid))
-            " |^B^3^n^b ^n %c %t | %B | %d | " 
+            " :: ^B^3^n^b ^n %c %t :: %B :: %d ::  "
             '(:eval (get-dropbox-status)) 
             ))
 
