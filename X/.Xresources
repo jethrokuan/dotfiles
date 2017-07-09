@@ -78,8 +78,8 @@ URxvt*scrollstyle:	plain
 
 !-*- Perl extensions -*-
 ! stored in ~/.urxvt/ext/
-URxvt.perl-ext-common: font-size,tabbed,clipboard
-URxvt.url-launcher:   firefox
+URxvt.perl-ext-common: font-size,tabbed
+URxvt.url-launcher:   conkeror
 URxvt.underlineURLs:  True
 URxvt.matcher.button: 1
 
@@ -91,24 +91,21 @@ URxvt.font-size.step:  2
 ! URxvt.iso14755:        false
 ! URxvt.iso14755_52: false
 
-! Clipboard
-! update clipboard whenever primary gets updated
-URxvt.clipboard.autocopy: true
-URxvt.keysym.M-c: perl:clipboard:copy
-URxvt.keysym.M-v: perl:clipboard:paste
-URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
-
 XTerm*alternateScroll:	true
 XTerm*charClass:	33:48,37-38:48,45-47:48,64:48,58:48,126:48,61:48,63:48,43:48,35:48
 XTerm*fullscreen:	never
 XTerm*metaSendsEscape:	true
 XTerm*scrollKey:	true
-XTerm*background:	bg
-XTerm*foreground:	fg
-XTerm*cursorColor:	fg
+XTerm*background:	rgb:33/33/33
+XTerm*foreground:	rgb:220/220/204
+XTerm*cursorColor:	rgb:220/220/204
 XTerm*faceName:		xft:DejaVu Sans Mono:size=9:antialias=true
 XTerm*termName:		xterm-256color
 XTerm*utf8:		1
 Xterm*borderWidth:	0
 XTerm*toolBar:		off
-XTerm*VT100.translations: #override <Btn1Up>: select-end(PRIMARY, CLIPBOARD, CUT_BUFFER0)
+XTerm*VT100.translations: #override \n\
+  Ctrl Shift <Key>C: copy-selection(CLIPBOARD) \n\
+  Ctrl Shift <Key>V: insert-selection(CLIPBOARD) \n\
+  Ctrl <Key>M: maximize() \n\
+  Ctrl <Key>R: restore()
