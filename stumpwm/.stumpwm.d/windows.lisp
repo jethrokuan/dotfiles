@@ -16,7 +16,9 @@
   (0 t t :class "Spotify"))
 
 (define-frame-preference "chat"
-    (0 t   t :class "Franz"))
+    (0 t   t :class "Franz")
+  (0 t   t :class "Slack")
+  (0 t   t :class "Telegram"))
 
 (load-module "winner-mode")
 
