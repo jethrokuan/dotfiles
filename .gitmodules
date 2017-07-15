@@ -1,6 +1,6 @@
 [submodule "emacs/.emacs.d/snippets"]
 	path = emacs/.emacs.d/snippets
 	url = git@github.com:jethrokuan/snippets.git
-[submodule "stumpwm/.stumpwm.d/contrib"]
+[submodule "stumpwm/.stumpwm.d/stumpwm-contrib"]
 	path = stumpwm/.stumpwm.d/contrib
-	url = https://github.com/stumpwm/stumpwm-contrib
+	url = git@github.com:jethrokuan/stumpwm-contrib.git
