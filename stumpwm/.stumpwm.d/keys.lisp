@@ -39,7 +39,7 @@
   ("s" "spotify")
   ("c" "conkeror"))
 
-(define-key *root-map* (kbd "0") "remove")
+(define-key *root-map* (kbd "0") "remove-split")
 (define-key *root-map* (kbd "1") "only")
 (define-key *root-map* (kbd "2") "vsplit")
 (define-key *root-map* (kbd "3") "hsplit")
@@ -47,16 +47,7 @@
 (define-key *root-map* (kbd "s") "select")
 (define-key *root-map* (kbd "r") "iresize")
 (define-key *root-map* (kbd "w") "windowlist-by-class")
-
-(defkeys *root-map*
-    ("0" "remove")
-  ("1" "only")
-  ("2" "vsplit")
-  ("3" "hsplit")
-  ("g" *groups-map*)
-  ("s" "select") 
-  ("r" "iresize")
-  ("w" "windowlist-by-class"))
+(define-key *root-map* (kbd "g") "toggle-gaps")
 
 (defkeys *top-map*
     ("F12" "reinit")

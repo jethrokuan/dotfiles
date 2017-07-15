@@ -51,12 +51,9 @@
 (set-font (make-instance 'xft:font :family "Droid Sans" :subfamily
                          "Regular" :size 11))
 
-(set-focus-color zenburn-red)
-(set-unfocus-color zenburn-green)
+(set-focus-color zenburn-green)
+(set-unfocus-color zenburn-red)
 
-(setf *maxsize-border-width* 0)
-(setf *transient-border-width* 0)
-(setf *normal-border-width* 0)
 (setf *window-border-style* :none)
 
 (set-fg-color zenburn-fg)
@@ -67,3 +64,14 @@
 (setf *message-window-padding* 50)
 (setf *message-window-gravity* :top
       *input-window-gravity* :top)
+
+(load-module "swm-gaps")
+
+;; According to lepisma:
+;; Inner gaps run along all the 4 borders of a frame
+(setf swm-gaps:*inner-gaps-size* 6)
+
+;; Outer gaps add more padding to the outermost borders
+;; (touching the screen border)
+(setf swm-gaps:*outer-gaps-size* 12)
+(run-commands "toggle-gaps")
