@@ -65,13 +65,13 @@
 (setf *message-window-gravity* :top
       *input-window-gravity* :top)
 
-(load-module "swm-gaps")
+;; (load-module "swm-gaps")
 
-;; According to lepisma:
-;; Inner gaps run along all the 4 borders of a frame
-(setf swm-gaps:*inner-gaps-size* 6)
+;; ;; According to lepisma:
+;; ;; Inner gaps run along all the 4 borders of a frame
+;; (setf swm-gaps:*inner-gaps-size* 6)
 
-;; Outer gaps add more padding to the outermost borders
-;; (touching the screen border)
-(setf swm-gaps:*outer-gaps-size* 12)
-(run-commands "toggle-gaps")
+;; ;; Outer gaps add more padding to the outermost borders
+;; ;; (touching the screen border)
+;; (setf swm-gaps:*outer-gaps-size* 12)
+;; (run-commands "toggle-gaps")

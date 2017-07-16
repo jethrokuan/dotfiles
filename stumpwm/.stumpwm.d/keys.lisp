@@ -4,9 +4,6 @@
 
 (set-prefix-key (kbd "C-t"))
 
-(defcommand urxvt () ()
-            (run-or-raise "urxvtc" '(:class "URxvt")))
-
 (defcommand reinit () ()
             (run-commands "reload" "loadrc"))
 
@@ -34,7 +31,7 @@
 
 (defkeys *applications-map*
     ("f" "firefox")
-  ("t" "urxvt")
+  ("t" "exec urxvtc")
   ("T" "popup-urxvt")
   ("s" "spotify")
   ("c" "conkeror"))
@@ -47,7 +44,7 @@
 (define-key *root-map* (kbd "s") "select")
 (define-key *root-map* (kbd "r") "iresize")
 (define-key *root-map* (kbd "w") "windowlist-by-class")
-(define-key *root-map* (kbd "g") "toggle-gaps")
+;; (define-key *root-map* (kbd "g") "toggle-gaps")
 
 (defkeys *top-map*
     ("F12" "reinit")

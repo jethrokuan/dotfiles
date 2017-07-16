@@ -5,7 +5,7 @@
 (define-frame-preference "code"
     ;; frame raise lock (lock AND raise == jumpto)
     (0 t   t :title "emacs")
-  (0 t   t :title "urxvt"))
+  (0 t   t :instance "urxvt"))
 
 (define-frame-preference "www"
     ;; frame raise lock (lock AND raise == jumpto)
