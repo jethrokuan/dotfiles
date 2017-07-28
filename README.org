@@ -7,7 +7,7 @@ Both machines run [[http://nixos.org][NixOS]] 17.03pre, and [[https://github.com
 I'm a huge fan of the Lisp dialect, and use Emacs as my daily runner.
 
 *Setup as of May 2016*
-[[file:scrot.png]]
+[[file:scrots/2017-07-28_1366x768_scrot.png]]
 
 
 | purpose       | program | folder     |
@@ -45,6 +45,4 @@ your nearest package manager.
 2. execute =stow stow= first to install stow global ignore file
 
 ** TODO
-- Prettify dunst
-- Configure stumpwm window placements
 - Configure mbsync again, with notmuch on Emacs
