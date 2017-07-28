@@ -35,14 +35,14 @@
   (run-shell-command "bash ~/.scripts/get-current-song | tr -d '[:cntrl:]'" t))
 
 (defun get-ssid ()
-  (run-shell-command "nmcli -t -f name connection show --active | tr -d '[:cntrl:]'" t))
+  (run-shell-command "bash ~/.scripts/get-ssid.sh | tr -d '[:cntrl:]'" t))
 
 (setf *screen-mode-line-format*
       (list "^B^3 %g ^n^b %W ^>  "
             ;; '(:eval (get-current-song))
             ;; " | "
             '(:eval (get-ssid))
-            " :: ^B^3^n^b ^n %c %t :: %B :: %d ::  "
+            "  %B  %d "
             '(:eval (get-dropbox-status)) 
             ))
 

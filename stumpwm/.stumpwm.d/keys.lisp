@@ -44,7 +44,6 @@
 (define-key *root-map* (kbd "s") "select")
 (define-key *root-map* (kbd "r") "iresize")
 (define-key *root-map* (kbd "w") "windowlist-by-class")
-;; (define-key *root-map* (kbd "g") "toggle-gaps")
 
 (defkeys *top-map*
     ("F12" "reinit")
