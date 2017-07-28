@@ -23,7 +23,7 @@
 
 (setf *group-format* " %t ")
 ;;(setf *window-format* "%m%50t ")
-(setf *window-format* "%m%n%s%10t ")
+(setf *window-format* "%m%n%s%20t ")
 (setf *mode-line-timeout* 1)
 
 (setf *time-modeline-string* "^B^3 %e %b %H:%M ^n")

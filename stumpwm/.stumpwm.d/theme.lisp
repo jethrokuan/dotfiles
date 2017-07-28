@@ -48,8 +48,8 @@
 (setq clx-truetype:*font-dirs* '("/run/current-system/sw/share/X11-fonts/"))
 (clx-truetype:cache-fonts)
 
-(set-font (make-instance 'xft:font :family "SauceCodePro Nerd Font" :subfamily
-                         "Regular" :size 11))
+(set-font (make-instance 'xft:font :family "Iosevka Nerd Font" :subfamily
+                         "Bold" :size 11))
 
 (set-focus-color zenburn-green)
 (set-unfocus-color zenburn-red)
