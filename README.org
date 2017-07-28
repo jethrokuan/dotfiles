@@ -6,7 +6,7 @@ I have 2 main machines:
 Both machines run [[http://nixos.org][NixOS]] 17.03pre, and [[https://github.com/stumpwm/stumpwm/][StumpWM]] as the window manager.
 I'm a huge fan of the Lisp dialect, and use Emacs as my daily runner.
 
-*Setup as of May 2016*
+*Setup as of Jul 2017*
 [[file:scrots/2017-07-28_1366x768_scrot.png]]
 
 
