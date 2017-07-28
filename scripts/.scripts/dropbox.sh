@@ -19,4 +19,4 @@ else
     word="ERR"
 fi
 
-echo -e "$word";
+echo -e " $word";
