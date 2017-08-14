@@ -75,18 +75,29 @@ URxvt*scrollstyle:	plain
 
 !-*- Perl extensions -*-
 ! stored in ~/.urxvt/ext/
-URxvt.perl-ext-common: font-size
+URxvt.perl-ext-common: font-size, selection_to_clipboard, clipboard
+URxvt.perl-ext: default,url-select
+URxvt.keysym.M-u: perl:url-select:select_next
+URxvt.url-select.launcher: /usr/bin/xdg-open
+URxvt.url-select.underline: true
 URxvt.url-launcher:   conkeror
 URxvt.underlineURLs:  True
 URxvt.matcher.button: 1
+
+! clipboard
+! update clipboard whenever primary gets updated
+URxvt.clipboard.autocopy: true
+URxvt.keysym.M-c: perl:clipboard:copy
+URxvt.keysym.M-v: perl:clipboard:paste
+URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
 
 ! font-size
 URxvt.keysym.C-Up:     perl:font-size:increase
 URxvt.keysym.C-Down:   perl:font-size:decrease
 URxvt.font-size.step:  2
 ! disable default binding for shift on urxvt
-! URxvt.iso14755:        false
-! URxvt.iso14755_52: false
+URxvt.iso14755: false
+URxvt.iso14755_52: false
 
 XTerm*alternateScroll:	true
 XTerm*charClass:	33:48,37-38:48,45-47:48,64:48,58:48,126:48,61:48,63:48,43:48,35:48
