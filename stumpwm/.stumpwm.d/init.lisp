@@ -19,7 +19,3 @@
 (load (concat *stumpwm-config-dir* "utils.lisp"))
 
 (load-mods '("quickload" "theme" "modeline" "keys" "groups" "windows")) ;; missing swank
-
-(add-hook *post-command-hook* (lambda (command)
-                                (when (member command winner-mode:*default-commands*)
-                                  (winner-mode:dump-group-to-file))))
