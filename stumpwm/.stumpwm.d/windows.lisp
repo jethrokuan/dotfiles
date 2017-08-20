@@ -28,3 +28,6 @@
 (defkeys *winner-map*
     ("h" "winner-undo")
   ("s" "winner-redo"))
+
+
+(setq *mouse-focus-policy* :ignore)
