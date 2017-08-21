@@ -18,16 +18,7 @@
 (define-frame-preference "chat"
     (0 t   t :class "Franz")
   (0 t   t :class "Slack")
-  (0 t   t :class "Telegram"))
-
-(load-module "winner-mode")
-
-(defvar *winner-map* nil
-  "keymap for winner-mode")
-
-(defkeys *winner-map*
-    ("h" "winner-undo")
-  ("s" "winner-redo"))
-
+  (0 t   t :class "Telegram")
+  (0 t   t :class "Whatsapp"))
 
 (setq *mouse-focus-policy* :ignore)
