@@ -64,6 +64,7 @@
   ("s-e" "emacs")
   ("s-x" "urxvt")
   ("s-space" "exec rofi -show run")
+  ("C-s-space" "exec rofi  -show fb -modi fb:~/.rofi/rofi-file-finder.sh")
   ("s-a" '*applications-map*)
   ("SunPrint_Screen" "exec scrot -s ~/tmp.png && xclip -selection c -t image/png -i ~/tmp.png && rm ~/tmp.png")
   ("C-SunPrint_Screen" "scrot -m ~/scrot.png")
