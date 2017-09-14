@@ -12,13 +12,10 @@
 
 (defcommand emacs () ()
             "raise emacs if there is a running instance, otherwise start it"
-            (run-or-raise "emacsclient -c -a emacs" '(:title "emacs")))
+            (run-or-raise "emacsclient -c" '(:class "Emacs")))
 
 (defcommand spotify () ()
             (run-or-raise "spotify" '(:class "Spotify")))
-
-(defcommand conkeror () ()
-            (run-or-raise "conkeror" '(:class "Conkeror")))
 
 (defcommand popup-urxvt () ()
             "popup new urxvt window"
@@ -33,8 +30,7 @@
     ("f" "firefox")
   ("t" "exec urxvtc")
   ("T" "popup-urxvt")
-  ("s" "spotify")
-  ("c" "conkeror"))
+  ("s" "spotify"))
 
 (define-key *root-map* (kbd "0") "remove-split")
 (define-key *root-map* (kbd "1") "only")
