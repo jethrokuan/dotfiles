@@ -10,23 +10,23 @@ I'm a huge fan of the Lisp dialect, and use Emacs as my daily runner.
 [[file:scrots/2017-07-28_1366x768_scrot.png]]
 
 
-| purpose       | program | folder     |
-|---------------+---------+------------|
-| OS            | NixOS   | [[https://github.com/jethrokuan/nix-config/][nix-config]] |
-| DE            | X       | [[file:X/][X]]          |
-| wm            | stumpwm | [[file:stumpwm/][.stumpwm.d]] |
-| compositor    | compton | [[file:compton/][compton]]    |
-| editor        | emacs   | [[https://github.com/jethrokuan/.emacs.d/][.emacs.d]]   |
-| shell         | fish    | [[file:fish/][fish]]       |
-| vcs           | git     | [[file:git/][.gitconfig]] |
-| notifications | dunst   | [[file:dunst/][dunstrc]]    |
-| mail          | mbsync  | [[file:mbsync/][mbsync]]     |
-| music         | ncmpcpp | [[file:ncmpcpp/][ncmpcpp]]    |
-| music         | beets   | [[file:README.org][beets]]      |
-| launcher      | rofi    | [[file:rofi/][rofi]]       |
-| pdf           | zathura | [[file:zathura/][zathura]]    |
-|               | misc    | [[file:scripts/][scripts]]    |
-|               |         |            |
+| purpose       | program | folder                                    |
+|---------------+---------+-------------------------------------------|
+| OS            | NixOS   | [[https://github.com/jethrokuan/nix-config/][nix-config]]                                |
+| DE            | X       | [[file:X/][X]]                                         |
+| wm            | stumpwm | [[file:stumpwm/][.stumpwm.d]]                                |
+| compositor    | compton | [[file:compton/][compton]] (DEPRECATED: moved to [[https://github.com/jethrokuan/nix-config/][nix-config]]) |
+| editor        | emacs   | [[https://github.com/jethrokuan/.emacs.d/][.emacs.d]]                                  |
+| shell         | fish    | [[file:fish/][fish]]                                      |
+| vcs           | git     | [[file:git/][.gitconfig]]                                |
+| notifications | dunst   | [[file:dunst/][dunstrc]]                                   |
+| mail          | mbsync  | [[file:mbsync/][mbsync]]                                    |
+| music         | ncmpcpp | [[file:ncmpcpp/][ncmpcpp]]                                   |
+| music         | beets   | [[file:README.org][beets]]                                     |
+| launcher      | rofi    | [[file:rofi/][rofi]]                                      |
+| pdf           | zathura | [[file:zathura/][zathura]]                                   |
+|               | misc    | [[file:scripts/][scripts]]                                   |
+|               |         |                                           |
 
 Deprecated:
 | program | folder |
