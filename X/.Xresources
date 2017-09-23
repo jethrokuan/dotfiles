@@ -75,18 +75,17 @@ URxvt*scrollstyle:	plain
 
 !-*- Perl extensions -*-
 ! stored in ~/.urxvt/ext/
-URxvt.perl-ext-common: font-size, selection_to_clipboard
-URxvt.perl-ext: default,url-select
-URxvt.keysym.M-u: perl:url-select:select_next
+URxvt.perl-ext-common: default,matcher,selection-to-clipboard
 URxvt.url-select.launcher: /usr/bin/xdg-open
 URxvt.url-select.underline: true
-URxvt.url-launcher:   conkeror
+URxvt.url-launcher: firefox
 URxvt.underlineURLs:  True
 URxvt.matcher.button: 1
 
 ! clipboard
 ! update clipboard whenever primary gets updated
 URxvt.clipboard.autocopy: true
+
 
 ! font-size
 URxvt.keysym.C-Up:     perl:font-size:increase
