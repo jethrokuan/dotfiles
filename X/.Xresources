@@ -1,13 +1,6 @@
 ! ------------------------------------------------------------------------------
 ! ROFI Color theme
 ! ------------------------------------------------------------------------------
-rofi.color-enabled:                  true
-rofi.color-window: #3f3f3f, #5f5f5f, #80cbc4
-rofi.color-normal: #3f3f3f, #c1c1c1, #3f3f3f, #80cbc4, #ffffff
-rofi.color-active: #3f3f3f, #80cbc4, #3f3f3f, #80cbc4, #80cbc4
-rofi.color-urgent: #3f3f3f, #ff1844, #3f3f3f, #80cbc4, #ff1844
-rofi.separator-style:                solid
-rofi.font: Droid Sans 28
 
 #define nord0 #2E3440
 #define nord1 #3B4252
@@ -26,6 +19,14 @@ rofi.font: Droid Sans 28
 #define nord14 #A3BE8C
 #define nord15 #B48EAD
 
+rofi.color-enabled: true
+rofi.color-window: nord0, nord1, nord9
+rofi.color-normal: nord0, nord4, nord0, nord3, nord6
+rofi.color-active: nord0, nord3, nord0, nord3, nord3
+rofi.color-urgent: nord0, nord11, nord0, nord3, nord11
+rofi.separator-style: solid
+rofi.font: Droid Sans 28
+
 *.foreground:   nord4
 *.background:   nord0
 *.cursorColor:  nord4
@@ -38,7 +39,7 @@ rofi.font: Droid Sans 28
 *.color3: nord13
 *.color4: nord9
 *.color5: nord15
-*.color6: nord8
+*.color6: nord3
 *.color7: nord5
 *.color8: nord3
 *.color9: nord11
