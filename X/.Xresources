@@ -56,49 +56,49 @@ Xft.lcdfilter: lcddefault
 Xft.hintstlye: hintfull
 Xft.dpi:		92
 
-URxvt*termName:		rxvt-unicode-256color
-URxvt*scrollTtyOutput: false
-URxvt*scrollTtyKeypress: true
-URxvt*scrollWithBuffer: true
-URxvt*saveLines: 3000
+! URxvt*termName:		rxvt-unicode-256color
+! URxvt*scrollTtyOutput: false
+! URxvt*scrollTtyKeypress: true
+! URxvt*scrollWithBuffer: true
+! URxvt*saveLines: 3000
 
-URxvt*loginShell: true
-Urxvt*secondaryScroll:  true
-URxvt*secondaryWheel: true
-URxvt*cursorUnderline: false
-URxvt*font: xft:DejaVu Sans Mono:size=10:autohint=true
-!URxvt.transparent: false
-URxvt*borderless: true
-!URxvt.shading: 35
-URxvt*depth: 32
+! URxvt*loginShell: true
+! Urxvt*secondaryScroll:  true
+! URxvt*secondaryWheel: true
+! URxvt*cursorUnderline: false
+! URxvt*font: xft:DejaVu Sans Mono:size=10:autohint=true
+! !URxvt.transparent: false
+! URxvt*borderless: true
+! !URxvt.shading: 35
+! URxvt*depth: 32
 
-URxvt*urgentOnBell:	true
-URxvt*scrollBar_right:	true
-URxvt*scrollstyle:	plain
+! URxvt*urgentOnBell:	true
+! URxvt*scrollBar_right:	true
+! URxvt*scrollstyle:	plain
 
-! urxvt
+! ! urxvt
 
-!-*- Perl extensions -*-
-! stored in ~/.urxvt/ext/
-URxvt.perl-ext-common: default,matcher,selection-to-clipboard
-URxvt.url-select.launcher: /usr/bin/xdg-open
-URxvt.url-select.underline: true
-URxvt.url-launcher: firefox
-URxvt.underlineURLs:  True
-URxvt.matcher.button: 1
+! !-*- Perl extensions -*-
+! ! stored in ~/.urxvt/ext/
+! URxvt.perl-ext-common: default,matcher,selection-to-clipboard
+! URxvt.url-select.launcher: /usr/bin/xdg-open
+! URxvt.url-select.underline: true
+! URxvt.url-launcher: firefox
+! URxvt.underlineURLs:  True
+! URxvt.matcher.button: 1
 
-! clipboard
-! update clipboard whenever primary gets updated
-URxvt.clipboard.autocopy: true
+! ! clipboard
+! ! update clipboard whenever primary gets updated
+! URxvt.clipboard.autocopy: true
 
 
-! font-size
-URxvt.keysym.C-Up:     perl:font-size:increase
-URxvt.keysym.C-Down:   perl:font-size:decrease
-URxvt.font-size.step:  2
-! disable default binding for shift on urxvt
-URxvt.iso14755: false
-URxvt.iso14755_52: false
+! ! font-size
+! URxvt.keysym.C-Up:     perl:font-size:increase
+! URxvt.keysym.C-Down:   perl:font-size:decrease
+! URxvt.font-size.step:  2
+! ! disable default binding for shift on urxvt
+! URxvt.iso14755: false
+! URxvt.iso14755_52: false
 
 XTerm.vt100.foreground: nord4
 XTerm.vt100.background: nord0
