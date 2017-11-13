@@ -99,6 +99,8 @@ URxvt.font-size.step:  2
 URxvt.iso14755: false
 URxvt.iso14755_52: false
 
+XTerm.vt100.foreground: nord4
+XTerm.vt100.background: nord0
 XTerm*faceName:		xft:DejaVu Sans Mono:size=16:antialias=true
 XTerm*termName:		xterm-256color
 XTerm*utf8:		1
