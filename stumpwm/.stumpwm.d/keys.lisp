@@ -17,19 +17,12 @@
 (defcommand spotify () ()
             (run-or-raise "spotify" '(:class "Spotify")))
 
-(defcommand popup-urxvt () ()
-            "popup new urxvt window"
-            (with-popup
-                (without-windows-placement-rules
-                    (run-shell-command "urxvtc"))))
-
 (defvar *applications-map* nil
   "keymap for applications")
 
 (defkeys *applications-map*
     ("f" "firefox")
-  ("t" "exec urxvtc")
-  ("T" "popup-urxvt")
+  ("t" "exec xterm")
   ("s" "spotify"))
 
 (define-key *root-map* (kbd "0") "remove-split")
@@ -63,7 +56,7 @@
   ("C-s-space" "exec rofi  -show fb -modi fb:~/.rofi/rofi-file-finder.sh")
   ("s-a" '*applications-map*)
   ("SunPrint_Screen" "exec scrot -s ~/tmp.png && xclip -selection c -t image/png -i ~/tmp.png && rm ~/tmp.png")
-  ("C-SunPrint_Screen" "scrot -m ~/scrot.png")
+  ("C-SunPrint_Screen" "exec scrot -m ~/scrot.png")
   ("s-p" "exec rofi-pass")
   ("s-h" "move-focus left")
   ("s-t" "move-focus down")

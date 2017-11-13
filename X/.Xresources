@@ -7,44 +7,47 @@ rofi.color-normal: #3f3f3f, #c1c1c1, #3f3f3f, #80cbc4, #ffffff
 rofi.color-active: #3f3f3f, #80cbc4, #3f3f3f, #80cbc4, #80cbc4
 rofi.color-urgent: #3f3f3f, #ff1844, #3f3f3f, #80cbc4, #ff1844
 rofi.separator-style:                solid
-rofi.font: Droid Sans 14
+rofi.font: Droid Sans 28
 
-! Zenburn color-scheme
-URxvt.background              :#3f3f3f
-URxvt.foreground              :#dcdccc
+#define nord0 #2E3440
+#define nord1 #3B4252
+#define nord2 #434C5E
+#define nord3 #4C566A
+#define nord4 #D8DEE9
+#define nord5 #E5E9F0
+#define nord6 #ECEFF4
+#define nord7 #8FBCBB
+#define nord8 #88C0D0
+#define nord9 #81A1C1
+#define nord10 #5E81AC
+#define nord11 #BF616A
+#define nord12 #D08770
+#define nord13 #EBCB8B
+#define nord14 #A3BE8C
+#define nord15 #B48EAD
 
-! black + red
-!URxvt.color0                 :#3f3f3f
-URxvt.color0                  :#1f1f1f
-URxvt.color1                  :#705050
+*.foreground:   nord4
+*.background:   nord0
+*.cursorColor:  nord4
+*fading: 35
+*fadeColor: nord3
 
-! green + yellow
-URxvt.color2                  :#60b48a
-URxvt.color3                  :#dfaf8f
-
-! blue + purple
-URxvt.color4                  :#506070
-URxvt.color5                  :#dc8cc3
-
-! cyan + white
-URxvt.color6                  :#8cd0d3
-URxvt.color7                  :#dcdccc
-
-! bright-black + bright-red
-URxvt.color8                  :#709080
-URxvt.color9                  :#dca3a3
-
-! bright-green + bright-yellow
-URxvt.color10                 :#c3bf9f
-URxvt.color11                 :#f0dfaf
-
-! bright-blue + bright-purple
-URxvt.color12                 :#94bff3
-URxvt.color13                 :#ec93d3
-
-! bright-cyan + bright-white
-URxvt.color14                 :#93e0e3
-URxvt.color15                 :#ffffff
+*.color0: nord1
+*.color1: nord11
+*.color2: nord14
+*.color3: nord13
+*.color4: nord9
+*.color5: nord15
+*.color6: nord8
+*.color7: nord5
+*.color8: nord3
+*.color9: nord11
+*.color10: nord14
+*.color11: nord13
+*.color12: nord9
+*.color13: nord15
+*.color14: nord7
+*.color15: nord6
 
 Xft.antialias:		1
 Xft.autohint:		0
@@ -96,15 +99,7 @@ URxvt.font-size.step:  2
 URxvt.iso14755: false
 URxvt.iso14755_52: false
 
-XTerm*alternateScroll:	true
-XTerm*charClass:	33:48,37-38:48,45-47:48,64:48,58:48,126:48,61:48,63:48,43:48,35:48
-XTerm*fullscreen:	never
-XTerm*metaSendsEscape:	true
-XTerm*scrollKey:	true
-XTerm*background:	rgb:33/33/33
-XTerm*foreground:	rgb:220/220/204
-XTerm*cursorColor:	rgb:220/220/204
-XTerm*faceName:		xft:DejaVu Sans Mono:size=9:antialias=true
+XTerm*faceName:		xft:DejaVu Sans Mono:size=16:antialias=true
 XTerm*termName:		xterm-256color
 XTerm*utf8:		1
 Xterm*borderWidth:	0
