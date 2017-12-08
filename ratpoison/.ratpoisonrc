@@ -3,18 +3,31 @@ definekey top C-M-r restart
 set ignorehints on
 set inputwidth 0
 set msgwait 3
-set onlyborder 0  
+set barborder 0
+set border 0
 set warp off
+set winfmt [%n] %s %t
+set winname class
 
 definekey top M-Tab next
 definekey top M-ISO_Left_Tab prev
 
-definekey top s-e exec emacsclient -c -a "emacs"
-definekey top s-space exec rofi -matching fuzzy -show run
-definekey top C-s-space exec rofi  -show fb -matching fuzzy -modi fb:~/.rofi/rofi-file-finder.sh
-definekey top s-p exec rofi-pass
+# Run or raise
+alias runorraise exec ~/rpscripts/runorraise
+alias emacs runorraise Emacs 'emacsclient -ca emacs'
 
-definekey top SunPrint_Screen exec maim -s | xclip -selection clipboard -t image/png
+alias rofi-show exec rofi -matching fuzzy -show run
+alias rofi-files exec rofi  -show fb -matching fuzzy -modi fb:~/.rofi/rofi-file-finder.sh
+alias rofi-pass exec rofi-pass
+
+alias screenshot-to-clipboard  exec maim -s | xclip -selection clipboard -t image/png
+
+definekey top s-e emacs
+definekey top s-space rofi-show
+definekey top C-s-space rofi-files
+definekey top s-p rofi-pass
+
+definekey top SunPrint_Screen screenshot-to-clipboard
 
 definekey top s-h focusleft
 definekey top s-t focusup
@@ -37,8 +50,9 @@ bind 1 only
 bind 2 split
 bind 3 hsplit
 
-bind f exec firefox
-bind s exec spotify
+bind f runorraise Firefox 'firefox'
+bind s runorraise Spotify 'spotify'
+bind T runorraise TelegramDesktop 'telegram-desktop'
 bind equal time
 
 definekey top XF86MonBrightnessDown exec xbacklight -dec 10
@@ -53,11 +67,11 @@ exec conky | dzen2 -ta c -e 'sigusr1=hide;sigusr2=unhide' -h '26' -y '-26' -fn '
 
 # Virtual Desktops
 setenv desktops code www media chat
-exec dnumb=1;for dname in `ratpoison -c "getenv desktops"`;do ratpoison -c 'alias selectgroup'$dnumb' exec ratpoison -c "gselect '$dnumb'" -c "echo []'$dname'"' -c 'alias switchtodesktop'$dnumb' exec tod='$dnumb';todname='$dname';fromd=`ratpoison -c "getenv desktop_cur"`; ratpoison -c "setenv desktop_$fromd `ratpoison -c fdump`" -c "setenv desktop_cur $tod" -c "gselect $tod"; restd=`ratpoison -c "getenv desktop_$tod"`; if [ -z "$restd" ]; then ratpoison -c "select -" -c only -c next; else ratpoison -c "frestore $restd"; fi; ratpoison -c "echo *$todname"' -c 'alias movetogroup'$dnumb' exec ratpoison -c "gmove '$dnumb'" -c "echo ->'$dname'"'; if [ "$dnumb" == 0 ]; then ratpoison -c "setenv desktop_cur $dnumb" -c "setenv desktop_$dnumb `ratpoison -c fdump`" -c "grename $dname"; else ratpoison -c "gnewbg $dname" -c "unsetenv desktop_$dnumb"; fi; dnumb=$(($dnumb+1));done
+exec dnumb=0;for dname in `ratpoison -c "getenv desktops"`;do ratpoison -c 'alias selectgroup'$dnumb' exec ratpoison -c "gselect '$dnumb'" -c "echo []'$dname'"' -c 'alias switchtodesktop'$dnumb' exec tod='$dnumb';todname='$dname';fromd=`ratpoison -c "getenv desktop_cur"`; ratpoison -c "setenv desktop_$fromd `ratpoison -c fdump`" -c "setenv desktop_cur $tod" -c "gselect $tod"; restd=`ratpoison -c "getenv desktop_$tod"`; if [ -z "$restd" ]; then ratpoison -c "select -" -c only -c next; else ratpoison -c "frestore $restd"; fi; ratpoison -c "echo *$todname"' -c 'alias movetogroup'$dnumb' exec ratpoison -c "gmove '$dnumb'" -c "echo ->'$dname'"'; if [ "$dnumb" == 0 ]; then ratpoison -c "setenv desktop_cur $dnumb" -c "setenv desktop_$dnumb `ratpoison -c fdump`" -c "grename $dname"; else ratpoison -c "gnewbg $dname" -c "unsetenv desktop_$dnumb"; fi; dnumb=$(($dnumb+1));done
 
-definekey top s-1 switchtodesktop1
-definekey top s-2 switchtodesktop2
-definekey top s-3 switchtodesktop3
-definekey top s-4 switchtodesktop4
+definekey top s-1 switchtodesktop0
+definekey top s-2 switchtodesktop1
+definekey top s-3 switchtodesktop2
+definekey top s-4 switchtodesktop3
 
 switchtodesktop1
