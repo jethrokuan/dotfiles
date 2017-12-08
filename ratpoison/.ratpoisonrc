@@ -49,6 +49,6 @@ definekey top XF86AudioLowerVolume exec amixer -q sset Master 3%-
 definekey top XF86AudioRaiseVolume exec amixer -q sset Master 3%+
 definekey top XF86AudioMute exec amixer -q sset Master toggle
 
-addhook quit exec killall dzen2
+addhook quit exec killall dzen2 && killall conky
 set padding 0 0 0 26
 exec conky | dzen2 -ta c -e 'sigusr1=hide;sigusr2=unhide' -h '26' -y '-26' -fn 'iosevka' &

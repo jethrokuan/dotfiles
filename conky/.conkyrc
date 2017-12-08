@@ -14,5 +14,5 @@ use_spacer none
 # can change this to whatever you want
 TEXT
 ^fg(grey)RAM: ^fg(green)$memperc% ^fg(grey)CPU: ^fg(green)$cpu%  \
-^fg(grey)U: ^fg(green)${upspeedf wlan0} ^fg(grey)D: ^fg(green)${downspeedf wlan0} \
+^fg(grey)U: ^fg(green)${upspeedf wlp0s20u5} ^fg(grey)D: ^fg(green)${downspeedf wlp0s20u5} \
 ^fg(yellow)${time %a.%d.%m.%Y %R}
