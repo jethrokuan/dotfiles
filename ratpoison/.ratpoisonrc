@@ -1,0 +1,43 @@
+definekey top C-M-r restart
+
+definekey top M-Tab next
+definekey top M-ISO_Left_Tab prev
+
+definekey top s-e exec emacsclient -c -a "emacs"
+definekey top s-space exec rofi -matching fuzzy -show run
+definekey top C-s-space exec rofi  -show fb -matching fuzzy -modi fb:~/.rofi/rofi-file-finder.sh
+definekey top s-p exec rofi-pass
+
+definekey top SunPrint_Screen exec maim -s | xclip -selection clipboard -t image/png
+
+definekey top s-h focusleft
+definekey top s-t focusup
+definekey top s-n focusdown
+definekey top s-s focusright
+
+definekey top s-H exchangeleft
+definekey top s-T exchangeup
+definekey top s-N exchangedown
+definekey top s-S exchangeright
+
+definekey top s-Left resize -20 0
+definekey top s-Right resize 20 0
+definekey top s-Up resize 0 20
+definekey top s-Down resize 0 -20
+
+# Emacs-like window management
+bind 0 remove
+bind 1 only
+bind 2 split
+bind 3 hsplit
+
+bind f exec firefox
+bind s exec spotify
+bind t exec xterm
+bind equal time
+
+definekey top XF86MonBrightnessDown exec xbacklight -dec 10
+definekey top XF86MonBrightnessUp exec xbacklight -inc 10
+definekey top XF86AudioLowerVolume exec amixer -q sset Master 3%-
+definekey top XF86AudioRaiseVolume exec amixer -q sset Master 3%+
+definekey top XF86AudioMute exec amixer -q sset Master toggle
