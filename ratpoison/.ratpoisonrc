@@ -1,5 +1,13 @@
 definekey top C-M-r restart
 
+set ignorehints on
+set inputwidth 0
+set msgwait 3
+set onlyborder 0  
+set warp off
+set winliststyle row
+set winfmt %t
+
 definekey top M-Tab next
 definekey top M-ISO_Left_Tab prev
 
@@ -33,7 +41,6 @@ bind 3 hsplit
 
 bind f exec firefox
 bind s exec spotify
-bind t exec xterm
 bind equal time
 
 definekey top XF86MonBrightnessDown exec xbacklight -dec 10
@@ -41,3 +48,7 @@ definekey top XF86MonBrightnessUp exec xbacklight -inc 10
 definekey top XF86AudioLowerVolume exec amixer -q sset Master 3%-
 definekey top XF86AudioRaiseVolume exec amixer -q sset Master 3%+
 definekey top XF86AudioMute exec amixer -q sset Master toggle
+
+addhook quit exec killall dzen2
+set padding 0 0 0 26
+exec conky | dzen2 -ta c -e 'sigusr1=hide;sigusr2=unhide' -h '26' -y '-26' -fn 'iosevka' &
