@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # emulate stumpwms run-or-raise with ratpoison
 # Param1: Windowname to look for
 # Param2: Command to start if not present yet
