@@ -53,6 +53,7 @@ bind 3 hsplit
 bind f runorraise Firefox 'firefox'
 bind s runorraise Spotify 'spotify'
 bind T runorraise TelegramDesktop 'telegram-desktop'
+bind z runorraise .zathura-wrapped 'zathura'
 bind equal time
 
 definekey top XF86MonBrightnessDown exec xbacklight -dec 10
