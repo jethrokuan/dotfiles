@@ -50,6 +50,7 @@ bind 1 only
 bind 2 split
 bind 3 hsplit
 
+bind c runorraise Sakura 'sakura'
 bind f runorraise Firefox 'firefox'
 bind s runorraise Spotify 'spotify'
 bind T runorraise TelegramDesktop 'telegram-desktop'
