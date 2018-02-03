@@ -1,5 +1,6 @@
 set selection-clipboard clipboard
 set adjust-open width
+set guioptions ""
 
 map \< goto top
 map \> goto bottom
