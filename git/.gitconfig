@@ -8,7 +8,7 @@
         ui = true
 [core]
         excludesfile = ~/.gitignore
-        editor = subl -n -w
+        editor = emacsclient -t
 [mergetool]
         keepBackup = false
 [help]
