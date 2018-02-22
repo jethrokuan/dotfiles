@@ -11,12 +11,6 @@
         editor = subl -n -w
 [mergetool]
         keepBackup = false
-[diff]
-   	tool = icdiff
-[difftool]
-    prompt = false
-[difftool "icdiff"]
- 	cmd = icdiff $LOCAL $REMOTE
 [help]
         autocorrect = 1
 [push]
