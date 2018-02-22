@@ -1,3 +1,0 @@
-library: ~/Music/library.db
-directory: ~/Music
-plugins: inline convert web duplicates
