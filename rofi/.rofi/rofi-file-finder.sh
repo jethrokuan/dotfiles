@@ -2,7 +2,7 @@
 
 if [ -z $@ ]
 then
-    rg $HOME --files
+    rg $HOME --files -tpdf
 else 
-    xdg-open "$@" > /dev/null &
+    zathura "$@" > /dev/null &
 fi

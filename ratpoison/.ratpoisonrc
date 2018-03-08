@@ -1,5 +1,7 @@
 definekey top C-M-r restart
 
+exec wmname LG3D
+
 set ignorehints on
 set inputwidth 0
 set msgwait 3
