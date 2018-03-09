@@ -1,7 +1,5 @@
 host = webvpn.comp.nus.edu.sg
 port = 443
-username = e0036913
-set-dns = 0
-set-routes = 0
+username = E0036913
 # X509 certificate sha256 sum, trust only this one!
 trusted-cert = 8738f29985992c73b30858e19f91c9bd55b7b8340f9ac93cc8a3b7259b7cc2b5
