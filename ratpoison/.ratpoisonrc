@@ -1,7 +1,5 @@
 definekey top C-M-r restart
 
-exec wmname LG3D
-
 set ignorehints on
 set inputwidth 0
 set msgwait 3
@@ -65,9 +63,6 @@ definekey top XF86MonBrightnessUp exec xbacklight -inc 10
 definekey top XF86AudioLowerVolume exec amixer -q sset Master 3%-
 definekey top XF86AudioRaiseVolume exec amixer -q sset Master 3%+
 definekey top XF86AudioMute exec amixer -q sset Master toggle
-
-exec nitrogen --restore
-exec dropbox start
 
 definekey top s-1 select 1
 definekey top s-2 select 2
