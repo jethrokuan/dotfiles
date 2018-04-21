@@ -2,7 +2,7 @@ fisherman/await
 fisherman/debug
 jethrokuan/fish-direnv
 jethrokuan/fish-emacs
-jethrokuan/fzf
+fisherman/fzf
 fisherman/get
 fisherman/getopts
 jethrokuan/git_distance
