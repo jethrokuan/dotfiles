@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+notmuch tag -untagged +personal +inbox -- tag:untagged and to:jethrokuan95@gmail.com
+notmuch tag -untagged +nus +inbox -- tag:untagged and to:e0036913@u.nus.edu
+notmuch tag -untagged +nushackers +inbox -- tag:untagged and to:e0036913@u.nus.edu
