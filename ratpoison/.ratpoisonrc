@@ -1,3 +1,5 @@
+startup_message off
+
 definekey top C-M-r restart
 
 set ignorehints on
@@ -9,6 +11,7 @@ set warp off
 set winfmt [%n] %s %t
 set winname class
 
+definekey top M-grave exec ~/rpscripts/appjump
 definekey top M-Tab next
 definekey top M-ISO_Left_Tab prev
 
@@ -17,7 +20,7 @@ alias runorraise exec ~/rpscripts/runorraise
 alias emacs runorraise Emacs 'emacsclient -ca emacs'
 
 alias rofi-show exec rofi -matching fuzzy -show run
-alias rofi-files exec rofi  -show fb -matching fuzzy -modi fb:~/.rofi/rofi-file-finder.sh
+alias rofi-files exec rofi -show fb -matching fuzzy -modi fb:~/.rofi/rofi-file-finder.sh
 alias rofi-pass exec rofi-pass
 
 alias screenshot-to-clipboard  exec maim -s | xclip -selection clipboard -t image/png

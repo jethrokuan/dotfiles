@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+
+# appjump - a script for convenient window switching in ratpoison.
+#
+# Usage: appjump REGEXP NAME COMMAND
+#
+# Example:
+#
+# bind e exec appjump '^[Ee]macs' Emacs emacs &
+#
+# Rationale (from ExtendedFrameJumping):
+#
+# Since the command for switching to the last used window is probably the one I
+# use the most in ratpoison, I made this script to be able to use similar
+# commands to switch to the last used instance of a given program. If there are
+# no instances of the particular program running, it starts one.
+#
+# Laest version:
+#
+# The version of this script on the Ratpoison wiki is *not* guaranteed to be
+# up-to-date. For the latest version, go to:
+# https://github.com/PhilHudson/appjump
+#
+# Adapted from:
+#
+# RatpoisonWiki: Extended Frame Jumping
+# http://ratpoison.wxcvbn.org/cgi-bin/wiki.pl/ExtendedFrameJumping
+
+##
+## Command line arguments
+##
+
+regexp="$1"
+name="$2"
+command="$3"
+
+if [ -n "$4" ]; then
+    exec ratpoison --command "echo Too many arguments."
+    exit 1
+fi
+
+window_row_pattern='^([0-9]+) ([*+-]) ([0-9]+) (.+)'
+active_window_matched=''
+
+# %n: window number
+# %s: active (*), switch-to-other (+), misc (-)
+# %l: last access number
+# %c: resource class (application)
+ratpoison --command 'windows %n %s %l %c' | \
+    sort --numeric-sort --reverse --key=3 | {
+    while read window; do
+
+        if [[ "$window" =~ $window_row_pattern ]]; then
+            window_number="${BASH_REMATCH[1]}"
+            window_status_indicator="${BASH_REMATCH[2]}"
+            window_order="${BASH_REMATCH[3]}"
+            window_app="${BASH_REMATCH[4]}"
+
+            if [[ "$window_app" =~ $regexp ]]; then
+                if [ "$window_status_indicator" = '*' ]; then
+                    active_window_matched=1
+                else
+                    exec ratpoison --command "select $window_number"
+                    exit 0
+                fi
+            fi
+        else
+            exec ratpoison --command "echo Bogus window record: $window"
+            exit 1
+        fi
+    done
+    if [ -z "$active_window_matched" ]; then
+        exec $command
+    else
+        exec ratpoison --command "echo No other $name window"
+    fi
+}
