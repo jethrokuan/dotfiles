@@ -25,7 +25,7 @@ rofi.color-normal: nord0, nord4, nord0, nord3, nord6
 rofi.color-active: nord0, nord3, nord0, nord3, nord3
 rofi.color-urgent: nord0, nord11, nord0, nord3, nord11
 rofi.separator-style: solid
-rofi.font: Droid Sans 28
+rofi.font: Droid Sans 16
 
 *.foreground:   nord4
 *.background:   nord0
@@ -54,7 +54,7 @@ Xft.antialias:		1
 Xft.autohint:		0
 Xft.lcdfilter: lcddefault
 Xft.hintstlye: hintfull
-Xft.dpi:		180
+Xft.dpi:		90
 
 ! URxvt*termName:		rxvt-unicode-256color
 ! URxvt*scrollTtyOutput: false
