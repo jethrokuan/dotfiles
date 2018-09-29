@@ -1,13 +1,10 @@
 * Jethro's =dotfiles=
 I have 2 main machines:
 1. Dell XPS 13 (2016) 
-2. Custom-built Desktop with dual-monitor
+2. Custom Desktop (26" monitor)
 
-Both machines run [[http://nixos.org][NixOS]] 17.03pre, and [[https://github.com/stumpwm/stumpwm/][StumpWM]] as the window manager.
+Both machines run [[http://nixos.org][NixOS]], and [[https://www.nongnu.org/ratpoison/][Ratpoison]] as the window manager.
 I'm a huge fan of the Lisp dialect, and use Emacs as my daily runner.
-
-*Setup as of Jul 2017*
-[[file:scrots/2017-07-28_1366x768_scrot.png]]
 
 
 | purpose       | program | folder                                    |
@@ -43,6 +40,3 @@ your nearest package manager.
    https://github.com/jethrokuan/dotfiles.git ~/= Important: it must be
    cloned in your $HOME for .stowrc files to work as expected
 2. execute =stow stow= first to install stow global ignore file
-
-** TODO
-- Configure mbsync again, with notmuch on Emacs

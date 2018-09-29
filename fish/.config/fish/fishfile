@@ -1,7 +1,9 @@
 fisherman/await
+0rax/fish-bd
 fisherman/debug
 jethrokuan/fish-direnv
 jethrokuan/fish-emacs
+fisherman/fishtape
 fisherman/fzf
 fisherman/get
 fisherman/getopts
