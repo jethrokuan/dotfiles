@@ -54,11 +54,11 @@ bind 2 split
 bind 3 hsplit
 
 bind b exec ~/rpscripts/battery
-bind c runorraise Sakura 'sakura'
+bind c runorraise kitty 'kitty'
 bind f runorraise Firefox 'firefox'
 bind s runorraise Spotify 'spotify'
 bind T runorraise TelegramDesktop 'telegram-desktop'
-bind z runorraise .zathura-wrapped 'zathura'
+bind z runorraise Zathura 'zathura'
 bind equal time
 
 definekey top XF86MonBrightnessDown exec xbacklight -dec 10
