@@ -12,6 +12,7 @@ set winfmt [%n] %s %t
 set winname class
 
 definekey top M-grave exec ~/rpscripts/appjump
+definekey top s-w exec ~/rpscripts/window_select
 definekey top M-Tab next
 definekey top M-ISO_Left_Tab prev
 
