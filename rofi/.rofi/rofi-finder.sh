@@ -2,7 +2,7 @@
 
 if [ -z $@ ]
 then
-    fd . $HOME
+    fd --type f . $HOME
 else
     xdg-open "$@" > /dev/null &
 fi

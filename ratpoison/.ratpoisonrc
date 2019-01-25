@@ -8,8 +8,7 @@ set msgwait 3
 set barborder 0
 set border 0
 set warp off
-set winfmt [%n] %s %t
-set winname class
+set winfmt [%n] %c %t
 
 definekey top M-grave exec ~/rpscripts/appjump
 definekey top s-w exec ~/rpscripts/window_select
@@ -21,7 +20,7 @@ alias runorraise exec ~/rpscripts/runorraise
 alias emacs runorraise Emacs 'emacsclient -ca emacs'
 
 alias rofi-show exec rofi -matching fuzzy -show run
-alias rofi-files exec rofi -show fb -matching fuzzy -modi fb:~/.rofi/rofi-finder.sh
+alias rofi-files exec rofi -show fb -modi fb:~/.rofi/rofi-finder.sh
 alias rofi-pass exec rofi-pass
 
 alias screenshot-to-clipboard  exec maim -s | xclip -selection clipboard -t image/png
