@@ -2,59 +2,50 @@
 ! ROFI Color theme
 ! ------------------------------------------------------------------------------
 
-#define nord0 #2E3440
-#define nord1 #3B4252
-#define nord2 #434C5E
-#define nord3 #4C566A
-#define nord4 #D8DEE9
-#define nord5 #E5E9F0
-#define nord6 #ECEFF4
-#define nord7 #8FBCBB
-#define nord8 #88C0D0
-#define nord9 #81A1C1
-#define nord10 #5E81AC
-#define nord11 #BF616A
-#define nord12 #D08770
-#define nord13 #EBCB8B
-#define nord14 #A3BE8C
-#define nord15 #B48EAD
+rofi.font: Droid Sans 20
 
-rofi.color-enabled: true
-rofi.color-window: nord0, nord1, nord9
-rofi.color-normal: nord0, nord4, nord0, nord3, nord6
-rofi.color-active: nord0, nord3, nord0, nord3, nord3
-rofi.color-urgent: nord0, nord11, nord0, nord3, nord11
-rofi.separator-style: solid
-rofi.font: Droid Sans 16
+! special
+*.foreground:   #464646
+*.background:   #f7f7f7
+*.cursorColor:  #464646
 
-*.foreground:   nord4
-*.background:   nord0
-*.cursorColor:  nord4
-*fading: 35
-*fadeColor: nord3
+! black
+*.color0:       #101010
+*.color8:       #525252
 
-*.color0: nord1
-*.color1: nord11
-*.color2: nord14
-*.color3: nord13
-*.color4: nord9
-*.color5: nord15
-*.color6: nord3
-*.color7: nord5
-*.color8: nord3
-*.color9: nord11
-*.color10: nord14
-*.color11: nord13
-*.color12: nord9
-*.color13: nord15
-*.color14: nord7
-*.color15: nord6
+! red
+*.color1:       #7c7c7c
+*.color9:       #7c7c7c
+
+! green
+*.color2:       #8e8e8e
+*.color10:      #8e8e8e
+
+! yellow
+*.color3:       #a0a0a0
+*.color11:      #a0a0a0
+
+! blue
+*.color4:       #686868
+*.color12:      #686868
+
+! magenta
+*.color5:       #747474
+*.color13:      #747474
+
+! cyan
+*.color6:       #868686
+*.color14:      #868686
+
+! white
+*.color7:       #b9b9b9
+*.color15:      #f7f7f7
 
 Xft.antialias:		1
 Xft.autohint:		0
 Xft.lcdfilter: lcddefault
 Xft.hintstlye: hintfull
-Xft.dpi:		90
+Xft.dpi:		180
 
 ! URxvt*termName:		rxvt-unicode-256color
 ! URxvt*scrollTtyOutput: false
