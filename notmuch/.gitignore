@@ -1,0 +1,7 @@
+.mail/drafts/
+.mail/gmail/
+.mail/nus/
+.mail/nushackers/
+.mail/sent/
+.mail/.notmuch/dump-*
+.mail/.notmuch/xapian/
