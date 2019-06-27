@@ -54,7 +54,7 @@ bind 2 split
 bind 3 hsplit
 
 bind b exec ~/rpscripts/battery
-bind c runorraise kitty 'kitty'
+bind c runorraise alacritty 'alacritty'
 bind f runorraise Firefox 'firefox'
 bind s runorraise Spotify 'spotify'
 bind T runorraise TelegramDesktop 'telegram-desktop'
