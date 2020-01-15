@@ -97,3 +97,6 @@ XTerm*VT100.translations: #override \n\
   Ctrl Shift <Key>V: insert-selection(CLIPBOARD) \n\
   Ctrl <Key>M: maximize() \n\
   Ctrl <Key>R: restore()
+
+Xcursor.size: 32
+Xcursor.theme: Numix-Cursor-Light
