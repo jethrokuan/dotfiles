@@ -15,6 +15,8 @@ vterm_prompt_end(){
 }
 PS1=$PS1'\[$(vterm_prompt_end)\]'
 
+export PATH="$HOME/.local/bin:$PATH"
+
 alias p2x1="pdfnup --nup 2x1 --landscape --suffix '2x1' --batch "
 
 pdfconstcrop() {
@@ -27,7 +29,6 @@ pdfconstcrop() {
 }
 
 pdfcrop_all() {
-    mkdir cropped
     for FILE in *.pdf; do
         pdfconstcrop --margins '20 20 20 20' "${FILE}"
     done
