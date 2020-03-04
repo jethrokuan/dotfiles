@@ -33,3 +33,6 @@ pdfcrop_all() {
         pdfconstcrop --margins '20 20 20 20' "${FILE}"
     done
 }
+
+eval "$(direnv hook bash)"
+eval "$(starship init bash)"

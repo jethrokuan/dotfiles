@@ -1,6 +1,0 @@
-#!/usr/bin/env fish
-
-if test ! -d "$HOME/.nano"
-  echo "Installing '~/.nano' ..."
-  git clone https://github.com/scopatz/nanorc.git ~/.nano
-end

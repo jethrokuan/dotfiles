@@ -39,7 +39,7 @@ Xft.antialias:		1
 Xft.autohint:		0
 Xft.lcdfilter: lcddefault
 Xft.hintstlye: hintfull
-Xft.dpi:		180
+Xft.dpi:		90
 
 URxvt*termName:		rxvt-unicode-256color
 URxvt*scrollTtyOutput: false
@@ -51,7 +51,7 @@ URxvt*loginShell: true
 Urxvt*secondaryScroll:  true
 URxvt*secondaryWheel: true
 URxvt*cursorUnderline: false
-URxvt*font: xft:DejaVu Sans Mono:size=14:autohint=true
+URxvt*font: xft:DejaVu Sans Mono:size=12:autohint=true
 !URxvt.transparent: false
 URxvt*borderless: true
 !URxvt.shading: 35
@@ -64,18 +64,8 @@ URxvt*scrollstyle:	plain
 ! urxvt
 
 !-*- Perl extensions -*-
-! stored in ~/.urxvt/ext/
-URxvt.perl-ext-common: default,matcher,selection-to-clipboard
-URxvt.url-select.launcher: /usr/bin/xdg-open
-URxvt.url-select.underline: true
-URxvt.url-launcher: firefox
-URxvt.underlineURLs:  True
-URxvt.matcher.button: 1
-
 ! clipboard
 ! update clipboard whenever primary gets updated
-URxvt.clipboard.autocopy: true
-
 
 ! font-size
 URxvt.keysym.C-Up:     perl:font-size:increase
@@ -84,9 +74,15 @@ URxvt.font-size.step:  2
 ! disable default binding for shift on urxvt
 URxvt.iso14755: false
 URxvt.iso14755_52: false
+URxvt.perl-ext-common: default,selection-to-clipboard,pasta,matcher,keyboard-select
+URxvt.keysym.M-u:     perl:url-select:select_next
+URxvt.underlineURLs:  True
+URxvt.matcher.button: 1 
+URxvt.keysym.M-Escape:perl:keyboard-select:activate
+URxvt.keysym.Control-Shift-V:     perl:pasta:paste
+URxvt.clipboard.autocopy: true
 
-XTerm.vt100.foreground: nord4
-XTerm.vt100.background: nord0
+
 XTerm*faceName:		xft:DejaVu Sans Mono:size=16:antialias=true
 XTerm*termName:		xterm-256color
 XTerm*utf8:		1
